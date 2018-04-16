@@ -163,45 +163,50 @@ module _ {i} {A : Type i} where
     → (p ∙ q == p ∙ r → q == r)
   anti-whisker-left idp h = h
 
-  post-rotate-in : {x y z : A} (p : x == y) (q : y == z) (r : x == z)
+  {-
+  The order of the arguments p, q, r follows the occurrences
+  of these variables in the output type
+  -}
+
+  post-rotate-in : {x y z : A} (p : x == y) (r : x == z) (q : y == z)
     → p ∙ q == r
     → p == r ∙ (! q)
-  post-rotate-in p idp r e = ! (∙-unit-r p) ∙ e ∙ ! (∙-unit-r r)
+  post-rotate-in p r idp e = ! (∙-unit-r p) ∙ e ∙ ! (∙-unit-r r)
 
   post-rotate-out : {x y z : A} (p : x == y) (q : y == z) (r : x == z)
     → p == r ∙ (! q)
     → p ∙ q == r
   post-rotate-out p idp r e = ∙-unit-r p ∙ e ∙ ∙-unit-r r
 
-  post-rotate'-in : {x y z : A} (p : x == y) (q : y == z) (r : x == z)
+  post-rotate'-in : {x y z : A} (r : x == z) (q : y == z) (p : x == y)
     → r == p ∙ q
     → r ∙ (! q) == p
-  post-rotate'-in p idp r e = ∙-unit-r r ∙ e ∙ ∙-unit-r p
+  post-rotate'-in r idp p e = ∙-unit-r r ∙ e ∙ ∙-unit-r p
 
-  post-rotate'-out : {x y z : A} (p : x == y) (q : y == z) (r : x == z)
+  post-rotate'-out : {x y z : A} (r : x == z) (p : x == y) (q : y == z)
     → r ∙ (! q) == p
     → r == p ∙ q
-  post-rotate'-out p idp r e = ! (∙-unit-r r) ∙ e ∙ ! (∙-unit-r p)
+  post-rotate'-out r p idp e = ! (∙-unit-r r) ∙ e ∙ ! (∙-unit-r p)
 
-  pre-rotate-in : {x y z : A} (p : x == y) (q : y == z) (r : x == z)
+  pre-rotate-in : {x y z : A} (q : y == z) (p : x == y) (r : x == z)
     → p ∙ q == r
     → q == (! p) ∙ r
-  pre-rotate-in idp q r e = e
+  pre-rotate-in q idp r e = e
 
   pre-rotate-out : {x y z : A} (p : x == y) (q : y == z) (r : x == z)
     → q == (! p) ∙ r
     → p ∙ q == r
   pre-rotate-out idp q r e = e
 
-  pre-rotate'-in : {x y z : A} (p : x == y) (q : y == z) (r : x == z)
+  pre-rotate'-in : {x y z : A} (p : x == y) (r : x == z) (q : y == z)
     → r == p ∙ q
     → (! p) ∙ r == q
-  pre-rotate'-in idp q r e = e
+  pre-rotate'-in idp r q e = e
 
-  pre-rotate'-out : {x y z : A} (p : x == y) (q : y == z) (r : x == z)
+  pre-rotate'-out : {x y z : A} (r : x == z) (p : x == y) (q : y == z)
     → (! p) ∙ r == q
     → r == p ∙ q
-  pre-rotate'-out idp q r e = e
+  pre-rotate'-out r idp q e = e
 
 
 {- Dependent stuff -}

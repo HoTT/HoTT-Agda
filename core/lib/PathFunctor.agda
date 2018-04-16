@@ -185,14 +185,20 @@ module _ {i j} {A : Type i} {B : Type j} where
     → ap2 f p p == ap (λ x → f x x) p
   ap2-diag f idp = idp
 
--- unsure where this belongs
-transp-cst=idf : ∀ {i} {A : Type i} {a x y : A} (p : x == y) (q : a == x)
-  → transport (λ x → a == x) p q == q ∙ p
-transp-cst=idf idp q = ! (∙-unit-r q)
+module _ {i} {A : Type i} where
 
-transp-cst=idf-natural : ∀ {i} {A : Type i} {a x y : A} {p p' : x == y} (e : p == p') (q : a == x)
-  → transp-cst=idf p q ∙ ap (λ s → q ∙ s) e == ap (λ s → transport (λ x → a == x) s q) e ∙ transp-cst=idf p' q
-transp-cst=idf-natural {p = idp} {p' = .idp} idp idp = idp
+  -- unsure where this belongs
+  transp-cst=idf : {a x y : A} (p : x == y) (q : a == x)
+    → transport (λ x → a == x) p q == q ∙ p
+  transp-cst=idf idp q = ! (∙-unit-r q)
+
+  transp-cst=idf-pentagon : {a x y z : A}
+    (p : x == y) (q : y == z) (r : a == x)
+    → transp-cst=idf (p ∙ q) r == transp-∙ p q r ∙
+                                  ap (transport (λ x → a == x) q) (transp-cst=idf p r) ∙
+                                  transp-cst=idf q (r ∙ p) ∙
+                                  ∙-assoc r p q
+  transp-cst=idf-pentagon idp q idp = ! (∙-unit-r (transp-cst=idf q idp))
 
 {- for functions with more arguments -}
 module _ {i₀ i₁ i₂ j} {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂}
