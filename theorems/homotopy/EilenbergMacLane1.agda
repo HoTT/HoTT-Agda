@@ -135,7 +135,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
         g₁g₂ : G.El
         g₁g₂ = G.comp g₁ g₂
 
-        swap-transp-emloop-2 : transp-emloop (emloop g₁ ∙ emloop g₂) == emloop-transp (emloop g₁ ∙ emloop g₂)
+        swap-transp-emloop-2 : transp-emloop (emloop g₁ ∙ emloop g₂) ∼ emloop-transp (emloop g₁ ∙ emloop g₂)
         swap-transp-emloop-2 = comp-transp {i} {i} {i} {EM₁ G} {fst ∘ Codes} {λ x → embase == x} {embase} {embase} {embase} {emloop} {emloop} {emloop} (emloop g₁) (emloop g₂) (swap-transp-emloop g₁) (swap-transp-emloop g₂)
 
         f₁ : G.El → embase' G == embase
@@ -163,7 +163,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
         q₁₆ = ap transp-emloop (emloop-comp g₁ g₂)
 
         q₆₂ : f₆ == f₂
-        q₆₂ = swap-transp-emloop-2
+        q₆₂ = λ= swap-transp-emloop-2
 
         q₁₂' : f₁ == f₂
         q₁₂' = q₁₆ ∙ q₆₂
@@ -215,6 +215,12 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
           s₁₅ : embase' G == embase
           s₁₅ = transp-emloop (emloop g₂) (transp-C (emloop g₁) y)
           --  = transp-PF (emloop g₂) (emloop-transp (emloop g₁) y)
+
+          s₁₆ : embase' G == embase
+          s₁₆ = emloop-transp (emloop g₁) y ∙ emloop g₂
+
+          s₁₇ : embase' G == embase
+          s₁₇ = emloop (G.comp (transp-C (emloop g₁) y) g₂)
 
           e₁₂ : s₁ == s₂
           e₁₂ = app= q₁₂ y
@@ -276,8 +282,40 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
           e₁₃₋₁₅ : s₁₃ == s₁₅
           e₁₃₋₁₅ = ap (transp-PF (emloop g₂)) (transp-emloop=emloop-transp g₁ y)
 
+          e₁₃₋₁₅' : s₁₃ == s₁₅
+          e₁₃₋₁₅' = ap (transp-PF (emloop g₂)) (app= (swap-transp-emloop g₁) y)
+
+          e₁₃₋₁₅'=e₁₃₋₁₅ : e₁₃₋₁₅' == e₁₃₋₁₅
+          e₁₃₋₁₅'=e₁₃₋₁₅ =
+            ap (ap (transp-PF (emloop g₂)))
+               (app=-β {f = transp-emloop (emloop g₁)} {g = emloop-transp (emloop g₁)}
+                       (transp-emloop=emloop-transp g₁) y)
+
           e₁₅₋₁₄ : s₁₅ == s₁₄
           e₁₅₋₁₄ = transp-emloop=emloop-transp g₂ (transp-C (emloop g₁) y)
+
+          e₁₅₋₁₄' : s₁₅ == s₁₄
+          e₁₅₋₁₄' = app= (λ= (transp-emloop=emloop-transp g₂)) (transp-C (emloop g₁) y)
+
+          e₁₅₋₁₄'=e₁₅₋₁₄ : e₁₅₋₁₄' == e₁₅₋₁₄
+          e₁₅₋₁₄'=e₁₅₋₁₄ =
+            app=-β {f = transp-emloop (emloop g₂)} {g = emloop-transp (emloop g₂)}
+                   (transp-emloop=emloop-transp g₂) (transp-C (emloop g₁) y)
+
+          e₁₅₋₁₆ : s₁₅ == s₁₆
+          e₁₅₋₁₆ = transp-emloop=∙-emloop g₂ (transp-C (emloop g₁) y)
+
+          e₁₇₋₁₆ : s₁₇ == s₁₆
+          e₁₇₋₁₆ = emloop-comp (transp-C (emloop g₁) y) g₂
+
+          e₁₇₋₁₄ : s₁₇ == s₁₄
+          e₁₇₋₁₄ = emloop-comp=emloop-transp g₂ (transp-C (emloop g₁) y)
+
+          e₁₀₋₁₇ : s₁₀ == s₁₇
+          e₁₀₋₁₇ = ap (λ z → emloop (G.comp z g₂)) (! (↓-Codes-loop-transp g₁ y))
+
+          e₉₋₁₆ : s₉ == s₁₆
+          e₉₋₁₆ = ap (λ z → emloop z ∙ emloop g₂) (! (↓-Codes-loop-transp g₁ y))
 
           -- TODO: move this somewhere else?
           ap-natural : ∀ {j k} {A : Type j} {B : Type k} {f g : A → B}
@@ -307,6 +345,58 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
                 post-rearrange'-in (e₁₂₋₁₁ ◃∙ e₁₁₋₈ ◃∎) e₉₈ (e₁₂₋₉ ◃∎) $
                 ap-natural (emloop-comp' G y g₁) (transp-cst=idf (emloop g₂))
 
+          cd₅ : ! e₁₀₋₉ == e₉₋₁₆ ∙ ! e₁₇₋₁₆ ∙ ! e₁₀₋₁₇
+          cd₅ = post-rearrange-in (! e₁₀₋₉ ◃∎) (e₉₋₁₆ ◃∙ ! e₁₇₋₁₆ ◃∎) e₁₀₋₁₇ $
+                post-rearrange-in (! e₁₀₋₉ ◃∙ e₁₀₋₁₇ ◃∎) (e₉₋₁₆ ◃∎) e₁₇₋₁₆ $
+                pre-rotate'-in e₁₀₋₉ (e₁₀₋₁₇ ∙ e₁₇₋₁₆) e₉₋₁₆ $
+                ap-natural {f = λ z → emloop (G.comp z g₂)} {g = λ z → emloop z ∙ emloop g₂}
+                           (! (↓-Codes-loop-transp g₁ y)) (λ z → emloop-comp z g₂)
+
+          cd₆ : ! e₁₀₋₁₇ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂ == e₁₇₋₁₄ ∙ ! e₂₋₁₄
+          cd₆ =
+            ! e₁₀₋₁₇ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂
+              =⟨ (ap (λ p → ! p) (ap-∘ emloop (λ z → G.comp z g₂) (! (↓-Codes-loop-transp g₁ y))) ∙ !-ap emloop i₁₀₋₁₇) |in-ctx (λ z → z ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂) ⟩
+            ap emloop (! i₁₀₋₁₇) ∙ ap emloop i₁₀₋₄ ∙ ap emloop i₄₅ ∙ e₅₂
+              =⟨ e₅₂=ap-emloop-i₅₂ |in-ctx (λ z → ap emloop (! i₁₀₋₁₇) ∙ ap emloop i₁₀₋₄ ∙ ap emloop i₄₅ ∙ z) ⟩
+            ap emloop (! i₁₀₋₁₇) ∙ ap emloop i₁₀₋₄ ∙ ap emloop i₄₅ ∙ ap emloop i₅₂
+              =⟨ ! (ap-∙∙∙ emloop (! i₁₀₋₁₇) i₁₀₋₄ i₄₅ i₅₂) ⟩
+            ap emloop (! i₁₀₋₁₇ ∙ i₁₀₋₄ ∙ i₄₅ ∙ i₅₂)
+              =⟨ ap (ap emloop) cd₆' ⟩
+            ap emloop (i₁₇₋₁₄ ∙ ! i₂₋₁₄)
+              =⟨ ap-∙ emloop i₁₇₋₁₄ (! i₂₋₁₄) ⟩
+            ap emloop i₁₇₋₁₄ ∙ ap emloop (! i₂₋₁₄)
+              =⟨ ap-! emloop i₂₋₁₄ |in-ctx (λ z → e₁₇₋₁₄ ∙ z) ⟩
+            e₁₇₋₁₄ ∙ ! e₂₋₁₄ =∎
+            where
+              h₁₇ : G.El
+              h₁₇ = G.comp (transp-C (emloop g₁) y) g₂
+              h₁₀ : G.El
+              h₁₀ = G.comp (G.comp y g₁) g₂
+              h₄ : G.El
+              h₄ = G.comp y (G.comp g₁ g₂)
+              h₅ : G.El
+              h₅ = transp-C (emloop (G.comp g₁ g₂)) y
+              h₂ : G.El
+              h₂ = transp-C (emloop g₁ ∙ emloop g₂) y
+              h₁₄ : G.El
+              h₁₄ = transp-C (emloop g₂) (transp-C (emloop g₁) y)
+              i₁₀₋₁₇ : h₁₀ == h₁₇
+              i₁₀₋₁₇ = ap (λ z → G.comp z g₂) (! (↓-Codes-loop-transp g₁ y))
+              i₁₀₋₄ : h₁₀ == h₄
+              i₁₀₋₄ = G.assoc y g₁ g₂
+              i₄₅ : h₄ == h₅
+              i₄₅ = ! (↓-Codes-loop-transp g₁g₂ y)
+              i₅₂ : h₅ == h₂
+              i₅₂ = ap (λ p → transp-C p y) (emloop-comp g₁ g₂)
+              i₁₇₋₁₄ : h₁₇ == h₁₄
+              i₁₇₋₁₄ = ! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) y))
+              i₂₋₁₄ : h₂ == h₁₄
+              i₂₋₁₄ = transp-∙ (emloop g₁) (emloop g₂) y
+              e₅₂=ap-emloop-i₅₂ : e₅₂ == ap emloop i₅₂
+              e₅₂=ap-emloop-i₅₂ = ap-∘ (emloop' G) (λ p → transp-C p y) (emloop-comp g₁ g₂)
+              cd₆' : ! i₁₀₋₁₇ ∙ i₁₀₋₄ ∙ i₄₅ ∙ i₅₂ == i₁₇₋₁₄ ∙ ! i₂₋₁₄
+              cd₆' = prop-path (has-level-apply G.El-level h₁₇ h₂) _ _
+
           DD : e₁₂ == e₁₂'
           DD =
             e₁₂
@@ -322,15 +412,30 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
             e₁₃ ∙ ! e₄₃ ∙ e₄₅ ∙ e₅₂
               =⟨ rewrite-path (s₁ ∎∎) (e₁₃ ◃∎) (e₁₆ ◃∙ e₆₇ ◃∙ ! e₃₇ ◃∎) cd₁ (! e₄₃ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎) ⟩
             e₁₆ ∙ e₆₇ ∙ ! e₃₇ ∙ ! e₄₃ ∙ e₄₅ ∙ e₅₂
-              =⟨ rewrite-path (e₁₆ ◃∙ e₆₇ ◃∎) (! e₃₇ ◃∙ ! e₄₃ ◃∎) (! e₈₇ ◃∙ ! e₉₈ ◃∙ ! e₁₀₋₉ ◃∙ e₁₀₋₄ ◃∎) cd₂ (e₄₅ ◃∙ e₅₂ ◃∎) ⟩
+              =⟨ rewrite-path (e₁₆ ◃∙ e₆₇ ◃∎)
+                              (! e₃₇ ◃∙ ! e₄₃ ◃∎) (! e₈₇ ◃∙ ! e₉₈ ◃∙ ! e₁₀₋₉ ◃∙ e₁₀₋₄ ◃∎) cd₂
+                              (e₄₅ ◃∙ e₅₂ ◃∎) ⟩
             e₁₆ ∙ e₆₇ ∙ ! e₈₇ ∙ ! e₉₈ ∙ ! e₁₀₋₉ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂
-              =⟨ rewrite-path (e₁₆ ◃∎) (e₆₇ ◃∙ ! e₈₇ ◃∎) (e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∎) cd₃ (! e₉₈ ◃∙ ! e₁₀₋₉ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎) ⟩
+              =⟨ rewrite-path (e₁₆ ◃∎)
+                              (e₆₇ ◃∙ ! e₈₇ ◃∎) (e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∎) cd₃
+                              (! e₉₈ ◃∙ ! e₁₀₋₉ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎) ⟩
             e₁₆ ∙ e₆₋₁₃ ∙ e₁₃₋₁₁ ∙ e₁₁₋₈ ∙ ! e₉₈ ∙ ! e₁₀₋₉ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂
-              =⟨ rewrite-path (e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∎) (e₁₁₋₈ ◃∙ ! e₉₈ ◃∎) (! e₁₂₋₁₁ ◃∙ e₁₂₋₉ ◃∎) cd₄ (! e₁₀₋₉ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎)  ⟩
+              =⟨ rewrite-path (e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∎)
+                              (e₁₁₋₈ ◃∙ ! e₉₈ ◃∎) (! e₁₂₋₁₁ ◃∙ e₁₂₋₉ ◃∎) cd₄
+                              (! e₁₀₋₉ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎)  ⟩
             e₁₆ ∙ e₆₋₁₃ ∙ e₁₃₋₁₁ ∙ ! e₁₂₋₁₁ ∙ e₁₂₋₉ ∙ ! e₁₀₋₉ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂
+              =⟨ rewrite-path (e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ ! e₁₂₋₁₁ ◃∙ e₁₂₋₉ ◃∎)
+                              (! e₁₀₋₉ ◃∎) (e₉₋₁₆ ◃∙ ! e₁₇₋₁₆ ◃∙ ! e₁₀₋₁₇ ◃∎) cd₅
+                              (e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎)  ⟩
+            e₁₆ ∙ e₆₋₁₃ ∙ e₁₃₋₁₁ ∙ ! e₁₂₋₁₁ ∙ e₁₂₋₉ ∙ e₉₋₁₆ ∙ ! e₁₇₋₁₆ ∙ ! e₁₀₋₁₇ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂
+              =⟨ rewrite-path (e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ ! e₁₂₋₁₁ ◃∙ e₁₂₋₉ ◃∙ e₉₋₁₆ ◃∙ ! e₁₇₋₁₆ ◃∎)
+                              (! e₁₀₋₁₇ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎) (e₁₇₋₁₄ ◃∙ ! e₂₋₁₄ ◃∎) cd₆ (s₂ ∎∎) ⟩
+            e₁₆ ∙ e₆₋₁₃ ∙ e₁₃₋₁₁ ∙ ! e₁₂₋₁₁ ∙ e₁₂₋₉ ∙ e₉₋₁₆ ∙ ! e₁₇₋₁₆ ∙ e₁₇₋₁₄ ∙ ! e₂₋₁₄
               =⟨ {!!} ⟩
             e₁₆ ∙ e₆₋₁₃ ∙ e₁₃₋₁₅ ∙ e₁₅₋₁₄ ∙ ! e₂₋₁₄
-              =⟨ {!!} ⟩
+              =⟨ ap2 (λ x y → e₁₆ ∙ e₆₋₁₃ ∙ x ∙ y ∙ ! e₂₋₁₄) (! e₁₃₋₁₅'=e₁₃₋₁₅) (! e₁₅₋₁₄'=e₁₅₋₁₄) ⟩
+            e₁₆ ∙ e₆₋₁₃ ∙ e₁₃₋₁₅' ∙ e₁₅₋₁₄' ∙ ! e₂₋₁₄
+              =⟨ ! (app=-β {f = f₆} {g = f₂} swap-transp-emloop-2 y) |in-ctx (λ z → e₁₆ ∙ z) ⟩
             e₁₆ ∙ app= q₆₂ y
               =⟨ ap-∘ (λ g → g y) transp-emloop (emloop-comp g₁ g₂) |in-ctx (λ z → z ∙ app= q₆₂ y) ⟩
             app= q₁₆ y ∙ app= q₆₂ y
@@ -342,8 +447,8 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
                        q₁₂ q₁₂'
                        (λ= {A = G.El} {P = λ x → f₁ x == f₂ x} {f = e₁₂} {g = e₁₂'} DD)
 
-        FF : loop' g₁g₂ == ↓-→-from-transp swap-transp-emloop-2 [ Q ↓ emloop-comp g₁ g₂ ]
-        FF = foo (emloop-comp g₁ g₂) emloop emloop (swap-transp-emloop g₁g₂) swap-transp-emloop-2 EE
+        FF : loop' g₁g₂ == ↓-→-from-transp q₆₂ [ Q ↓ emloop-comp g₁ g₂ ]
+        FF = foo (emloop-comp g₁ g₂) emloop emloop (swap-transp-emloop g₁g₂) q₆₂ EE
 
 {-
         GG : ↓-→-from-transp comp-loop'-transp == loop' g₁ ∙ᵈ loop' g₂
