@@ -39,7 +39,7 @@ module _ {G : Group i} where
   instance
     EM₁-level : {n : ℕ₋₂} → has-level (S (S (S (S n)))) (EM₁ G)
     EM₁-level {⟨-2⟩} = EM₁-level' G
-    EM₁-level {S n} = raise-level _ EM₁-level
+    EM₁-level  {S n} = raise-level _ EM₁-level
 
   abstract
     -- This was in the original paper, but is actually derivable.
