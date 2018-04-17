@@ -2,6 +2,7 @@
 
 open import HoTT
 open import homotopy.HSpace
+open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
 
 module homotopy.EM1HSpace where
 
@@ -11,9 +12,8 @@ module EM₁HSpace {i} (G : AbGroup i) where
     module G = AbGroup G
 
   mult-loop : (g : G.El) (x : EM₁ G.grp) → x == x
-  mult-loop g = EM₁-elim
+  mult-loop g = EM₁-level₁-elim
     {P = λ x → x == x}
-    
     (emloop g)
     loop'
     (λ _ _ → set-↓-has-all-paths-↓)
@@ -34,7 +34,7 @@ module EM₁HSpace {i} (G : AbGroup i) where
     f = λ g → λ= (mult-loop g)
 
     pres-comp = λ g₁ g₂ →
-      ap λ= (λ= (EM₁-elim
+      ap λ= (λ= (EM₁-level₁-elim
         {P = λ x → mult-loop (G.comp g₁ g₂) x
                 == mult-loop g₁ x ∙ mult-loop g₂ x}
         (emloop-comp g₁ g₂)
@@ -43,13 +43,13 @@ module EM₁HSpace {i} (G : AbGroup i) where
       ∙ ! (∙-λ= _ _)
 
   mult : EM₁ G.grp → EM₁ G.grp → EM₁ G.grp
-  mult = EM₁-rec {C = EM₁ G.grp → EM₁ G.grp} (λ x → x) mult-hom
+  mult = EM₁-level₁-rec {C = EM₁ G.grp → EM₁ G.grp} (λ x → x) mult-hom
 
   H-⊙EM₁ : HSpaceStructure (⊙EM₁ G.grp)
   H-⊙EM₁ = from-alt-h-space $ record { μ = mult; unit-l = unit-l; unit-r = unit-r; coh = coh }
     where
     unit-l : (x : EM₁ G.grp) → mult embase x == x
-    unit-l = EM₁-elim
+    unit-l = EM₁-level₁-elim
       {P = λ x → mult embase x == x}
       idp
       (λ g → ↓-app=idf-in $ ∙'-unit-l (emloop g) ∙ (! (ap-idf (emloop g)))
@@ -57,7 +57,7 @@ module EM₁HSpace {i} (G : AbGroup i) where
       (λ _ _ → set-↓-has-all-paths-↓)
 
     unit-r : (x : EM₁ G.grp) → mult x embase == x
-    unit-r = EM₁-elim
+    unit-r = EM₁-level₁-elim
       {P = λ x → mult x embase == x}
       idp
       (λ g → ↓-app=idf-in $
