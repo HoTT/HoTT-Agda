@@ -109,7 +109,7 @@ module SpaceFromGroups {i} (G : ℕ → Group i)
 
     instance
       pF : (n : ℕ) → has-level ⟨ S n ⟩ (de⊙ (F n))
-      pF O = EM₁-level {G = G O}
+      pF O = EM₁-level₁ (G 0)
       pF (S n) = EMExplicit.EM-level (G (S n) , abG-S n) (S (S n))
 
       cF : (n : ℕ) → is-connected ⟨ n ⟩ (de⊙ (F n))
