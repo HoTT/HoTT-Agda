@@ -208,23 +208,25 @@ module EilenbergMacLane-functorial {i} (G : Group i) (H : Group i) where
         emloop (GroupHom.f φ g₁) ∙ emloop (GroupHom.f φ g₂) =∎
 
   EM₁-fmap : (G →ᴳ H) → EM₁ G → EM₁ H
-  EM₁-fmap φ = EM₁-rec {G = G} {C = EM₁ H} embase (EM₁-fmap' φ)
+  EM₁-fmap φ = EM₁-level₁-rec {G = G} {C = EM₁ H} {{EM₁-level₁ H {⟨-2⟩}}} embase (EM₁-fmap' φ)
 
   ⊙EM₁-fmap : (G →ᴳ H) → (⊙EM₁ G ⊙→ ⊙EM₁ H)
   ⊙EM₁-fmap φ = EM₁-fmap φ , idp
 
   EM₁-fmap-cst : ∀ x → EM₁-fmap cst-hom x == embase
-  EM₁-fmap-cst = EM₁-elim {P = λ x' → EM₁-fmap cst-hom x' == embase}
-                          idp
-                          h
-                          (λ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
+  EM₁-fmap-cst =
+    EM₁-level₁-elim {P = λ x' → EM₁-fmap cst-hom x' == embase}
+                    {{λ x → has-level-apply EM₁-level _ _}}
+                    idp
+                    h
+                    (λ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
     where
       h : (g : Group.El G) → idp == idp [ (λ x' → EM₁-fmap cst-hom x' == embase) ↓ emloop g ]
       h g = ↓-app=cst-in $
               idp {a = embase' H}
                 =⟨ ! emloop-ident ⟩
               emloop (Group.ident H)
-                =⟨ ! (EM₁Rec.emloop-β {C = EM₁ H} embase (EM₁-fmap' cst-hom) g) ⟩
+                =⟨ ! (EM₁Level₁Rec.emloop-β {C = EM₁ H} {{EM₁-level₁ H {⟨-2⟩}}} embase (EM₁-fmap' cst-hom) g) ⟩
               ap (λ z → EM₁-fmap cst-hom z) (emloop' G g)
                 =⟨ ! (∙-unit-r _) ⟩
               ap (λ z → EM₁-fmap cst-hom z) (emloop' G g) ∙ idp =∎
