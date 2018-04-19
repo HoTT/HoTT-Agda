@@ -21,7 +21,7 @@ module _ {i} (G : AbGroup i) where
     E-spectrum (pos n) = spectrum n
     E-spectrum (negsucc O) = ≃-to-⊙≃ {X = ⊙Ω (E 0)}
       (equiv (λ _ → _) (λ _ → idp)
-             (λ _ → idp) (prop-has-all-paths _))
+             (λ _ → idp) (prop-has-all-paths {{has-level-apply (EM-level 0) _ _}} _))
       idp
     E-spectrum (negsucc (S n)) = ≃-to-⊙≃ {X = ⊙Ω (E (negsucc n))}
       (equiv (λ _ → _) (λ _ → idp)
@@ -47,7 +47,8 @@ module _ {i} (G : AbGroup i) where
   EM-dimension {negsucc O} _ =
     contr-is-trivialᴳ (C (negsucc O) (⊙Lift ⊙S⁰))
       {{Trunc-preserves-level 0 (Σ-level (Π-level λ _ →
-        inhab-prop-is-contr idp) ⟨⟩)}}
+        inhab-prop-is-contr idp {{has-level-apply (EM-level 0) _ _}})
+        (λ x → has-level-apply (has-level-apply (EM-level 0) _ _) _ _))}}
 
   EM-dimension {negsucc (S n)} _ =
     contr-is-trivialᴳ (C (negsucc (S n)) (⊙Lift ⊙S⁰))
