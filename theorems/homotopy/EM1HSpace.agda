@@ -51,8 +51,10 @@ module EM₁HSpace {i} (G : AbGroup i) where
       f (G.comp g₁ g₂) == Group.comp EM₁-endo-Ω-group (f g₁) (f g₂)
     pres-comp g₁ g₂ = ap λ= (λ= (pres-comp' g₁ g₂)) ∙ ! (∙-λ= _ _)
 
+  module MultRec = EM₁Level₁Rec {G = G.grp} {C = EM₁ G.grp → EM₁ G.grp} (λ x → x) mult-hom
+
   mult : EM₁ G.grp → EM₁ G.grp → EM₁ G.grp
-  mult = EM₁-level₁-rec {C = EM₁ G.grp → EM₁ G.grp} (λ x → x) mult-hom
+  mult = MultRec.f
 
   H-⊙EM₁ : HSpaceStructure (⊙EM₁ G.grp)
   H-⊙EM₁ = from-alt-h-space $ record { μ = mult; unit-l = unit-l; unit-r = unit-r; coh = coh }
