@@ -222,6 +222,21 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
        (λ a → idp)
        x
 
+  {- XXX naming convention -}
+  Trunc=-∙-comm' : {x y z : Trunc (S n) A }
+    (p : fst (Trunc= x y)) (q : fst (Trunc= y z))
+    →  <– (Trunc=-equiv x z) (Trunc=-∙ {ta = x} {tb = y} {tc = z} p q)
+    == <– (Trunc=-equiv x y) p ∙ <– (Trunc=-equiv y z) q
+  Trunc=-∙-comm' {x} {y} {z} p q =
+    –>-is-inj (Trunc=-equiv x z) (<– (Trunc=-equiv x z) (Trunc=-∙ {ta = x} {tb = y} {tc = z} p q)) (<– (Trunc=-equiv x y) p ∙ <– (Trunc=-equiv y z) q) $
+      –> (Trunc=-equiv x z) (<– (Trunc=-equiv x z) (Trunc=-∙ {ta = x} {tb = y} {tc = z} p q))
+        =⟨ <–-inv-r (Trunc=-equiv x z) (Trunc=-∙ {ta = x} {tb = y} {tc = z} p q) ⟩
+      Trunc=-∙ {ta = x} {tb = y} {tc = z} p q
+        =⟨ ! (ap2 (Trunc=-∙ {ta = x} {tb = y} {tc = z}) (<–-inv-r (Trunc=-equiv x y) p) (<–-inv-r (Trunc=-equiv y z) q)) ⟩
+      Trunc=-∙ {ta = x} {tb = y} {tc = z} (–> (Trunc=-equiv x y) (<– (Trunc=-equiv x y) p)) (–> (Trunc=-equiv y z) (<– (Trunc=-equiv y z) q))
+        =⟨ ! (Trunc=-∙-comm (<– (Trunc=-equiv x y) p) (<– (Trunc=-equiv y z) q)) ⟩
+      –> (Trunc=-equiv x z) (<– (Trunc=-equiv x y) p ∙ <– (Trunc=-equiv y z) q) =∎
+
 {- naturality of Trunc=-equiv -}
 
 module _ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} (f : A → B) where
@@ -290,7 +305,7 @@ Trunc-fuse A m n = equiv
        {{λ _ → =-preserves-level (Trunc-preserves-level _ Trunc-level)}}
        (λ _ → idp)))
   where
-      instance 
+      instance
         l : has-level (minT m n) (Trunc m (Trunc n A))
         l with (minT-out m n)
         l | inl p = transport (λ k → has-level k (Trunc m (Trunc n A)))
