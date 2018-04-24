@@ -36,6 +36,9 @@ record CRingStructure {i} (El : Type i)
     infix 90 _⊗_
     _⊗_ = mult
 
+  add-assoc : ∀ a b c → (a ⊕ b) ⊕ c == a ⊕ (b ⊕ c)
+  add-assoc = assoc
+
   abstract
     mult-unit-r : ∀ a → a ⊗ one == a
     mult-unit-r a =

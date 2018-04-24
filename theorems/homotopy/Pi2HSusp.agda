@@ -42,9 +42,11 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   encode' {x} = Trunc-rec {{Codes-level x}} encode'₀
 
   import homotopy.SuspAdjointLoop as SAL
-  {- This should be [[_] ∘ η] where [η] is the functor in SuspAdjointLoop.agda -}
+  η : A → north == north
+  η = fst (SAL.η X)
+
   decodeN' : A → P north
-  decodeN' = [_] ∘ fst (SAL.η X)
+  decodeN' = [_] ∘ η
 
   abstract
     transport-Codes-mer : (a a' : A)

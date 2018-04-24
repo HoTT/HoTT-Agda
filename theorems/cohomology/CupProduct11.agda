@@ -4,7 +4,6 @@ open import HoTT
 open import homotopy.EilenbergMacLane
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
 open import homotopy.EM1HSpace
-open import homotopy.Pi2HSusp
 
 module cohomology.CupProduct11 {i} (R : CRing i) where
 
@@ -16,6 +15,8 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
   open EM₁HSpace R.add-ab-group renaming (mult to EM₁-mult)
 
   open EMExplicit R.add-ab-group
+  open import homotopy.Pi2HSusp {X = ⊙EM₁ R₊} H-⊙EM₁
+  open import homotopy.Pi2HSuspCompose {X = ⊙EM₁ R₊} H-⊙EM₁
 
   module CP₁₁ where
 
@@ -25,71 +26,57 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
     base' : EM₁ R₊ → EM 2
     base' _ = pt (⊙EM 2)
 
-    [_]₁ : {x y : Susp (EM₁ R₊)} → (x == y) → Trunc 1 (x == y)
-    [_]₁ p = [ p ]
+    e₁ : Ω (⊙EM 2) ≃ (north' (EM₁ R₊) ==₁ north)
+    e₁ = Trunc=-equiv [ north' (EM₁ R₊) ] [ north' (EM₁ R₊) ]
+
+    e₂ : (north' (EM₁ R₊) ==₁ north) ≃ EM₁ R₊
+    e₂ = eq'
+
+    ee : Ω (⊙EM 2) ≃ EM₁ R₊
+    ee = e₂ ∘e e₁
 
     module _ (g : R.El) where
 
-      loop''' : base'' ∼ base''
-      loop''' y = merid (cp₀₁ g y) ∙ ! (merid embase)
-
-      loop'' : base' ∼ base'
-      loop'' y = <– (Trunc=-equiv [ north' (EM₁ R₊) ] [ north' (EM₁ R₊) ]) [ loop''' y ]₁
+      loop'= : base' ∼ base'
+      loop'= x = <– ee (cp₀₁ g x)
 
       loop' : base' == base'
-      loop' = λ= loop''
-
-    infixr 80 _∙ₜ_
-    _∙ₜ_ : {x y z : Susp (EM₁ R₊)} → Trunc 1 (x == y) → Trunc 1 (y == z) → Trunc 1 (x == z)
-    _∙ₜ_ {x} {y} {z} p q = Trunc=-∙ {A = Susp (EM₁ R₊)} {ta = [ x ]} {tb = [ y ]} {tc = [ z ]} p q
-
-    -- TODO: generalize and move somewhere else
-    ∙-∙ₜ : {x y z : Susp (EM₁ R₊)} (p : x == y) (q : y == z)
-      → [ p ∙ q ]₁ == [ p ]₁ ∙ₜ [ q ]₁
-    ∙-∙ₜ idp q = idp
+      loop' = λ= loop'=
 
     module _ (g₁ g₂ : R.El) where
 
-      comp''' : (y : EM₁ R₊) → [ loop''' (R.add g₁ g₂) y ]₁ == [ loop''' g₁ y ]₁ ∙ₜ [ loop''' g₂ y ]₁
-      comp''' y =
-        [ loop''' (R.add g₁ g₂) y ]₁
-          =⟨ ∙-∙ₜ (merid (cp₀₁ (R.add g₁ g₂) y)) (! (merid embase)) ⟩
-        [ merid (cp₀₁ (R.add g₁ g₂) y) ]₁ ∙ₜ [ ! (merid embase) ]₁
-          =⟨ R.add-comm g₁ g₂ |in-ctx (λ z → [ merid (cp₀₁ z y) ∙ ! (merid embase) ]₁) ⟩
-        [ merid (cp₀₁ (R.add g₂ g₁) y) ]₁ ∙ₜ [ ! (merid embase) ]₁
-          =⟨ {!cp₀₁-distr-l g₂ g₁ y!} |in-ctx (λ (z : EM₁ R₊) → [ merid z ∙ ! (merid embase) ]₁) ⟩
-        [ merid (EM₁-mult (cp₀₁ g₂ y) (cp₀₁ g₁ y)) ]₁ ∙ₜ [ ! (merid embase) ]₁
-          =⟨ homomorphism {X = ⊙EM₁ R₊} H-⊙EM₁ (cp₀₁ g₂ y) (cp₀₁ g₁ y) |in-ctx (λ z → z ∙ₜ [ ! (merid embase) ]₁) ⟩
-        [ merid (cp₀₁ g₁ y) ∙ ! (merid embase) ∙ merid (cp₀₁ g₂ y) ]₁ ∙ₜ [ ! (merid embase) ]₁
-          =⟨ ! (∙-∙ₜ (merid (cp₀₁ g₁ y) ∙ ! (merid embase) ∙ merid (cp₀₁ g₂ y)) (! (merid embase))) ⟩
-        [ (merid (cp₀₁ g₁ y) ∙ ! (merid embase) ∙ merid (cp₀₁ g₂ y)) ∙ ! (merid embase) ]₁
-          =⟨ ap (λ z → [ z ∙ ! (merid embase) ]₁) (! (∙-assoc (merid (cp₀₁ g₁ y)) (! (merid embase)) (merid (cp₀₁ g₂ y)))) ⟩
-        [ ((merid (cp₀₁ g₁ y) ∙ ! (merid embase)) ∙ merid (cp₀₁ g₂ y)) ∙ ! (merid embase) ]₁
-          =⟨ ap [_]₁ (∙-assoc (merid (cp₀₁ g₁ y) ∙ ! (merid embase)) (merid (cp₀₁ g₂ y)) (! (merid embase))) ⟩
-        [ loop''' g₁ y ∙ loop''' g₂ y ]₁
-          =⟨ ∙-∙ₜ (loop''' g₁ y) (loop''' g₂ y) ⟩
-        [ loop''' g₁ y ]₁ ∙ₜ [ loop''' g₂ y ]₁ =∎
-
-      comp'' : loop'' (R.add g₁ g₂) ∼ (λ y → loop'' g₁ y ∙ loop'' g₂ y)
-      comp'' y =
-        loop'' (R.add g₁ g₂) y
-          =⟨ ap (<– (Trunc=-equiv [ north' (EM₁ R₊) ] [ north' (EM₁ R₊) ])) (comp''' y) ⟩
-        <– (Trunc=-equiv [ north' (EM₁ R₊) ] [ north' (EM₁ R₊) ]) ([ loop''' g₁ y ]₁ ∙ₜ [ loop''' g₂ y ]₁)
-          =⟨ Trunc=-∙-comm' {x = [ north' (EM₁ R₊) ]} {y = [ north' (EM₁ R₊) ]} {z = [ north' (EM₁ R₊) ]} [ loop''' g₁ y ]₁ [ loop''' g₂ y ]₁ ⟩
-        loop'' g₁ y ∙ loop'' g₂ y =∎
+      comp'= : (x : EM₁ R₊) → loop'= (R.add g₂ g₁) x == loop'= g₁ x ∙ loop'= g₂ x
+      comp'= x =
+        loop'= (R.add g₂ g₁) x
+          =⟨ ap (<– ee) (cp₀₁-distr-l g₂ g₁ x) ⟩
+        <– ee (μ (cp₀₁ g₂ x) (cp₀₁ g₁ x))
+          =⟨ ap (<– e₁) (comp (cp₀₁ g₂ x) (cp₀₁ g₁ x)) ⟩
+        <– e₁ ((<– e₂ (cp₀₁ g₁ x)) ∙₁ (<– e₂ (cp₀₁ g₂ x)))
+          =⟨ Trunc=-∙-comm' {x = [ north ]} {y = [ north ]} {z = [ north ]}
+                            (<– e₂ (cp₀₁ g₁ x)) (<– e₂ (cp₀₁ g₂ x)) ⟩
+        loop'= g₁ x ∙ loop'= g₂ x =∎
 
       comp' : loop' (R.add g₁ g₂) == loop' g₁ ∙ loop' g₂
-      comp' = ap λ= (λ= comp'') ∙ ! (∙-λ= (loop'' g₁) (loop'' g₂))
+      comp' =
+        loop' (R.add g₁ g₂)
+          =⟨ ap loop' (R.add-comm g₁ g₂) ⟩
+        loop' (R.add g₂ g₁)
+          =⟨ ap λ= (λ= comp'=) ⟩
+        λ= (λ x → loop'= g₁ x ∙ loop'= g₂ x)
+          =⟨ ! (∙-λ= (loop'= g₁) (loop'= g₂)) ⟩
+        loop' g₁ ∙ loop' g₂ =∎
 
-  {-
-  cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
-  cp₁₁ =
-    EM₁-rec
-      {C = EM₁ R₊ → EM 2}
-      -- {{Π-level (λ _ → EM-level 2)}}
-      base'
-      loop'
-      comp'
-      {!!}
-    where
-  -}
+    module _ (g₁ g₂ g₃ : R.El) where
+
+      coh' : comp' (R.add g₁ g₂) g₃ ∙ ap (λ l → l ∙ loop' g₃) (comp' g₁ g₂) ∙ ∙-assoc (loop' g₁) (loop' g₂) (loop' g₃) ==
+             ap loop' (R.add-assoc g₁ g₂ g₃) ∙ comp' g₁ (R.add g₂ g₃) ∙ ap (λ l → loop' g₁ ∙ l) (comp' g₂ g₃)
+      coh' = {!!}
+
+    cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
+    cp₁₁ =
+      EM₁-rec
+        {C = EM₁ R₊ → EM 2}
+        base'
+        loop'
+        comp'
+        coh'
