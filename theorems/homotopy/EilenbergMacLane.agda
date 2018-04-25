@@ -215,11 +215,10 @@ module EilenbergMacLane-functorial {i} (G : Group i) (H : Group i) where
 
   EM₁-fmap-cst : ∀ x → EM₁-fmap cst-hom x == embase
   EM₁-fmap-cst =
-    EM₁-level₁-elim {P = λ x' → EM₁-fmap cst-hom x' == embase}
-                    {{λ x → has-level-apply EM₁-level _ _}}
-                    idp
-                    h
-                    (λ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
+    EM₁-set-elim {P = λ x' → EM₁-fmap cst-hom x' == embase}
+                 {{λ x → has-level-apply (EM₁-level₁ H) _ _}}
+                 idp
+                 h
     where
       h : (g : Group.El G) → idp == idp [ (λ x' → EM₁-fmap cst-hom x' == embase) ↓ emloop g ]
       h g = ↓-app=cst-in $

@@ -70,15 +70,12 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
         =⟨ ! (∙-unit-r (ap f (emloop h))) ⟩
       ap f (emloop h) ∙ base' =∎
 
-    comp' : (h₁ h₂ : R.El) → loop' (Group.comp R₊ h₁ h₂) == loop' h₁ ∙ᵈ loop' h₂ [ (λ p → base' == base' [ (λ x → f x == g x) ↓ p ]) ↓ emloop-comp' R₊ h₁ h₂ ]
-    comp' h₁ h₂ = prop-has-all-paths-↓ {{↓-level (has-level-apply (EM₁-level₁ R₊) _ _)}}
-
     abstract
       cp₀₁-distr-l : (g' : EM₁ R₊) → cp₀₁ (R.add g₁ g₂) g' == EM₁-mult (cp₀₁ g₁ g') (cp₀₁ g₂ g')
       cp₀₁-distr-l =
-        EM₁-level₁-elim
+        EM₁-set-elim
           {P = λ x → f x == g x}
-          {{λ x → has-level-apply EM₁-level _ _}}
-        base' loop' comp'
+          {{λ x → has-level-apply (EM₁-level₁ R₊) _ _}}
+          base' loop'
 
   open distr-l public using (cp₀₁-distr-l)

@@ -85,6 +85,29 @@ module _ {G : Group i} where
 
   open EM₁Level₁Elim public using () renaming (f to EM₁-level₁-elim)
 
+  module EM₁SetElim {j} {P : EM₁ G → Type j}
+    {{is-set : (x : EM₁ G) → is-set (P x)}}
+    (embase* : P embase)
+    (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ]) where
+
+    module N = EM₁Level₁Elim {{λ x → raise-level 0 (is-set x)}}
+                             embase* emloop*
+                             (λ g₁ g₂ → set-↓-has-all-paths-↓ {{is-set embase}})
+    open N public
+
+  open EM₁SetElim public using () renaming (f to EM₁-set-elim)
+
+  module EM₁PropElim {j} {P : EM₁ G → Type j}
+    {{is-prop : (x : EM₁ G) → is-prop (P x)}}
+    (embase* : P embase) where
+
+    module P = EM₁SetElim {{λ x → raise-level -1 (is-prop x)}}
+                          embase*
+                          (λ g → prop-has-all-paths-↓ {{is-prop embase}})
+    open P public
+
+  open EM₁PropElim public using () renaming (f to EM₁-prop-elim)
+
   module EM₁Rec {j} {C : Type j}
     {{_ : has-level ⟨ 2 ⟩ C}}
     (embase* : C)

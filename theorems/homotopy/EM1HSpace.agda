@@ -12,12 +12,11 @@ module EM₁HSpace {i} (G : AbGroup i) where
     module G = AbGroup G
 
   mult-loop : (g : G.El) (x : EM₁ G.grp) → x == x
-  mult-loop g = EM₁-level₁-elim
+  mult-loop g = EM₁-set-elim
     {P = λ x → x == x}
-    {{λ x → has-level-apply EM₁-level x x}}
+    {{λ x → has-level-apply (EM₁-level₁ G.grp) x x}}
     (emloop g)
     loop'
-    (λ _ _ → set-↓-has-all-paths-↓)
     where
     abstract
       loop' : (g' : G.El) → emloop' G.grp g == emloop g [ (λ x → x == x) ↓ emloop g' ]
@@ -40,12 +39,10 @@ module EM₁HSpace {i} (G : AbGroup i) where
     pres-comp' : (g₁ g₂ : G.El) (x : EM₁ G.grp) →
       mult-loop (G.comp g₁ g₂) x == mult-loop g₁ x ∙ mult-loop g₂ x
     pres-comp' g₁ g₂ =
-      EM₁-level₁-elim
+      EM₁-prop-elim
         {P = λ x → mult-loop (G.comp g₁ g₂) x == mult-loop g₁ x ∙ mult-loop g₂ x}
-        {{λ x → has-level-apply (has-level-apply EM₁-level _ _) _ _}}
+        {{λ x → has-level-apply (has-level-apply (EM₁-level₁ G.grp) _ _) _ _}}
         (emloop-comp g₁ g₂)
-        (λ _ → prop-has-all-paths-↓)
-        (λ _ _ → set-↓-has-all-paths-↓ {{has-level-apply (has-level-apply EM₁-level _ _) _ _}})
 
     pres-comp : (g₁ g₂ : G.El) →
       f (G.comp g₁ g₂) == Group.comp EM₁-endo-Ω-group (f g₁) (f g₂)
@@ -60,18 +57,17 @@ module EM₁HSpace {i} (G : AbGroup i) where
   H-⊙EM₁ = from-alt-h-space $ record { μ = mult; unit-l = unit-l; unit-r = unit-r; coh = coh }
     where
     unit-l : (x : EM₁ G.grp) → mult embase x == x
-    unit-l = EM₁-level₁-elim
+    unit-l = EM₁-set-elim
       {P = λ x → mult embase x == x}
-      {{λ x → has-level-apply EM₁-level (mult embase x) x}}
+      {{λ x → has-level-apply (EM₁-level₁ G.grp) (mult embase x) x}}
       idp
       (λ g → ↓-app=idf-in $ ∙'-unit-l (emloop g) ∙ (! (ap-idf (emloop g)))
                             ∙ ! (∙-unit-r (ap (mult embase) (emloop g))))
-      (λ _ _ → set-↓-has-all-paths-↓)
 
     unit-r : (x : EM₁ G.grp) → mult x embase == x
-    unit-r = EM₁-level₁-elim
+    unit-r = EM₁-set-elim
       {P = λ x → mult x embase == x}
-      {{λ x → has-level-apply EM₁-level (mult x embase) x}}
+      {{λ x → has-level-apply (EM₁-level₁ G.grp) (mult x embase) x}}
       idp
       (λ g → ↓-app=idf-in $
          idp ∙' emloop g
@@ -87,7 +83,6 @@ module EM₁HSpace {i} (G : AbGroup i) where
          ap (λ z → mult z embase) (emloop g)
            =⟨ ! (∙-unit-r (ap (λ z → mult z embase) (emloop g))) ⟩
          ap (λ z → mult z embase) (emloop g) ∙ idp ∎)
-      (λ _ _ → set-↓-has-all-paths-↓)
 
     coh : unit-l embase == unit-r embase
     coh = idp
