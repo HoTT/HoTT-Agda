@@ -82,38 +82,52 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
         =⟨ transport-Codes-mer-e-! a ⟩
       a ∎
 
+  ∙-add-path-and-inverse : ∀ {k} {B : Type k} {x y z : B}
+    → (p : x == y) (q : z == y)
+    → p == p ∙ ! q ∙ q
+  ∙-add-path-and-inverse p q =
+    ! (∙-unit-r p) ∙ ap (λ s → p ∙ s) (! (!-inv-l q))
+
   abstract
+    homomorphism-args : WedgeExt.args {i} {i} {A} {e} {A} {e}
+    homomorphism-args =
+      record {
+        m = -1; n = -1;
+        P = λ a a' → (Q a a' , ⟨⟩);
+        f = λ a → ap [_] $ ↯ (
+              merid (μ a e)
+                =⟪ ap merid (μ.unit-r a) ⟫
+              merid a
+                =⟪ ap (λ w → w ∙ merid a) (! (!-inv-r (merid e))) ⟫
+              (merid e ∙ ! (merid e)) ∙ merid a
+                =⟪ ∙-assoc (merid e) (! (merid e)) (merid a) ⟫
+              merid e ∙ ! (merid e) ∙ merid a ∎∎);
+        g = λ a' → ap [_] $ ↯ (
+              merid (μ e a')
+                =⟪ ap merid (μ.unit-l a') ⟫
+              merid a'
+                =⟪ ∙-add-path-and-inverse (merid a') (merid e) ⟫
+              merid a' ∙ ! (merid e) ∙ merid e ∎∎);
+        p = ap (λ {(p₁ , p₂) → ap [_] $ ↯ (
+              merid (μ e e) =⟪ p₁ ⟫
+              merid e       =⟪ p₂ ⟫
+              merid e ∙ ! (merid e) ∙ merid e ∎∎)})
+             (pair×= (ap (λ x → ap merid x) (! μ.coh)) (coh (merid e)))
+      }
+
+      where
+        Q : A → A → Type i
+        Q a a' = Path {A = Trunc 1 (north == south)}
+                      [ merid (μ a a' ) ] [ merid a' ∙ ! (merid e) ∙ merid a ]
+        coh : {B : Type i} {b b' : B} (p : b == b')
+          → ap (λ w → w ∙ p) (! (!-inv-r p)) ∙ ∙-assoc p (! p) p
+            == ! (∙-unit-r p) ∙ ap (λ w → p ∙ w) (! (!-inv-l p))
+        coh idp = idp
+
     homomorphism : (a a' : A)
       → Path {A = Trunc 1 (north == south)}
         [ merid (μ a a' ) ] [ merid a' ∙ ! (merid e) ∙ merid a ]
-    homomorphism = WedgeExt.ext args
-      where
-      args : WedgeExt.args {a₀ = e} {b₀ = e}
-      args = record {m = -1; n = -1;
-        P = λ a a' → (_ , ⟨⟩);
-        f = λ a →  ap [_] $
-              merid (μ a e)
-                =⟨ ap merid (μ.unit-r a) ⟩
-              merid a
-                =⟨ ap (λ w → w ∙ merid a) (! (!-inv-r (merid e)))
-                   ∙ ∙-assoc (merid e) (! (merid e)) (merid a)  ⟩
-              merid e ∙ ! (merid e) ∙ merid a ∎;
-        g = λ a' → ap [_] $
-              merid (μ e a')
-                =⟨ ap merid (μ.unit-l a') ⟩
-              merid a'
-                =⟨ ! (∙-unit-r (merid a'))
-                   ∙ ap (λ w → merid a' ∙ w) (! (!-inv-l (merid e))) ⟩
-              merid a' ∙ ! (merid e) ∙ merid e ∎ ;
-        p = ap (λ {(p₁ , p₂) → ap [_] $
-              merid (μ e e) =⟨ p₁ ⟩
-              merid e       =⟨ p₂ ⟩
-              merid e ∙ ! (merid e) ∙ merid e ∎})
-             (pair×= (ap (λ x → ap merid x) (! μ.coh)) (coh (merid e)))}
-        where coh : {B : Type i} {b b' : B} (p : b == b')
-                → ap (λ w → w ∙ p) (! (!-inv-r p)) ∙ ∙-assoc p (! p) p
-                  == ! (∙-unit-r p) ∙ ap (λ w → p ∙ w) (! (!-inv-l p))
-              coh idp = idp
+    homomorphism = WedgeExt.ext homomorphism-args
 
   decode' : {x : Susp A} → Codes x → P x
   decode' {x} = Susp-elim {P = λ x → Codes x → P x}

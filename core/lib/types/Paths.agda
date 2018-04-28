@@ -242,6 +242,18 @@ homotopy-naturality : ∀ {j k} {A : Type j} {B : Type k} (f g : A → B)
 homotopy-naturality f g h {x} {y} p =
   ∙=∙' (ap f p) (h y) ∙ ! (↓-='-out' {f = f} {g = g} {p = p} {u = h x} {v = h y} (apd h p))
 
+homotopy-naturality-to-idf : ∀ {j} {A : Type j} (f : A → A)
+  (h : (x : A) → f x == x) {x y : A} (p : x == y)
+  → ap f p ∙ h y == h x ∙ p
+homotopy-naturality-to-idf {A = A} f h {x} {y} p =
+  homotopy-naturality f (λ a → a) h p ∙ ap (λ w → h x ∙ w) (ap-idf p)
+
+homotopy-naturality-from-idf : ∀ {j} {A : Type j} (g : A → A)
+  (h : (x : A) → x == g x) {x y : A} (p : x == y)
+  → p ∙ h y == h x ∙ ap g p
+homotopy-naturality-from-idf {A = A} g h {x} {y} p =
+  ap (λ w → w ∙ h y) (! (ap-idf p)) ∙ homotopy-naturality (λ a → a) g h p
+
 -- WIP, derive it from more primitive principles
 -- ↓-∘=id-in f g {p = p} {u} {v} q =
 --   ↓-=-in (u ◃ apd (λ x → g (f x)) p =⟨ apd-∘ f g p |in-ctx (λ t → u ◃ t) ⟩
