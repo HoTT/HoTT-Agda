@@ -323,19 +323,13 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
           e₉₋₁₆ : s₉ == s₁₆
           e₉₋₁₆ = ap (λ z → emloop z ∙ emloop g₂) (! (↓-Codes-loop-transp g₁ y))
 
-          -- TODO: move this somewhere else?
-          ap-natural : ∀ {j k} {A : Type j} {B : Type k} {f g : A → B}
-            {a a' : A} (p : a == a') (h : (x : A) → f x == g x)
-            → ap f p ∙ h a' == h a ∙ ap g p
-          ap-natural {f = f} {g = g} {a = a} {a' = a'} p h =
-            ∙=∙' (ap f p) (h a') ∙ ! (↓-='-out' {f = f} {g = g} {p = p} {u = h a} {v = h a'} (apd h p))
-
           cd₁ : e₁₃ == e₁₆ ∙ e₆₇ ∙ e₇₃
-          cd₁ = post-rearrange-in (e₁₃ ◃∎) (e₁₆ ◃∙ e₆₇ ◃∎) e₃₇ $
-                ! (ap-natural (emloop-comp g₁ g₂) (λ p → transp-cst=idf p (emloop y)))
+          cd₁ = post-rearrange-in (e₁₃ ◃∎) (e₁₆ ◃∙ e₆₇ ◃∎) e₃₇ (! cd₁')
             where
             e₃₇ : s₃ == s₇
             e₃₇ = ap (λ z → emloop y ∙ z) (emloop-comp g₁ g₂)
+            cd₁' : e₁₆ ∙ e₆₇ == e₁₃ ∙ e₃₇
+            cd₁' = homotopy-naturality (λ z → transp-emloop z y) (λ z → emloop y ∙ z) (λ p → transp-cst=idf p (emloop y)) (emloop-comp g₁ g₂)
 
           cd₂ : e₇₃ ∙ e₃₄ == e₇₈ ∙ e₈₉ ∙ e₉₋₁₀ ∙ e₁₀₋₄
           cd₂ = transport (λ z → e₇₃ ∙ e₃₄ == e₇₈ ∙ z ∙ e₉₋₁₀ ∙ e₁₀₋₄) (! e₈₉=!e₉₈) $
@@ -367,20 +361,18 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
             e₈₇ = ∙-assoc (emloop y) (emloop g₁) (emloop g₂)
 
           cd₄ : e₁₁₋₈ ∙ e₈₉ == e₁₁₋₁₂ ∙ e₁₂₋₉
-          cd₄ = ! (ap-natural (! (emloop-comp' G y g₁)) (transp-cst=idf (emloop g₂)))
+          cd₄ = ! (homotopy-naturality (transp-PF (emloop g₂)) (λ p → p ∙ emloop g₂) (transp-cst=idf (emloop g₂)) (! (emloop-comp' G y g₁)))
 
           cd₅ : e₉₋₁₀ == e₉₋₁₆ ∙ e₁₆₋₁₇ ∙ e₁₇₋₁₀
-          cd₅ =
-            post-rearrange-in (e₉₋₁₀ ◃∎) (e₉₋₁₆ ◃∙ e₁₆₋₁₇ ◃∎) e₁₀₋₁₇ $
-            ! (ap-natural {A = G.El} {B = embase' G == embase}
-                          {f = λ (z : G.El) → emloop z ∙ emloop g₂}
-                          {g = λ (z : G.El) → emloop (G.comp z g₂)}
-                          {a = G.comp y g₁} {a' = transp-C (emloop g₁) y}
-                          (! (↓-Codes-loop-transp g₁ y))
-                          (λ (z : G.El) → ! (emloop-comp' G z g₂)))
+          cd₅ = post-rearrange-in (e₉₋₁₀ ◃∎) (e₉₋₁₆ ◃∙ e₁₆₋₁₇ ◃∎) e₁₀₋₁₇ (! cd₅')
             where
             e₁₀₋₁₇ : s₁₀ == s₁₇
             e₁₀₋₁₇ = ap (λ z → emloop (G.comp z g₂)) (! (↓-Codes-loop-transp g₁ y))
+            cd₅' : e₉₋₁₆ ∙ e₁₆₋₁₇ == e₉₋₁₀ ∙ e₁₀₋₁₇
+            cd₅' = homotopy-naturality (λ (z : G.El) → emloop z ∙ emloop g₂)
+                                       (λ (z : G.El) → emloop (G.comp z g₂))
+                                       (λ (z : G.El) → ! (emloop-comp' G z g₂))
+                                       (! (↓-Codes-loop-transp g₁ y))
 
           cd₆ : e₁₇₋₁₀ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂ == e₁₇₋₁₄ ∙ e₁₄₋₂
           cd₆ =
@@ -430,10 +422,10 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
               cd₆' = prop-path (has-level-apply G.El-level h₁₇ h₂) _ _
 
           cd₇ : e₁₂₋₉ ∙ e₉₋₁₆ == e₁₂₋₁₅ ∙ e₁₅₋₁₆
-          cd₇ = ! (ap-natural {f = transp-emloop (emloop g₂)}
-                              {g = λ (z : G.El) → emloop z ∙ emloop g₂}
-                              (! (↓-Codes-loop-transp g₁ y))
-                              (transp-emloop=∙-emloop g₂))
+          cd₇ = ! (homotopy-naturality (transp-emloop (emloop g₂))
+                                       (λ (z : G.El) → emloop z ∙ emloop g₂)
+                                       (transp-emloop=∙-emloop g₂)
+                                       (! (↓-Codes-loop-transp g₁ y)))
 
           cd₈ : e₁₃₋₁₁ ∙ e₁₁₋₁₂ ∙ e₁₂₋₁₅ == e₁₃₋₁₅
           cd₈ =

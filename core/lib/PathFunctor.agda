@@ -129,8 +129,7 @@ transp-∙' _ idp _ = idp
 
 {- Naturality of homotopies -}
 
--- One should use [↓-='-out] and [apd] together, or even lib.cubical,
--- for homotopy naturality.
+{- see 'homotopy-naturality' in lib.types.Paths -}
 
 {- for functions with two arguments -}
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
