@@ -28,12 +28,10 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
     → [ p ∙ q ]₁ == [ p ]₁ ∙₁ [ q ]₁
   ∙-∙₁ idp q = idp
 
-  -- comp' : {x y : Susp A} (p : north ==₁ x) (q : x ==₁ y) → μ (encode' p) (encode' q) == encode' (p ∙₁ q)
-  -- comp' = {!!}
-
   module _ (H-space-assoc : ∀ a b c → μ (μ a b) c == μ a (μ b c))
            (H-space-assoc-coh : ∀ a b → μ.unit-r (μ a b) == H-space-assoc a b e ∙ ap (μ a) (μ.unit-r b)) where
 
+    {-
     module InnerDiagram (y : A) where
 
       c₁ : north == south
@@ -237,6 +235,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
         (e₁₋₆ ◃∙ e₆₋₈ ◃∙ e₈₋₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₅ ◃∎)
           ↯=⟨ 2 & 2 & (e₈₋₁₁ ◃∙ e₁₁₋₁₀ ◃∎) & cd₉ ⟩
         e₁₋₆ ∙ e₆₋₈ ∙ e₈₋₁₁ ∙ e₁₁₋₁₀ ∙ e₁₀₋₅ ∎
+    -}
 
     {-
     module V1 (x y z : A) where
@@ -297,10 +296,8 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       =⟨ ∙-∙₁ (merid (μ x y)) back ⟩
     [ merid (μ x y) ]₁ ∙₁ [ back ]₁
       =⟨ ap (λ z → z ∙₁ [ back ]₁) (homomorphism x y) ⟩
-    [ merid y ∙ back ∙ merid x ]₁ ∙₁ [ back ]₁
-      =⟨ ! (∙-∙₁ (merid y ∙ back ∙ merid x) back) ⟩
-    [ (merid y ∙ back ∙ merid x) ∙ back ]₁
-      =⟨ ! (ap (λ z → [ z ∙ back ]₁) (∙-assoc (merid y) back (merid x))) ⟩
+    [ η y ∙ merid x ]₁ ∙₁ [ back ]₁
+      =⟨ ! (∙-∙₁ (η y ∙ merid x) back) ⟩
     [ (η y ∙ merid x) ∙ back ]₁
       =⟨ ap [_]₁ (∙-assoc (η y) (merid x) back) ⟩
     [ η y ∙ η x ]₁

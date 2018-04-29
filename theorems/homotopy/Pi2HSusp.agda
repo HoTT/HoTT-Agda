@@ -102,34 +102,34 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
                 =⟪ ap merid (μ.unit-r a) ⟫
               merid a
                 =⟪ ap (λ w → w ∙ merid a) (! (!-inv-r (merid e))) ⟫
-              (merid e ∙ back) ∙ merid a
-                =⟪ ∙-assoc (merid e) back (merid a) ⟫
-              merid e ∙ back ∙ merid a ∎∎);
+              (merid e ∙ back) ∙ merid a ∎∎);
         g = λ a' → ap [_] $ ↯ (
               merid (μ e a')
                 =⟪ ap merid (μ.unit-l a') ⟫
               merid a'
                 =⟪ ∙-add-path-and-inverse (merid a') (merid e) ⟫
-              merid a' ∙ back ∙ merid e ∎∎);
+              merid a' ∙ back ∙ merid e
+                =⟪ ! (∙-assoc (merid a') back (merid e)) ⟫
+              (merid a' ∙ back) ∙ merid e ∎∎);
         p = ap (λ {(p₁ , p₂) → ap [_] $ ↯ (
-              merid (μ e e) =⟪ p₁ ⟫
-              merid e       =⟪ p₂ ⟫
-              merid e ∙ back ∙ merid e ∎∎)})
-             (pair×= (ap (λ x → ap merid x) (! μ.coh)) (coh (merid e)))
+                  merid (μ e e) =⟪ ap merid p₁ ⟫
+                  merid e       =⟪ p₂ ⟫
+                  (merid e ∙ back) ∙ merid e ∎∎)})
+               (pair×= (! μ.coh) (coh (merid e)))
       }
 
       where
         Q : A → A → Type i
         Q a a' = Path {A = Trunc 1 (north == south)}
-                      [ merid (μ a a' ) ] [ merid a' ∙ back ∙ merid a ]
+                      [ merid (μ a a' ) ] [ (merid a' ∙ back) ∙ merid a ]
         coh : {B : Type i} {b b' : B} (p : b == b')
-          → ap (λ w → w ∙ p) (! (!-inv-r p)) ∙ ∙-assoc p (! p) p
-            == ! (∙-unit-r p) ∙ ap (λ w → p ∙ w) (! (!-inv-l p))
+          → ap (λ w → w ∙ p) (! (!-inv-r p))
+            == ∙-add-path-and-inverse p p ∙ ! (∙-assoc p (! p) p)
         coh idp = idp
 
     homomorphism : (a a' : A)
       → Path {A = Trunc 1 (north == south)}
-        [ merid (μ a a' ) ] [ merid a' ∙ back ∙ merid a ]
+        [ merid (μ a a' ) ] [ (merid a' ∙ back) ∙ merid a ]
     homomorphism = WedgeExt.ext homomorphism-args
 
   decode' : {x : Susp A} → Codes x → P x
@@ -148,8 +148,6 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
         [ transport (north ==_) (merid a) (merid a' ∙ back) ]
           =⟨ ap [_] (transp-cst=idf {A = Susp A} (merid a) _) ⟩
         [ (merid a' ∙ back) ∙ merid a ]
-          =⟨ ap [_] (∙-assoc (merid a') back (merid a)) ⟩
-        [ merid a' ∙ back ∙ merid a ]
           =⟨ ! (homomorphism a a') ⟩
         [ merid (μ a a') ]
           =⟨ ap ([_] ∘ merid) (! (transport-Codes-mer a a')) ⟩
