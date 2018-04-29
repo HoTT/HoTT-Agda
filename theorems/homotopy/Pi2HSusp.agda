@@ -23,6 +23,9 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
     A = de⊙ X
     e = pt X
 
+  back : south == north
+  back = ! (merid e)
+
   P : Susp A → Type i
   P x = Trunc 1 (north == x)
 
@@ -59,9 +62,9 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       μ a a' ∎
 
     transport-Codes-mer-e-! : (a : A)
-      → transport Codes (! (merid e)) a == a
+      → transport Codes back a == a
     transport-Codes-mer-e-! a =
-      coe (ap Codes (! (merid e))) a
+      coe (ap Codes back) a
         =⟨ ap-! Codes (merid e) |in-ctx (λ w → coe w a) ⟩
       coe (! (ap Codes (merid e))) a
         =⟨ Codes.merid-β e |in-ctx (λ w → coe (! w) a) ⟩
@@ -73,12 +76,12 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   abstract
     encode'-decodeN' : (a : A) → encode' (decodeN' a) == a
     encode'-decodeN' a =
-      transport Codes (merid a ∙ ! (merid e)) e
-        =⟨ transp-∙ {B = Codes} (merid a) (! (merid e)) e ⟩
-      transport Codes (! (merid e)) (transport Codes (merid a) e)
+      transport Codes (merid a ∙ back) e
+        =⟨ transp-∙ {B = Codes} (merid a) back e ⟩
+      transport Codes back (transport Codes (merid a) e)
         =⟨ transport-Codes-mer a e ∙ μ.unit-r a
-          |in-ctx (λ w → transport Codes (! (merid e)) w) ⟩
-      transport Codes (! (merid e)) a
+          |in-ctx (λ w → transport Codes back w) ⟩
+      transport Codes back a
         =⟨ transport-Codes-mer-e-! a ⟩
       a ∎
 
@@ -99,26 +102,26 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
                 =⟪ ap merid (μ.unit-r a) ⟫
               merid a
                 =⟪ ap (λ w → w ∙ merid a) (! (!-inv-r (merid e))) ⟫
-              (merid e ∙ ! (merid e)) ∙ merid a
-                =⟪ ∙-assoc (merid e) (! (merid e)) (merid a) ⟫
-              merid e ∙ ! (merid e) ∙ merid a ∎∎);
+              (merid e ∙ back) ∙ merid a
+                =⟪ ∙-assoc (merid e) back (merid a) ⟫
+              merid e ∙ back ∙ merid a ∎∎);
         g = λ a' → ap [_] $ ↯ (
               merid (μ e a')
                 =⟪ ap merid (μ.unit-l a') ⟫
               merid a'
                 =⟪ ∙-add-path-and-inverse (merid a') (merid e) ⟫
-              merid a' ∙ ! (merid e) ∙ merid e ∎∎);
+              merid a' ∙ back ∙ merid e ∎∎);
         p = ap (λ {(p₁ , p₂) → ap [_] $ ↯ (
               merid (μ e e) =⟪ p₁ ⟫
               merid e       =⟪ p₂ ⟫
-              merid e ∙ ! (merid e) ∙ merid e ∎∎)})
+              merid e ∙ back ∙ merid e ∎∎)})
              (pair×= (ap (λ x → ap merid x) (! μ.coh)) (coh (merid e)))
       }
 
       where
         Q : A → A → Type i
         Q a a' = Path {A = Trunc 1 (north == south)}
-                      [ merid (μ a a' ) ] [ merid a' ∙ ! (merid e) ∙ merid a ]
+                      [ merid (μ a a' ) ] [ merid a' ∙ back ∙ merid a ]
         coh : {B : Type i} {b b' : B} (p : b == b')
           → ap (λ w → w ∙ p) (! (!-inv-r p)) ∙ ∙-assoc p (! p) p
             == ! (∙-unit-r p) ∙ ap (λ w → p ∙ w) (! (!-inv-l p))
@@ -126,7 +129,7 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
 
     homomorphism : (a a' : A)
       → Path {A = Trunc 1 (north == south)}
-        [ merid (μ a a' ) ] [ merid a' ∙ ! (merid e) ∙ merid a ]
+        [ merid (μ a a' ) ] [ merid a' ∙ back ∙ merid a ]
     homomorphism = WedgeExt.ext homomorphism-args
 
   decode' : {x : Susp A} → Codes x → P x
@@ -140,13 +143,13 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       STS : (a a' : A) → transport P (merid a) (decodeN' a')
                          == [ merid (transport Codes (merid a) a') ]
       STS a a' =
-        transport P (merid a) [ merid a' ∙ ! (merid e) ]
+        transport P (merid a) [ merid a' ∙ back ]
           =⟨ transport-Trunc (north ==_) (merid a) _ ⟩
-        [ transport (north ==_) (merid a) (merid a' ∙ ! (merid e)) ]
+        [ transport (north ==_) (merid a) (merid a' ∙ back) ]
           =⟨ ap [_] (transp-cst=idf {A = Susp A} (merid a) _) ⟩
-        [ (merid a' ∙ ! (merid e)) ∙ merid a ]
-          =⟨ ap [_] (∙-assoc (merid a') (! (merid e)) (merid a)) ⟩
-        [ merid a' ∙ ! (merid e) ∙ merid a ]
+        [ (merid a' ∙ back) ∙ merid a ]
+          =⟨ ap [_] (∙-assoc (merid a') back (merid a)) ⟩
+        [ merid a' ∙ back ∙ merid a ]
           =⟨ ! (homomorphism a a') ⟩
         [ merid (μ a a') ]
           =⟨ ap ([_] ∘ merid) (! (transport-Codes-mer a a')) ⟩

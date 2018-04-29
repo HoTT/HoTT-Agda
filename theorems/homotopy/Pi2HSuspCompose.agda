@@ -28,9 +28,6 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
     → [ p ∙ q ]₁ == [ p ]₁ ∙₁ [ q ]₁
   ∙-∙₁ idp q = idp
 
-  back : south == north
-  back = ! (merid e)
-
   -- comp' : {x y : Susp A} (p : north ==₁ x) (q : x ==₁ y) → μ (encode' p) (encode' q) == encode' (p ∙₁ q)
   -- comp' = {!!}
 
