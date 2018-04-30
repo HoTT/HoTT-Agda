@@ -61,7 +61,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       c₁₆ = (((merid e ∙ back) ∙ merid y) ∙ back) ∙ merid e
 
       e₁₋₂ : c₁ == c₂
-      e₁₋₂ = ap merid (μ.unit-l (μ y e)) ∙ add-path-and-inverse-r (merid (μ y e)) (merid e)
+      e₁₋₂ = homomorphism-l (μ y e)
 
       e₁₋₁₃ : c₁ == c₁₃
       e₁₋₁₃ = ap merid (! (H-space-assoc e y e))
@@ -74,12 +74,10 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
               ap merid (μ.unit-r y)
 
       e₂₋₁₆ : c₂ == c₁₆
-      e₂₋₁₆ = ap (λ v → (v ∙ back) ∙ merid e) $
-              ap merid (μ.unit-r y) ∙ add-path-and-inverse-l (merid e) (merid y)
+      e₂₋₁₆ = ap (λ v → (v ∙ back) ∙ merid e) (homomorphism-r y)
 
       e₁₂₋₉ : c₁₂ == c₉
-      e₁₂₋₉ = ap (λ v → (merid e ∙ back) ∙ v) $
-              ap merid (μ.unit-l y) ∙ add-path-and-inverse-r (merid y) (merid e)
+      e₁₂₋₉ = ap (λ v → (merid e ∙ back) ∙ v) (homomorphism-l y)
 
       e₉₋₈ : c₉ == c₈
       e₉₋₈ = ! (∙-assoc (merid e ∙ back) (merid y ∙ back) (merid e))
@@ -94,7 +92,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       e₁₃₋₁₂ = e₁₃₋₁₄ ∙ e₁₄₋₁₂
 
       e₁₄₋₁₅ : c₁₄ == c₁₅
-      e₁₄₋₁₅ = ap merid (μ.unit-l y) ∙ add-path-and-inverse-r (merid y) (merid e)
+      e₁₄₋₁₅ = homomorphism-l y
 
       e₁₅₋₁₆ : c₁₅ == c₁₆
       e₁₅₋₁₆ = ap (λ v → (v ∙ back) ∙ merid e) $
@@ -178,8 +176,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
           step₂ = ! $
             homotopy-naturality (λ x → merid (μ e x))
                                 (λ x → (merid x ∙ back) ∙ merid e)
-                                (λ x → ap merid (μ.unit-l x) ∙
-                                       add-path-and-inverse-r (merid x) (merid e))
+                                homomorphism-l
                                 (μ.unit-r y)
           step₃ : e₁₋₁₄' == e₁₋₁₄
           step₃ = ap-∘ merid (μ e) (μ.unit-r y)
@@ -187,8 +184,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       cd₅ : e₁₄₋₁₅ ∙ e₁₅₋₉ == e₁₄₋₁₂ ∙ e₁₂₋₉
       cd₅ = homotopy-naturality-from-idf (λ v → (merid e ∙ back) ∙ v)
                                          (add-path-and-inverse-l (merid e))
-                                         (ap merid (μ.unit-l y) ∙
-                                          add-path-and-inverse-r (merid y) (merid e))
+                                         (homomorphism-l y)
 
       cd₆ : e₁₋₁₄ == e₁₋₁₃ ∙ e₁₃₋₁₄
       cd₆ =

@@ -96,28 +96,21 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   add-path-and-inverse-r p q =
     ! (∙-unit-r p) ∙ ap (λ s → p ∙ s) (! (!-inv-l q)) ∙ ! (∙-assoc p (! q) q)
 
+  homomorphism-l : (a' : A) → merid (μ e a') == (merid a' ∙ back) ∙ merid e
+  homomorphism-l a' = ap merid (μ.unit-l a') ∙ add-path-and-inverse-r (merid a') (merid e)
+
+  homomorphism-r : (a : A) → merid (μ a e) == (merid e ∙ back) ∙ merid a
+  homomorphism-r a = ap merid (μ.unit-r a) ∙ add-path-and-inverse-l (merid e) (merid a)
+
   abstract
     homomorphism-args : WedgeExt.args {i} {i} {A} {e} {A} {e}
     homomorphism-args =
       record {
         m = -1; n = -1;
         P = λ a a' → (Q a a' , ⟨⟩);
-        f = λ a → ap [_] $ ↯ (
-              merid (μ a e)
-                =⟪ ap merid (μ.unit-r a) ⟫
-              merid a
-                =⟪ add-path-and-inverse-l (merid e) (merid a) ⟫
-              (merid e ∙ back) ∙ merid a ∎∎);
-        g = λ a' → ap [_] $ ↯ (
-              merid (μ e a')
-                =⟪ ap merid (μ.unit-l a') ⟫
-              merid a'
-                =⟪ add-path-and-inverse-r (merid a') (merid e) ⟫
-              (merid a' ∙ back) ∙ merid e ∎∎);
-        p = ap (λ {(p₁ , p₂) → ap [_] $ ↯ (
-                  merid (μ e e) =⟪ ap merid p₁ ⟫
-                  merid e       =⟪ p₂ ⟫
-                  (merid e ∙ back) ∙ merid e ∎∎)})
+        f = ap [_] ∘ homomorphism-r;
+        g = ap [_] ∘ homomorphism-l;
+        p = ap (λ {(p₁ , p₂) → ap [_] (ap merid p₁ ∙ p₂)})
                (pair×= (! μ.coh) (coh (merid e)))
       }
 
