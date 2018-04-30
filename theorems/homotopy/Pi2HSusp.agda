@@ -102,30 +102,40 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   homomorphism-r : (a : A) → merid (μ a e) == (merid e ∙ back) ∙ merid a
   homomorphism-r a = ap merid (μ.unit-r a) ∙ add-path-and-inverse-l (merid e) (merid a)
 
+  homomorphism-l₁ : (a' : A) → [ merid (μ e a') ]₁ == [ (merid a' ∙ back) ∙ merid e ]₁
+  homomorphism-l₁ = ap [_]₁ ∘ homomorphism-l
+
+  homomorphism-r₁ : (a : A) → [ merid (μ a e) ]₁ == [ (merid e ∙ back) ∙ merid a ]₁
+  homomorphism-r₁ = ap [_]₁ ∘ homomorphism-r
+
   abstract
     homomorphism-args : WedgeExt.args {i} {i} {A} {e} {A} {e}
     homomorphism-args =
       record {
         m = -1; n = -1;
         P = λ a a' → (Q a a' , ⟨⟩);
-        f = ap [_] ∘ homomorphism-r;
-        g = ap [_] ∘ homomorphism-l;
+        f = homomorphism-r₁;
+        g = homomorphism-l₁;
         p = ap (λ {(p₁ , p₂) → ap [_] (ap merid p₁ ∙ p₂)})
                (pair×= (! μ.coh) (coh (merid e)))
       }
 
       where
         Q : A → A → Type i
-        Q a a' = Path {A = Trunc 1 (north == south)}
-                      [ merid (μ a a' ) ] [ (merid a' ∙ back) ∙ merid a ]
+        Q a a' = [ merid (μ a a' ) ]₁ == [ (merid a' ∙ back) ∙ merid a ]₁
         coh : {B : Type i} {b b' : B} (p : b == b')
           → add-path-and-inverse-l p p == add-path-and-inverse-r p p
         coh idp = idp
 
     homomorphism : (a a' : A)
-      → Path {A = Trunc 1 (north == south)}
-        [ merid (μ a a' ) ] [ (merid a' ∙ back) ∙ merid a ]
+      → [ merid (μ a a' ) ]₁ == [ (merid a' ∙ back) ∙ merid a ]₁
     homomorphism = WedgeExt.ext homomorphism-args
+
+    homomorphism-β-l : (a' : A) → homomorphism e a' == homomorphism-l₁ a'
+    homomorphism-β-l a' = WedgeExt.β-r {r = homomorphism-args} a'
+
+    homomorphism-β-r : (a : A) → homomorphism a e == homomorphism-r₁ a
+    homomorphism-β-r a = WedgeExt.β-l {r = homomorphism-args} a
 
   decode' : {x : Susp A} → Codes x → P x
   decode' {x} = Susp-elim {P = λ x → Codes x → P x}

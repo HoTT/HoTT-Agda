@@ -70,6 +70,13 @@ module TruncRecType {i j} {n : ℕ₋₂} {A : Type i} (d : A → n -Type j) whe
 ⊙Trunc : ∀ {i} → ℕ₋₂ → Ptd i → Ptd i
 ⊙Trunc n ⊙[ A , a ] = ⊙[ Trunc n A , [ a ] ]
 
+module _ {i} {A : Type i} where
+
+  [_]₀ : A → Trunc 0 A
+  [_]₀ a = [_] {n = 0} a
+
+  [_]₁ : A → Trunc 1 A
+  [_]₁ a = [_] {n = 1} a
 
 module _ {i} {n : ℕ₋₂} {A : Type i} where
 
