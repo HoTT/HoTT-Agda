@@ -77,3 +77,13 @@ module ConnectedHSpace {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
 
   r-equiv : de⊙ X → de⊙ X ≃ de⊙ X
   r-equiv x = _ , r-is-equiv x
+
+module _ {i} {X : Ptd i} (hX : HSpaceStructure X) where
+
+  module hX = HSpaceStructure hX
+
+  associator : Type i
+  associator = ∀ a b c → hX.μ (hX.μ a b) c == hX.μ a (hX.μ b c)
+
+  coh-unit-r : associator → Type i
+  coh-unit-r assoc = ∀ a b → hX.unit-r (hX.μ a b) == assoc a b (pt X) ∙ ap (hX.μ a) (hX.unit-r b)
