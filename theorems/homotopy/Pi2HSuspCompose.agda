@@ -31,211 +31,202 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   module _ (H-space-assoc : ∀ a b c → μ (μ a b) c == μ a (μ b c))
            (H-space-assoc-coh : ∀ a b → μ.unit-r (μ a b) == H-space-assoc a b e ∙ ap (μ a) (μ.unit-r b)) where
 
-    {-
     module InnerDiagram (y : A) where
 
       c₁ : north == south
-      c₁ = merid (μ (μ e y) e)
+      c₁ = merid (μ e (μ y e))
 
       c₂ : north == south
-      c₂ = merid e ∙ back ∙ merid (μ e y)
-
-      c₃ : north == south
-      c₃ = (merid e ∙ back) ∙ merid (μ e y)
-
-      c₄ : north == south
-      c₄ = (merid e ∙ back) ∙ merid y
-
-      c₅ : north == south
-      c₅ = (merid e ∙ back) ∙ merid y ∙ back ∙ merid e
-
-      c₆ : north == south
-      c₆ = merid (μ e (μ y e))
-
-      c₇ : north == south
-      c₇ = merid (μ y e)
+      c₂ = (merid (μ y e) ∙ back) ∙ merid e
 
       c₈ : north == south
-      c₈ = merid (μ y e) ∙ back ∙ merid e
+      c₈ = ((merid e ∙ back) ∙ merid y ∙ back) ∙ merid e
 
       c₉ : north == south
-      c₉ = merid y ∙ back ∙ merid e
-
-      c₁₀ : north == south
-      c₁₀ = ((merid e ∙ back) ∙ merid y) ∙ back ∙ merid e
-
-      c₁₁ : north == south
-      c₁₁ = (merid e ∙ back ∙ merid y) ∙ back ∙ merid e
+      c₉ = (merid e ∙ back) ∙ (merid y ∙ back) ∙ merid e
 
       c₁₂ : north == south
-      c₁₂ = merid (μ e y)
+      c₁₂ = (merid e ∙ back) ∙ merid (μ e y)
 
       c₁₃ : north == south
-      c₁₃ = merid y
+      c₁₃ = merid (μ (μ e y) e)
 
-      e₁₋₁₂ : c₁ == c₁₂
-      e₁₋₁₂ = ap merid (μ.unit-r (μ e y))
+      c₁₄ : north == south
+      c₁₄ = merid (μ e y)
 
-      e₁₂₋₃ : c₁₂ == c₃
-      e₁₂₋₃ = ap (λ s → s ∙ merid (μ e y)) (! (!-inv-r (merid e)))
+      c₁₅ : north == south
+      c₁₅ = (merid y ∙ back) ∙ merid e
 
-      -- TODO: is this needed in this direction?
-      e₃₋₁₂ : c₃ == c₁₂
-      e₃₋₁₂ = ! e₁₂₋₃
-
-      e₃₋₂ : c₃ == c₂
-      e₃₋₂ = ∙-assoc (merid e) back (merid (μ e y))
-
-      e₂₋₃ : c₂ == c₃
-      e₂₋₃ = ! e₃₋₂
+      c₁₆ : north == south
+      c₁₆ = (((merid e ∙ back) ∙ merid y) ∙ back) ∙ merid e
 
       e₁₋₂ : c₁ == c₂
-      e₁₋₂ = e₁₋₁₂ ∙ e₁₂₋₃ ∙ e₃₋₂
+      e₁₋₂ = ap merid (μ.unit-l (μ y e)) ∙ add-path-and-inverse-r (merid (μ y e)) (merid e)
 
-      e₃₋₄ : c₃ == c₄
-      e₃₋₄ = ap (λ v → (merid e ∙ back) ∙ v) $
-             ap merid (μ.unit-l y)
+      e₁₋₁₃ : c₁ == c₁₃
+      e₁₋₁₃ = ap merid (! (H-space-assoc e y e))
 
-      e₄₋₅ : c₄ == c₅
-      e₄₋₅ = ap (λ v → (merid e ∙ back) ∙ v)
-                (∙-add-path-and-inverse (merid y) (merid e))
+      e₁₋₁₄ : c₁ == c₁₄
+      e₁₋₁₄ = ap merid (ap (μ e) (μ.unit-r y))
 
-      e₄₋₁₀ : c₄ == c₁₀
-      e₄₋₁₀ = ∙-add-path-and-inverse ((merid e ∙ back) ∙ merid y) (merid e)
+      e₂₋₁₅ : c₂ == c₁₅
+      e₂₋₁₅ = ap (λ v → (v ∙ back) ∙ merid e) $
+              ap merid (μ.unit-r y)
 
-      e₃₋₅ : c₃ == c₅
-      e₃₋₅ = e₃₋₄ ∙ e₄₋₅
+      e₂₋₁₆ : c₂ == c₁₆
+      e₂₋₁₆ = ap (λ v → (v ∙ back) ∙ merid e) $
+              ap merid (μ.unit-r y) ∙ add-path-and-inverse-l (merid e) (merid y)
 
-      e₁₋₆ : c₁ == c₆
-      e₁₋₆ = ap merid (H-space-assoc e y e)
+      e₁₂₋₉ : c₁₂ == c₉
+      e₁₂₋₉ = ap (λ v → (merid e ∙ back) ∙ v) $
+              ap merid (μ.unit-l y) ∙ add-path-and-inverse-r (merid y) (merid e)
 
-      e₆₋₇ : c₆ == c₇
-      e₆₋₇ = ap merid (μ.unit-l (μ y e))
+      e₉₋₈ : c₉ == c₈
+      e₉₋₈ = ! (∙-assoc (merid e ∙ back) (merid y ∙ back) (merid e))
 
-      e₆₋₁₂ : c₆ == c₁₂
-      e₆₋₁₂ = ap (λ s → merid (μ e s)) (μ.unit-r y)
+      e₁₃₋₁₄ : c₁₃ == c₁₄
+      e₁₃₋₁₄ = ap merid (μ.unit-r (μ e y))
 
-      e₇₋₈ : c₇ == c₈
-      e₇₋₈ = ∙-add-path-and-inverse (merid (μ y e)) (merid e)
+      e₁₄₋₁₂ : c₁₄ == c₁₂
+      e₁₄₋₁₂ = add-path-and-inverse-l (merid e) (merid (μ e y))
 
-      e₇₋₁₃ : c₇ == c₁₃
-      e₇₋₁₃ = ap merid (μ.unit-r y)
+      e₁₃₋₁₂ : c₁₃ == c₁₂
+      e₁₃₋₁₂ = e₁₃₋₁₄ ∙ e₁₄₋₁₂
 
-      e₆₋₈ : c₆ == c₈
-      e₆₋₈ = e₆₋₇ ∙ e₇₋₈
+      e₁₄₋₁₅ : c₁₄ == c₁₅
+      e₁₄₋₁₅ = ap merid (μ.unit-l y) ∙ add-path-and-inverse-r (merid y) (merid e)
 
-      e₈₋₉' : c₈ == c₉
-      e₈₋₉' = ap (λ v → merid v ∙ back ∙ merid e) (μ.unit-r y)
+      e₁₅₋₁₆ : c₁₅ == c₁₆
+      e₁₅₋₁₆ = ap (λ v → (v ∙ back) ∙ merid e) $
+               add-path-and-inverse-l (merid e) (merid y)
 
-      e₈₋₉ : c₈ == c₉
-      e₈₋₉ = ap (λ v → v ∙ back ∙ merid e) $
-             ap merid (μ.unit-r y)
+      e₁₅₋₈ : c₁₅ == c₈
+      e₁₅₋₈ = ap (λ v → v ∙ merid e) $
+              add-path-and-inverse-l (merid e) (merid y ∙ back)
 
-      e₉₋₁₀ : c₉ == c₁₀
-      e₉₋₁₀ = ap (λ v → v ∙ back ∙ merid e) $
-              ap (λ w → w ∙ merid y) (! (!-inv-r (merid e)))
+      e₁₅₋₉ : c₁₅ == c₉
+      e₁₅₋₉ = add-path-and-inverse-l (merid e) ((merid y ∙ back) ∙ merid e)
 
-      e₁₀₋₁₁ : c₁₀ == c₁₁
-      e₁₀₋₁₁ = ap (λ v → v ∙ back ∙ merid e) $
-               ∙-assoc (merid e) back (merid y)
+      e₁₆₋₈ : c₁₆ == c₈
+      e₁₆₋₈ = ap (λ v → v ∙ merid e) (∙-assoc (merid e ∙ back) (merid y) back)
 
-      e₁₁₋₁₀ : c₁₁ == c₁₀
-      e₁₁₋₁₀ = ! e₁₀₋₁₁
+      cd₁ : e₂₋₁₆ == e₂₋₁₅ ∙ e₁₅₋₁₆
+      cd₁ = ap-∙ (λ v → (v ∙ back) ∙ merid e)
+                 (ap merid (μ.unit-r y))
+                 (add-path-and-inverse-l (merid e) (merid y))
 
-      e₈₋₁₁ : c₈ == c₁₁
-      e₈₋₁₁ = e₈₋₉ ∙ e₉₋₁₀ ∙ e₁₀₋₁₁
+      add-path-and-inverse-l-triangle : ∀ {k} {B : Type k} {w x y z : B}
+        (p : x == w) (q : x == y) (q' : y == z)
+        → ap (λ s → s ∙ q') (add-path-and-inverse-l p q) ∙ ∙-assoc (p ∙ ! p) q q'
+          == add-path-and-inverse-l p (q ∙ q')
+      add-path-and-inverse-l-triangle idp idp idp = idp
 
-      e₁₀₋₅ : c₁₀ == c₅
-      e₁₀₋₅ = ∙-assoc (merid e ∙ back) (merid y) (back ∙ merid e)
-
-      e₁₂₋₁₃ : c₁₂ == c₁₃
-      e₁₂₋₁₃ = ap merid (μ.unit-l y)
-
-      e₁₃₋₄ : c₁₃ == c₄
-      e₁₃₋₄ = ap (λ v → v ∙ merid y) (! (!-inv-r (merid e)))
-
-      e₁₃₋₉ : c₁₃ == c₉
-      e₁₃₋₉ = ∙-add-path-and-inverse (merid y) (merid e)
-
-      cd₁ : e₃₋₂ ∙ e₂₋₃ == idp
-      cd₁ = !-inv-r e₃₋₂
-
-      cd₂ : e₁₂₋₃ ∙ e₃₋₄ == e₁₂₋₁₃ ∙ e₁₃₋₄
-      cd₂ = ! (homotopy-naturality-from-idf (λ v → (merid e ∙ back) ∙ v)
-                                            (λ v → ap (λ s → s ∙ v) (! (!-inv-r (merid e))))
-                                            (ap merid (μ.unit-l y)))
-
-      cd₃ : e₄₋₅ == e₄₋₁₀ ∙ e₁₀₋₅
-      cd₃ = ∙-add-path-and-inverse-triangle (merid e ∙ back) (merid y) (merid e)
+      cd₂ : e₁₅₋₁₆ ∙ e₁₆₋₈ == e₁₅₋₈
+      cd₂ =
+        e₁₅₋₁₆ ∙ e₁₆₋₈
+          =⟨ ap (λ s → s ∙ e₁₆₋₈) step₁ ⟩
+        e₁₅₋₁₆' ∙ e₁₆₋₈
+          =⟨ step₂ ⟩
+        e₁₅₋₈'
+          =⟨ step₃ ⟩
+        e₁₅₋₈ ∎
         where
-        ∙-add-path-and-inverse-triangle : ∀ {k} {B : Type k} {w x y z : B}
-          → (p : w == x) (p' : x == y) (q : z == y)
-          → ap (λ s → p ∙ s) (∙-add-path-and-inverse p' q)
-            == ∙-add-path-and-inverse (p ∙ p') q ∙ ∙-assoc p p' (! q ∙ q)
-        ∙-add-path-and-inverse-triangle idp idp idp = idp
+          e₁₅₋₁₆' : c₁₅ == c₁₆
+          e₁₅₋₁₆' = ap (λ w → w ∙ merid e) $
+                    ap (λ v → v ∙ back) $
+                    add-path-and-inverse-l (merid e) (merid y)
+          e₁₅₋₈' : c₁₅ == c₈
+          e₁₅₋₈' = ap (λ w → w ∙ merid e) $
+                   (ap (λ v → v ∙ back) $ add-path-and-inverse-l (merid e) (merid y)) ∙
+                   (∙-assoc (merid e ∙ back) (merid y) back)
+          step₁ : e₁₅₋₁₆ == e₁₅₋₁₆'
+          step₁ = ap-∘ (λ w → w ∙ merid e)
+                       (λ v → v ∙ back)
+                       (add-path-and-inverse-l (merid e) (merid y))
+          step₂ : e₁₅₋₁₆' ∙ e₁₆₋₈ == e₁₅₋₈'
+          step₂ = ∙-ap (λ w → w ∙ merid e)
+                       (ap (λ v → v ∙ back) $ add-path-and-inverse-l (merid e) (merid y))
+                       (∙-assoc (merid e ∙ back) (merid y) back)
+          step₃ : e₁₅₋₈' == e₁₅₋₈
+          step₃ = ap (ap (λ w → w ∙ merid e)) $
+                  add-path-and-inverse-l-triangle (merid e) (merid y) back
 
-      cd₄ : e₁₃₋₄ ∙ e₄₋₁₀ == e₁₃₋₉ ∙ e₉₋₁₀
-      cd₄ = homotopy-naturality-from-idf (λ v → v ∙ back ∙ merid e)
-                                         (λ u → ∙-add-path-and-inverse u (merid e))
-                                         (ap (λ s → s ∙ merid y) (! (!-inv-r (merid e))))
+      cd₃ : e₁₅₋₈ == e₁₅₋₉ ∙ e₉₋₈
+      cd₃ = post-rearrange-in (e₁₅₋₈ ◃∎) (e₁₅₋₉ ◃∎) e₈₋₉ $
+            add-path-and-inverse-l-triangle (merid e) (merid y ∙ back) (merid e)
+        where
+        e₈₋₉ : c₈ == c₉
+        e₈₋₉ = ∙-assoc (merid e ∙ back) (merid y ∙ back) (merid e)
 
-      cd₅ : e₁₋₁₂ == e₁₋₆ ∙ e₆₋₁₂
-      cd₅ =
-        e₁₋₁₂
-          =⟨ ap (ap merid) (H-space-assoc-coh e y) ⟩
-        ap merid (H-space-assoc e y e ∙ ap (μ e) (μ.unit-r y))
-          =⟨ ap-∙ merid (H-space-assoc e y e) (ap (μ e) (μ.unit-r y)) ⟩
-        e₁₋₆ ∙ ap merid (ap (μ e) (μ.unit-r y))
-          =⟨ ap (λ v → e₁₋₆ ∙ v) (∘-ap merid (μ e) (μ.unit-r y)) ⟩
-        e₁₋₆ ∙ e₆₋₁₂ ∎
+      cd₄ : e₁₋₂ ∙ e₂₋₁₅ == e₁₋₁₄ ∙ e₁₄₋₁₅
+      cd₄ =
+        e₁₋₂ ∙ e₂₋₁₅
+          =⟨ ap (λ v → e₁₋₂ ∙ v) step₁ ⟩
+        e₁₋₂ ∙ e₂₋₁₅'
+          =⟨ step₂ ⟩
+        e₁₋₁₄' ∙ e₁₄₋₁₅
+          =⟨ ap (λ v → v ∙ e₁₄₋₁₅) step₃ ⟩
+        e₁₋₁₄ ∙ e₁₄₋₁₅ ∎
+        where
+          e₂₋₁₅' : c₂ == c₁₅
+          e₂₋₁₅' = ap (λ x → (merid x ∙ back) ∙ merid e) (μ.unit-r y)
+          e₁₋₁₄' : c₁ == c₁₄
+          e₁₋₁₄' = ap (λ x → merid (μ e x)) (μ.unit-r y)
+          step₁ : e₂₋₁₅ == e₂₋₁₅'
+          step₁ = ∘-ap (λ v → (v ∙ back) ∙ merid e) merid (μ.unit-r y)
+          step₂ : e₁₋₂ ∙ e₂₋₁₅' == e₁₋₁₄' ∙ e₁₄₋₁₅
+          step₂ = ! $
+            homotopy-naturality (λ x → merid (μ e x))
+                                (λ x → (merid x ∙ back) ∙ merid e)
+                                (λ x → ap merid (μ.unit-l x) ∙
+                                       add-path-and-inverse-r (merid x) (merid e))
+                                (μ.unit-r y)
+          step₃ : e₁₋₁₄' == e₁₋₁₄
+          step₃ = ap-∘ merid (μ e) (μ.unit-r y)
 
-      cd₆ : e₆₋₁₂ ∙ e₁₂₋₁₃ == e₆₋₇ ∙ e₇₋₁₃
-      cd₆ = homotopy-naturality (merid ∘ μ e) merid (ap merid ∘ μ.unit-l) (μ.unit-r y)
+      cd₅ : e₁₄₋₁₅ ∙ e₁₅₋₉ == e₁₄₋₁₂ ∙ e₁₂₋₉
+      cd₅ = homotopy-naturality-from-idf (λ v → (merid e ∙ back) ∙ v)
+                                         (add-path-and-inverse-l (merid e))
+                                         (ap merid (μ.unit-l y) ∙
+                                          add-path-and-inverse-r (merid y) (merid e))
 
-      cd₇ : e₇₋₁₃ ∙ e₁₃₋₉ == e₇₋₈ ∙ e₈₋₉'
-      cd₇ = homotopy-naturality merid (λ v → merid v ∙ back ∙ merid e) (λ v → ∙-add-path-and-inverse (merid v) (merid e)) (μ.unit-r y)
+      cd₆ : e₁₋₁₄ == e₁₋₁₃ ∙ e₁₃₋₁₄
+      cd₆ =
+        e₁₋₁₄
+          =⟨ step₁ ⟩
+        e₁₋₁₄'
+          =⟨ step₂ ⟩
+        e₁₋₁₃ ∙ e₁₃₋₁₄ ∎
+        where
+          e₁₋₁₄' : c₁ == c₁₄
+          e₁₋₁₄' = ap merid $
+                   ! (H-space-assoc e y e) ∙ μ.unit-r (μ e y)
+          step₁ : e₁₋₁₄ == e₁₋₁₄'
+          step₁ = ap (ap merid) step₁'
+            where
+            step₁' : ap (μ e) (μ.unit-r y) == ! (H-space-assoc e y e) ∙ μ.unit-r (μ e y)
+            step₁' = pre-rotate-in (ap (μ e) (μ.unit-r y)) (H-space-assoc e y e) (μ.unit-r (μ e y)) $
+                     ! (H-space-assoc-coh e y)
+          step₂ : e₁₋₁₄' == e₁₋₁₃ ∙ e₁₃₋₁₄
+          step₂ = ap-∙ merid (! (H-space-assoc e y e)) (μ.unit-r (μ e y))
 
-      cd₈ : e₈₋₉' == e₈₋₉
-      cd₈ = ap-∘ (λ v → v ∙ back ∙ merid e) merid (μ.unit-r y)
-
-      cd₉ : e₈₋₉ ∙ e₉₋₁₀ == e₈₋₁₁ ∙ e₁₁₋₁₀
-      cd₉ =
-        (e₈₋₉ ◃∙ e₉₋₁₀ ◃∎)
-          ↯=⟨ 1 & 1 & (e₉₋₁₀ ◃∙ idp ◃∎) & (! (∙-unit-r e₉₋₁₀)) ⟩
-        (e₈₋₉ ◃∙ e₉₋₁₀ ◃∙ idp ◃∎)
-          ↯=⟨ 2 & 1 & (e₁₀₋₁₁ ◃∙ e₁₁₋₁₀ ◃∎) & (! (!-inv-r e₁₀₋₁₁)) ⟩
-        (e₈₋₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₁₁ ◃∙ e₁₁₋₁₀ ◃∎)
-          ↯=⟨ 0 & 3 & (e₈₋₁₁ ◃∎) & idp ⟩
-        e₈₋₁₁ ∙ e₁₁₋₁₀ ∎
-
-      cd : e₁₋₂ ∙ e₂₋₃ ∙ e₃₋₅ == e₁₋₆ ∙ e₆₋₈ ∙ e₈₋₁₁ ∙ e₁₁₋₁₀ ∙ e₁₀₋₅
+      cd : e₁₋₂ ∙ e₂₋₁₆ ∙ e₁₆₋₈ == e₁₋₁₃ ∙ e₁₃₋₁₂ ∙ e₁₂₋₉ ∙ e₉₋₈
       cd =
-        (e₁₋₂ ◃∙ e₂₋₃ ◃∙ e₃₋₅ ◃∎)
-          ↯=⟨ 0 & 1 & (e₁₋₁₂ ◃∙ e₁₂₋₃ ◃∙ e₃₋₂ ◃∎) & idp ⟩
-        (e₁₋₁₂ ◃∙ e₁₂₋₃ ◃∙ e₃₋₂ ◃∙ e₂₋₃ ◃∙ e₃₋₅ ◃∎)
-          ↯=⟨ 2 & 2 & (c₃ ∎∎) & cd₁ ⟩
-        (e₁₋₁₂ ◃∙ e₁₂₋₃ ◃∙ e₃₋₅ ◃∎)
-          ↯=⟨ 2 & 1 & (e₃₋₄ ◃∙ e₄₋₅ ◃∎) & idp ⟩
-        (e₁₋₁₂ ◃∙ e₁₂₋₃ ◃∙ e₃₋₄ ◃∙ e₄₋₅ ◃∎)
-          ↯=⟨ 1 & 2 & (e₁₂₋₁₃ ◃∙ e₁₃₋₄ ◃∎) & cd₂ ⟩
-        (e₁₋₁₂ ◃∙ e₁₂₋₁₃ ◃∙ e₁₃₋₄ ◃∙ e₄₋₅ ◃∎)
-          ↯=⟨ 3 & 1 & (e₄₋₁₀ ◃∙ e₁₀₋₅ ◃∎) & cd₃ ⟩
-        (e₁₋₁₂ ◃∙ e₁₂₋₁₃ ◃∙ e₁₃₋₄ ◃∙ e₄₋₁₀ ◃∙ e₁₀₋₅ ◃∎)
-          ↯=⟨ 2 & 2 & (e₁₃₋₉ ◃∙ e₉₋₁₀ ◃∎) & cd₄ ⟩
-        (e₁₋₁₂ ◃∙ e₁₂₋₁₃ ◃∙ e₁₃₋₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₅ ◃∎)
-          ↯=⟨ 0 & 1 & (e₁₋₆ ◃∙ e₆₋₁₂ ◃∎) & cd₅ ⟩
-        (e₁₋₆ ◃∙ e₆₋₁₂ ◃∙ e₁₂₋₁₃ ◃∙ e₁₃₋₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₅ ◃∎)
-          ↯=⟨ 1 & 2 & (e₆₋₇ ◃∙ e₇₋₁₃ ◃∎) & cd₆ ⟩
-        (e₁₋₆ ◃∙ e₆₋₇ ◃∙ e₇₋₁₃ ◃∙ e₁₃₋₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₅ ◃∎)
-          ↯=⟨ 2 & 2 & (e₇₋₈ ◃∙ e₈₋₉' ◃∎) & cd₇ ⟩
-        (e₁₋₆ ◃∙ e₆₋₇ ◃∙ e₇₋₈ ◃∙ e₈₋₉' ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₅ ◃∎)
-          ↯=⟨ 3 & 1 & (e₈₋₉ ◃∎) & cd₈ ⟩
-        (e₁₋₆ ◃∙ e₆₋₇ ◃∙ e₇₋₈ ◃∙ e₈₋₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₅ ◃∎)
-          ↯=⟨ 1 & 2 & (e₆₋₈ ◃∎) & idp ⟩
-        (e₁₋₆ ◃∙ e₆₋₈ ◃∙ e₈₋₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₅ ◃∎)
-          ↯=⟨ 2 & 2 & (e₈₋₁₁ ◃∙ e₁₁₋₁₀ ◃∎) & cd₉ ⟩
-        e₁₋₆ ∙ e₆₋₈ ∙ e₈₋₁₁ ∙ e₁₁₋₁₀ ∙ e₁₀₋₅ ∎
-    -}
+        (e₁₋₂ ◃∙ e₂₋₁₆ ◃∙ e₁₆₋₈ ◃∎)
+          ↯=⟨ 1 & 1 & (e₂₋₁₅ ◃∙ e₁₅₋₁₆ ◃∎) & cd₁ ⟩
+        (e₁₋₂ ◃∙ e₂₋₁₅ ◃∙ e₁₅₋₁₆ ◃∙ e₁₆₋₈ ◃∎)
+          ↯=⟨ 2 & 2 & (e₁₅₋₈ ◃∎) & cd₂ ⟩
+        (e₁₋₂ ◃∙ e₂₋₁₅ ◃∙ e₁₅₋₈ ◃∎)
+          ↯=⟨ 2 & 1 & (e₁₅₋₉ ◃∙ e₉₋₈ ◃∎) & cd₃ ⟩
+        (e₁₋₂ ◃∙ e₂₋₁₅ ◃∙ e₁₅₋₉ ◃∙ e₉₋₈ ◃∎)
+          ↯=⟨ 0 & 2 & (e₁₋₁₄ ◃∙ e₁₄₋₁₅ ◃∎) & cd₄ ⟩
+        (e₁₋₁₄ ◃∙ e₁₄₋₁₅ ◃∙ e₁₅₋₉ ◃∙ e₉₋₈ ◃∎)
+          ↯=⟨ 1 & 2 & (e₁₄₋₁₂ ◃∙ e₁₂₋₉ ◃∎) & cd₅ ⟩
+        (e₁₋₁₄ ◃∙ e₁₄₋₁₂ ◃∙ e₁₂₋₉ ◃∙ e₉₋₈ ◃∎)
+          ↯=⟨ 0 & 1 & (e₁₋₁₃ ◃∙ e₁₃₋₁₄ ◃∎) & cd₆ ⟩
+        (e₁₋₁₃ ◃∙ e₁₃₋₁₄ ◃∙ e₁₄₋₁₂ ◃∙ e₁₂₋₉ ◃∙ e₉₋₈ ◃∎)
+          ↯=⟨ 1 & 2 & (e₁₃₋₁₂ ◃∎) & idp ⟩
+        e₁₋₁₃ ∙ e₁₃₋₁₂ ∙ e₁₂₋₉ ∙ e₉₋₈ ∎
 
     {-
     module V1 (x y z : A) where
@@ -290,6 +281,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       Q-is-prop x y z = has-level-apply (has-level-apply (Trunc-level {n = 1}) _ _) _ _
   -}
 
+  {-
   comp : (x y : A) → decodeN' (μ x y) == decodeN' y ∙₁ decodeN' x
   comp x y =
     [ η (μ x y) ]₁
@@ -303,3 +295,4 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
     [ η y ∙ η x ]₁
       =⟨ ∙-∙₁ (η y) (η x) ⟩
     [ η y ]₁ ∙₁ [ η x ]₁ =∎
+  -}

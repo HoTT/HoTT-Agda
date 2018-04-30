@@ -85,11 +85,16 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
         =⟨ transport-Codes-mer-e-! a ⟩
       a ∎
 
-  ∙-add-path-and-inverse : ∀ {k} {B : Type k} {x y z : B}
+  add-path-and-inverse-l : ∀ {k} {B : Type k} {x y z : B}
+    → (p : y == x) (q : y == z)
+    → q == (p ∙ ! p) ∙ q
+  add-path-and-inverse-l p q = ap (λ s → s ∙ q) (! (!-inv-r p))
+
+  add-path-and-inverse-r : ∀ {k} {B : Type k} {x y z : B}
     → (p : x == y) (q : z == y)
-    → p == p ∙ ! q ∙ q
-  ∙-add-path-and-inverse p q =
-    ! (∙-unit-r p) ∙ ap (λ s → p ∙ s) (! (!-inv-l q))
+    → p == (p ∙ ! q) ∙ q
+  add-path-and-inverse-r p q =
+    ! (∙-unit-r p) ∙ ap (λ s → p ∙ s) (! (!-inv-l q)) ∙ ! (∙-assoc p (! q) q)
 
   abstract
     homomorphism-args : WedgeExt.args {i} {i} {A} {e} {A} {e}
@@ -101,15 +106,13 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
               merid (μ a e)
                 =⟪ ap merid (μ.unit-r a) ⟫
               merid a
-                =⟪ ap (λ w → w ∙ merid a) (! (!-inv-r (merid e))) ⟫
+                =⟪ add-path-and-inverse-l (merid e) (merid a) ⟫
               (merid e ∙ back) ∙ merid a ∎∎);
         g = λ a' → ap [_] $ ↯ (
               merid (μ e a')
                 =⟪ ap merid (μ.unit-l a') ⟫
               merid a'
-                =⟪ ∙-add-path-and-inverse (merid a') (merid e) ⟫
-              merid a' ∙ back ∙ merid e
-                =⟪ ! (∙-assoc (merid a') back (merid e)) ⟫
+                =⟪ add-path-and-inverse-r (merid a') (merid e) ⟫
               (merid a' ∙ back) ∙ merid e ∎∎);
         p = ap (λ {(p₁ , p₂) → ap [_] $ ↯ (
                   merid (μ e e) =⟪ ap merid p₁ ⟫
@@ -123,8 +126,7 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
         Q a a' = Path {A = Trunc 1 (north == south)}
                       [ merid (μ a a' ) ] [ (merid a' ∙ back) ∙ merid a ]
         coh : {B : Type i} {b b' : B} (p : b == b')
-          → ap (λ w → w ∙ p) (! (!-inv-r p))
-            == ∙-add-path-and-inverse p p ∙ ! (∙-assoc p (! p) p)
+          → add-path-and-inverse-l p p == add-path-and-inverse-r p p
         coh idp = idp
 
     homomorphism : (a a' : A)
