@@ -176,15 +176,15 @@ module _ {i} {A : Type i} where
   ∙∙-#-! (a =⟪ p ⟫ s) (S n) = ap (λ v → p ◃∙ v) (∙∙-#-! s n)
 
 
-  infixr 10 _↯=⟨_&_&_&_⟩_
-  _↯=⟨_&_&_&_⟩_ : {a a' : A} {q : a == a'}
+  infixr 10 _=↯=⟨_&_&_&_⟩_
+  _=↯=⟨_&_&_&_⟩_ : {a a' : A} {q : a == a'}
     → (s : PathSeq a a')
     → (n : ℕ) (m : ℕ)
     → (t : PathSeq (point-from-start n s) (point-from-start m ((n -!) s)))
     → (m -#) ((n -!) s) =↯= t
     → (↯ ((n -#) s) ∙∙ t ∙∙ ((m -!) ((n -!) s))) == q
     → (↯ s) == q
-  _↯=⟨_&_&_&_⟩_ {a} {a'} {q} s n m t p p' =
+  _=↯=⟨_&_&_&_⟩_ {a} {a'} {q} s n m t p p' =
     (↯ s)
       =⟨ ap (λ v → ↯ v) (∙∙-#-! s n) ⟩
     (↯ (n -#) s ∙∙ (n -!) s)
@@ -202,6 +202,18 @@ module _ {i} {A : Type i} where
     (↯ (n -#) s ∙∙ t ∙∙ (m -!) ((n -!) s))
       =⟨ p' ⟩
     q =∎
+
+  infixr 10 _↯=⟨_⟩_
+  _↯=⟨_⟩_ : {a a' : A} {t : a == a'} {q : a == a'}
+    → (s : PathSeq a a')
+    → (↯ s) == t
+    → t == q
+    → (↯ s) == q
+  _↯=⟨_⟩_ s = _=⟨_⟩_ (↯ s)
+
+  infix 15 _↯∎
+  _↯∎ : {a a' : A} (s : PathSeq a a') → s =↯= s
+  _↯∎ s = (↯ s) =∎
 
   private
     split : {a a' : A} (s : PathSeq a a')
