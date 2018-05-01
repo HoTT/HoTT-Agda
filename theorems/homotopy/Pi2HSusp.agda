@@ -119,7 +119,6 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
         p = ap (λ {(p₁ , p₂) → ap [_] (ap merid p₁ ∙ p₂)})
                (pair×= (! μ.coh) (coh (merid e)))
       }
-
       where
         Q : A → A → Type i
         Q a a' = [ merid (μ a a' ) ]₁ == [ (merid a' ∙ back) ∙ merid a ]₁

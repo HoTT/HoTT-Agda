@@ -87,3 +87,20 @@ module _ {i} {X : Ptd i} (hX : HSpaceStructure X) where
 
   coh-unit-r : associator → Type i
   coh-unit-r assoc = ∀ a b → hX.unit-r (hX.μ a b) == assoc a b (pt X) ∙ ap (hX.μ a) (hX.unit-r b)
+
+  coh-unit-l-r-pentagon : associator → Type i
+  coh-unit-l-r-pentagon assoc = ∀ a' →
+    hX.unit-r (hX.μ (pt X) a') ∙ hX.unit-l a' ==
+    assoc (pt X) a' (pt X) ∙ hX.unit-l (hX.μ a' (pt X)) ∙ hX.unit-r a'
+
+  coh-unit-r-to-unit-l-r-pentagon : (assoc : associator)
+    → coh-unit-r assoc → coh-unit-l-r-pentagon assoc
+  coh-unit-r-to-unit-l-r-pentagon assoc c a' =
+    hX.unit-r (hX.μ (pt X) a') ∙ hX.unit-l a'
+      =⟨ ap (λ v → v ∙ hX.unit-l a') (c (pt X) a') ⟩
+    (assoc (pt X) a' (pt X) ∙ ap (hX.μ (pt X)) (hX.unit-r a')) ∙ hX.unit-l a'
+      =⟨ ∙-assoc (assoc (pt X) a' (pt X)) (ap (hX.μ (pt X)) (hX.unit-r a')) (hX.unit-l a') ⟩
+    assoc (pt X) a' (pt X) ∙ ap (hX.μ (pt X)) (hX.unit-r a') ∙ hX.unit-l a'
+      =⟨ ap (λ v → assoc (pt X) a' (pt X) ∙ v)
+            (homotopy-naturality-to-idf (hX.μ (pt X)) hX.unit-l (hX.unit-r a')) ⟩
+    assoc (pt X) a' (pt X) ∙ hX.unit-l (hX.μ a' (pt X)) ∙ hX.unit-r a' ∎
