@@ -17,7 +17,7 @@ record GroupoidStructure {i j} {El : Type i} (Arr : El → El → Type j)
     unit-l : ∀ {x y} (a : Arr x y) → comp ident a == a
     assoc : ∀ {x y z w} (a : Arr x y) (b : Arr y z) (c : Arr z w)
               → comp (comp a b) c == comp a (comp b c)
-    inv-l : ∀ {x y } (a : Arr x y) → (comp (inv a) a) == ident
+    inv-l : ∀ {x y} (a : Arr x y) → (comp (inv a) a) == ident
 
   private
     infix 80 _⊙_
