@@ -320,7 +320,35 @@ module _ {i} {A : Type i} where
     ex9 : (↯ 4# t) == p ∙ q ∙ r
     ex9 = idp
 
+module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
+  ap-seq : {a a' : A} → PathSeq a a' → PathSeq (f a) (f a')
+  ap-seq (a ∎∎) = f a ∎∎
+  ap-seq (a =⟪ p ⟫ s) = f a =⟪ ap f p ⟫ ap-seq s
+
+  ap-seq-∙ : {a a' : A} → (s : PathSeq a a')
+    → ap f (↯ s) == (↯ ap-seq s)
+  ap-seq-∙ (a ∎∎) = idp
+  ap-seq-∙ (a =⟪ p ⟫ a' ∎∎) = idp
+  ap-seq-∙ (a =⟪ p ⟫ a' =⟪ p' ⟫ s) =
+    ap-∙ f p (↯ a' =⟪ p' ⟫ s) ∙
+    ap (λ s → ap f p ∙ s) (ap-seq-∙ (a' =⟪ p' ⟫ s))
+
+  ∙-ap-seq : {a a' : A} → (s : PathSeq a a')
+    → (↯ ap-seq s) == ap f (↯ s)
+  ∙-ap-seq s = ! (ap-seq-∙ s)
+
+  ap-seq-=↯= : {a a' : A} → (s t : PathSeq a a')
+    → s =↯= t
+    → ap-seq s =↯= ap-seq t
+  ap-seq-=↯= s t e =
+    (↯ (ap-seq s))
+      =⟨ ∙-ap-seq s ⟩
+    ap f (↯ s)
+      =⟨ ap (ap f) e ⟩
+    ap f (↯ t)
+      =⟨ ap-seq-∙ t ⟩
+    (↯ (ap-seq t)) =∎
 
 apd= : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
        (p : f ∼ g) {a b : A} (q : a == b)

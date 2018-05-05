@@ -20,23 +20,31 @@ module lib.groupoids.FundamentalPreTwoGroupoid {i} (A : Type i) where
     == ∙-assoc a (! a) a ∙ ap (_∙_ a) (!-inv-l a) ∙ ∙-unit-r a
   ∙-inv-coherence idp = idp
 
-  fundamental-pretwogroupoid-of-a-two-type : {{_ : has-level 2 A}} → PreTwoGroupoid i i
-  fundamental-pretwogroupoid-of-a-two-type =
+  fundamental-two-one-semi-category-of-a-two-type : {{_ : has-level 2 A}} → TwoOneSemiCategory i i
+  fundamental-two-one-semi-category-of-a-two-type =
     record
     { El = A
     ; Arr = _==_
     ; Arr-level = λ _ _ → ⟨⟩
+    ; two-one-semi-cat-struct = record
+      { comp = _∙_
+      ; assoc = λ a b c → ∙-assoc a b c
+      ; pentagon-identity = ∙-pentagon-identity
+      }
+    }
+
+  fundamental-pretwogroupoid-of-a-two-type : {{_ : has-level 2 A}} → PreTwoGroupoid i i
+  fundamental-pretwogroupoid-of-a-two-type =
+    record
+    { two-one-semi-cat = fundamental-two-one-semi-category-of-a-two-type
     ; two-groupoid-struct = record
       { ident = idp
       ; inv = λ a → ! a
-      ; comp = _∙_
       ; unit-l = λ _ → idp
       ; unit-r = λ a → ∙-unit-r a
-      ; assoc = λ a b c → ∙-assoc a b c
       ; inv-l = λ a → !-inv-l a
       ; inv-r = λ a → !-inv-r a
       ; triangle-identity = ∙-triangle-identity
-      ; pentagon-identity = ∙-pentagon-identity
       ; inv-coherence = ∙-inv-coherence
       }
     }
@@ -133,23 +141,31 @@ module lib.groupoids.FundamentalPreTwoGroupoid {i} (A : Type i) where
     ∙₁-inv-coherence' : {v w : A} (p : v == w) → P [ p ]₁
     ∙₁-inv-coherence' idp = idp
 
+  fundamental-two-one-semi-category : TwoOneSemiCategory i i
+  fundamental-two-one-semi-category =
+    record
+    { El = A
+    ; Arr = _=₁_
+    ; Arr-level = λ _ _ → Trunc-level
+    ; two-one-semi-cat-struct = record
+      { comp = _∙₁_
+      ; assoc = ∙₁-assoc
+      ; pentagon-identity = ∙₁-pentagon-identity
+      }
+    }
+
   fundamental-pretwogroupoid : PreTwoGroupoid i i
   fundamental-pretwogroupoid =
     record
-      { El = A
-      ; Arr = _=₁_
-      ; Arr-level = λ _ _ → Trunc-level
-      ; two-groupoid-struct = record
-        { ident = idp₁
-        ; inv = !₁
-        ; comp = _∙₁_
-        ; unit-l = ∙₁-unit-l
-        ; unit-r = ∙₁-unit-r
-        ; assoc = ∙₁-assoc
-        ; inv-l = !₁-inv-l
-        ; inv-r = !₁-inv-r
-        ; triangle-identity = ∙₁-triangle-identity
-        ; pentagon-identity = ∙₁-pentagon-identity
-        ; inv-coherence = ∙₁-inv-coherence
-        }
+    { two-one-semi-cat = fundamental-two-one-semi-category
+    ; two-groupoid-struct = record
+      { ident = idp₁
+      ; inv = !₁
+      ; unit-l = ∙₁-unit-l
+      ; unit-r = ∙₁-unit-r
+      ; inv-l = !₁-inv-l
+      ; inv-r = !₁-inv-r
+      ; triangle-identity = ∙₁-triangle-identity
+      ; inv-coherence = ∙₁-inv-coherence
       }
+    }
