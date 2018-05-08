@@ -142,6 +142,10 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) wher
     → ap2 p q == ap (λ u → f u w) p ∙ ap (λ v → f y v) q
   ap2-out idp idp = idp
 
+  ap2-out' : {x y : A} {w z : B} (p : x == y) (q : w == z)
+    → ap2 p q == ap (λ u → f x u) q ∙ ap (λ v → f v z) p
+  ap2-out' idp idp = idp
+
   ap2-idp-l : {x : A} {w z : B} (q : w == z)
     → ap2 (idp {a = x}) q == ap (f x) q
   ap2-idp-l idp = idp
