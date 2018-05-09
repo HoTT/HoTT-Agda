@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
+open import homotopy.HSpace
 open import homotopy.EM1HSpace
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
 
@@ -11,6 +12,8 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
   private
     module G = AbGroup G
   open EM₁HSpace G
+  private
+    module H-⊙EM₁ = HSpaceStructure H-⊙EM₁
 
   mult-loop-mult : (g : G.El) (y z : EM₁ G.grp)
     → mult-loop g (mult y z) == ap (λ x' → mult x' z) (mult-loop g y)
@@ -29,16 +32,10 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
         =⟨ ∘-ap (λ f → f z) mult (emloop g) ⟩
       ap (λ x' → mult x' z) (emloop g) =∎
 
-  H-⊙EM₁-assoc : (x y z : EM₁ G.grp) → mult (mult x y) z == mult x (mult y z)
-  H-⊙EM₁-assoc x y z =
-    EM₁-set-elim {P = λ x → mult (mult x y) z == mult x (mult y z)}
-                 {{λ x → has-level-apply (EM₁-level₁ G.grp) _ _}}
-                 idp
-                 comp'
-                 x
-    where
-    comp' : (g : G.El) → idp == idp [ (λ x → mult (mult x y) z == mult x (mult y z)) ↓ emloop g ]
-    comp' g =
+  abstract
+    comp' : (x y z : EM₁ G.grp) (g : G.El)
+      → idp == idp [ (λ x → mult (mult x y) z == mult x (mult y z)) ↓ emloop g ]
+    comp' x y z g =
       ↓-='-in $
       idp ∙' ap (λ x → mult x (mult y z)) (emloop g)
         =⟨ ∙'-unit-l _ ⟩
@@ -61,3 +58,25 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
       ap (λ x → mult (mult x y) z) (emloop g)
         =⟨ ! (∙-unit-r _) ⟩
       ap (λ x → mult (mult x y) z) (emloop g) ∙ idp =∎
+
+  H-⊙EM₁-assoc : (x y z : EM₁ G.grp) → mult (mult x y) z == mult x (mult y z)
+  H-⊙EM₁-assoc x y z =
+    EM₁-set-elim {P = λ x → mult (mult x y) z == mult x (mult y z)}
+                 {{λ x → has-level-apply (EM₁-level₁ G.grp) _ _}}
+                 idp
+                 (comp' x y z)
+                 x
+
+  H-EM₁-assoc-coh-unit-r : coh-unit-r H-⊙EM₁ H-⊙EM₁-assoc
+  H-EM₁-assoc-coh-unit-r =
+    EM₁-prop-elim {P = λ x → ∀ y → P x y} {{λ x → Π-level (P-level x)}}
+      (EM₁-prop-elim {P = P embase} {{P-level embase}} idp)
+    where
+    P : EM₁ G.grp → EM₁ G.grp → Type i
+    P = coh-unit-r-eq H-⊙EM₁ H-⊙EM₁-assoc
+    P-level : ∀ x y → is-prop (P x y)
+    P-level x y = has-level-apply (has-level-apply (EM₁-level₁ G.grp) _ _) _ _
+
+  H-EM₁-assoc-coh-unit-l-r-pentagon : coh-unit-l-r-pentagon H-⊙EM₁ H-⊙EM₁-assoc
+  H-EM₁-assoc-coh-unit-l-r-pentagon =
+    coh-unit-r-to-unit-l-r-pentagon H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-coh-unit-r
