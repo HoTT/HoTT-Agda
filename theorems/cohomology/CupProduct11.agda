@@ -27,7 +27,7 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
     base' _ = pt (⊙EM 2)
 
     e₁ : Ω (⊙EM 2) ≃ (north' (EM₁ R₊) ==₁ north)
-    e₁ = Trunc=-equiv [ north' (EM₁ R₊) ] [ north' (EM₁ R₊) ]
+    e₁ = =ₜ-equiv [ north' (EM₁ R₊) ] [ north' (EM₁ R₊) ]
 
     e₂ : (north' (EM₁ R₊) ==₁ north) ≃ EM₁ R₊
     e₂ = eq'
@@ -52,7 +52,7 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
         <– ee (μ (cp₀₁ g₂ x) (cp₀₁ g₁ x))
           =⟨ ap (<– e₁) (comp (cp₀₁ g₂ x) (cp₀₁ g₁ x)) ⟩
         <– e₁ ((<– e₂ (cp₀₁ g₁ x)) ∙₁ (<– e₂ (cp₀₁ g₂ x)))
-          =⟨ Trunc=-∙-comm' {x = [ north ]} {y = [ north ]} {z = [ north ]}
+          =⟨ <–-=ₜ-equiv-pres-∙ₜ {x = [ north ]} {y = [ north ]} {z = [ north ]}
                             (<– e₂ (cp₀₁ g₁ x)) (<– e₂ (cp₀₁ g₂ x)) ⟩
         loop'= g₁ x ∙ loop'= g₂ x =∎
 

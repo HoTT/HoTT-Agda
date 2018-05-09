@@ -484,7 +484,7 @@ module _ {i} where
   Trunc-Ω^-conv m O X = idp
   Trunc-Ω^-conv m (S n) X =
     ⊙Trunc m (⊙Ω^ (S n) X)
-      =⟨ ! (pair= (Trunc=-path [ _ ] [ _ ]) (↓-idf-ua-in _ idp)) ⟩
+      =⟨ ! (pair= (=ₜ-path [ _ ] [ _ ]) (↓-idf-ua-in _ idp)) ⟩
     ⊙Ω (⊙Trunc (S m) (⊙Ω^ n X))
       =⟨ ap ⊙Ω (Trunc-Ω^-conv (S m) n X) ⟩
     ⊙Ω^ (S n) (⊙Trunc (⟨ n ⟩₋₂ +2+ S m) X)
@@ -493,7 +493,7 @@ module _ {i} where
 
   Ω-Trunc-econv : (m : ℕ₋₂) (X : Ptd i)
     → Ω (⊙Trunc (S m) X) ≃ Trunc m (Ω X)
-  Ω-Trunc-econv m X = Trunc=-equiv [ pt X ] [ pt X ]
+  Ω-Trunc-econv m X = =ₜ-equiv [ pt X ] [ pt X ]
 -}
 
 {- Our definition of [Ω^] builds up loops from the outside,

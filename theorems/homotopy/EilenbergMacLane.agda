@@ -138,7 +138,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
     spectrum0 : ⊙Ω (⊙EM 1) ⊙≃ ⊙EM 0
     spectrum0 =
       ⊙Ω (⊙EM 1)
-        ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (=ₜ-equiv _ _) idp ⟩
       ⊙Trunc 0 (⊙Ω X)
         ⊙≃⟨ ≃-to-⊙≃ (unTrunc-equiv _) idp ⟩
       ⊙Ω X ⊙≃∎
@@ -146,7 +146,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
     spectrum1 : ⊙Ω (⊙EM 2) ⊙≃ ⊙EM 1
     spectrum1 =
       ⊙Ω (⊙EM 2)
-        ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (=ₜ-equiv _ _) idp ⟩
       ⊙Trunc 1 (⊙Ω (⊙Susp X))
         ⊙≃⟨ Π₂.⊙eq ⟩
       ⊙EM 1 ⊙≃∎
@@ -170,7 +170,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
       → ⊙Ω (⊙EM (S (S (S n)))) ⊙≃ ⊙EM (S (S n))
     spectrumSS n =
       ⊙Ω (⊙EM (S (S (S n))))
-        ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (=ₜ-equiv _ _) idp ⟩
       ⊙Trunc ⟨ S (S n) ⟩ (⊙Ω (⊙Susp^ (S (S n)) X))
         ⊙≃⟨ FS.⊙eq n ⊙⁻¹ ⟩
       ⊙EM (S (S n)) ⊙≃∎

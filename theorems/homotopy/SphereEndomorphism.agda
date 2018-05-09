@@ -103,7 +103,7 @@ module homotopy.SphereEndomorphism where
     SphereSS-conn-path n x y = path-conn (SphereSS-conn n)
 
     SphereSS-has-all-trunc-paths : ∀ n (x y : Sphere (S (S n))) → Trunc 0 (x == y)
-    SphereSS-has-all-trunc-paths n x y = –> (Trunc=-equiv [ x ] [ y ])
+    SphereSS-has-all-trunc-paths n x y = –> (=ₜ-equiv [ x ] [ y ])
       (contr-has-all-paths {{SphereSS-conn n}} [ x ] [ y ])
 
   Trunc-⊙SphereSS-endo-in : ∀ n

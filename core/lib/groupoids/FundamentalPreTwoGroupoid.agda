@@ -4,16 +4,13 @@ open import lib.Basics
 open import lib.types.Truncation
 open import lib.types.TwoGroupoid
 
-module lib.groupoids.FundamentalPreTwoGroupoid {i} (A : Type i) where
+module lib.groupoids.FundamentalPreTwoGroupoid where
+
+module _ {i} (A : Type i) where
 
   ∙-triangle-identity : {x y z : A} (a : x == y) (b : y == z)
     → ap (λ s → s ∙ b) (∙-unit-r a) == ∙-assoc a idp b ∙ ap (_∙_ a) idp
   ∙-triangle-identity idp b = idp
-
-  ∙-pentagon-identity : {v w x y z : A} (a : v == w) (b : w == x) (c : x == y) (d : y == z)
-    → ∙-assoc (a ∙ b) c d ∙ ∙-assoc a b (c ∙ d)
-      == ap (λ s → s ∙ d) (∙-assoc a b c) ∙ ∙-assoc a (b ∙ c) d ∙ ap (_∙_ a) (∙-assoc b c d)
-  ∙-pentagon-identity idp idp c d = idp
 
   ∙-inv-coherence : {x y : A} (a : x == y)
     → ap (λ s → s ∙ a) (!-inv-r a) ∙ idp
@@ -29,7 +26,7 @@ module lib.groupoids.FundamentalPreTwoGroupoid {i} (A : Type i) where
     ; two-one-semi-cat-struct = record
       { comp = _∙_
       ; assoc = λ a b c → ∙-assoc a b c
-      ; pentagon-identity = ∙-pentagon-identity
+      ; pentagon-identity = ∙-assoc-pentagon
       }
     }
 
@@ -104,31 +101,6 @@ module lib.groupoids.FundamentalPreTwoGroupoid {i} (A : Type i) where
     ∙₁-triangle-identity' : {u v w : A} (p : u == v) (q : v == w) → P [ p ] [ q ]
     ∙₁-triangle-identity' idp q = idp
 
-  ∙₁-pentagon-identity : {v w x y z : A}
-    (a : v =₁ w) (b : w =₁ x) (c : x =₁ y) (d : y =₁ z)
-    → ∙₁-assoc (a ∙₁ b) c d ∙ ∙₁-assoc a b (c ∙₁ d)
-      == ap (λ s → s ∙₁ d) (∙₁-assoc a b c) ∙
-            ∙₁-assoc a (b ∙₁ c) d ∙ ap (_∙₁_ a) (∙₁-assoc b c d)
-  ∙₁-pentagon-identity a b c d =
-    Trunc-elim {P = λ a → P a b c d}
-      (λ a' → Trunc-elim {P = λ b → P [ a' ] b c d}
-        (λ b' → Trunc-elim {P = λ c → P [ a' ] [ b' ] c d}
-          (λ c' → Trunc-elim {P = λ d → P [ a' ] [ b' ] [ c' ] d}
-            (λ d' → ∙₁-pentagon-identity' a' b' c' d')
-            d)
-          c)
-        b)
-      a
-    where
-    P : {k l m n o : A} → k =₁ l → l =₁ m → m =₁ n → n =₁ o → Type i
-    P a b c d = ∙₁-assoc (a ∙₁ b) c d ∙ ∙₁-assoc a b (c ∙₁ d)
-                == ap (λ s → s ∙₁ d) (∙₁-assoc a b c) ∙
-                     ∙₁-assoc a (b ∙₁ c) d ∙ ap (_∙₁_ a) (∙₁-assoc b c d)
-    ∙₁-pentagon-identity' : {k l m n o : A}
-      (a' : k == l) (b' : l == m) (c' : m == n) (d' : n == o)
-      → P [ a' ] [ b' ] [ c' ] [ d' ]
-    ∙₁-pentagon-identity' idp idp c' d' = idp
-
   ∙₁-inv-coherence : {x y : A} (a : x =₁ y)
     → ap (λ s → s ∙₁ a) (!₁-inv-r a) ∙ ∙₁-unit-l a
       == ∙₁-assoc a (!₁ a) a ∙ ap (_∙₁_ a) (!₁-inv-l a) ∙ ∙₁-unit-r a
@@ -144,16 +116,17 @@ module lib.groupoids.FundamentalPreTwoGroupoid {i} (A : Type i) where
   fundamental-two-one-semi-category : TwoOneSemiCategory i i
   fundamental-two-one-semi-category =
     record
-    { El = A
-    ; Arr = _=₁_
-    ; Arr-level = λ _ _ → Trunc-level
+    { El = Trunc 2 A
+    ; Arr = _=ₜ_
+    ; Arr-level = =ₜ-level
     ; two-one-semi-cat-struct = record
-      { comp = _∙₁_
-      ; assoc = ∙₁-assoc
-      ; pentagon-identity = ∙₁-pentagon-identity
+      { comp = λ {ta} p q → _∙ₜ_ {ta = ta} p q
+      ; assoc = λ {ta} p q r → ∙ₜ-assoc {ta = ta} p q r
+      ; pentagon-identity = λ {ta} p q r s → ∙ₜ-assoc-pentagon {ta = ta} p q r s
       }
     }
 
+  {-
   fundamental-pretwogroupoid : PreTwoGroupoid i i
   fundamental-pretwogroupoid =
     record
@@ -168,4 +141,21 @@ module lib.groupoids.FundamentalPreTwoGroupoid {i} (A : Type i) where
       ; triangle-identity = ∙₁-triangle-identity
       ; inv-coherence = ∙₁-inv-coherence
       }
+    }
+  -}
+
+module _ {i} (A : Type i) where
+
+  =ₜ-equiv-semi-cat-functor
+    : TwoOneSemiCategoryFunctor
+        (fundamental-two-one-semi-category-of-a-two-type (Trunc 2 A))
+        (fundamental-two-one-semi-category A)
+  =ₜ-equiv-semi-cat-functor =
+    record
+    { F₀ = idf (Trunc 2 A)
+    ; F₁ = λ {ta} {tb} f → –> (=ₜ-equiv ta tb) f
+    ; pres-comp = –>-=ₜ-equiv-pres-∙
+      -- TODO: The following line takes a really long time to check
+      -- Can we optimize this somehow?
+    ; pres-comp-coh = λ {ta} p q r → –>-=ₜ-equiv-pres-∙-coh {ta = ta} p q r
     }

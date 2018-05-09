@@ -6,7 +6,7 @@ module homotopy.TruncationLoopLadder where
 
   ⊙Ω-Trunc : ∀ {i} {n : ℕ₋₂} (X : Ptd i)
     → ⊙Ω (⊙Trunc (S n) X) ⊙≃ ⊙Trunc n (⊙Ω X)
-  ⊙Ω-Trunc X = ≃-to-⊙≃ (Trunc=-equiv [ pt X ] [ pt X ]) idp
+  ⊙Ω-Trunc X = ≃-to-⊙≃ (=ₜ-equiv [ pt X ] [ pt X ]) idp
 
   step : ∀ {i j} n {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
     → ⊙CommSquareEquiv
@@ -15,7 +15,7 @@ module homotopy.TruncationLoopLadder where
         (⊙–> (⊙Ω-Trunc X))
         (⊙–> (⊙Ω-Trunc Y))
   step n (f , idp) =
-    ⊙comm-sqr (Trunc=-equiv-nat _ _ _ , idp) , snd (⊙Ω-Trunc _) , snd (⊙Ω-Trunc _)
+    ⊙comm-sqr (=ₜ-equiv-nat _ _ _ , idp) , snd (⊙Ω-Trunc _) , snd (⊙Ω-Trunc _)
 
   rail : ∀ m {i} (X : Ptd i)
     → ⊙Ω^' m (⊙Trunc ⟨ m ⟩ X) ⊙→ ⊙Trunc 0 (⊙Ω^' m X)

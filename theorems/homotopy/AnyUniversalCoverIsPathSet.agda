@@ -28,7 +28,7 @@ module _ {j} (univ-cov : ⊙UniversalCover X j) where
     -- and the truncated path spaces from one point.
 
     [path] : ∀ (a⇑₁ a⇑₂ : univ-cov.TotalSpace) → a⇑₁ =₀ a⇑₂
-    [path] a⇑₁ a⇑₂ = –> (Trunc=-equiv [ a⇑₁ ] [ a⇑₂ ])
+    [path] a⇑₁ a⇑₂ = –> (=ₜ-equiv [ a⇑₁ ] [ a⇑₂ ])
       (contr-has-all-paths [ a⇑₁ ] [ a⇑₂ ])
 
     abstract
@@ -36,7 +36,7 @@ module _ {j} (univ-cov : ⊙UniversalCover X j) where
         ∀ {a⇑₁ a⇑₂ : univ-cov.TotalSpace}
         → has-all-paths (a⇑₁ =₀ a⇑₂)
       [path]-has-all-paths {a⇑₁} {a⇑₂} =
-        transport has-all-paths (ua (Trunc=-equiv [ a⇑₁ ] [ a⇑₂ ])) $
+        transport has-all-paths (ua (=ₜ-equiv [ a⇑₁ ] [ a⇑₂ ])) $
           contr-has-all-paths {{has-level-apply (raise-level -2 univ-cov.is-univ) [ a⇑₁ ] [ a⇑₂ ]}}
 
     to : ∀ {a₂} → univ-cov.Fiber a₂ → a₁ =₀ a₂

@@ -113,6 +113,16 @@ module _ {i} {A : Type i} where
     → (idp {a = p}) ∙'2 (idp {a = q}) == idp
   idp∙'2idp idp idp = idp
 
+{- Coherence -}
+
+module _ {i} {A : Type i} where
+
+  ∙-assoc-pentagon : {v w x y z : A} (p : v == w) (q : w == x) (r : x == y) (s : y == z)
+    → ∙-assoc (p ∙ q) r s ∙ ∙-assoc p q (r ∙ s)
+      == ap (λ u → u ∙ s) (∙-assoc p q r) ∙
+         ∙-assoc p (q ∙ r) s ∙ ap (λ u → p ∙ u) (∙-assoc q r s)
+  ∙-assoc-pentagon idp idp r s = idp
+
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
   ap-∙' : {x y z : A} (p : x == y) (q : y == z)

@@ -23,14 +23,9 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   back : south == north
   back = ! (merid e)
 
-  -- TODO: generalize and move somewhere else
-  _==₁_ : (x y : Susp A) → Type i
-  _==₁_ x y = Trunc 1 (x == y)
-
-  -- TODO: generalize and move somewhere else
   infixr 80 _∙₁_
-  _∙₁_ : {x y z : Susp A} → x ==₁ y → y ==₁ z → x ==₁ z
-  _∙₁_ {x} {y} {z} p q = Trunc=-∙ {A = Susp A} {ta = [ x ]} {tb = [ y ]} {tc = [ z ]} p q
+  _∙₁_ : {x y z : Susp A} → Trunc 1 (x == y) → Trunc 1 (y == z) → Trunc 1 (x == z)
+  _∙₁_ {x} {y} {z} p q = _∙ₜ_ {A = Susp A} {ta = [ x ]} {tb = [ y ]} {tc = [ z ]} p q
 
   module _ {k} {B : Type k} where
 
