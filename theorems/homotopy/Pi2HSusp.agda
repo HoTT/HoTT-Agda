@@ -26,8 +26,9 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   back : south == north
   back = ! (merid e)
 
-  P : Susp A → Type i
-  P x = Trunc 1 (north == x)
+  private
+    P : Susp A → Type i
+    P x = Trunc 1 (north == x)
 
   module Codes = SuspRec A A (λ a → ua (μ.r-equiv a))
 

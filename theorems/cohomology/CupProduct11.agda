@@ -4,6 +4,7 @@ open import HoTT
 open import homotopy.EilenbergMacLane
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
 open import homotopy.EM1HSpace
+open import homotopy.EM1HSpaceAssoc
 
 module cohomology.CupProduct11 {i} (R : CRing i) where
 
@@ -12,11 +13,9 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
   private
     module R = CRing R
   open R using () renaming (add-group to R₊)
-  open EM₁HSpace R.add-ab-group renaming (mult to EM₁-mult)
+  open EM₁HSpaceAssoc R.add-ab-group renaming (mult to EM₁-mult; eq' to Pi2HSusp-eq'; comp to Pi2HSusp-comp)
 
   open EMExplicit R.add-ab-group
-  open import homotopy.Pi2HSusp {X = ⊙EM₁ R₊} H-⊙EM₁
-  open import homotopy.Pi2HSuspCompose {X = ⊙EM₁ R₊} H-⊙EM₁
 
   module CP₁₁ where
 
@@ -26,11 +25,11 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
     base' : EM₁ R₊ → EM 2
     base' _ = pt (⊙EM 2)
 
-    e₁ : Ω (⊙EM 2) ≃ (north' (EM₁ R₊) ==₁ north)
+    e₁ : Ω (⊙EM 2) ≃ Trunc 1 (north' (EM₁ R₊) == north)
     e₁ = =ₜ-equiv [ north' (EM₁ R₊) ] [ north' (EM₁ R₊) ]
 
-    e₂ : (north' (EM₁ R₊) ==₁ north) ≃ EM₁ R₊
-    e₂ = eq'
+    e₂ : Trunc 1 (north' (EM₁ R₊) == north) ≃ EM₁ R₊
+    e₂ = Pi2HSusp-eq'
 
     ee : Ω (⊙EM 2) ≃ EM₁ R₊
     ee = e₂ ∘e e₁
@@ -50,7 +49,7 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
         loop'= (R.add g₂ g₁) x
           =⟨ ap (<– ee) (cp₀₁-distr-l g₂ g₁ x) ⟩
         <– ee (μ (cp₀₁ g₂ x) (cp₀₁ g₁ x))
-          =⟨ ap (<– e₁) (comp (cp₀₁ g₂ x) (cp₀₁ g₁ x)) ⟩
+          =⟨ ap (<– e₁) (Pi2HSusp-comp (cp₀₁ g₂ x) (cp₀₁ g₁ x)) ⟩
         <– e₁ ((<– e₂ (cp₀₁ g₁ x)) ∙₁ (<– e₂ (cp₀₁ g₂ x)))
           =⟨ <–-=ₜ-equiv-pres-∙ₜ {x = [ north ]} {y = [ north ]} {z = [ north ]}
                             (<– e₂ (cp₀₁ g₁ x)) (<– e₂ (cp₀₁ g₂ x)) ⟩

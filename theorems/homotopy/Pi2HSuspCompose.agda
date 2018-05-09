@@ -10,18 +10,11 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   (coh-assoc-unit-l-r-pentagon : coh-unit-l-r-pentagon H-X H-X-assoc)
   where
 
-  module μ = ConnectedHSpace H-X
-  μ = μ.μ
   private
     A = de⊙ X
     e = pt X
 
-  import homotopy.SuspAdjointLoop as SAL
-  η : A → north == north
-  η = fst (SAL.η X)
-
-  back : south == north
-  back = ! (merid e)
+  open import homotopy.Pi2HSusp H-X public
 
   infixr 80 _∙₁_
   _∙₁_ : {x y z : Susp A} → Trunc 1 (x == y) → Trunc 1 (y == z) → Trunc 1 (x == z)
@@ -133,7 +126,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
         ◃∙ add-path-inverse-r (η a') (merid e)
         ◃∙ ap (λ v → v ∙ η e) (add-path-inverse-l (merid e) (η a')) ◃∎)
         =↯=⟨ 0 & 2 & (ap η (H-X-assoc e a' e) ◃∙ ap η (μ.unit-l (μ a' e)) ◃∙ ap η (μ.unit-r a') ◃∎)
-               & ap-seq-=↯= η (μ.unit-r (μ e a') ◃∙ μ.unit-l a' ◃∎)
+              & ap-seq-=↯= η (μ.unit-r (μ e a') ◃∙ μ.unit-l a' ◃∎)
                             (H-X-assoc e a' e ◃∙ μ.unit-l (μ a' e) ◃∙ μ.unit-r a' ◃∎)
                             (coh-assoc-unit-l-r-pentagon a') ⟩
       (ap η (H-X-assoc e a' e)
