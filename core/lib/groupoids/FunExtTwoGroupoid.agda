@@ -9,7 +9,8 @@ module lib.groupoids.FunExtTwoGroupoid where
 
 module _ {i j k} (A : Type i) (G : TwoOneSemiCategory j k) where
 
-  module G = TwoOneSemiCategory G
+  private
+    module G = TwoOneSemiCategory G
 
   fun-El : Type (lmax i j)
   fun-El = A → G.El
@@ -66,8 +67,8 @@ module _ {i j k} (A : Type i) (G : TwoOneSemiCategory j k) where
      fun-assoc α (fun-comp β γ) δ ◃∙
      ap (fun-comp α) (fun-assoc β γ δ) ◃∎) ↯∎
 
-  fun-groupoid : TwoOneSemiCategory (lmax i j) (lmax i k)
-  fun-groupoid =
+  fun-semi-cat : TwoOneSemiCategory (lmax i j) (lmax i k)
+  fun-semi-cat =
     record
     { El = fun-El
     ; Arr = fun-Arr
@@ -78,4 +79,92 @@ module _ {i j k} (A : Type i) (G : TwoOneSemiCategory j k) where
       ; assoc = fun-assoc
       ; pentagon-identity = fun-pentagon
       }
+    }
+
+module _ {i j₁ k₁ j₂ k₂} (A : Type i) (G : TwoOneSemiCategory j₁ k₁) (H : TwoOneSemiCategory j₂ k₂)
+  (F : TwoOneSemiCategoryFunctor G H) where
+
+  module G = TwoOneSemiCategory G
+  module H = TwoOneSemiCategory H
+  module F = TwoOneSemiCategoryFunctor F
+  module fun-G = TwoOneSemiCategory (fun-semi-cat A G)
+  module fun-H = TwoOneSemiCategory (fun-semi-cat A H)
+
+  fun-F₀ : fun-G.El → fun-H.El
+  fun-F₀ I = λ a → F.F₀ (I a)
+
+  fun-F₁ : {I J : fun-G.El} → fun-G.Arr I J → fun-H.Arr (fun-F₀ I) (fun-F₀ J)
+  fun-F₁ α = λ a → F.F₁ (α a)
+
+  fun-pres-comp : {I J K : fun-G.El} (α : fun-G.Arr I J) (β : fun-G.Arr J K)
+    → fun-F₁ (fun-G.comp α β) == fun-H.comp (fun-F₁ α) (fun-F₁ β)
+  fun-pres-comp α β = λ= (λ a → F.pres-comp (α a) (β a))
+
+  abstract
+    fun-pres-comp-coh : {I J K L : fun-G.El}
+      (α : fun-G.Arr I J) (β : fun-G.Arr J K) (γ : fun-G.Arr K L)
+      → fun-pres-comp (fun-G.comp α β) γ ∙
+        ap (λ s → fun-H.comp s (fun-F₁ γ)) (fun-pres-comp α β) ∙
+        fun-H.assoc (fun-F₁ α) (fun-F₁ β) (fun-F₁ γ)
+        ==
+        ap fun-F₁ (fun-G.assoc α β γ) ∙
+        fun-pres-comp α (fun-G.comp β γ) ∙
+        ap (fun-H.comp (fun-F₁ α)) (fun-pres-comp β γ)
+    fun-pres-comp-coh α β γ =
+      (fun-pres-comp (fun-G.comp α β) γ ◃∙
+      ap (λ s → fun-H.comp s (fun-F₁ γ)) (fun-pres-comp α β) ◃∙
+      fun-H.assoc (fun-F₁ α) (fun-F₁ β) (fun-F₁ γ) ◃∎)
+        =↯=⟨ 1 & 1 & λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a))) ◃∎
+              & λ=-ap (λ a s → H.comp s (fun-F₁ γ a) ) (λ a → F.pres-comp (α a) (β a)) ⟩
+      (fun-pres-comp (fun-G.comp α β) γ ◃∙
+      λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a))) ◃∙
+      fun-H.assoc (fun-F₁ α) (fun-F₁ β) (fun-F₁ γ) ◃∎)
+        =↯=⟨ 1 & 2 & λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)) ∙
+                                H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ◃∎
+                & ∙-λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)))
+                      (λ a → H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ⟩
+      (fun-pres-comp (fun-G.comp α β) γ ◃∙
+      λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)) ∙
+                H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ◃∎)
+        ↯=⟨ ∙-λ= (λ a → F.pres-comp (G.comp (α a) (β a)) (γ a))
+                (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)) ∙
+                        H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ⟩
+      λ= (λ a → F.pres-comp (G.comp (α a) (β a)) (γ a) ∙
+                ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)) ∙
+                H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a))
+        =⟨ ap λ= (λ= (λ a → F.pres-comp-coh (α a) (β a) (γ a))) ⟩
+      λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a)) ∙
+                F.pres-comp (α a) (G.comp (β a) (γ a)) ∙
+                ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a)))
+        =⟨ ! (∙-λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a)))
+                  (λ a → F.pres-comp (α a) (G.comp (β a) (γ a)) ∙
+                          ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a)))) ⟩
+      (λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a))) ◃∙
+      λ= (λ a → F.pres-comp (α a) (G.comp (β a) (γ a)) ∙
+                ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎)
+        =↯=⟨ 1 & 1 & (fun-pres-comp α (fun-G.comp β γ) ◃∙
+                      λ= (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎)
+                      & ! $ ∙-λ= (λ a → F.pres-comp (α a) (G.comp (β a) (γ a)))
+                                (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ⟩
+      (λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a))) ◃∙
+      fun-pres-comp α (fun-G.comp β γ) ◃∙
+      λ= (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎)
+        =↯=⟨ 0 & 1 & ap fun-F₁ (fun-G.assoc α β γ) ◃∎
+              & ! $ λ=-ap (λ _ → F.F₁) (λ a → G.assoc (α a) (β a) (γ a)) ⟩
+      (ap fun-F₁ (fun-G.assoc α β γ) ◃∙
+      fun-pres-comp α (fun-G.comp β γ) ◃∙
+      λ= (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎)
+        =↯=⟨ 2 & 1 & ap (fun-H.comp (fun-F₁ α)) (fun-pres-comp β γ) ◃∎
+              & ! $ λ=-ap (λ a → H.comp (fun-F₁ α a)) (λ a → F.pres-comp (β a) (γ a)) ⟩
+      (ap fun-F₁ (fun-G.assoc α β γ) ◃∙
+      fun-pres-comp α (fun-G.comp β γ) ◃∙
+      ap (fun-H.comp (fun-F₁ α)) (fun-pres-comp β γ) ◃∎) ↯∎
+
+  fun-functor : TwoOneSemiCategoryFunctor (fun-semi-cat A G) (fun-semi-cat A H)
+  fun-functor =
+    record
+    { F₀ = fun-F₀
+    ; F₁ = fun-F₁
+    ; pres-comp = fun-pres-comp
+    ; pres-comp-coh = fun-pres-comp-coh
     }
