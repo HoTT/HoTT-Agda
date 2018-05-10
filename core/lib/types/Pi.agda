@@ -401,14 +401,30 @@ easy as it seems.
 
 {- Functoriality of application and function extensionality -}
 
-∙-app= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B}
-  (α : f == g) (β : g == h)
-  → α ∙ β == λ= (λ x → app= α x ∙ app= β x)
-∙-app= idp β = λ=-η β
+module _ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B} where
 
-∙-λ= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B}
-  (α : f ∼ g) (β : g ∼ h)
-  → λ= α ∙ λ= β == λ= (λ x → α x ∙ β x)
-∙-λ= α β = ∙-app= (λ= α) (λ= β)
-  ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)
-                   ∙ ap (λ w → α x ∙ w) (app=-β β x)))
+  ∙-app= : (α : f == g) (β : g == h)
+    → α ∙ β == λ= (λ x → app= α x ∙ app= β x)
+  ∙-app= idp β = λ=-η β
+
+  ∙-λ= : (α : f ∼ g) (β : g ∼ h)
+    → λ= α ∙ λ= β == λ= (λ x → α x ∙ β x)
+  ∙-λ= α β = ∙-app= (λ= α) (λ= β)
+    ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)
+                    ∙ ap (λ w → α x ∙ w) (app=-β β x)))
+
+module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  {f g : Π A B} (h : (a : A) → B a → C a) where
+
+  app=-ap : (α : f == g)
+    → ap (λ f' a → h a (f' a)) α == λ= (λ a → ap (h a) (app= α a))
+  app=-ap idp = λ=-η idp
+
+  λ=-ap : (α : f ∼ g)
+    → ap (λ f' a → h a (f' a)) (λ= α) == λ= (λ a → ap (h a) (α a))
+  λ=-ap α =
+    ap (λ f' a → h a (f' a)) (λ= α)
+      =⟨ app=-ap (λ= α) ⟩
+    λ= (λ a → ap (h a) (app= (λ= α) a))
+      =⟨ ap λ= (λ= (λ a → ap (ap (h a)) (app=-β α a))) ⟩
+    λ= (λ a → ap (h a) (α a)) =∎
