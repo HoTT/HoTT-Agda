@@ -3,6 +3,8 @@
 open import lib.Basics
 open import lib.types.PathSeq
 open import lib.types.Paths using (homotopy-naturality)
+open import lib.types.Group
+open import lib.groups.Homomorphism
 
 module lib.types.TwoGroupoid where
 
@@ -408,3 +410,33 @@ comp-two-groupoid-functors {C = C} {D = D} {E = E} F G =
       (pres-comp a C.ident
       ◃∙ ap (E.comp (F₁ a)) (pres-ident y)
       ◃∙ E.unit-r (F₁ a) ◃∎) ↯∎
+
+two-one-semi-cat-from-group : ∀ {i} → Group i → TwoOneSemiCategory lzero i
+two-one-semi-cat-from-group G =
+  record
+  { El = ⊤
+  ; Arr = λ _ _ → G.El
+  ; Arr-level = λ _ _ → raise-level 0 G.El-level
+  ; two-one-semi-cat-struct =
+    record
+    { comp = G.comp
+    ; assoc = G.assoc
+    ; pentagon-identity = λ _ _ _ _ → prop-path (has-level-apply G.El-level _ _) _ _
+    }
+  }
+  where
+    module G = Group G
+
+semi-cat-functor-from-homomorphism : ∀ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
+  → TwoOneSemiCategoryFunctor (two-one-semi-cat-from-group G) (two-one-semi-cat-from-group H)
+semi-cat-functor-from-homomorphism {G = G} {H = H} φ =
+  record
+  { F₀ = idf ⊤
+  ; F₁ = φ.f
+  ; pres-comp = φ.pres-comp
+  ; pres-comp-coh = λ _ _ _ → prop-path (has-level-apply H.El-level _ _) _ _
+  }
+  where
+    module G = Group G
+    module H = Group H
+    module φ = GroupHom φ
