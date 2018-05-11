@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.types.Pi
 open import lib.types.TwoGroupoid
+open import lib.groupoids.TwoOneSemiCatFunctorInverse
 open import lib.types.PathSeq
 
 module lib.groupoids.FunExtTwoGroupoid where
@@ -168,3 +169,61 @@ module _ {i j₁ k₁ j₂ k₂} (A : Type i) (G : TwoOneSemiCategory j₁ k₁)
     ; pres-comp = fun-pres-comp
     ; pres-comp-coh = fun-pres-comp-coh
     }
+
+module _ {i j} (A : Type i) (B : Type j) {{B-level : has-level 2 B}} where
+
+  open import lib.groupoids.FundamentalPreTwoGroupoid
+
+  private
+
+    A→B-semi-cat : TwoOneSemiCategory (lmax i j) (lmax i j)
+    A→B-semi-cat = fundamental-two-one-semi-category-of-a-two-type (A → B)
+
+    Bᴬ-functor-semi-cat : TwoOneSemiCategory (lmax i j) (lmax i j)
+    Bᴬ-functor-semi-cat = fun-semi-cat A (fundamental-two-one-semi-category-of-a-two-type B)
+
+    fun-ext-pres-comp : ∀ {f g h : A → B} (α : f == g) (β : g == h) → app= (α ∙ β) == (λ a → app= α a ∙ app= β a)
+    fun-ext-pres-comp α β = λ= (λ a → ap-∙ (λ f → f a) α β)
+
+    fun-ext-pres-comp-coh : ∀ {f g h i : A → B} (α : f == g) (β : g == h) (γ : h == i)
+      → fun-ext-pres-comp (α ∙ β) γ ∙
+        ap (λ s a → s a ∙ app= γ a) (fun-ext-pres-comp α β) ∙
+        λ= (λ a → ∙-assoc (app= α a) (app= β a) (app= γ a))
+        ==
+        ap app= (∙-assoc α β γ) ∙
+        fun-ext-pres-comp α (β ∙ γ) ∙
+        ap (λ s a → app= α a ∙ s a) (fun-ext-pres-comp β γ)
+    fun-ext-pres-comp-coh {f} idp idp γ =
+      (fun-ext-pres-comp idp γ ◃∙
+       ap (λ s a → s a ∙ app= γ a) (fun-ext-pres-comp idp idp) ◃∙
+       λ= (λ a → idp) ◃∎)
+        =↯=⟨ 2 & 1 & (_ ∎∎)
+               & ! (λ=-η idp) ⟩
+      (fun-ext-pres-comp idp γ ◃∙
+       ap (λ s a → s a ∙ app= γ a) (fun-ext-pres-comp idp idp) ◃∎)
+        ↯=⟨ idp ⟩
+      (fun-ext-pres-comp idp γ ◃∙
+       ap (λ s a → s a ∙ app= γ a) (λ= (λ a → ap-∙ (λ f → f a) (idp {a = f}) idp)) ◃∎)
+        =↯=⟨ 1 & 1 & fun-ext-pres-comp idp γ ◃∎
+               & λ=-ap (λ a t → t ∙ app= γ a) (λ a → ap-∙ (λ f → f a) (idp {a = f}) idp) ⟩
+      (fun-ext-pres-comp idp γ ◃∙
+       fun-ext-pres-comp idp γ ◃∎)
+        =↯=⟨ 1 & 1 & ap (λ s a → s a) (fun-ext-pres-comp idp γ) ◃∎
+               & ! (ap-idf (fun-ext-pres-comp idp γ)) ⟩
+      (fun-ext-pres-comp idp γ ◃∙
+       ap (λ s a → s a) (fun-ext-pres-comp idp γ) ◃∎) ↯∎
+
+  fun-ext-functor : TwoOneSemiCategoryFunctor A→B-semi-cat Bᴬ-functor-semi-cat
+  fun-ext-functor =
+    record
+    { F₀ = idf (A → B)
+    ; F₁ = app=
+    ; pres-comp = fun-ext-pres-comp
+    ; pres-comp-coh = fun-ext-pres-comp-coh
+    }
+
+  fun-ext-functor-inv : TwoOneSemiCategoryFunctor Bᴬ-functor-semi-cat A→B-semi-cat
+  fun-ext-functor-inv =
+    semi-cat-functor-inverse fun-ext-functor
+      (idf-is-equiv _)
+      (λ f g → snd app=-equiv)
