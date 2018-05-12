@@ -440,3 +440,46 @@ semi-cat-functor-from-homomorphism {G = G} {H = H} φ =
     module G = Group G
     module H = Group H
     module φ = GroupHom φ
+
+dual-two-one-semi-cat : ∀ {i j} → TwoOneSemiCategory i j → TwoOneSemiCategory i j
+dual-two-one-semi-cat G =
+  record
+  { El = G.El
+  ; Arr = λ x y → G.Arr y x
+  ; Arr-level = λ x y → G.Arr-level y x
+  ; two-one-semi-cat-struct =
+    record
+    { comp = λ f g → G.comp g f
+    ; assoc = λ f g h → ! (G.assoc h g f)
+    ; pentagon-identity = λ f g h i →
+      ! (G.assoc i h (G.comp g f)) ∙ ! (G.assoc (G.comp i h) g f)
+        =⟨ ∙-! (G.assoc i h (G.comp g f)) (G.assoc (G.comp i h) g f) ⟩
+      ! (G.assoc (G.comp i h) g f ∙ G.assoc i h (G.comp g f))
+        =⟨ ap ! (G.pentagon-identity i h g f) ⟩
+      ! (ap (λ s → G.comp s f) (G.assoc i h g) ∙
+         G.assoc i (G.comp h g) f ∙
+         ap (G.comp i) (G.assoc h g f))
+        =⟨ !-∙ (ap (λ s → G.comp s f) (G.assoc i h g))
+               (G.assoc i (G.comp h g) f ∙ ap (G.comp i) (G.assoc h g f)) ⟩
+      (! (G.assoc i (G.comp h g) f ∙
+          ap (G.comp i) (G.assoc h g f)) ◃∙
+       ! (ap (λ s → G.comp s f) (G.assoc i h g)) ◃∎)
+        =↯=⟨ 0 & 1 & (! (ap (G.comp i) (G.assoc h g f)) ◃∙
+                      ! (G.assoc i (G.comp h g) f) ◃∎) &
+             !-∙ (G.assoc i (G.comp h g) f) (ap (G.comp i) (G.assoc h g f)) ⟩
+      (! (ap (G.comp i) (G.assoc h g f)) ◃∙
+       ! (G.assoc i (G.comp h g) f) ◃∙
+       ! (ap (λ s → G.comp s f) (G.assoc i h g)) ◃∎)
+        =↯=⟨ 0 & 1 & ap (G.comp i) (! (G.assoc h g f)) ◃∎ &
+             !-ap (G.comp i) (G.assoc h g f) ⟩
+      (ap (G.comp i) (! (G.assoc h g f)) ◃∙
+      ! (G.assoc i (G.comp h g) f) ◃∙
+      ! (ap (λ s → G.comp s f) (G.assoc i h g)) ◃∎)
+        =↯=⟨ 2 & 1 & ap (λ s → G.comp s f) (! (G.assoc i h g)) ◃∎ &
+             !-ap (λ s → G.comp s f) (G.assoc i h g) ⟩
+      ap (G.comp i) (! (G.assoc h g f)) ∙
+      ! (G.assoc i (G.comp h g) f) ∙
+      ap (λ s → G.comp s f) (! (G.assoc i h g)) =∎
+    }
+  }
+  where module G = TwoOneSemiCategory G
