@@ -483,3 +483,22 @@ dual-two-one-semi-cat G =
     }
   }
   where module G = TwoOneSemiCategory G
+
+from-double-dual : ∀ {i j} → (G : TwoOneSemiCategory i j)
+  → TwoOneSemiCategoryFunctor
+      (dual-two-one-semi-cat (dual-two-one-semi-cat G))
+      G
+from-double-dual G =
+  record
+  { F₀ = λ x → x
+  ; F₁ = λ f → f
+  ; pres-comp = λ f g → idp
+  ; pres-comp-coh = λ f g h →
+    TwoOneSemiCategory.assoc G f g h
+      =⟨ ! (!-! (TwoOneSemiCategory.assoc G f g h)) ⟩
+    ! (! (TwoOneSemiCategory.assoc G f g h))
+      =⟨ ! (ap-idf _) ⟩
+    ap (λ f → f) (! (! (TwoOneSemiCategory.assoc G f g h)))
+      =⟨ ! (∙-unit-r _) ⟩
+    ap (λ f → f) (! (! (TwoOneSemiCategory.assoc G f g h))) ∙ idp =∎
+  }
