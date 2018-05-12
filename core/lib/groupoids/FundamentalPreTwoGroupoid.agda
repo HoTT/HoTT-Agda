@@ -46,6 +46,7 @@ module _ {i} (A : Type i) where
       }
     }
 
+  {-
   _=₁_ : A → A → Type i
   _=₁_ x y = Trunc 1 (x == y)
 
@@ -112,6 +113,7 @@ module _ {i} (A : Type i) where
       == ∙₁-assoc a (!₁ a) a ∙ ap (_∙₁_ a) (!₁-inv-l a) ∙ ∙₁-unit-r a
     ∙₁-inv-coherence' : {v w : A} (p : v == w) → P [ p ]₁
     ∙₁-inv-coherence' idp = idp
+  -}
 
   fundamental-two-one-semi-category : TwoOneSemiCategory i i
   fundamental-two-one-semi-category =

@@ -3,6 +3,8 @@
 open import HoTT
 open import homotopy.HSpace renaming (HSpaceStructure to HSS)
 import homotopy.WedgeExtension as WedgeExt
+open import lib.types.TwoGroupoid
+open import lib.groupoids.FundamentalPreTwoGroupoid
 
 module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   {{is-0-connected : is-connected 0 (de⊙ X)}} (H-X : HSS X)
@@ -83,7 +85,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
 
     P : A → A → Type i
     P a a'' =
-      comp (μ a a') a'' ∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ∙ ap [_]₁ (! (∙-assoc (η a'') (η a') (η a)))
+      comp (μ a a') a'' ∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ∙ ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a)))
       == ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ∙ comp a (μ a' a'') ∙ ap (λ v → v ∙₁ [ η a ]) (comp a' a'')
 
     P-is-prop : ∀ a a'' → is-prop (P a a'')
@@ -155,6 +157,9 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
 
     coh : P e e
     coh =
+      (comp (μ e a') e ◃∙ ap (_∙₁_ [ η e ]₁) (comp e a') ◃∙ ! (ap [_]₁ (∙-assoc (η e) (η a') (η e))) ◃∎)
+        =↯=⟨ 2 & 1 & ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎
+               & !-ap [_]₁ (∙-assoc (η e) (η a') (η e)) ⟩
       (comp (μ e a') e ◃∙ ap (_∙₁_ [ η e ]₁) (comp e a') ◃∙ ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎)
         =↯=⟨ 0 & 1 & (comp-r₁ (μ e a') ◃∎) & comp-unit-r (μ e a') ⟩
       (comp-r₁ (μ e a') ◃∙ ap (_∙₁_ [ η e ]₁) (comp e a') ◃∙ ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎)
@@ -192,7 +197,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
         ap (λ v → v ∙₁ [ η e ]) (comp a' e) ∎
 
   comp-coh : (a a' a'' : A)
-    →  comp (μ a a') a'' ∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ∙ ap [_]₁ (! (∙-assoc (η a'') (η a') (η a)))
+    →  comp (μ a a') a'' ∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ∙ ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a)))
     == ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ∙ comp a (μ a' a'') ∙ ap (λ v → v ∙₁ [ η a ]) (comp a' a'')
   comp-coh a a' a'' =
     prop-over-connected {A = A} {a = e} {{is-0-connected}}
@@ -202,3 +207,15 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
                                              (CoherenceProof.coh a')
                                              a'')
                         a
+
+  comp-functor : (pentagon : coh-assoc-pentagon H-X H-X-assoc)
+    → TwoOneSemiCategoryFunctor
+        (HSpace-2-semi-category H-X {{⟨⟩}} H-X-assoc pentagon)
+        (dual-two-one-semi-cat (fundamental-two-one-semi-category (Susp (de⊙ X))))
+  comp-functor _ =
+    record
+    { F₀ = λ _ → [ north ]
+    ; F₁ = λ x → [ η x ]
+    ; pres-comp = comp
+    ; pres-comp-coh = comp-coh
+    }
