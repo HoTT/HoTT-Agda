@@ -19,6 +19,7 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
 
   module CP₁₁ where
 
+    {-
     base'' : EM₁ R₊ → Susp (EM₁ R₊)
     base'' _ = north' (EM₁ R₊)
 
@@ -70,12 +71,10 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
       coh' : comp' (R.add g₁ g₂) g₃ ∙ ap (λ l → l ∙ loop' g₃) (comp' g₁ g₂) ∙ ∙-assoc (loop' g₁) (loop' g₂) (loop' g₃) ==
              ap loop' (R.add-assoc g₁ g₂ g₃) ∙ comp' g₁ (R.add g₂ g₃) ∙ ap (λ l → loop' g₁ ∙ l) (comp' g₂ g₃)
       coh' = {!!}
+    -}
 
     cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
     cp₁₁ =
       EM₁-rec
         {C = EM₁ R₊ → EM 2}
-        base'
-        loop'
-        comp'
-        coh'
+        ?

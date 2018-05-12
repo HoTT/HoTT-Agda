@@ -98,10 +98,10 @@ conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t = has-level-in
     Q : (g h : Π B (fst ∘ P)) → B → (k' +2+ n) -Type _
     Q g h b = ((g b == h b) , has-level-apply (snd (P b)) _ _)
 
-    app=-ap : ∀ {i j k} {A : Type i} {B : Type j} {C : B → Type k}
+    app=-∘ : ∀ {i j k} {A : Type i} {B : Type j} {C : B → Type k}
       (f : A → B) {g h : Π B C} (p : g == h)
       → app= (ap (λ k → k ∘ f) p) == (app= p ∘ f)
-    app=-ap f idp = idp
+    app=-∘ f idp = idp
 
     move-right-on-right-econv : ∀ {i} {A : Type i} {x y z : A}
       (p : x == y) (q : x == z) (r : y == z)
@@ -116,7 +116,7 @@ conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t = has-level-in
       move-right-on-right-econv (ap (λ v → v ∘ f) (λ= H)) p q
       ∘e transport (λ w → (w == app= (p ∙ ! q))
                       ≃ (ap (λ v → v ∘ f) (λ= H) == p ∙ ! q))
-                   (app=-ap f (λ= H) ∙ ap (λ k → k ∘ f) (λ= $ app=-β H))
+                   (app=-∘ f (λ= H) ∙ ap (λ k → k ∘ f) (λ= $ app=-β H))
                    (ap-equiv app=-equiv _ _ ⁻¹)
 
     e : ∀ g h p q  →

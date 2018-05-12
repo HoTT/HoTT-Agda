@@ -159,3 +159,18 @@ module _ {i} (A : Type i) where
       -- Can we optimize this somehow?
     ; pres-comp-coh = λ {ta} p q r → –>-=ₜ-equiv-pres-∙-coh {ta = ta} p q r
     }
+
+module _ {i} (C : Type i) (c₀ : C) {{C-level : has-level 1 C}} where
+
+  open import lib.groups.LoopSpace
+
+  fundamental-group-to-fundamental-groupoid
+    : TwoOneSemiCategoryFunctor (two-one-semi-cat-from-group (Ω^S-group 0 ⊙[ C , c₀ ]))
+                                (fundamental-two-one-semi-category-of-a-two-type C {{raise-level 1 C-level}})
+  fundamental-group-to-fundamental-groupoid =
+    record
+    { F₀ = λ _ → c₀
+    ; F₁ = λ p → p
+    ; pres-comp = λ p q → idp
+    ; pres-comp-coh = λ p q r → prop-path (has-level-apply (has-level-apply C-level _ _) _ _) _ _
+    }
