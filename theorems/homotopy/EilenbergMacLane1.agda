@@ -47,10 +47,10 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
           ∙ nType=-out {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂))
             =∎
 
+    module CodesRec = EM₁Level₁Rec {G = G} {C = 0 -Type i} (G.El , G.El-level) Codes-hom
+
     Codes : EM₁ G → 0 -Type i
-    Codes = EM₁-level₁-rec {G = G} {C = 0 -Type i}
-                           (G.El , G.El-level)
-                           Codes-hom
+    Codes = CodesRec.f
 
     abstract
       ↓-Codes-loop : ∀ g g' → g' == G.comp g' g [ fst ∘ Codes ↓ emloop g ]
@@ -58,7 +58,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
         ↓-ap-out fst Codes (emloop g) $
         ↓-ap-out (idf _) fst (ap Codes (emloop g)) $
         transport (λ w → g' == G.comp g' g [ idf _ ↓ ap fst w ])
-                  (! (EM₁Level₁Rec.emloop-β (G.El , G.El-level) Codes-hom g)) $
+                  (! (CodesRec.emloop-β g)) $
         transport (λ w → g' == G.comp g' g [ idf _ ↓ w ])
                   (! (fst=-β (ua $ comp-equiv g) _)) $
         ↓-idf-ua-in (comp-equiv g) idp
