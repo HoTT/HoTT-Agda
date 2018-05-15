@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-open import lib.types.TwoGroupoid
+open import lib.types.TwoSemiCategory
 
 module homotopy.HSpace where
 
@@ -121,13 +121,13 @@ module _ {i} {X : Ptd i} (hX : HSpaceStructure X) where
   HSpace-2-semi-category : {{X-level : has-level 1 (de⊙ X)}}
     → (assoc : associator)
     → coh-assoc-pentagon assoc
-    → TwoOneSemiCategory lzero i
+    → TwoSemiCategory lzero i
   HSpace-2-semi-category assoc assoc-coh =
     record
     { El = ⊤
     ; Arr = λ _ _ → de⊙ X
     ; Arr-level = λ _ _ → ⟨⟩
-    ; two-one-semi-cat-struct =
+    ; two-semi-cat-struct =
       record
       { comp = hX.μ
       ; assoc = assoc

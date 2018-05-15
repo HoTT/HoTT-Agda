@@ -3,9 +3,10 @@
 open import lib.Basics
 open import lib.types.PathSeq
 open import lib.types.Paths
-open import lib.types.TwoGroupoid
+open import lib.types.TwoSemiCategory
+open import lib.two-semi-categories.Functor
 
-module lib.groupoids.TwoOneSemiCatFunctorInverse where
+module lib.two-semi-categories.FunctorInverse where
 
 module _ {k l} {B : Type k} {C : B → B → Type l}
   (comp : {b b' b'' : B} → C b b' → C b' b'' → C b b'') where
@@ -34,13 +35,13 @@ module _ {k l} {B : Type k} {C : B → B → Type l}
   coe-comp-coh assoc idp idp idp idp f g h =
     ! (ap-idf (assoc f g h)) ∙ ! (∙-unit-r (ap (coe-C idp idp) (assoc f g h)))
 
-semi-cat-functor-inverse : ∀ {i₁ j₁ i₂ j₂}
-  {C : TwoOneSemiCategory i₁ j₁} {D : TwoOneSemiCategory i₂ j₂}
-  → (F : TwoOneSemiCategoryFunctor C D)
-  → is-equiv (TwoOneSemiCategoryFunctor.F₀ F)
-  → ((x y : TwoOneSemiCategory.El C) → is-equiv (TwoOneSemiCategoryFunctor.F₁ F {x} {y}))
-  → TwoOneSemiCategoryFunctor D C
-semi-cat-functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
+functor-inverse : ∀ {i₁ j₁ i₂ j₂}
+  {C : TwoSemiCategory i₁ j₁} {D : TwoSemiCategory i₂ j₂}
+  → (F : TwoSemiFunctor C D)
+  → is-equiv (TwoSemiFunctor.F₀ F)
+  → ((x y : TwoSemiCategory.El C) → is-equiv (TwoSemiFunctor.F₁ F {x} {y}))
+  → TwoSemiFunctor D C
+functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
   record
   { F₀ = F₀
   ; F₁ = F₁
@@ -48,9 +49,9 @@ semi-cat-functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
   ; pres-comp-coh = pres-comp-coh
   }
   where
-    module C = TwoOneSemiCategory C
-    module D = TwoOneSemiCategory D
-    module F = TwoOneSemiCategoryFunctor F
+    module C = TwoSemiCategory C
+    module D = TwoSemiCategory D
+    module F = TwoSemiFunctor F
     F₀ : D.El → C.El
     F₀ = is-equiv.g F₀-equiv
     F₁' : {x y : D.El} → D.Arr (F.F₀ (F₀ x)) (F.F₀ (F₀ y)) → C.Arr (F₀ x) (F₀ y)

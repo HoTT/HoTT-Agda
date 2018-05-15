@@ -4,8 +4,8 @@ open import HoTT
 open import homotopy.HSpace
 open import homotopy.EM1HSpace
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
-open import lib.types.TwoGroupoid
-open import lib.groupoids.FundamentalPreTwoGroupoid
+open import lib.types.TwoSemiCategory
+open import lib.two-semi-categories.FundamentalCategory
 
 module homotopy.EM1HSpaceAssoc where
 
@@ -98,13 +98,13 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
       P-level : ∀ w x y z → is-prop (P w x y z)
       P-level w x y z = has-level-apply (has-level-apply (EM₁-level₁ G.grp) _ _) _ _
 
-  EM₁-2-semi-category : TwoOneSemiCategory lzero i
+  EM₁-2-semi-category : TwoSemiCategory lzero i
   EM₁-2-semi-category = HSpace-2-semi-category H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-pentagon
 
   comp-functor :
-    TwoOneSemiCategoryFunctor
+    TwoSemiFunctor
       EM₁-2-semi-category
-      (dual-two-one-semi-cat (fundamental-two-one-semi-category (Susp (EM₁ G.grp))))
+      (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ G.grp))))
   comp-functor =
     record
     { F₀ = λ _ → [ north ]

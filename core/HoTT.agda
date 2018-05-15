@@ -15,6 +15,7 @@ open import lib.types.Types public
 open import lib.groups.Groups public
 open import lib.groupoids.Groupoids public
 open import lib.modalities.Modalities public
+open import lib.two-semi-categories.TwoSemiCategories public
 
 {-
 To use coinduction in the form of [∞], [♭] and [♯] you can do:

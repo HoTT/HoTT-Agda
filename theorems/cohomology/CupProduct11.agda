@@ -5,9 +5,9 @@ open import homotopy.EilenbergMacLane
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
 open import homotopy.EM1HSpace
 open import homotopy.EM1HSpaceAssoc
-open import lib.types.TwoGroupoid
-open import lib.groupoids.FundamentalPreTwoGroupoid
-open import lib.groupoids.FunExtTwoGroupoid
+open import lib.types.TwoSemiCategory
+open import lib.two-semi-categories.FundamentalCategory
+open import lib.two-semi-categories.FunCategory
 
 module cohomology.CupProduct11 {i} (R : CRing i) where
 
@@ -76,13 +76,13 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
       coh' = {!!}
     -}
 
-    F : TwoOneSemiCategoryFunctor (two-one-semi-cat-from-group R₊) (fundamental-two-one-semi-category-of-a-two-type (EM₁ R₊ → EM 2))
+    F : TwoSemiFunctor (group-to-cat R₊) (2-type-fundamental-cat (EM₁ R₊ → EM 2))
     F =
-      ab-group-semicategory-to-dual R.add-ab-group ∙F∙
-      dual-map group-to-EM₁-endos ∙F∙
-      {!dual-map fun-functor (EM₁ R₊) comp-functor) ∙F∙
+      ab-group-cat-to-dual R.add-ab-group ∙F∙
+      dual-functor-map group-to-EM₁-endos ∙F∙
+      {!dual-functor-map fun-functor-map (EM₁ R₊) comp-functor) ∙F∙
       ? !} ∙F∙
-      fun-ext-functor-inv (EM₁ R₊) (EM 2)
+      λ=-functor (EM₁ R₊) (EM 2)
       where
       infixr 80 _∙F∙_
       _∙F∙_ = comp-semi-cat-functors

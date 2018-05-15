@@ -4,9 +4,9 @@ open import HoTT
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
 -- open import homotopy.EM1HSpace
 open import homotopy.EM1HSpaceAssoc
-open import lib.types.TwoGroupoid
-open import lib.groupoids.FunExtTwoGroupoid
-open import lib.groupoids.FundamentalPreTwoGroupoid
+open import lib.types.TwoSemiCategory
+open import lib.two-semi-categories.FunCategory
+open import lib.two-semi-categories.FundamentalCategory
 
 module cohomology.CupProduct01 {i} (R : CRing i) where
 
@@ -113,12 +113,12 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
       ap (cst embase) (R.add-assoc g₁ g₂ g₃) ∙ idp =∎)
 
   group-to-EM₁-endos :
-    TwoOneSemiCategoryFunctor
-      (two-one-semi-cat-from-group R₊)
-      (fun-semi-cat (EM₁ R₊) EM₁-2-semi-category)
+    TwoSemiFunctor
+      (group-to-cat R₊)
+      (fun-cat (EM₁ R₊) EM₁-2-semi-category)
   group-to-EM₁-endos =
     record
-    { F₀ = λ _ _ → record {}
+    { F₀ = λ _ _ → unit
     ; F₁ = λ g x → cp₀₁ g x
     ; pres-comp = λ g₁ g₂ → λ= (cp₀₁-distr-l g₁ g₂)
     ; pres-comp-coh = pres-comp-coh
@@ -178,13 +178,13 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
 
 {-
   group-to-EM₁→EM₂-op :
-    TwoOneSemiCategoryFunctor
-      (two-one-semi-cat-from-group R₊)
-      (fun-semi-cat (EM₁ R₊) (dual-two-one-semi-cat (fundamental-two-one-semi-category (Susp (EM₁ R₊)))))
+    TwoSemiFunctor
+      (group-to-cat R₊)
+      (fun-cat (EM₁ R₊) (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊)))))
   group-to-EM₁→EM₂-op =
-    comp-semi-cat-functors {C = two-one-semi-cat-from-group R₊}
-                           {D = fun-semi-cat (EM₁ R₊) EM₁-2-semi-category}
-                           {E = fun-semi-cat (EM₁ R₊) (dual-two-one-semi-cat (fundamental-two-one-semi-category (Susp (EM₁ R₊))))}
+    comp-semi-cat-functors {C = group-to-cat R₊}
+                           {D = fun-cat (EM₁ R₊) EM₁-2-semi-category}
+                           {E = fun-cat (EM₁ R₊) (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊))))}
                            group-to-EM₁-endos
-                           (fun-functor (EM₁ R₊) {G = EM₁-2-semi-category} {H = dual-two-one-semi-cat (fundamental-two-one-semi-category (Susp (EM₁ R₊)))} {!comp-functor!})
+                           (fun-functor-map (EM₁ R₊) {G = EM₁-2-semi-category} {H = dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊)))} {!comp-functor!})
 -}

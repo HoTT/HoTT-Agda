@@ -9,8 +9,10 @@ open import lib.types.Truncation
 open import lib.types.Group
 open import lib.groups.LoopSpace
 open import lib.groups.Homomorphism
-open import lib.types.TwoGroupoid
-open import lib.groupoids.FundamentalPreTwoGroupoid
+open import lib.types.TwoSemiCategory
+open import lib.two-semi-categories.FundamentalCategory
+open import lib.two-semi-categories.Functor
+open import lib.two-semi-categories.GroupToCategory
 
 module lib.types.EilenbergMacLane1 {i} where
 
@@ -383,12 +385,12 @@ module _ {G : Group i} where
 
   module EM₁Rec {j} {C : Type j}
     {{C-level : has-level ⟨ 2 ⟩ C}}
-    (F : TwoOneSemiCategoryFunctor (two-one-semi-cat-from-group G) (fundamental-two-one-semi-category-of-a-two-type C)) where
+    (F : TwoSemiFunctor (group-to-cat G) (2-type-fundamental-cat C)) where
 
     private
-      module F = TwoOneSemiCategoryFunctor F
+      module F = TwoSemiFunctor F
       module M = EM₁Rec' {C = C} {{C-level}}
-                         (F.F₀ (record {}))
+                         (F.F₀ (unit))
                          F.F₁
                          F.pres-comp
                          F.pres-comp-coh

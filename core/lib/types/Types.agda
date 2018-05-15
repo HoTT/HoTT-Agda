@@ -48,6 +48,7 @@ open import lib.types.Suspension public
 open import lib.types.TLevel public
 open import lib.types.Torus public
 open import lib.types.Truncation public
+open import lib.types.TwoSemiCategory public
 open import lib.types.Unit public
 open import lib.types.Wedge public
 open import lib.types.Word public

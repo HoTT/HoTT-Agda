@@ -3,8 +3,8 @@
 open import HoTT
 open import homotopy.HSpace renaming (HSpaceStructure to HSS)
 import homotopy.WedgeExtension as WedgeExt
-open import lib.types.TwoGroupoid
-open import lib.groupoids.FundamentalPreTwoGroupoid
+open import lib.types.TwoSemiCategory
+open import lib.two-semi-categories.FundamentalCategory
 
 module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   {{is-0-connected : is-connected 0 (de⊙ X)}} (H-X : HSS X)
@@ -210,9 +210,9 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
                           a
 
   comp-functor : (pentagon : coh-assoc-pentagon H-X H-X-assoc)
-    → TwoOneSemiCategoryFunctor
+    → TwoSemiFunctor
         (HSpace-2-semi-category H-X {{⟨⟩}} H-X-assoc pentagon)
-        (dual-two-one-semi-cat (fundamental-two-one-semi-category (Susp (de⊙ X))))
+        (dual-cat (=ₜ-fundamental-cat (Susp (de⊙ X))))
   comp-functor _ =
     record
     { F₀ = λ _ → [ north ]
