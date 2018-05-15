@@ -442,47 +442,97 @@ semi-cat-functor-from-homomorphism {G = G} {H = H} φ =
     module φ = GroupHom φ
 
 dual-two-one-semi-cat : ∀ {i j} → TwoOneSemiCategory i j → TwoOneSemiCategory i j
-dual-two-one-semi-cat G =
+dual-two-one-semi-cat C =
   record
-  { El = G.El
-  ; Arr = λ x y → G.Arr y x
-  ; Arr-level = λ x y → G.Arr-level y x
+  { El = C.El
+  ; Arr = λ x y → C.Arr y x
+  ; Arr-level = λ x y → C.Arr-level y x
   ; two-one-semi-cat-struct =
     record
-    { comp = λ f g → G.comp g f
-    ; assoc = λ f g h → ! (G.assoc h g f)
-    ; pentagon-identity = λ f g h i →
-      ! (G.assoc i h (G.comp g f)) ∙ ! (G.assoc (G.comp i h) g f)
-        =⟨ ∙-! (G.assoc i h (G.comp g f)) (G.assoc (G.comp i h) g f) ⟩
-      ! (G.assoc (G.comp i h) g f ∙ G.assoc i h (G.comp g f))
-        =⟨ ap ! (G.pentagon-identity i h g f) ⟩
-      ! (ap (λ s → G.comp s f) (G.assoc i h g) ∙
-         G.assoc i (G.comp h g) f ∙
-         ap (G.comp i) (G.assoc h g f))
-        =⟨ !-∙ (ap (λ s → G.comp s f) (G.assoc i h g))
-               (G.assoc i (G.comp h g) f ∙ ap (G.comp i) (G.assoc h g f)) ⟩
-      (! (G.assoc i (G.comp h g) f ∙
-          ap (G.comp i) (G.assoc h g f)) ◃∙
-       ! (ap (λ s → G.comp s f) (G.assoc i h g)) ◃∎)
-        =↯=⟨ 0 & 1 & (! (ap (G.comp i) (G.assoc h g f)) ◃∙
-                      ! (G.assoc i (G.comp h g) f) ◃∎) &
-             !-∙ (G.assoc i (G.comp h g) f) (ap (G.comp i) (G.assoc h g f)) ⟩
-      (! (ap (G.comp i) (G.assoc h g f)) ◃∙
-       ! (G.assoc i (G.comp h g) f) ◃∙
-       ! (ap (λ s → G.comp s f) (G.assoc i h g)) ◃∎)
-        =↯=⟨ 0 & 1 & ap (G.comp i) (! (G.assoc h g f)) ◃∎ &
-             !-ap (G.comp i) (G.assoc h g f) ⟩
-      (ap (G.comp i) (! (G.assoc h g f)) ◃∙
-      ! (G.assoc i (G.comp h g) f) ◃∙
-      ! (ap (λ s → G.comp s f) (G.assoc i h g)) ◃∎)
-        =↯=⟨ 2 & 1 & ap (λ s → G.comp s f) (! (G.assoc i h g)) ◃∎ &
-             !-ap (λ s → G.comp s f) (G.assoc i h g) ⟩
-      ap (G.comp i) (! (G.assoc h g f)) ∙
-      ! (G.assoc i (G.comp h g) f) ∙
-      ap (λ s → G.comp s f) (! (G.assoc i h g)) =∎
+    { comp = λ f g → C.comp g f
+    ; assoc = λ f g h → ! (C.assoc h g f)
+    ; pentagon-identity = pentagon
     }
   }
-  where module G = TwoOneSemiCategory G
+  where
+    module C = TwoOneSemiCategory C
+    abstract
+      pentagon : {z y x w v : C.El}
+        (f : C.Arr y z) (g : C.Arr x y) (h : C.Arr w x) (i : C.Arr v w)
+        → ! (C.assoc i h (C.comp g f)) ∙ ! (C.assoc (C.comp i h) g f)
+          ==
+          ap (C.comp i) (! (C.assoc h g f)) ∙
+          ! (C.assoc i (C.comp h g) f) ∙
+          ap (λ s → C.comp s f) (! (C.assoc i h g))
+      pentagon = λ f g h i →
+        ! (C.assoc i h (C.comp g f)) ∙ ! (C.assoc (C.comp i h) g f)
+          =⟨ ∙-! (C.assoc i h (C.comp g f)) (C.assoc (C.comp i h) g f) ⟩
+        ! (C.assoc (C.comp i h) g f ∙ C.assoc i h (C.comp g f))
+          =⟨ ap ! (C.pentagon-identity i h g f) ⟩
+        ! (ap (λ s → C.comp s f) (C.assoc i h g) ∙
+          C.assoc i (C.comp h g) f ∙
+          ap (C.comp i) (C.assoc h g f))
+          =⟨ !-∙ (ap (λ s → C.comp s f) (C.assoc i h g))
+                (C.assoc i (C.comp h g) f ∙ ap (C.comp i) (C.assoc h g f)) ⟩
+        (! (C.assoc i (C.comp h g) f ∙
+            ap (C.comp i) (C.assoc h g f)) ◃∙
+        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎)
+          =↯=⟨ 0 & 1 & (! (ap (C.comp i) (C.assoc h g f)) ◃∙
+                        ! (C.assoc i (C.comp h g) f) ◃∎) &
+              !-∙ (C.assoc i (C.comp h g) f) (ap (C.comp i) (C.assoc h g f)) ⟩
+        (! (ap (C.comp i) (C.assoc h g f)) ◃∙
+        ! (C.assoc i (C.comp h g) f) ◃∙
+        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎)
+          =↯=⟨ 0 & 1 & ap (C.comp i) (! (C.assoc h g f)) ◃∎ &
+              !-ap (C.comp i) (C.assoc h g f) ⟩
+        (ap (C.comp i) (! (C.assoc h g f)) ◃∙
+        ! (C.assoc i (C.comp h g) f) ◃∙
+        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎)
+          =↯=⟨ 2 & 1 & ap (λ s → C.comp s f) (! (C.assoc i h g)) ◃∎ &
+              !-ap (λ s → C.comp s f) (C.assoc i h g) ⟩
+        ap (C.comp i) (! (C.assoc h g f)) ∙
+        ! (C.assoc i (C.comp h g) f) ∙
+        ap (λ s → C.comp s f) (! (C.assoc i h g)) =∎
+
+dual-map : ∀ {i₁ j₁ i₂ j₂} {C : TwoOneSemiCategory i₁ j₁} {D : TwoOneSemiCategory i₂ j₂}
+  → TwoOneSemiCategoryFunctor C D
+  → TwoOneSemiCategoryFunctor (dual-two-one-semi-cat C) (dual-two-one-semi-cat D)
+dual-map {C = C} {D = D} F =
+  record
+  { F₀ = F.F₀
+  ; F₁ = λ f → F.F₁ f
+  ; pres-comp = λ f g → F.pres-comp g f
+  ; pres-comp-coh = pres-comp-coh
+  }
+  where
+    module F = TwoOneSemiCategoryFunctor F
+    module C = TwoOneSemiCategory C
+    module D = TwoOneSemiCategory D
+    abstract
+      pres-comp-coh : {w x y z : C.El} → (f : C.Arr y z) (g : C.Arr x y) (h : C.Arr w x)
+        → F.pres-comp h (C.comp g f) ∙
+          ap (D.comp (F.F₁ h)) (F.pres-comp g f) ∙
+          ! (D.assoc (F.F₁ h) (F.F₁ g) (F.F₁ f))
+          ==
+          ap (λ f' → F.F₁ f') (! (C.assoc h g f)) ∙
+          F.pres-comp (C.comp h g) f ∙
+          ap (λ s → D.comp s (F.F₁ f)) (F.pres-comp h g)
+      pres-comp-coh f g h =
+        e₅₋₆ ∙ e₆₋₄ ∙ ! e₃₋₄
+          =⟨ post-rearrange'-in (e₅₋₆ ◃∙ e₆₋₄ ◃∎) e₃₋₄ (! e₁₋₅ ◃∙ e₁₋₂ ◃∙ e₂₋₃ ◃∎) $
+            pre-rotate-in (e₅₋₆ ∙ e₆₋₄) e₁₋₅ (e₁₋₂ ∙ e₂₋₃ ∙ e₃₋₄) $
+            ! (F.pres-comp-coh h g f) ⟩
+        ! e₁₋₅ ∙ e₁₋₂ ∙ e₂₋₃
+          =⟨ ap (λ s → s ∙ e₁₋₂ ∙ e₂₋₃)
+                (!-ap (λ f' → F.F₁ f') (C.assoc h g f)) ⟩
+        ap (λ f' → F.F₁ f') (! (C.assoc h g f)) ∙ e₁₋₂ ∙ e₂₋₃ =∎
+        where
+        e₁₋₂ = F.pres-comp (C.comp h g) f
+        e₂₋₃ = ap (λ s → D.comp s (F.F₁ f)) (F.pres-comp h g)
+        e₃₋₄ = D.assoc (F.F₁ h) (F.F₁ g) (F.F₁ f)
+        e₁₋₅ = ap F.F₁ (C.assoc h g f)
+        e₅₋₆ = F.pres-comp h (C.comp g f)
+        e₆₋₄ = ap (D.comp (F.F₁ h)) (F.pres-comp g f)
 
 from-double-dual : ∀ {i j} → (G : TwoOneSemiCategory i j)
   → TwoOneSemiCategoryFunctor
@@ -502,3 +552,16 @@ from-double-dual G =
       =⟨ ! (∙-unit-r _) ⟩
     ap (λ f → f) (! (! (TwoOneSemiCategory.assoc G f g h))) ∙ idp =∎
   }
+
+ab-group-semicategory-to-dual : ∀ {i} (G : AbGroup i)
+  → TwoOneSemiCategoryFunctor
+      (two-one-semi-cat-from-group (AbGroup.grp G))
+      (dual-two-one-semi-cat (two-one-semi-cat-from-group (AbGroup.grp G)))
+ab-group-semicategory-to-dual G =
+  record
+  { F₀ = λ _ → record {}
+  ; F₁ = λ g → g
+  ; pres-comp = G.comm
+  ; pres-comp-coh = λ _ _ _ → prop-path (has-level-apply G.El-level _ _) _ _
+  }
+  where module G = AbGroup G

@@ -4,6 +4,8 @@ open import HoTT
 open import homotopy.HSpace
 open import homotopy.EM1HSpace
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
+open import lib.types.TwoGroupoid
+open import lib.groupoids.FundamentalPreTwoGroupoid
 
 module homotopy.EM1HSpaceAssoc where
 
@@ -81,4 +83,35 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
   H-EM₁-assoc-coh-unit-l-r-pentagon =
     coh-unit-r-to-unit-l-r-pentagon H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-coh-unit-r
 
-  open import homotopy.Pi2HSuspCompose H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-coh-unit-l-r-pentagon public
+  import homotopy.Pi2HSuspCompose H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-coh-unit-l-r-pentagon as Pi2EMSuspCompose
+  open Pi2EMSuspCompose hiding (comp-functor) public
+
+  abstract
+    H-EM₁-assoc-pentagon : coh-assoc-pentagon H-⊙EM₁ H-⊙EM₁-assoc
+    H-EM₁-assoc-pentagon w x y z =
+      EM₁-prop-elim {P = λ w' → P w' x y z} {{λ w' → P-level w' x y z}}
+        (EM₁-prop-elim {P = λ x' → P embase x' y z} {{λ x' → P-level embase x' y z}} idp x)
+        w
+      where
+      P : (w x y z : EM₁ G.grp) → Type i
+      P = coh-assoc-pentagon-eq H-⊙EM₁ H-⊙EM₁-assoc
+      P-level : ∀ w x y z → is-prop (P w x y z)
+      P-level w x y z = has-level-apply (has-level-apply (EM₁-level₁ G.grp) _ _) _ _
+
+  EM₁-2-semi-category : TwoOneSemiCategory lzero i
+  EM₁-2-semi-category = HSpace-2-semi-category H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-pentagon
+
+  comp-functor :
+    TwoOneSemiCategoryFunctor
+      EM₁-2-semi-category
+      (dual-two-one-semi-cat (fundamental-two-one-semi-category (Susp (EM₁ G.grp))))
+  comp-functor =
+    record
+    { F₀ = λ _ → [ north ]
+    ; F₁ = λ x → [ η x ]
+    ; pres-comp = comp
+    ; pres-comp-coh = comp-coh
+    }
+    -- this is *exactly* the same as
+    --   `Pi2EMSuspCompose.comp-functor H-EM₁-assoc-pentagon`
+    -- inlined but Agda chokes on this shorter definition

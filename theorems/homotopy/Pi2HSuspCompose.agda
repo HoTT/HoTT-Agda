@@ -196,17 +196,18 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
           =⟨ ! (ap (ap (λ v → v ∙₁ [ η e ]₁)) (comp-unit-r a')) ⟩
         ap (λ v → v ∙₁ [ η e ]) (comp a' e) ∎
 
-  comp-coh : (a a' a'' : A)
-    →  comp (μ a a') a'' ∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ∙ ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a)))
-    == ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ∙ comp a (μ a' a'') ∙ ap (λ v → v ∙₁ [ η a ]) (comp a' a'')
-  comp-coh a a' a'' =
-    prop-over-connected {A = A} {a = e} {{is-0-connected}}
-                        (λ a → CoherenceProof.Q a' a a'')
-                        (prop-over-connected {A = A} {a = e} {{is-0-connected}}
-                                             (λ a'' → CoherenceProof.Q a' e a'')
-                                             (CoherenceProof.coh a')
-                                             a'')
-                        a
+  abstract
+    comp-coh : (a a' a'' : A)
+      →  comp (μ a a') a'' ∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ∙ ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a)))
+      == ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ∙ comp a (μ a' a'') ∙ ap (λ v → v ∙₁ [ η a ]) (comp a' a'')
+    comp-coh a a' a'' =
+      prop-over-connected {A = A} {a = e} {{is-0-connected}}
+                          (λ a → CoherenceProof.Q a' a a'')
+                          (prop-over-connected {A = A} {a = e} {{is-0-connected}}
+                                              (λ a'' → CoherenceProof.Q a' e a'')
+                                              (CoherenceProof.coh a')
+                                              a'')
+                          a
 
   comp-functor : (pentagon : coh-assoc-pentagon H-X H-X-assoc)
     → TwoOneSemiCategoryFunctor

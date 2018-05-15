@@ -5,15 +5,18 @@ open import homotopy.EilenbergMacLane
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
 open import homotopy.EM1HSpace
 open import homotopy.EM1HSpaceAssoc
+open import lib.types.TwoGroupoid
+open import lib.groupoids.FundamentalPreTwoGroupoid
+open import lib.groupoids.FunExtTwoGroupoid
 
 module cohomology.CupProduct11 {i} (R : CRing i) where
 
-  open import cohomology.CupProduct01 R
+  open import cohomology.CupProduct01 R renaming (eq' to Pi2HSusp-eq'; comp to Pi2HSusp-comp)
 
   private
     module R = CRing R
   open R using () renaming (add-group to R₊)
-  open EM₁HSpaceAssoc R.add-ab-group renaming (mult to EM₁-mult; eq' to Pi2HSusp-eq'; comp to Pi2HSusp-comp)
+  -- open EM₁HSpaceAssoc R.add-ab-group renaming (mult to EM₁-mult; eq' to Pi2HSusp-eq'; comp to Pi2HSusp-comp)
 
   open EMExplicit R.add-ab-group
 
@@ -73,8 +76,19 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
       coh' = {!!}
     -}
 
+    F : TwoOneSemiCategoryFunctor (two-one-semi-cat-from-group R₊) (fundamental-two-one-semi-category-of-a-two-type (EM₁ R₊ → EM 2))
+    F =
+      ab-group-semicategory-to-dual R.add-ab-group ∙F∙
+      dual-map group-to-EM₁-endos ∙F∙
+      {!dual-map fun-functor (EM₁ R₊) comp-functor) ∙F∙
+      ? !} ∙F∙
+      fun-ext-functor-inv (EM₁ R₊) (EM 2)
+      where
+      infixr 80 _∙F∙_
+      _∙F∙_ = comp-semi-cat-functors
+
     cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
     cp₁₁ =
       EM₁-rec
         {C = EM₁ R₊ → EM 2}
-        ?
+        F
