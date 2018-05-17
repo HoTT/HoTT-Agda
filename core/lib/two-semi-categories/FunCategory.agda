@@ -163,8 +163,8 @@ module _ {i j₁ k₁ j₂ k₂} (A : Type i) {G : TwoSemiCategory j₁ k₁} {H
       fun-pres-comp α (fun-G.comp β γ) ◃∙
       ap (fun-H.comp (fun-F₁ α)) (fun-pres-comp β γ) ◃∎) ↯∎
 
-  fun-functor : TwoSemiFunctor (fun-cat A G) (fun-cat A H)
-  fun-functor =
+  fun-functor-map : TwoSemiFunctor (fun-cat A G) (fun-cat A H)
+  fun-functor-map =
     record
     { F₀ = fun-F₀
     ; F₁ = fun-F₁

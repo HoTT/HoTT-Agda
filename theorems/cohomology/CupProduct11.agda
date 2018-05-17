@@ -79,9 +79,8 @@ module cohomology.CupProduct11 {i} (R : CRing i) where
     F : TwoSemiFunctor (group-to-cat R₊) (2-type-fundamental-cat (EM₁ R₊ → EM 2))
     F =
       ab-group-cat-to-dual R.add-ab-group ∙F∙
-      dual-functor-map group-to-EM₁-endos ∙F∙
-      {!dual-functor-map fun-functor-map (EM₁ R₊) comp-functor) ∙F∙
-      ? !} ∙F∙
+      dual-functor-map group-to-EM₁→EM₂-op ∙F∙
+      {!!} ∙F∙
       λ=-functor (EM₁ R₊) (EM 2)
       where
       infixr 80 _∙F∙_

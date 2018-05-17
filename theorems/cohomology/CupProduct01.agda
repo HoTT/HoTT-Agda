@@ -16,7 +16,7 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
 
   -- open EM₁HSpace R.add-ab-group renaming (mult to EM₁-mult)
   -- open EM₁HSpaceAssoc R.add-ab-group using (H-⊙EM₁-assoc; EM₁-2-semi-category)
-  open EM₁HSpaceAssoc R.add-ab-group renaming (mult to EM₁-mult) public
+  open EM₁HSpaceAssoc R.add-ab-group hiding (comp-functor) renaming (mult to EM₁-mult) public
 
   module CP₀₁ (g : R.El) where
 
@@ -176,7 +176,21 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
          λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
          ap (λ s g' → EM₁-mult (cp₀₁ g₁ g') (s g')) (λ= (cp₀₁-distr-l g₂ g₃)) ◃∎) ↯∎
 
-{-
+  comp-functor :
+    TwoSemiFunctor
+      EM₁-2-semi-category
+      (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊))))
+  comp-functor =
+    record
+    { F₀ = λ _ → [ north ]
+    ; F₁ = λ x → [ η x ]
+    ; pres-comp = comp
+    ; pres-comp-coh = comp-coh
+    }
+    -- this is *exactly* the same as
+    --   `EM1HSpaceAssoc.comp-functor`
+    -- inlined but Agda chokes on this shorter definition
+
   group-to-EM₁→EM₂-op :
     TwoSemiFunctor
       (group-to-cat R₊)
@@ -186,5 +200,4 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
                            {D = fun-cat (EM₁ R₊) EM₁-2-semi-category}
                            {E = fun-cat (EM₁ R₊) (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊))))}
                            group-to-EM₁-endos
-                           (fun-functor-map (EM₁ R₊) {G = EM₁-2-semi-category} {H = dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊)))} {!comp-functor!})
--}
+                           (fun-functor-map (EM₁ R₊) {G = EM₁-2-semi-category} {H = dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊)))} comp-functor)
