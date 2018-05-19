@@ -413,6 +413,19 @@ module _ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B} where
     ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)
                     ∙ ap (λ w → α x ∙ w) (app=-β β x)))
 
+module _ {i j} {A : Type i} {B : A → Type j} {f g : Π A B} where
+
+  !-app= : (α : f == g) → λ= (! ∘ app= α) == ! α
+  !-app= idp = ! (λ=-η idp)
+
+  !-λ= : (α : f ∼ g) → λ= (! ∘ α) == ! (λ= α)
+  !-λ= α =
+    λ= (! ∘ α)
+      =⟨ ap λ= (λ= (λ a → ap ! (! (app=-β α a)))) ⟩
+    λ= (! ∘ app= (λ= α))
+      =⟨ !-app= (λ= α) ⟩
+    ! (λ= α) =∎
+
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   {f g : Π A B} (h : (a : A) → B a → C a) where
 

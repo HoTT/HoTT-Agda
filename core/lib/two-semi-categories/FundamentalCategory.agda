@@ -41,11 +41,11 @@ module _ {i} (A : Type i) where
 
 module _ {i} (A : Type i) where
 
-  =ₜ-equiv-semi-cat-functor
+  2-type-to-=ₜ-fundamental-cat
     : TwoSemiFunctor
         (2-type-fundamental-cat (Trunc 2 A))
         (=ₜ-fundamental-cat A)
-  =ₜ-equiv-semi-cat-functor =
+  2-type-to-=ₜ-fundamental-cat =
     record
     { F₀ = idf (Trunc 2 A)
     ; F₁ = λ {ta} {tb} f → –> (=ₜ-equiv ta tb) f
@@ -54,6 +54,15 @@ module _ {i} (A : Type i) where
       -- Can we optimize this somehow?
     ; pres-comp-coh = λ {ta} p q r → –>-=ₜ-equiv-pres-∙-coh {ta = ta} p q r
     }
+
+  =ₜ-to-2-type-fundamental-cat
+    : TwoSemiFunctor
+        (=ₜ-fundamental-cat A)
+        (2-type-fundamental-cat (Trunc 2 A))
+  =ₜ-to-2-type-fundamental-cat =
+    functor-inverse 2-type-to-=ₜ-fundamental-cat
+      (idf-is-equiv (Trunc 2 A))
+      (λ ta tb → snd (=ₜ-equiv ta tb))
 
 module _ {i} (C : Type i) (c₀ : C) {{C-level : has-level 1 C}} where
 

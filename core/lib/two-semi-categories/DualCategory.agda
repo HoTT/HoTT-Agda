@@ -1,9 +1,12 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.types.Pi
 open import lib.types.PathSeq
 open import lib.types.TwoSemiCategory
+open import lib.two-semi-categories.FunCategory
 open import lib.two-semi-categories.Functor
+open import lib.two-semi-categories.FunctorInverse
 
 module lib.two-semi-categories.DualCategory where
 
@@ -124,3 +127,40 @@ from-double-dual C =
         ap (λ f → f) (! (! (C.assoc f g h)))
           =⟨ ! (∙-unit-r _) ⟩
         ap (λ f → f) (! (! (C.assoc f g h))) ∙ idp =∎
+
+module _ {i j k} (A : Type i) (C : TwoSemiCategory j k) where
+
+  private
+    module C = TwoSemiCategory C
+
+  swap-dual-fun-functor : TwoSemiFunctor (dual-cat (fun-cat A C)) (fun-cat A (dual-cat C))
+  swap-dual-fun-functor =
+    record
+    { F₀ = λ x → x
+    ; F₁ = λ f → f
+    ; pres-comp = λ f g → idp
+    ; pres-comp-coh = pres-comp-coh
+    }
+    where
+      abstract
+        pres-comp-coh : ∀ {w x y z : A → C.El}
+          (f : ∀ a → C.Arr (x a) (w a))
+          (g : ∀ a → C.Arr (y a) (x a))
+          (h : ∀ a → C.Arr (z a) (y a))
+          → idp ∙ idp ∙ λ= (λ a → ! (C.assoc (h a) (g a) (f a)))
+            ==
+            ap (λ x → x) (! (λ= (λ a → C.assoc (h a) (g a) (f a)))) ∙ idp ∙ idp
+        pres-comp-coh f g h =
+          λ= (λ a → ! (C.assoc (h a) (g a) (f a)))
+            =⟨ !-λ= (λ a → C.assoc (h a) (g a) (f a)) ⟩
+          ! (λ= (λ a → C.assoc (h a) (g a) (f a)))
+            =⟨ ! (ap-idf _) ⟩
+          ap (λ x → x) (! (λ= (λ a → C.assoc (h a) (g a) (f a))))
+            =⟨ ! (∙-unit-r _) ⟩
+          ap (λ x → x) (! (λ= (λ a → C.assoc (h a) (g a) (f a)))) ∙ idp =∎
+
+  swap-fun-dual-functor : TwoSemiFunctor (fun-cat A (dual-cat C)) (dual-cat (fun-cat A C))
+  swap-fun-dual-functor =
+    functor-inverse swap-dual-fun-functor
+                    (idf-is-equiv (A → C.El))
+                    (λ α β → idf-is-equiv (∀ a → C.Arr (β a) (α a)))

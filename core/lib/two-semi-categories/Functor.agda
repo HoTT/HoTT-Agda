@@ -44,11 +44,11 @@ record TwoSemiFunctor {i₁ j₁ i₂ j₂} (C : TwoSemiCategory i₁ j₁) (D :
     pres-comp-coh : {w x y z : C.El} (f : C.Arr w x) (g : C.Arr x y) (h : C.Arr y z)
       → pres-comp-coh-seq₁ f g h =↯= pres-comp-coh-seq₂ f g h
 
-comp-semi-cat-functors : ∀ {i₁ j₁ i₂ j₂ i₃ j₃}
+comp-functors : ∀ {i₁ j₁ i₂ j₂ i₃ j₃}
   {C : TwoSemiCategory i₁ j₁} {D : TwoSemiCategory i₂ j₂} {E : TwoSemiCategory i₃ j₃}
   (F : TwoSemiFunctor C D) (G : TwoSemiFunctor D E)
   → TwoSemiFunctor C E
-comp-semi-cat-functors {C = C} {D = D} {E = E} F G =
+comp-functors {C = C} {D = D} {E = E} F G =
   record { F₀ = F₀; F₁ = F₁; pres-comp = pres-comp; pres-comp-coh = pres-comp-coh }
   where
     module C = TwoSemiCategory C
@@ -168,3 +168,6 @@ comp-semi-cat-functors {C = C} {D = D} {E = E} F G =
         ◃∙ ap (E.comp (F₁ f)) (pres-comp g h) ◃∎)
           =↯=⟨ 0 & 1 & ap F₁ (C.assoc f g h) ◃∎ & ∘-ap G.F₁ F.F₁ (C.assoc f g h) ⟩
         (ap F₁ (C.assoc f g h) ◃∙ pres-comp f (C.comp g h) ◃∙ ap (E.comp (F₁ f)) (pres-comp g h) ◃∎) ↯∎
+
+infixr 80 _–F→_
+_–F→_ = comp-functors

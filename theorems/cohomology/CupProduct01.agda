@@ -2,7 +2,6 @@
 
 open import HoTT
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
--- open import homotopy.EM1HSpace
 open import homotopy.EM1HSpaceAssoc
 open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.FunCategory
@@ -10,9 +9,8 @@ open import lib.two-semi-categories.FundamentalCategory
 
 module cohomology.CupProduct01 {i} (R : CRing i) where
 
-  private
-    module R = CRing R
-  open R using () renaming (add-group to R₊)
+  module R = CRing R
+  open R using () renaming (add-group to R₊) public
 
   -- open EM₁HSpace R.add-ab-group renaming (mult to EM₁-mult)
   -- open EM₁HSpaceAssoc R.add-ab-group using (H-⊙EM₁-assoc; EM₁-2-semi-category)
@@ -121,11 +119,20 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
     { F₀ = λ _ _ → unit
     ; F₁ = λ g x → cp₀₁ g x
     ; pres-comp = λ g₁ g₂ → λ= (cp₀₁-distr-l g₁ g₂)
-    ; pres-comp-coh = pres-comp-coh
+    ; pres-comp-coh = λ g₁ g₂ g₃ → pres-comp-coh g₁ g₂ g₃
+      -- TODO: for some reason, this last field takes a really long time to check
     }
     where
     abstract
-      pres-comp-coh = λ g₁ g₂ g₃ →
+      pres-comp-coh : ∀ g₁ g₂ g₃ →
+        λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ∙
+        ap (λ s g' → EM₁-mult (s g') (cp₀₁ g₃ g')) (λ= (cp₀₁-distr-l g₁ g₂)) ∙
+        λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g'))
+        ==
+        ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ∙
+        λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ∙
+        ap (λ s g' → EM₁-mult (cp₀₁ g₁ g') (s g')) (λ= (cp₀₁-distr-l g₂ g₃))
+      pres-comp-coh g₁ g₂ g₃ =
         (λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ◃∙
          ap (λ s g' → EM₁-mult (s g') (cp₀₁ g₃ g')) (λ= (cp₀₁-distr-l g₁ g₂)) ◃∙
          λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎)
@@ -194,10 +201,17 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
   group-to-EM₁→EM₂-op :
     TwoSemiFunctor
       (group-to-cat R₊)
-      (fun-cat (EM₁ R₊) (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊)))))
+      (dual-cat (fun-cat (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))))
   group-to-EM₁→EM₂-op =
-    comp-semi-cat-functors {C = group-to-cat R₊}
-                           {D = fun-cat (EM₁ R₊) EM₁-2-semi-category}
-                           {E = fun-cat (EM₁ R₊) (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊))))}
-                           group-to-EM₁-endos
-                           (fun-functor-map (EM₁ R₊) {G = EM₁-2-semi-category} {H = dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊)))} comp-functor)
+    group-to-EM₁-endos –F→
+    fun-functor-map (EM₁ R₊) comp-functor –F→
+    swap-fun-dual-functor (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))
+
+  group-op-to-EM₁→EM₂ :
+    TwoSemiFunctor
+    (dual-cat (group-to-cat R₊))
+    (fun-cat (EM₁ R₊) (2-type-fundamental-cat (Trunc 2 (Susp (EM₁ R₊)))))
+  group-op-to-EM₁→EM₂ =
+    dual-functor-map group-to-EM₁→EM₂-op –F→
+    from-double-dual (fun-cat (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))) –F→
+    fun-functor-map (EM₁ R₊) (=ₜ-to-2-type-fundamental-cat (Susp (EM₁ R₊)))
