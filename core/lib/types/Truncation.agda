@@ -107,20 +107,21 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
     from : (a b : Trunc (S n) A) → a =ₜ b → a == b
     from = Trunc-elim (λ a → Trunc-elim (λ b → Trunc-rec (from-aux a b)))
 
-    to-from-aux : (a b : A) → (p : a == b) → to _ _ (from-aux a b p) == [ p ]
-    to-from-aux a .a idp = idp
+    abstract
+      to-from-aux : (a b : A) → (p : a == b) → to _ _ (from-aux a b p) == [ p ]
+      to-from-aux a .a idp = idp
 
-    to-from : (a b : Trunc (S n) A) (x : a =ₜ b) → to a b (from a b x) == x
-    to-from = Trunc-elim {{λ x → Π-level (λ y → Π-level (λ _ → =-preserves-level (raise-level _ (=ₜ-level x y))))}}
-              (λ a → Trunc-elim {{λ x → Π-level (λ _ → =-preserves-level (raise-level _ (=ₜ-level [ a ] x)))}}
-              (λ b → Trunc-elim
-              (to-from-aux a b)))
+      to-from : (a b : Trunc (S n) A) (x : a =ₜ b) → to a b (from a b x) == x
+      to-from = Trunc-elim {{λ x → Π-level (λ y → Π-level (λ _ → =-preserves-level (raise-level _ (=ₜ-level x y))))}}
+                (λ a → Trunc-elim {{λ x → Π-level (λ _ → =-preserves-level (raise-level _ (=ₜ-level [ a ] x)))}}
+                (λ b → Trunc-elim
+                (to-from-aux a b)))
 
-    from-to-aux : (a : Trunc (S n) A) → from a a (to-aux a) == idp
-    from-to-aux = Trunc-elim (λ _ → idp)
+      from-to-aux : (a : Trunc (S n) A) → from a a (to-aux a) == idp
+      from-to-aux = Trunc-elim (λ _ → idp)
 
-    from-to : (a b : Trunc (S n) A) (p : a == b) → from a b (to a b p) == p
-    from-to a .a idp = from-to-aux a
+      from-to : (a b : Trunc (S n) A) (p : a == b) → from a b (to a b p) == p
+      from-to a .a idp = from-to-aux a
 
   =ₜ-path : (a b : Trunc (S n) A) → (a == b) == (a =ₜ b)
   =ₜ-path a b = ua (=ₜ-equiv a b)

@@ -64,6 +64,10 @@ module _ {i} (A : Type i) where
       (idf-is-equiv (Trunc 2 A))
       (λ ta tb → snd (=ₜ-equiv ta tb))
 
+  =ₜ-to-2-type-fundamental-cat-F₁ : ∀ {ta} {tb} (p : ta =ₜ tb)
+    → TwoSemiFunctor.F₁ =ₜ-to-2-type-fundamental-cat p == <– (=ₜ-equiv ta tb) p
+  =ₜ-to-2-type-fundamental-cat-F₁ p = idp
+
 module _ {i} (C : Type i) (c₀ : C) {{C-level : has-level 1 C}} where
 
   open import lib.groups.LoopSpace
@@ -129,3 +133,7 @@ module _ {i j} (A : Type i) (B : Type j) {{B-level : has-level 2 B}} where
     functor-inverse app=-functor
       (idf-is-equiv _)
       (λ f g → snd app=-equiv)
+
+  λ=-functor-F₁ : ∀ {f g : A → B} (α : f ∼ g)
+    → TwoSemiFunctor.F₁ λ=-functor α == λ= α
+  λ=-functor-F₁ α = idp

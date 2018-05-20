@@ -385,12 +385,12 @@ module _ {G : Group i} where
 
   module EM₁Rec {j} {C : Type j}
     {{C-level : has-level ⟨ 2 ⟩ C}}
-    (F : TwoSemiFunctor (group-to-cat G) (2-type-fundamental-cat C)) where
+    (F : TwoSemiFunctor (group-to-cat G) (2-type-fundamental-cat C {{C-level}})) where
 
     private
       module F = TwoSemiFunctor F
       module M = EM₁Rec' {C = C} {{C-level}}
-                         (F.F₀ (unit))
+                         (F.F₀ unit)
                          F.F₁
                          F.pres-comp
                          F.pres-comp-coh

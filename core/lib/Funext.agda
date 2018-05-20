@@ -159,5 +159,9 @@ module _ {j} {P : A → Type j} {f g : Π A P} where
   app=-equiv : (f == g) ≃ (f ∼ g)
   app=-equiv = (app= , app=-is-equiv) where
     abstract
-      app=-is-equiv : is-equiv app=
-      app=-is-equiv = StrongFunextDep.app=-is-equiv
+      app=-λ= : ∀ (h : f ∼ g) → app= (λ= h) == h
+      app=-λ= h = FunextDep.λ= (app=-β h)
+      λ=-app= : ∀ (h : f == g) → λ= (app= h) == h
+      λ=-app= = ! ∘ λ=-η
+    app=-is-equiv : is-equiv app=
+    app=-is-equiv = is-eq _ λ= app=-λ= λ=-app=

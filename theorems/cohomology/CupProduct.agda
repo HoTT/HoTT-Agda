@@ -1,13 +1,14 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
+open import homotopy.EilenbergMacLane
 open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
 open import homotopy.EM1HSpaceAssoc
 open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.FunCategory
 open import lib.two-semi-categories.FundamentalCategory
 
-module cohomology.CupProduct01 {i} (R : CRing i) where
+module cohomology.CupProduct {i} (R : CRing i) where
 
   module R = CRing R
   open R using () renaming (add-group to R₊) public
@@ -121,6 +122,7 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
     ; pres-comp = λ g₁ g₂ → λ= (cp₀₁-distr-l g₁ g₂)
     ; pres-comp-coh = λ g₁ g₂ g₃ → pres-comp-coh g₁ g₂ g₃
       -- TODO: for some reason, this last field takes a really long time to check
+      -- it is recommended to comment it out
     }
     where
     abstract
@@ -207,11 +209,59 @@ module cohomology.CupProduct01 {i} (R : CRing i) where
     fun-functor-map (EM₁ R₊) comp-functor –F→
     swap-fun-dual-functor (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))
 
-  group-op-to-EM₁→EM₂ :
-    TwoSemiFunctor
-    (dual-cat (group-to-cat R₊))
-    (fun-cat (EM₁ R₊) (2-type-fundamental-cat (Trunc 2 (Susp (EM₁ R₊)))))
-  group-op-to-EM₁→EM₂ =
-    dual-functor-map group-to-EM₁→EM₂-op –F→
-    from-double-dual (fun-cat (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))) –F→
-    fun-functor-map (EM₁ R₊) (=ₜ-to-2-type-fundamental-cat (Susp (EM₁ R₊)))
+  module CP₁₁ where
+
+    open EMExplicit R.add-ab-group
+
+    private
+      C : Type i
+      C = EM₁ R₊ → EM 2
+
+      C-level : has-level 2 C
+      C-level = Π-level (λ _ → EM-level 2)
+
+    F : TwoSemiFunctor (group-to-cat R₊) (2-type-fundamental-cat (EM₁ R₊ → EM 2) {{C-level}})
+    F =
+      ab-group-cat-to-dual R.add-ab-group –F→
+      dual-functor-map group-to-EM₁→EM₂-op –F→
+      from-double-dual (fun-cat (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))) –F→
+      fun-functor-map (EM₁ R₊) (=ₜ-to-2-type-fundamental-cat (Susp (EM₁ R₊))) –F→
+      λ=-functor (EM₁ R₊) (EM 2)
+
+    module CP₁₁-Rec = EM₁Rec {G = R₊} {C = C} {{C-level}} F
+
+    cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
+    cp₁₁ = CP₁₁-Rec.f
+
+    antipodal-map : EM 2 → EM 2
+    antipodal-map =
+      Trunc-fmap (Susp-fmap (EM₁-fmap (inv-hom R.add-ab-group)))
+
+    cp₁₁-β : ∀ g → ap cp₁₁ (emloop g) == λ= (λ x → <– (=ₜ-equiv [ north ] [ north ]) [ η (cp₀₁ g x) ])
+    cp₁₁-β g = CP₁₁-Rec.emloop-β g -- takes a long time to check
+
+    {-
+    cp₁₁-comm : ∀ x y → cp₁₁ x y == antipodal-map (cp₁₁ y x)
+    cp₁₁-comm x y =
+      EM₁-level₁-elim {P = λ x → P x y}
+                      {{λ x → P-level x y}}
+                      (EM₁-level₁-elim {P = P embase}
+                        {{P-level embase}}
+                        idp
+                        (λ g → ↓-='-in' $
+                          ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop g)
+                            =⟨ ap-∘ (λ f → antipodal-map (f embase)) cp₁₁ (emloop g) ⟩
+                          ap (λ f → antipodal-map (f embase)) (ap cp₁₁ (emloop g))
+                            =⟨ {!!} ⟩
+                          {!!}) --
+                        {!!}
+                        y)
+                      {!!}
+                      {!!}
+                      x
+      where
+      P : EM₁ R₊ → EM₁ R₊ → Type i
+      P x y = cp₁₁ x y == antipodal-map (cp₁₁ y x)
+      P-level : (x y : EM₁ R₊) → has-level 1 (P x y)
+      P-level x y = has-level-apply (EM-level 2) _ _
+    -}

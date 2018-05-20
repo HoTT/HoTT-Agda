@@ -230,4 +230,45 @@ module EilenbergMacLane-functorial {i} (G : Group i) (H : Group i) where
                 =⟨ ! (∙-unit-r _) ⟩
               ap (λ z → EM₁-fmap cst-hom z) (emloop' G g) ∙ idp =∎
 
-  -- TODO: ⊙EM-fmap functor axioms
+module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
+
+  EM₁-fmap-hom : G →ᴳ Ω^S-group 0 (⊙EM₁ H)
+  EM₁-fmap-hom = group-hom f f-preserves-comp
+    where
+      f : Group.El G → embase' H == embase
+      f g = emloop (GroupHom.f φ g)
+      f-preserves-comp : ∀ g₁ g₂ → f (Group.comp G g₁ g₂) == f g₁ ∙ f g₂
+      f-preserves-comp g₁ g₂ =
+        emloop (GroupHom.f φ (Group.comp G g₁ g₂))
+          =⟨ GroupHom.pres-comp φ g₁ g₂ |in-ctx emloop ⟩
+        emloop (Group.comp H (GroupHom.f φ g₁) (GroupHom.f φ g₂))
+          =⟨ emloop-comp' H (GroupHom.f φ g₁) (GroupHom.f φ g₂) ⟩
+        emloop (GroupHom.f φ g₁) ∙ emloop (GroupHom.f φ g₂) =∎
+
+  EM₁-fmap : EM₁ G → EM₁ H
+  EM₁-fmap = EM₁-level₁-rec {G = G} {C = EM₁ H} {{EM₁-level₁ H {⟨-2⟩}}}
+                            embase
+                            EM₁-fmap-hom
+
+  ⊙EM₁-fmap : ⊙EM₁ G ⊙→ ⊙EM₁ H
+  ⊙EM₁-fmap = EM₁-fmap φ , idp
+
+EM₁-fmap-cst : ∀ {i j} (G : Group i) (H : Group j)
+  → ∀ x → EM₁-fmap {G = G} {H = H} cst-hom x == embase
+EM₁-fmap-cst G H =
+  EM₁-set-elim {P = λ x' → EM₁-fmap cst-hom x' == embase}
+                {{λ x → has-level-apply (EM₁-level₁ H) _ _}}
+                idp
+                h
+  where
+    h : (g : Group.El G) → idp == idp [ (λ x' → EM₁-fmap cst-hom x' == embase) ↓ emloop g ]
+    h g = ↓-app=cst-in $
+            idp {a = embase' H}
+              =⟨ ! emloop-ident ⟩
+            emloop (Group.ident H)
+              =⟨ ! (EM₁Level₁Rec.emloop-β {C = EM₁ H} {{EM₁-level₁ H {⟨-2⟩}}} embase (EM₁-fmap-hom cst-hom) g) ⟩
+            ap (λ z → EM₁-fmap cst-hom z) (emloop' G g)
+              =⟨ ! (∙-unit-r _) ⟩
+            ap (λ z → EM₁-fmap cst-hom z) (emloop' G g) ∙ idp =∎
+
+-- TODO: ⊙EM-fmap functor axioms
