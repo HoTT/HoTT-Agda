@@ -251,7 +251,7 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
                             EM₁-fmap-hom
 
   ⊙EM₁-fmap : ⊙EM₁ G ⊙→ ⊙EM₁ H
-  ⊙EM₁-fmap = EM₁-fmap φ , idp
+  ⊙EM₁-fmap = EM₁-fmap , idp
 
 EM₁-fmap-cst : ∀ {i j} (G : Group i) (H : Group j)
   → ∀ x → EM₁-fmap {G = G} {H = H} cst-hom x == embase
