@@ -191,29 +191,67 @@ module _ {i} {A : Type i} where
 
 {- Nondependent identity type -}
 
-↓-='-in : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
-  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
-  → (u ∙' ap g p) == (ap f p ∙ v)
-  → (u == v [ (λ x → f x == g x) ↓ p ])
-↓-='-in {p = idp} q = q
+module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
 
-↓-='-out : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
-  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
-  → (u == v [ (λ x → f x == g x) ↓ p ])
-  → (u ∙' ap g p) == (ap f p ∙ v)
-↓-='-out {p = idp} q = q
+  ↓-='-in : ∀ {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+    → (u ∙' ap g p) == (ap f p ∙ v)
+    → (u == v [ (λ x → f x == g x) ↓ p ])
+  ↓-='-in {p = idp} q = q
 
-↓-='-in' : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
-  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
-  → (u ∙ ap g p) == (ap f p ∙' v)
-  → (u == v [ (λ x → f x == g x) ↓ p ])
-↓-='-in' {p = idp} q = ! (∙-unit-r _) ∙ q ∙ (∙'-unit-l _)
+  ↓-='-out : ∀ {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+    → (u == v [ (λ x → f x == g x) ↓ p ])
+    → (u ∙' ap g p) == (ap f p ∙ v)
+  ↓-='-out {p = idp} q = q
 
-↓-='-out' : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
-  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
-  → (u == v [ (λ x → f x == g x) ↓ p ])
-  → (u ∙ ap g p) == (ap f p ∙' v)
-↓-='-out' {p = idp} q = (∙-unit-r _) ∙ q ∙ ! (∙'-unit-l _)
+  ↓-='-in' : ∀ {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+    → (u ∙ ap g p) == (ap f p ∙' v)
+    → (u == v [ (λ x → f x == g x) ↓ p ])
+  ↓-='-in' {p = idp} q = ! (∙-unit-r _) ∙ q ∙ (∙'-unit-l _)
+
+  ↓-='-out' : ∀ {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+    → (u == v [ (λ x → f x == g x) ↓ p ])
+    → (u ∙ ap g p) == (ap f p ∙' v)
+  ↓-='-out' {p = idp} q = (∙-unit-r _) ∙ q ∙ ! (∙'-unit-l _)
+
+  -- TODO: better name
+  ↓-='-in'-∙ : ∀ {x y z : A} {p : x == y} {p' : y == z}
+    (u : f x == g x) (v : f y == g y) (w : f z == g z)
+    → u ∙ ap g p == ap f p ∙' v
+    → v ∙ ap g p' == ap f p' ∙' w
+    → u ∙ ap g (p ∙ p') == ap f (p ∙ p') ∙' w
+  ↓-='-in'-∙ {p = idp} {p' = idp} u v w q q' =
+    (q ∙ ∙'-unit-l v) ∙ ! (∙-unit-r v) ∙ q'
+  {-
+  ↓-='-in'-∙ {p = p} {p' = p'} u v w q q' =
+    ap (u ∙_) (ap-∙ g p p') ∙
+    ! (∙-assoc u (ap g p) (ap g p')) ∙
+    ap (_∙ ap g p') (q ∙ ∙'=∙ (ap f p) v) ∙
+    ∙-assoc (ap f p) v (ap g p') ∙
+    ap (ap f p ∙_) q' ∙
+    ! (∙-∙'-assoc (ap f p) (ap f p') w) ∙
+    ap (_∙' w) (∙-ap f p p')
+  -}
+
+  -- TODO: better name
+  ↓-='-in'-pres-comp : ∀ {x y z : A} {p : x == y} {p' : y == z}
+    {u : f x == g x} {v : f y == g y} {w : f z == g z}
+    (q : u ∙ ap g p == ap f p ∙' v) (q' : v ∙ ap g p' == ap f p' ∙' w)
+    → ↓-='-in' {u = u} {v = w} (↓-='-in'-∙ u v w q q') ==
+      ↓-='-in' {u = u} {v = v} q ∙ᵈ ↓-='-in' {u = v} {v = w} q'
+  ↓-='-in'-pres-comp {p = idp} {p' = idp} {u} {v} {w} q q' =
+    -- ! (∙-unit-r u) ∙ ↓-='-in'-∙ u v w q q' ∙ ∙'-unit-l w
+    --   =⟨ ap (λ s → ! (∙-unit-r u) ∙ s ∙ ∙'-unit-l w) h ⟩
+    ! (∙-unit-r u) ∙ ((q ∙ ∙'-unit-l v) ∙ ! (∙-unit-r v) ∙ q') ∙ ∙'-unit-l w
+      =⟨ ap (! (∙-unit-r u) ∙_) (∙-assoc (q ∙ ∙'-unit-l v) (! (∙-unit-r v) ∙ q') (∙'-unit-l w)) ⟩
+    ! (∙-unit-r u) ∙ (q ∙ ∙'-unit-l v) ∙ (! (∙-unit-r v) ∙ q') ∙ ∙'-unit-l w
+      =⟨ ! (∙-assoc (! (∙-unit-r u)) (q ∙ ∙'-unit-l v) ((! (∙-unit-r v) ∙ q') ∙ ∙'-unit-l w)) ⟩
+    (! (∙-unit-r u) ∙ q ∙ ∙'-unit-l v) ∙ (! (∙-unit-r v) ∙ q') ∙ ∙'-unit-l w
+      =⟨ ap ((! (∙-unit-r u) ∙ q ∙ ∙'-unit-l v) ∙_) (∙-assoc (! (∙-unit-r v)) q' (∙'-unit-l w)) ⟩
+    (! (∙-unit-r u) ∙ q ∙ ∙'-unit-l v) ∙ ! (∙-unit-r v) ∙ q' ∙ ∙'-unit-l w =∎
+    -- where
+    -- h : ↓-='-in'-∙ u v w q q' == q ∙ ∙'-unit-l v ∙ ! (∙-unit-r v) ∙ q'
+    -- h =
+    --   {!!}
 
 {- Identity type where the type is dependent -}
 

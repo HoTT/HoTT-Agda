@@ -24,10 +24,10 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
       P-level : (x y : EM₁ R₊) → has-level 1 (P x y)
       P-level x y = has-level-apply (EM-level 2) _ _
 
-      comm-embase-ap : ∀ g
-        → ap (λ z → antipodal-map (cp₁₁ z embase)) (emloop' R₊ g) ==
-          ap (λ z → cp₁₁ embase z) (emloop' R₊ g)
-      comm-embase-ap g =
+      comm-embase-emloop : ∀ g
+        → ap (λ z → antipodal-map (cp₁₁ z embase)) (emloop g) ==
+          ap (λ z → cp₁₁ embase z) (emloop g)
+      comm-embase-emloop g =
         ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop g)
           =⟨ ap-∘ (λ f → antipodal-map (f embase)) cp₁₁ (emloop g) ⟩
         ap (λ f → antipodal-map (f embase)) (ap cp₁₁ (emloop g))
@@ -40,11 +40,24 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
           =⟨ ! (ap-cst [ north ] (emloop g)) ⟩
         ap (cst [ north ]) (emloop g) =∎
 
+      comm-embase-emloop-comp : ∀ g₁ g₂
+        → comm-embase-emloop (R.add g₁ g₂) ∙
+          ap (ap (λ z₁ → cp₁₁ embase z₁)) (emloop-comp g₁ g₂)
+          ==
+          ap (ap (λ z → antipodal-map (cp₁₁ z embase))) (emloop-comp g₁ g₂) ∙'
+          ↓-='-in'-∙ {f = λ z → cp₁₁ embase z} {g = λ z → antipodal-map (cp₁₁ z embase)}
+                     {p = emloop g₁} {p' = emloop g₂}
+                     idp idp idp (comm-embase-emloop g₁) (comm-embase-emloop g₂)
+      comm-embase-emloop-comp g₁ g₂ =
+        {!!}
+
     module CommEmbaseElim =
       EM₁Level₁Elim {P = P embase} {{P-level embase}}
                     idp
-                    (λ g → ↓-='-in' (comm-embase-ap g))
-                    {!!}
+                    (λ g → ↓-='-in' (comm-embase-emloop g))
+                    (λ g₁ g₂ →
+                      ap↓ ↓-='-in' (↓-='-in' {!comm-embase-emloop-comp g₁ g₂!}) ▹
+                      ↓-='-in'-pres-comp {u = idp} {v = idp} {w = idp} (comm-embase-emloop g₁) (comm-embase-emloop g₂))
 
     comm-embase-elim = CommEmbaseElim.f
 
@@ -55,10 +68,26 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
       P'-level y p = ↓-level (P-level embase y)
 
     module _ (g : R.El) where
+      comm-emloop-embase :
+        ap (antipodal-map ∘ cp₁₁ embase) (emloop g) ==
+        ap (λ z → cp₁₁ z embase) (emloop g)
+      comm-emloop-embase =
+        ap (cst [ north ]) (emloop g)
+          =⟨ ap-cst [ north ] (emloop g) ⟩
+        idp
+          =⟨ ! (ap (ap [_]) (!-inv-r (merid embase))) ⟩
+        ap [_] (η embase)
+          =⟨ idp ⟩
+        ap [_] (η (cp₀₁ g embase))
+          =⟨ ! (app=-ap-cp₁₁ g embase) ⟩
+        app= (ap cp₁₁ (emloop g)) embase
+          =⟨ ∘-ap (λ f → f embase) cp₁₁ (emloop g) ⟩
+        ap (λ z → cp₁₁ z embase) (emloop g) =∎
+
       module CommEmloopElim =
         EM₁SetElim {P = λ y → P' y (emloop g) }
                    {{λ y → P'-level y (emloop g)}}
-                   {!!}
+                   (↓-='-in' comm-emloop-embase)
                    {!!}
 
       comm-emloop-elim = CommEmloopElim.f
