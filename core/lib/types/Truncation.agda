@@ -102,7 +102,7 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
     to a .a idp = to-aux a
 
     from-aux : (a b : A) → a == b → [ a ] == [ b ] :> Trunc (S n) A
-    from-aux a .a idp = idp
+    from-aux _ _ = ap [_]
 
     from : (a b : Trunc (S n) A) → a =ₜ b → a == b
     from = Trunc-elim (λ a → Trunc-elim (λ b → Trunc-rec (from-aux a b)))

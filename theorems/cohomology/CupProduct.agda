@@ -233,35 +233,9 @@ module cohomology.CupProduct {i} (R : CRing i) where
     cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
     cp₁₁ = CP₁₁-Rec.f
 
-    antipodal-map : EM 2 → EM 2
-    antipodal-map =
-      Trunc-fmap (Susp-fmap (EM₁-fmap (inv-hom R.add-ab-group)))
-
-    cp₁₁-β : ∀ g → ap cp₁₁ (emloop g) == λ= (λ x → <– (=ₜ-equiv [ north ] [ north ]) [ η (cp₀₁ g x) ])
+    cp₁₁-β : ∀ g → ap cp₁₁ (emloop g) == λ= (λ x → ap [_] (η (cp₀₁ g x)))
     cp₁₁-β g = CP₁₁-Rec.emloop-β g -- takes a long time to check
 
-    {-
-    cp₁₁-comm : ∀ x y → cp₁₁ x y == antipodal-map (cp₁₁ y x)
-    cp₁₁-comm x y =
-      EM₁-level₁-elim {P = λ x → P x y}
-                      {{λ x → P-level x y}}
-                      (EM₁-level₁-elim {P = P embase}
-                        {{P-level embase}}
-                        idp
-                        (λ g → ↓-='-in' $
-                          ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop g)
-                            =⟨ ap-∘ (λ f → antipodal-map (f embase)) cp₁₁ (emloop g) ⟩
-                          ap (λ f → antipodal-map (f embase)) (ap cp₁₁ (emloop g))
-                            =⟨ {!!} ⟩
-                          {!!}) --
-                        {!!}
-                        y)
-                      {!!}
-                      {!!}
-                      x
-      where
-      P : EM₁ R₊ → EM₁ R₊ → Type i
-      P x y = cp₁₁ x y == antipodal-map (cp₁₁ y x)
-      P-level : (x y : EM₁ R₊) → has-level 1 (P x y)
-      P-level x y = has-level-apply (EM-level 2) _ _
-    -}
+    app=-ap-cp₁₁ : ∀ g y → app= (ap cp₁₁ (emloop g)) y == ap [_] (η (cp₀₁ g y))
+    app=-ap-cp₁₁ g y =
+      ap (λ z → app= z y) (cp₁₁-β g) ∙ app=-β (λ x → ap [_] (η (cp₀₁ g x))) y
