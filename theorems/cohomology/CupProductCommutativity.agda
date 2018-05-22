@@ -46,11 +46,42 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
                     (λ g → ↓-='-in' (comm-embase-ap g))
                     {!!}
 
+    comm-embase-elim = CommEmbaseElim.f
+
+    private
+      P' : EM₁ R₊ → embase' R₊ == embase → Type i
+      P' y p = comm-embase-elim y == comm-embase-elim y [ (λ x → P x y) ↓ p ]
+      P'-level : ∀ y p → has-level 0 (P' y p)
+      P'-level y p = ↓-level (P-level embase y)
+
+    module _ (g : R.El) where
+      module CommEmloopElim =
+        EM₁SetElim {P = λ y → P' y (emloop g) }
+                   {{λ y → P'-level y (emloop g)}}
+                   {!!}
+                   {!!}
+
+      comm-emloop-elim = CommEmloopElim.f
+
+    module _ (g₁ g₂ : R.El) where
+      private
+        P'' : EM₁ R₊ → Type i
+        P'' y = comm-emloop-elim (R.add g₁ g₂) y ==
+                comm-emloop-elim g₁ y ∙ᵈ comm-emloop-elim g₂ y [ P' y ↓ emloop-comp g₁ g₂ ]
+        P''-level : ∀ y → has-level -1 (P'' y)
+        P''-level y = ↓-level (P'-level y (emloop g₁ ∙ emloop g₂))
+
+      module CommEmloopCompElim =
+        EM₁PropElim {P = P''} {{P''-level}}
+                    {!!}
+
+      comm-emloop-comp-elim = CommEmloopCompElim.f
+
     cp₁₁-comm : ∀ x y → cp₁₁ x y == antipodal-map (cp₁₁ y x)
     cp₁₁-comm x y =
       EM₁-level₁-elim {P = λ x → P x y}
                       {{λ x → P-level x y}}
-                      (CommEmbaseElim.f y)
-                      {!!}
-                      {!!}
+                      (comm-embase-elim y)
+                      (λ g → comm-emloop-elim g y)
+                      {!!} -- (λ g₁ g₂ → comm-emloop-comp-elim g₁ g₂ y)
                       x
