@@ -60,14 +60,14 @@ module _ {i j} {A : Type i} {B : Type j} where
     (p' : u == v) (q' : v == w)
     → ↓-cst-in {p = p ∙ q} (p' ∙ q')
       == ↓-cst-in {p = p} p' ∙ᵈ ↓-cst-in {p = q} q'
-  ↓-cst-in-∙ idp idp idp idp = idp
+  ↓-cst-in-∙ idp idp p' q' = idp
 
   {- Interaction of [↓-cst-in] with [_∙'_] -}
   ↓-cst-in-∙' : {x y z : A} (p : x == y) (q : y == z) {u v w : B}
     (p' : u == v) (q' : v == w)
     → ↓-cst-in {p = p ∙' q} (p' ∙' q')
       == ↓-cst-in {p = p} p' ∙'ᵈ ↓-cst-in {p = q} q'
-  ↓-cst-in-∙' idp idp idp idp = idp
+  ↓-cst-in-∙' idp idp p' q' = idp
 
   {- Introduction of an equality between [↓-cst-in]s (used to deduce the
      recursor from the eliminator in HIT with 2-paths) -}
@@ -76,6 +76,23 @@ module _ {i j} {A : Type i} {B : Type j} where
     → q₀ == q₁
     → (↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁ [ (λ p → b == b' [ (λ _ → B) ↓ p ]) ↓ q ] )
   ↓-cst-in2 {p₀ = idp} {p₁ = .idp} {q = idp} k = k
+
+  {-
+  ↓-cst-out2' : {a a' : A} {b b' : B}
+    {p₀ p₁ : a == a'} {q₀ q₁ : b == b'} {q : p₀ == p₁}
+    → (↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁ [ (λ p → b == b' [ (λ _ → B) ↓ p ]) ↓ q ] )
+    → q₀ == q₁
+  ↓-cst-out2' {p₀ = idp} {p₁ = .idp} {q = idp} k = k
+  -}
+
+  ↓-cst-out2 : {a a' : A} {b b' : B}
+    {p₀ p₁ : a == a'}
+    {q₀ : b == b' [ (λ _ → B) ↓ p₀ ]}
+    {q₁ : b == b' [ (λ _ → B) ↓ p₁ ]}
+    {q : p₀ == p₁}
+    → (q₀ == q₁ [ (λ p → b == b' [ (λ _ → B) ↓ p ]) ↓ q ] )
+    → ↓-cst-out q₀ == ↓-cst-out q₁
+  ↓-cst-out2 {p₀ = idp} {p₁ = .idp} {q = idp} k = k
 
   ↓-cst-in2-idp : {a a' : A} {b b' : B}
     (p : a == a') (q : b == b')
@@ -97,7 +114,7 @@ module _ {i j} {A : Type i} {B : Type j} where
     == ↓-cst-in-∙ (p₀ ∙ p₁) p₂ (q₀ ∙ q₁) q₂
      ◃ (↓-cst-in-∙ p₀ p₁ q₀ q₁ ∙ᵈᵣ ↓-cst-in {p = p₂} q₂)
      ◃ ∙ᵈ-assoc (↓-cst-in {p = p₀} q₀) (↓-cst-in {p = p₁} q₁) (↓-cst-in {p = p₂} q₂)
-  ↓-cst-in-assoc {p₀ = idp} {p₁ = idp} {p₂ = idp} idp idp idp = idp
+  ↓-cst-in-assoc {p₀ = idp} {p₁ = idp} {p₂ = idp} q₀ q₁ q₂ = idp
 
   ↓-cst-in2-whisker-right : {a a' a'' : A} {b b' b'' : B}
     {p₀ p₁ : a == a'} {p' : a' == a''}
@@ -107,7 +124,7 @@ module _ {i j} {A : Type i} {B : Type j} where
     →    ↓-cst-in2 {q = ap (λ r → r ∙ p') p₀₁} (ap (λ r → r ∙ q') q₀₁)
        ▹ ↓-cst-in-∙ p₁ p' q₁ q'
       == ↓-cst-in-∙ p₀ p' q₀ q' ◃ (↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q')
-  ↓-cst-in2-whisker-right {p₀ = idp} {p₁ = .idp} {p' = idp} {q₀ = idp} {q₁ = .idp} {q' = idp} {p₀₁ = idp} idp = idp
+  ↓-cst-in2-whisker-right {p₀ = idp} {p₁ = .idp} {p' = idp} {p₀₁ = idp} idp = idp
 
   ↓-cst-in2-whisker-left : {a a' a'' : A} {b b' b'' : B}
     {p : a == a'} {p₀' p₁' : a' == a''}
@@ -117,7 +134,7 @@ module _ {i j} {A : Type i} {B : Type j} where
     →  ↓-cst-in2 {q = ap (λ r → p ∙ r) p₀₁'} (ap (λ r → q ∙ r) q₀₁')
     ▹  ↓-cst-in-∙ p p₁' q q₁'
     == ↓-cst-in-∙ p p₀' q q₀' ◃ (↓-cst-in {p = p} q ∙ᵈₗ ↓-cst-in2 {q = p₀₁'} q₀₁')
-  ↓-cst-in2-whisker-left {p = idp} {p₀' = idp} {p₁' = .idp} {q = idp} {q₀' = idp} {q₁' = .idp} {p₀₁' = idp} idp = idp
+  ↓-cst-in2-whisker-left {p = idp} {p₀' = idp} {p₁' = .idp} {p₀₁' = idp} idp = idp
 
 -- Dependent paths in a fibration constant in the second argument
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
@@ -289,11 +306,42 @@ module _ {i j} {A : Type i} where
 
 {- Various other lemmas -}
 
-{- Used for defining the recursor from the eliminator for 1-HIT -}
-apd=cst-in : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
-  {a a' : A} {p : a == a'} {q : f a == f a'}
-  → apd f p == ↓-cst-in q → ap f p == q
-apd=cst-in {p = idp} x = x
+module _ {i j} {A : Type i} {B : Type j} where
+
+  {- Used for defining the recursor from the eliminator for 1-HIT -}
+  apd=cst-in : ∀ {f : A → B} {a a' : A} {p : a == a'} {q : f a == f a'}
+    → apd f p == ↓-cst-in q → ap f p == q
+  apd=cst-in {p = idp} x = x
+
+  apd=cst-in-∙ : ∀ {f : A → B} {a a' a'' : A}
+    {p : a == a'} {q : f a == f a'}
+    {p' : a' == a''} {q' : f a' == f a''}
+    (r : apd f p == ↓-cst-in q)
+    (r' : apd f p' == ↓-cst-in q')
+    → ap-∙ f p p' ∙ ap2 _∙_ (apd=cst-in r) (apd=cst-in r') ==
+      apd=cst-in (apd-∙ f p p' ∙ ap2 _∙ᵈ_ r r' ∙ ! (↓-cst-in-∙ p p' q q'))
+  apd=cst-in-∙ {p = idp} {p' = idp} r r' = ! (∙-unit-r _)
+
+  apd=ap : ∀ (f : A → B) {a a' : A} (p : a == a')
+    → apd f p == ↓-cst-in (ap f p)
+  apd=ap f idp = idp
+
+  apd=ap' : ∀ (f : A → B) {a a' : A} (p : a == a')
+    → ap f p == ↓-cst-out (apd f p)
+  apd=ap' f idp = idp
+
+  apd=cst-in-∙' : ∀ {f : A → B} {a a' a'' : A}
+    {p : a == a'} {q : f a == f a'}
+    {p' : a' == a''} {q' : f a' == f a''}
+    (r : apd f p == ↓-cst-in q)
+    (r' : apd f p' == ↓-cst-in q')
+    → ! (apd=ap' f (p ∙ p')) ∙ ap-∙ f p p' ∙ ap2 _∙_ (apd=cst-in r) (apd=cst-in r') ==
+      ↓-cst-out2 (apd-∙ f p p' ∙ ap2 _∙ᵈ_ r r' ∙ ! (↓-cst-in-∙ p p' q q')) ∙ ↓-cst-β (p ∙ p') (q ∙ q')
+  apd=cst-in-∙' {p = idp} {p' = idp} r r' = ! (∙-unit-r _ ∙ ∙-unit-r _)
+
+  ap-ap : ∀ (f : A → B) {a a' : A} {p p' : a == a'} (q : p == p')
+    → ap (ap f) q == apd=ap' f p ∙ ↓-cst-out2 (apd (apd f) q) ∙ ! (apd=ap' f p')
+  ap-ap f {p = idp} {p' = .idp} idp = idp
 
 ↓-apd-out : ∀ {i j k} {A : Type i} {B : A → Type j} (C : (a : A) → B a → Type k)
   {f : Π A B} {x y : A} {p : x == y}
