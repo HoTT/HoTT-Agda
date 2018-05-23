@@ -77,14 +77,6 @@ module _ {i j} {A : Type i} {B : Type j} where
     → (↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁ [ (λ p → b == b' [ (λ _ → B) ↓ p ]) ↓ q ] )
   ↓-cst-in2 {p₀ = idp} {p₁ = .idp} {q = idp} k = k
 
-  {-
-  ↓-cst-out2' : {a a' : A} {b b' : B}
-    {p₀ p₁ : a == a'} {q₀ q₁ : b == b'} {q : p₀ == p₁}
-    → (↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁ [ (λ p → b == b' [ (λ _ → B) ↓ p ]) ↓ q ] )
-    → q₀ == q₁
-  ↓-cst-out2' {p₀ = idp} {p₁ = .idp} {q = idp} k = k
-  -}
-
   ↓-cst-out2 : {a a' : A} {b b' : B}
     {p₀ p₁ : a == a'}
     {q₀ : b == b' [ (λ _ → B) ↓ p₀ ]}
@@ -313,35 +305,9 @@ module _ {i j} {A : Type i} {B : Type j} where
     → apd f p == ↓-cst-in q → ap f p == q
   apd=cst-in {p = idp} x = x
 
-  apd=cst-in-∙ : ∀ {f : A → B} {a a' a'' : A}
-    {p : a == a'} {q : f a == f a'}
-    {p' : a' == a''} {q' : f a' == f a''}
-    (r : apd f p == ↓-cst-in q)
-    (r' : apd f p' == ↓-cst-in q')
-    → ap-∙ f p p' ∙ ap2 _∙_ (apd=cst-in r) (apd=cst-in r') ==
-      apd=cst-in (apd-∙ f p p' ∙ ap2 _∙ᵈ_ r r' ∙ ! (↓-cst-in-∙ p p' q q'))
-  apd=cst-in-∙ {p = idp} {p' = idp} r r' = ! (∙-unit-r _)
-
-  apd=ap : ∀ (f : A → B) {a a' : A} (p : a == a')
-    → apd f p == ↓-cst-in (ap f p)
-  apd=ap f idp = idp
-
-  apd=ap' : ∀ (f : A → B) {a a' : A} (p : a == a')
+  ap=↓-cst-out-apd : ∀ (f : A → B) {a a' : A} (p : a == a')
     → ap f p == ↓-cst-out (apd f p)
-  apd=ap' f idp = idp
-
-  apd=cst-in-∙' : ∀ {f : A → B} {a a' a'' : A}
-    {p : a == a'} {q : f a == f a'}
-    {p' : a' == a''} {q' : f a' == f a''}
-    (r : apd f p == ↓-cst-in q)
-    (r' : apd f p' == ↓-cst-in q')
-    → ! (apd=ap' f (p ∙ p')) ∙ ap-∙ f p p' ∙ ap2 _∙_ (apd=cst-in r) (apd=cst-in r') ==
-      ↓-cst-out2 (apd-∙ f p p' ∙ ap2 _∙ᵈ_ r r' ∙ ! (↓-cst-in-∙ p p' q q')) ∙ ↓-cst-β (p ∙ p') (q ∙ q')
-  apd=cst-in-∙' {p = idp} {p' = idp} r r' = ! (∙-unit-r _ ∙ ∙-unit-r _)
-
-  ap-ap : ∀ (f : A → B) {a a' : A} {p p' : a == a'} (q : p == p')
-    → ap (ap f) q == apd=ap' f p ∙ ↓-cst-out2 (apd (apd f) q) ∙ ! (apd=ap' f p')
-  ap-ap f {p = idp} {p' = .idp} idp = idp
+  ap=↓-cst-out-apd f idp = idp
 
 ↓-apd-out : ∀ {i j k} {A : Type i} {B : A → Type j} (C : (a : A) → B a → Type k)
   {f : Π A B} {x y : A} {p : x == y}

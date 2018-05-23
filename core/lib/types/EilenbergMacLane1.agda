@@ -397,13 +397,13 @@ module _ {G : Group i} where
           {f : A → B} {a₀ a₁ a₂ : A}
           (p₀₁ : a₀ == a₁) (p₁₂ : a₁ == a₂) (p₀₂ : a₀ == a₂)
           (q₀₁ : f a₀ == f a₁) (q₁₂ : f a₁ == f a₂) (q₀₂ : f a₀ == f a₂)
-          (s : p₀₂ == p₀₁ ∙ p₁₂)
+          (p-comp : p₀₂ == p₀₁ ∙ p₁₂)
           → apd f p₀₂ == ↓-cst-in {p = p₀₁} q₀₁ ∙ᵈ ↓-cst-in {p = p₁₂} q₁₂
-              [ (λ w → f a₀ == f a₂ [ (λ _ → B) ↓ w ]) ↓ s ]
+              [ (λ w → f a₀ == f a₂ [ (λ _ → B) ↓ w ]) ↓ p-comp ]
           → ap f p₀₂ == q₀₁ ∙ q₁₂
-        middle-fun {f = f} p₀₁ p₁₂ p₀₂ q₀₁ q₁₂ q₀₂ s w =
-          apd=ap' f p₀₂ ∙
-          ↓-cst-out2 w ∙
+        middle-fun {f = f} p₀₁ p₁₂ p₀₂ q₀₁ q₁₂ q₀₂ p-comp inner =
+          ap=↓-cst-out-apd f p₀₂ ∙
+          ↓-cst-out2 inner ∙
           ↓-cst-out2 (! (↓-cst-in-∙ p₀₁ p₁₂ q₀₁ q₁₂)) ∙
           ↓-cst-β (p₀₁ ∙ p₁₂) (q₀₁ ∙ q₁₂)
 
@@ -411,15 +411,15 @@ module _ {G : Group i} where
           {f : A → B} {a₀ a₁ a₂ : A}
           (p₀₁ : a₀ == a₁) (p₁₂ : a₁ == a₂) (p₀₂ : a₀ == a₂)
           (q₀₁ : f a₀ == f a₁) (q₁₂ : f a₁ == f a₂) (q₀₂ : f a₀ == f a₂)
-          (s : p₀₂ == p₀₁ ∙ p₁₂)
+          (p-comp : p₀₂ == p₀₁ ∙ p₁₂)
           (r₀₁ : apd f p₀₁ == ↓-cst-in q₀₁)
           (r₁₂ : apd f p₁₂ == ↓-cst-in q₁₂)
-          → ap (ap f) s ∙
+          → ap (ap f) p-comp ∙
             ap-∙ f p₀₁ p₁₂ ∙
             ap2 _∙_ (apd=cst-in r₀₁) (apd=cst-in r₁₂)
             ==
-            middle-fun p₀₁ p₁₂ p₀₂ q₀₁ q₁₂ q₀₂ s
-              (apd (apd f) s ▹
+            middle-fun p₀₁ p₁₂ p₀₂ q₀₁ q₁₂ q₀₂ p-comp
+              (apd (apd f) p-comp ▹
                apd-∙ f p₀₁ p₁₂ ∙
                ap2 _∙ᵈ_ r₀₁ r₁₂)
         emloop-comp-path-rewrite₁ idp idp .idp q₀₁ q₁₂ q₀₂ idp r₀₁ r₁₂ =
@@ -429,19 +429,19 @@ module _ {G : Group i} where
           {f : A → B} {a₀ a₁ a₂ : A}
           (p₀₁ : a₀ == a₁) (p₁₂ : a₁ == a₂) (p₀₂ : a₀ == a₂)
           (q₀₁ : f a₀ == f a₁) (q₁₂ : f a₁ == f a₂) (q₀₂ : f a₀ == f a₂)
-          (s : p₀₂ == p₀₁ ∙ p₁₂) (t : q₀₂ == q₀₁ ∙ q₁₂)
+          (p-comp : p₀₂ == p₀₁ ∙ p₁₂) (q-comp : q₀₂ == q₀₁ ∙ q₁₂)
           (r₀₁ : apd f p₀₁ == ↓-cst-in q₀₁)
           (r₁₂ : apd f p₁₂ == ↓-cst-in q₁₂)
           (r₀₂ : apd f p₀₂ == ↓-cst-in q₀₂)
-          → middle-fun p₀₁ p₁₂ p₀₂ q₀₁ q₁₂ q₀₂ s
+          → middle-fun p₀₁ p₁₂ p₀₂ q₀₁ q₁₂ q₀₂ p-comp
               (r₀₂ ◃
-               ↓-cst-in2 {q = s} t ▹
+               ↓-cst-in2 {q = p-comp} q-comp ▹
                ↓-cst-in-∙ p₀₁ p₁₂ q₀₁ q₁₂)
             ==
             apd=cst-in r₀₂ ∙
-            t
-        emloop-comp-path-rewrite₂ idp idp .idp q₀₁ q₁₂ q₀₂ idp t r₀₁ r₁₂ r₀₂ =
-          ∙-unit-r (r₀₂ ∙ t)
+            q-comp
+        emloop-comp-path-rewrite₂ idp idp .idp q₀₁ q₁₂ q₀₂ idp q-comp r₀₁ r₁₂ r₀₂ =
+          ∙-unit-r (r₀₂ ∙ q-comp)
 
       emloop-comp-path : (g₁ g₂ : G.El)
         → ap (ap f) (emloop-comp g₁ g₂) ∙
@@ -454,31 +454,27 @@ module _ {G : Group i} where
         ap (ap f) (emloop-comp g₁ g₂) ∙
         ap-∙ f (emloop g₁) (emloop g₂) ∙
         ap2 _∙_ (emloop-β g₁) (emloop-β g₂)
-          =⟨ emloop-comp-path-rewrite₁ (emloop g₁) (emloop g₂) (emloop (G.comp g₁ g₂))
-                                       (emloop* g₁) (emloop* g₂) (emloop* (G.comp g₁ g₂))
-                                       (emloop-comp g₁ g₂)
-                                       (M.emloop-β g₁) (M.emloop-β g₂) ⟩
-        middle-fun (emloop g₁) (emloop g₂) (emloop (G.comp g₁ g₂))
-                   (emloop* g₁) (emloop* g₂) (emloop* (G.comp g₁ g₂))
-                   (emloop-comp g₁ g₂)
-                   (apd (apd f) (emloop-comp g₁ g₂) ▹
-                    apd-∙ f (emloop g₁) (emloop g₂) ∙
-                    ap2 _∙ᵈ_ (M.emloop-β g₁) (M.emloop-β g₂))
-          =⟨ ap (middle-fun (emloop g₁) (emloop g₂) (emloop (G.comp g₁ g₂))
-                            (emloop* g₁) (emloop* g₂) (emloop* (G.comp g₁ g₂))
-                            (emloop-comp g₁ g₂))
-                (M.emloop-comp-path g₁ g₂) ⟩
-        middle-fun (emloop g₁) (emloop g₂) (emloop (G.comp g₁ g₂))
-                   (emloop* g₁) (emloop* g₂) (emloop* (G.comp g₁ g₂))
-                   (emloop-comp g₁ g₂)
-                   (M.emloop-β (G.comp g₁ g₂) ◃
-                    emloop-comp** g₁ g₂)
-          =⟨ emloop-comp-path-rewrite₂ (emloop g₁) (emloop g₂) (emloop (G.comp g₁ g₂))
-                                       (emloop* g₁) (emloop* g₂) (emloop* (G.comp g₁ g₂))
-                                       (emloop-comp g₁ g₂) (emloop-comp* g₁ g₂)
-                                       (M.emloop-β g₁) (M.emloop-β g₂) (M.emloop-β (G.comp g₁ g₂)) ⟩
-        emloop-β (G.comp g₁ g₂) ∙
-        emloop-comp* g₁ g₂ =∎
+          =⟨ emloop-comp-path-rewrite₁ p₀₁ p₁₂ p₀₂ q₀₁ q₁₂ q₀₂ p-comp r₀₁ r₁₂ ⟩
+        fun (apd (apd f) (emloop-comp g₁ g₂) ▹
+             apd-∙ f (emloop g₁) (emloop g₂) ∙
+             ap2 _∙ᵈ_ (M.emloop-β g₁) (M.emloop-β g₂))
+          =⟨ ap fun (M.emloop-comp-path g₁ g₂) ⟩
+        fun (M.emloop-β (G.comp g₁ g₂) ◃ emloop-comp** g₁ g₂)
+          =⟨ emloop-comp-path-rewrite₂ p₀₁ p₁₂ p₀₂ q₀₁ q₁₂ q₀₂ p-comp q-comp r₀₁ r₁₂ r₀₂ ⟩
+        emloop-β (G.comp g₁ g₂) ∙ emloop-comp* g₁ g₂ =∎
+        where
+          p₀₁ = emloop g₁
+          p₁₂ = emloop g₂
+          p₀₂ = emloop (G.comp g₁ g₂)
+          q₀₁ = emloop* g₁
+          q₁₂ = emloop* g₂
+          q₀₂ = emloop* (G.comp g₁ g₂)
+          r₀₁ = M.emloop-β g₁
+          r₁₂ = M.emloop-β g₂
+          r₀₂ = M.emloop-β (G.comp g₁ g₂)
+          p-comp = emloop-comp g₁ g₂
+          q-comp = emloop-comp* g₁ g₂
+          fun = middle-fun p₀₁ p₁₂ p₀₂ q₀₁ q₁₂ q₀₂ p-comp
 
   module EM₁Rec {j} {C : Type j}
     {{C-level : has-level ⟨ 2 ⟩ C}}
