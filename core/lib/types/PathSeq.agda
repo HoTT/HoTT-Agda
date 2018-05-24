@@ -268,8 +268,8 @@ module _ {i} {A : Type i} where
       path : (↯ s) ∙' end-matches == (↯ t)
 
   instance
-    =ₛ-free-end-refl : {a a' : A} (s : a =-= a') → s =ₛ-free-end s
-    =ₛ-free-end-refl s = record { end-matches = idp; path = idp }
+    =ₛ-free-end-refl : {a a' : A} {s : a =-= a'} → s =ₛ-free-end s
+    =ₛ-free-end-refl = record { end-matches = idp; path = idp }
 
   record _=ₛ-free-start_ {aₛ aₜ a' : A} (s : aₛ =-= a') (t : aₜ =-= a') : Type i where
     constructor =ₛ-free-start-intro
@@ -278,8 +278,8 @@ module _ {i} {A : Type i} where
       path : (↯ s) == start-matches ∙ (↯ t)
 
   instance
-    =ₛ-free-start-refl : {a a' : A} (s : a =-= a') → s =ₛ-free-start s
-    =ₛ-free-start-refl s = record { start-matches = idp; path = idp }
+    =ₛ-free-start-refl : {a a' : A} {s : a =-= a'} → s =ₛ-free-start s
+    =ₛ-free-start-refl = record { start-matches = idp; path = idp }
 
 module _ {i} {A : Type i} {a a' : A} where
 
@@ -296,60 +296,68 @@ module _ {i} {A : Type i} {a a' : A} where
   _∙ₛ_ : {s t u : a =-= a'} → s =ₛ t → t =ₛ u → s =ₛ u
   _∙ₛ_ (=ₛ-intro p) (=ₛ-intro q) = =ₛ-intro (p ∙ q)
 
+  {-
+    Note: While this enables more succinct chains of equations in comparison to
+    chains using _=↯=⟨_&_&_&_⟩_ (since it avoids having to spell out the target
+    subsequence), it is also results in significantly (~ one order of magnitude)
+    slower type checking. Therefore, this function should only be used for
+    developing new proofs, not to simplify old proofs.
+  -}
   infixr 10 _=ₛ⟨_&_&_&_⟩_
-  _=ₛ⟨_&_&_&_⟩_ : (s : a =-= a') {t u : a =-= a'}
-    → (m n o : ℕ)
-    → {{init-matches : ((m -#) s) =ₛ-free-end ((m -#) t)}}
-    → {{tail-matches : ((n -!) ((m -!) s)) =ₛ-free-start ((o -!) ((m -!) t))}}
-    → (path : (↯ (n -#) ((m -!) s)) ∙' _=ₛ-free-start_.start-matches tail-matches ==
-              _=ₛ-free-end_.end-matches init-matches ∙ (↯ (o -#) ((m -!) t)))
-    → t =ₛ u
-    → s =ₛ u
-  _=ₛ⟨_&_&_&_⟩_ s {t} {u} m n o {{init-matches}} {{tail-matches}} path q =
-    =ₛ-intro $
-      (↯ s)
-        =⟨ ap (λ v → ↯ v) (∙∙-#-! s m) ⟩
-      (↯ (m -#) s ∙∙ (m -!) s)
-        =⟨ ap (λ v → ↯ (m -#) s ∙∙ v) (∙∙-#-! ((m -!) s) n) ⟩
-      (↯ (m -#) s ∙∙ (n -#) ((m -!) s) ∙∙ (n -!) ((m -!) s))
-        =⟨ ↯-∙∙ ((m -#) s) ((n -#) ((m -!) s) ∙∙ (n -!) ((m -!) s)) ⟩
-      (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s) ∙∙ (n -!) ((m -!) s))
-        =⟨ ap (λ v → (↯ (m -#) s) ∙ v) (↯-∙∙ ((n -#) ((m -!) s)) ((n -!) ((m -!) s))) ⟩
-      (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s)) ∙ (↯ (n -!) ((m -!) s))
-        =⟨ ap (λ w → (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s)) ∙ w) tail-matches.path ⟩
-      (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s)) ∙ tail-matches.start-matches ∙ (↯ (o -!) ((m -!) t))
-        =⟨ ap (λ w → (↯ (m -#) s) ∙ w) (! (∙-assoc (↯ (n -#) ((m -!) s)) tail-matches.start-matches (↯ (o -!) ((m -!) t)))) ⟩
-      (↯ (m -#) s) ∙ ((↯ (n -#) ((m -!) s)) ∙ tail-matches.start-matches) ∙ (↯ (o -!) ((m -!) t))
-        =⟨ ap (λ w → (↯ (m -#) s) ∙ w ∙ (↯ (o -!) ((m -!) t)))
-              (∙=∙' (↯ (n -#) ((m -!) s)) tail-matches.start-matches ∙ path) ⟩
-      (↯ (m -#) s) ∙ (init-matches.end-matches ∙ (↯ (o -#) ((m -!) t))) ∙ (↯ (o -!) ((m -!) t))
-        =⟨ ap (λ w → (↯ (m -#) s) ∙ w) (∙-assoc init-matches.end-matches (↯ (o -#) ((m -!) t)) (↯ (o -!) ((m -!) t))) ⟩
-      (↯ (m -#) s) ∙ init-matches.end-matches ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t))
-        =⟨ ! (∙-assoc (↯ (m -#) s) init-matches.end-matches ((↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t)))) ⟩
-      ((↯ (m -#) s) ∙ init-matches.end-matches) ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t))
-        =⟨ ap (λ w → w ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t)))
-              (∙=∙' (↯ (m -#) s) init-matches.end-matches ∙ init-matches.path) ⟩
-      (↯ (m -#) t) ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t))
-        =⟨ ap (λ w → (↯ (m -#) t) ∙ w) (! (↯-∙∙ ((o -#) ((m -!) t)) ((o -!) ((m -!) t)))) ⟩
-      (↯ (m -#) t) ∙ (↯ (o -#) ((m -!) t) ∙∙ (o -!) ((m -!) t))
-        =⟨ ! (↯-∙∙ ((m -#) t) ((o -#) ((m -!) t) ∙∙ (o -!) ((m -!) t))) ⟩
-      (↯ (m -#) t ∙∙ (o -#) ((m -!) t) ∙∙ (o -!) ((m -!) t))
-        =⟨ ! (ap (λ v → ↯ (m -#) t ∙∙ v) (∙∙-#-! ((m -!) t) o)) ⟩
-      (↯ (m -#) t ∙∙ (m -!) t)
-        =⟨ ! (ap (λ v → ↯ v) (∙∙-#-! t m)) ⟩
-      (↯ t)
-        =⟨ =ₛ-path q ⟩
-      (↯ u) =∎
-    where
-    module init-matches = _=ₛ-free-end_ init-matches
-    module tail-matches = _=ₛ-free-start_ tail-matches
+  abstract
+    _=ₛ⟨_&_&_&_⟩_ : (s : a =-= a') {t u : a =-= a'}
+      → (m n o : ℕ)
+      → {{init-matches : ((m -#) s) =ₛ-free-end ((m -#) t)}}
+      → {{tail-matches : ((n -!) ((m -!) s)) =ₛ-free-start ((o -!) ((m -!) t))}}
+      → (path : (↯ (n -#) ((m -!) s)) ∙' _=ₛ-free-start_.start-matches tail-matches ==
+                _=ₛ-free-end_.end-matches init-matches ∙ (↯ (o -#) ((m -!) t)))
+      → t =ₛ u
+      → s =ₛ u
+    _=ₛ⟨_&_&_&_⟩_ s {t} {u} m n o {{init-matches}} {{tail-matches}} path q =
+      =ₛ-intro $
+        (↯ s)
+          =⟨ ap (λ v → ↯ v) (∙∙-#-! s m) ⟩
+        (↯ (m -#) s ∙∙ (m -!) s)
+          =⟨ ap (λ v → ↯ (m -#) s ∙∙ v) (∙∙-#-! ((m -!) s) n) ⟩
+        (↯ (m -#) s ∙∙ (n -#) ((m -!) s) ∙∙ (n -!) ((m -!) s))
+          =⟨ ↯-∙∙ ((m -#) s) ((n -#) ((m -!) s) ∙∙ (n -!) ((m -!) s)) ⟩
+        (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s) ∙∙ (n -!) ((m -!) s))
+          =⟨ ap (λ v → (↯ (m -#) s) ∙ v) (↯-∙∙ ((n -#) ((m -!) s)) ((n -!) ((m -!) s))) ⟩
+        (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s)) ∙ (↯ (n -!) ((m -!) s))
+          =⟨ ap (λ w → (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s)) ∙ w) tail-matches.path ⟩
+        (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s)) ∙ tail-matches.start-matches ∙ (↯ (o -!) ((m -!) t))
+          =⟨ ap (λ w → (↯ (m -#) s) ∙ w) (! (∙-assoc (↯ (n -#) ((m -!) s)) tail-matches.start-matches (↯ (o -!) ((m -!) t)))) ⟩
+        (↯ (m -#) s) ∙ ((↯ (n -#) ((m -!) s)) ∙ tail-matches.start-matches) ∙ (↯ (o -!) ((m -!) t))
+          =⟨ ap (λ w → (↯ (m -#) s) ∙ w ∙ (↯ (o -!) ((m -!) t)))
+                (∙=∙' (↯ (n -#) ((m -!) s)) tail-matches.start-matches ∙ path) ⟩
+        (↯ (m -#) s) ∙ (init-matches.end-matches ∙ (↯ (o -#) ((m -!) t))) ∙ (↯ (o -!) ((m -!) t))
+          =⟨ ap (λ w → (↯ (m -#) s) ∙ w) (∙-assoc init-matches.end-matches (↯ (o -#) ((m -!) t)) (↯ (o -!) ((m -!) t))) ⟩
+        (↯ (m -#) s) ∙ init-matches.end-matches ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t))
+          =⟨ ! (∙-assoc (↯ (m -#) s) init-matches.end-matches ((↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t)))) ⟩
+        ((↯ (m -#) s) ∙ init-matches.end-matches) ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t))
+          =⟨ ap (λ w → w ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t)))
+                (∙=∙' (↯ (m -#) s) init-matches.end-matches ∙ init-matches.path) ⟩
+        (↯ (m -#) t) ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t))
+          =⟨ ap (λ w → (↯ (m -#) t) ∙ w) (! (↯-∙∙ ((o -#) ((m -!) t)) ((o -!) ((m -!) t)))) ⟩
+        (↯ (m -#) t) ∙ (↯ (o -#) ((m -!) t) ∙∙ (o -!) ((m -!) t))
+          =⟨ ! (↯-∙∙ ((m -#) t) ((o -#) ((m -!) t) ∙∙ (o -!) ((m -!) t))) ⟩
+        (↯ (m -#) t ∙∙ (o -#) ((m -!) t) ∙∙ (o -!) ((m -!) t))
+          =⟨ ! (ap (λ v → ↯ (m -#) t ∙∙ v) (∙∙-#-! ((m -!) t) o)) ⟩
+        (↯ (m -#) t ∙∙ (m -!) t)
+          =⟨ ! (ap (λ v → ↯ v) (∙∙-#-! t m)) ⟩
+        (↯ t)
+          =⟨ =ₛ-path q ⟩
+        (↯ u) =∎
+      where
+      module init-matches = _=ₛ-free-end_ init-matches
+      module tail-matches = _=ₛ-free-start_ tail-matches
 
-  infixr 10 _=ₛ⟨_⟩_
-  _=ₛ⟨_⟩_ : (s : a =-= a') {t u : a =-= a'}
-    → s =↯= t
-    → t =ₛ u
-    → s =ₛ u
-  _=ₛ⟨_⟩_ _ p q = =ₛ-intro p ∙ₛ q
+    infixr 10 _=ₛ⟨_⟩_
+    _=ₛ⟨_⟩_ : (s : a =-= a') {t u : a =-= a'}
+      → s =↯= t
+      → t =ₛ u
+      → s =ₛ u
+    _=ₛ⟨_⟩_ _ p q = =ₛ-intro p ∙ₛ q
 
   infix 15 _∎ₛ
   _∎ₛ : (s : a =-= a') → s =ₛ s
