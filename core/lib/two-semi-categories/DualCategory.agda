@@ -34,35 +34,32 @@ dual-cat C =
           ap (C.comp i) (! (C.assoc h g f)) ∙
           ! (C.assoc i (C.comp h g) f) ∙
           ap (λ s → C.comp s f) (! (C.assoc i h g))
-      pentagon = λ f g h i →
-        ! (C.assoc i h (C.comp g f)) ∙ ! (C.assoc (C.comp i h) g f)
-          =⟨ ∙-! (C.assoc i h (C.comp g f)) (C.assoc (C.comp i h) g f) ⟩
-        ! (C.assoc (C.comp i h) g f ∙ C.assoc i h (C.comp g f))
-          =⟨ ap ! (C.pentagon-identity i h g f) ⟩
+      pentagon = λ f g h i → =ₛ-path $
+        ! (C.assoc i h (C.comp g f)) ◃∙ ! (C.assoc (C.comp i h) g f) ◃∎
+          =ₛ⟨ ∙-! (C.assoc i h (C.comp g f)) (C.assoc (C.comp i h) g f) ⟩
+        ! (C.assoc (C.comp i h) g f ∙ C.assoc i h (C.comp g f)) ◃∎
+          =ₛ⟨ ap ! (C.pentagon-identity i h g f) ⟩
         ! (ap (λ s → C.comp s f) (C.assoc i h g) ∙
-          C.assoc i (C.comp h g) f ∙
-          ap (C.comp i) (C.assoc h g f))
-          =⟨ !-∙ (ap (λ s → C.comp s f) (C.assoc i h g))
-                (C.assoc i (C.comp h g) f ∙ ap (C.comp i) (C.assoc h g f)) ⟩
-        (! (C.assoc i (C.comp h g) f ∙
-            ap (C.comp i) (C.assoc h g f)) ◃∙
-        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎)
-          =↯=⟨ 0 & 1 & (! (ap (C.comp i) (C.assoc h g f)) ◃∙
-                        ! (C.assoc i (C.comp h g) f) ◃∎) &
+           C.assoc i (C.comp h g) f ∙
+           ap (C.comp i) (C.assoc h g f)) ◃∎
+          =ₛ⟨ !-∙ (ap (λ s → C.comp s f) (C.assoc i h g))
+                  (C.assoc i (C.comp h g) f ∙ ap (C.comp i) (C.assoc h g f)) ⟩
+        ! (C.assoc i (C.comp h g) f ∙
+           ap (C.comp i) (C.assoc h g f)) ◃∙
+        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎
+          =ₛ⟨ 0 & 1 & 2 &
               !-∙ (C.assoc i (C.comp h g) f) (ap (C.comp i) (C.assoc h g f)) ⟩
-        (! (ap (C.comp i) (C.assoc h g f)) ◃∙
+        ! (ap (C.comp i) (C.assoc h g f)) ◃∙
         ! (C.assoc i (C.comp h g) f) ◃∙
-        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎)
-          =↯=⟨ 0 & 1 & ap (C.comp i) (! (C.assoc h g f)) ◃∎ &
-              !-ap (C.comp i) (C.assoc h g f) ⟩
-        (ap (C.comp i) (! (C.assoc h g f)) ◃∙
+        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎
+          =ₛ⟨ 0 & 1 & 1 & !-ap (C.comp i) (C.assoc h g f) ⟩
+        ap (C.comp i) (! (C.assoc h g f)) ◃∙
         ! (C.assoc i (C.comp h g) f) ◃∙
-        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎)
-          =↯=⟨ 2 & 1 & ap (λ s → C.comp s f) (! (C.assoc i h g)) ◃∎ &
-              !-ap (λ s → C.comp s f) (C.assoc i h g) ⟩
-        ap (C.comp i) (! (C.assoc h g f)) ∙
-        ! (C.assoc i (C.comp h g) f) ∙
-        ap (λ s → C.comp s f) (! (C.assoc i h g)) =∎
+        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎
+          =ₛ⟨ 2 & 1 & 1 & !-ap (λ s → C.comp s f) (C.assoc i h g) ⟩
+        ap (C.comp i) (! (C.assoc h g f)) ◃∙
+        ! (C.assoc i (C.comp h g) f) ◃∙
+        ap (λ s → C.comp s f) (! (C.assoc i h g)) ◃∎ ∎ₛ
 
 dual-functor-map : ∀ {i₁ j₁ i₂ j₂} {C : TwoSemiCategory i₁ j₁} {D : TwoSemiCategory i₂ j₂}
   → TwoSemiFunctor C D → TwoSemiFunctor (dual-cat C) (dual-cat D)

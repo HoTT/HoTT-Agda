@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
-open import lib.types.Nat
 open import lib.types.Sigma
 
 module lib.types.PathSeq where
@@ -64,17 +63,17 @@ module _ {i} {A : Type i} where
   _∙∙_ (a ∎∎) t = t
   _∙∙_ (a =⟪ p ⟫ a') t = a =⟪ p ⟫ (a' ∙∙ t)
 
-  infixr 10 _◃∙_
+  infixr 80 _◃∙_
   _◃∙_ : {a a' a'' : A}
     → a == a' → PathSeq a' a'' → PathSeq a a''
   _◃∙_ {a} p s = a =⟪ p ⟫ s
 
-  infixl 10 _∙▹_
+  infixl 80 _∙▹_
   _∙▹_ : {a a' a'' : A}
     → PathSeq a a' → a' == a'' → PathSeq a a''
   _∙▹_ {a} {a'} {a''} s p = s ∙∙ (a' =⟪ p ⟫ a'' ∎∎)
 
-  infix 15 _◃∎
+  infix 90 _◃∎
   _◃∎ : {a a' : A} → a == a' → PathSeq a a'
   _◃∎ {a} {a'} p = a =⟪ p ⟫ a' ∎∎
 
@@ -134,11 +133,10 @@ module _ {i} {A : Type i} where
         =⟨ ! (↯-∙∙ s (t₂ ∙∙ u)) ⟩
       (↯ (s ∙∙ t₂ ∙∙ u)) =∎
 
-  private
-    point-from-start : (n : ℕ) {a a' : A} (s : PathSeq a a') → A
-    point-from-start O {a} s = a
-    point-from-start (S n) (a ∎∎) = a
-    point-from-start (S n) (a =⟪ p ⟫ s) = point-from-start n s
+  point-from-start : (n : ℕ) {a a' : A} (s : PathSeq a a') → A
+  point-from-start O {a} s = a
+  point-from-start (S n) (a ∎∎) = a
+  point-from-start (S n) (a =⟪ p ⟫ s) = point-from-start n s
 
   _-! : (n : ℕ) {a a' : A} (s : PathSeq a a') → PathSeq (point-from-start n s) a'
   (O -!) s = s
@@ -262,63 +260,100 @@ module _ {i} {A : Type i} where
   4# = 4 -#
   5# = 5 -#
 
-  private
-    postulate   -- Demo
-      a b c d e : A
-      p : a == b
-      q : b == c
-      r : c == d
-      s : d == e
+module _ {i} {A : Type i} where
+  record _=ₛ-free-end_ {a aₛ' aₜ' : A} (s : a =-= aₛ') (t : a =-= aₜ') : Type i where
+    constructor =ₛ-free-end-intro
+    field
+      end-matches : aₛ' == aₜ'
+      path : (↯ s) ∙' end-matches == (↯ t)
 
-    t : PathSeq a e
-    t =
-      a =⟪ p ⟫
-      b =⟪idp⟫
-      b =⟪ q ⟫
-      c =⟪ idp ⟫
-      c =⟪ r ⟫
-      d =⟪ s ⟫
-      e =⟪idp⟫
-      e ∎∎
+  instance
+    =ₛ-free-end-refl : {a a' : A} (s : a =-= a') → s =ₛ-free-end s
+    =ₛ-free-end-refl s = record { end-matches = idp; path = idp }
 
-    t' : a == e
-    t' = ↯
-      a =⟪ p ⟫
-      b =⟪ q ⟫
-      c =⟪ idp ⟫
-      c =⟪ r ⟫
-      d =⟪ s ⟫
-      e ∎∎
+  record _=ₛ-free-start_ {aₛ aₜ a' : A} (s : aₛ =-= a') (t : aₜ =-= a') : Type i where
+    constructor =ₛ-free-start-intro
+    field
+      start-matches : aₛ == aₜ
+      path : (↯ s) == start-matches ∙ (↯ t)
 
-    ex0 : t' == (↯ t)
-    ex0 = idp
+  instance
+    =ₛ-free-start-refl : {a a' : A} (s : a =-= a') → s =ₛ-free-start s
+    =ₛ-free-start-refl s = record { start-matches = idp; path = idp }
 
-    ex1 : t' == p ∙ q ∙ r ∙ s
-    ex1 = idp
+module _ {i} {A : Type i} {a a' : A} where
 
-    ex2 : (↯ t !1) == p ∙ q ∙ r
-    ex2 = idp
+  -- 'ₛ' is for sequence
+  data _=ₛ_ (s t : a =-= a') : Type i where
+    =ₛ-intro : s =↯= t → s =ₛ t
 
-    ex3 : (↯ t !3) == p ∙ q  -- The [idp] count
-    ex3 = idp
+  =ₛ-path : {s t : a =-= a'} → s =ₛ t → (↯ s) == (↯ t)
+  =ₛ-path (=ₛ-intro p) = p
 
-    ex4 : (↯ 2! t) == r ∙ s
-    ex4 = idp
+  !ₛ : {s t : a =-= a'} → s =ₛ t → t =ₛ s
+  !ₛ (=ₛ-intro p) = =ₛ-intro (! p)
 
-    ex5 : (↯ 4! t) == s
-    ex5 = idp
+  _∙ₛ_ : {s t u : a =-= a'} → s =ₛ t → t =ₛ u → s =ₛ u
+  _∙ₛ_ (=ₛ-intro p) (=ₛ-intro q) = =ₛ-intro (p ∙ q)
 
-    ex6 : (↯ t #1) == s
-    ex6 = idp
+  infixr 10 _=ₛ⟨_&_&_&_⟩_
+  _=ₛ⟨_&_&_&_⟩_ : (s : a =-= a') {t u : a =-= a'}
+    → (m n o : ℕ)
+    → {{init-matches : ((m -#) s) =ₛ-free-end ((m -#) t)}}
+    → {{tail-matches : ((n -!) ((m -!) s)) =ₛ-free-start ((o -!) ((m -!) t))}}
+    → (path : (↯ (n -#) ((m -!) s)) ∙' _=ₛ-free-start_.start-matches tail-matches ==
+              _=ₛ-free-end_.end-matches init-matches ∙ (↯ (o -#) ((m -!) t)))
+    → t =ₛ u
+    → s =ₛ u
+  _=ₛ⟨_&_&_&_⟩_ s {t} {u} m n o {{init-matches}} {{tail-matches}} path q =
+    =ₛ-intro $
+      (↯ s)
+        =⟨ ap (λ v → ↯ v) (∙∙-#-! s m) ⟩
+      (↯ (m -#) s ∙∙ (m -!) s)
+        =⟨ ap (λ v → ↯ (m -#) s ∙∙ v) (∙∙-#-! ((m -!) s) n) ⟩
+      (↯ (m -#) s ∙∙ (n -#) ((m -!) s) ∙∙ (n -!) ((m -!) s))
+        =⟨ ↯-∙∙ ((m -#) s) ((n -#) ((m -!) s) ∙∙ (n -!) ((m -!) s)) ⟩
+      (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s) ∙∙ (n -!) ((m -!) s))
+        =⟨ ap (λ v → (↯ (m -#) s) ∙ v) (↯-∙∙ ((n -#) ((m -!) s)) ((n -!) ((m -!) s))) ⟩
+      (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s)) ∙ (↯ (n -!) ((m -!) s))
+        =⟨ ap (λ w → (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s)) ∙ w) tail-matches.path ⟩
+      (↯ (m -#) s) ∙ (↯ (n -#) ((m -!) s)) ∙ tail-matches.start-matches ∙ (↯ (o -!) ((m -!) t))
+        =⟨ ap (λ w → (↯ (m -#) s) ∙ w) (! (∙-assoc (↯ (n -#) ((m -!) s)) tail-matches.start-matches (↯ (o -!) ((m -!) t)))) ⟩
+      (↯ (m -#) s) ∙ ((↯ (n -#) ((m -!) s)) ∙ tail-matches.start-matches) ∙ (↯ (o -!) ((m -!) t))
+        =⟨ ap (λ w → (↯ (m -#) s) ∙ w ∙ (↯ (o -!) ((m -!) t)))
+              (∙=∙' (↯ (n -#) ((m -!) s)) tail-matches.start-matches ∙ path) ⟩
+      (↯ (m -#) s) ∙ (init-matches.end-matches ∙ (↯ (o -#) ((m -!) t))) ∙ (↯ (o -!) ((m -!) t))
+        =⟨ ap (λ w → (↯ (m -#) s) ∙ w) (∙-assoc init-matches.end-matches (↯ (o -#) ((m -!) t)) (↯ (o -!) ((m -!) t))) ⟩
+      (↯ (m -#) s) ∙ init-matches.end-matches ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t))
+        =⟨ ! (∙-assoc (↯ (m -#) s) init-matches.end-matches ((↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t)))) ⟩
+      ((↯ (m -#) s) ∙ init-matches.end-matches) ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t))
+        =⟨ ap (λ w → w ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t)))
+              (∙=∙' (↯ (m -#) s) init-matches.end-matches ∙ init-matches.path) ⟩
+      (↯ (m -#) t) ∙ (↯ (o -#) ((m -!) t)) ∙ (↯ (o -!) ((m -!) t))
+        =⟨ ap (λ w → (↯ (m -#) t) ∙ w) (! (↯-∙∙ ((o -#) ((m -!) t)) ((o -!) ((m -!) t)))) ⟩
+      (↯ (m -#) t) ∙ (↯ (o -#) ((m -!) t) ∙∙ (o -!) ((m -!) t))
+        =⟨ ! (↯-∙∙ ((m -#) t) ((o -#) ((m -!) t) ∙∙ (o -!) ((m -!) t))) ⟩
+      (↯ (m -#) t ∙∙ (o -#) ((m -!) t) ∙∙ (o -!) ((m -!) t))
+        =⟨ ! (ap (λ v → ↯ (m -#) t ∙∙ v) (∙∙-#-! ((m -!) t) o)) ⟩
+      (↯ (m -#) t ∙∙ (m -!) t)
+        =⟨ ! (ap (λ v → ↯ v) (∙∙-#-! t m)) ⟩
+      (↯ t)
+        =⟨ =ₛ-path q ⟩
+      (↯ u) =∎
+    where
+    module init-matches = _=ₛ-free-end_ init-matches
+    module tail-matches = _=ₛ-free-start_ tail-matches
 
-    ex7 : (↯ t #3) == r ∙ s
-    ex7 = idp
+  infixr 10 _=ₛ⟨_⟩_
+  _=ₛ⟨_⟩_ : (s : a =-= a') {t u : a =-= a'}
+    → s =↯= t
+    → t =ₛ u
+    → s =ₛ u
+  _=ₛ⟨_⟩_ _ p q = =ₛ-intro p ∙ₛ q
 
-    ex8 : (↯ 2# t) == p ∙ q
-    ex8 = idp
-
-    ex9 : (↯ 4# t) == p ∙ q ∙ r
-    ex9 = idp
+  infix 15 _∎ₛ
+  _∎ₛ : (s : a =-= a') → s =ₛ s
+  _∎ₛ _ = =ₛ-intro idp
 
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
@@ -334,11 +369,19 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
     ap-∙ f p (↯ a' =⟪ p' ⟫ s) ∙
     ap (λ s → ap f p ∙ s) (ap-seq-∙ (a' =⟪ p' ⟫ s))
 
-  ∙-ap-seq : {a a' : A} → (s : PathSeq a a')
+  ∙-ap-seq : {a a' : A} (s : PathSeq a a')
     → (↯ ap-seq s) == ap f (↯ s)
   ∙-ap-seq s = ! (ap-seq-∙ s)
 
-  ap-seq-=↯= : {a a' : A} → (s t : PathSeq a a')
+  ap-seq-∙-=ₛ : {a a' : A} → (s : PathSeq a a')
+    → (ap f (↯ s) ◃∎) =ₛ ap-seq s
+  ap-seq-∙-=ₛ s = =ₛ-intro (ap-seq-∙ s)
+
+  ∙-ap-seq-=ₛ : {a a' : A} (s : PathSeq a a')
+    → ap-seq s =ₛ (ap f (↯ s) ◃∎)
+  ∙-ap-seq-=ₛ s = !ₛ (ap-seq-∙-=ₛ s)
+
+  ap-seq-=↯= : {a a' : A} (s t : PathSeq a a')
     → s =↯= t
     → ap-seq s =↯= ap-seq t
   ap-seq-=↯= s t e =
@@ -349,6 +392,11 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
     ap f (↯ t)
       =⟨ ap-seq-∙ t ⟩
     (↯ (ap-seq t)) =∎
+
+  ap-seq-=ₛ : {a a' : A} {s t : PathSeq a a'}
+    → s =ₛ t
+    → ap-seq s =ₛ ap-seq t
+  ap-seq-=ₛ {s = s} {t = t} (=ₛ-intro p) = =ₛ-intro (ap-seq-=↯= s t p)
 
 apd= : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
        (p : f ∼ g) {a b : A} (q : a == b)
