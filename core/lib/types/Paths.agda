@@ -253,6 +253,24 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
     -- h =
     --   {!!}
 
+module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
+
+  {- A pattern that proved useful when using the elimination principle of EM₁ to construct a
+    (dependent) path -}
+  abstract
+    ↓-='-in'-weird : ∀ {x y z : A} {p : x == y} {p' : y == z} {p'' : x == z}
+      (p-comp : p'' == p ∙ p')
+      {u : f x == g x} {v : f y == g y} {w : f z == g z}
+      (q : u ∙ ap g p == ap f p ∙' v) (q' : v ∙ ap g p' == ap f p' ∙' w)
+      (q'' : u ∙ ap g p'' == ap f p'' ∙' w)
+      → q'' ∙ ap (λ z → ap f z ∙' w) p-comp ==
+        ap (λ z → u ∙ ap g z) p-comp ∙' ↓-='-in'-∙ {p = p} {p' = p'} u v w q q'
+      → ↓-='-in' {u = u} {v = w} q'' ==
+        ↓-='-in' {p = p} {u = u} {v = v} q ∙ᵈ ↓-='-in' {p = p'} {u = v} {v = w} q'
+          [ (λ p → u == w [ (λ x → f x == g x) ↓ p ]) ↓ p-comp ]
+    ↓-='-in'-weird p-comp q q' q'' e =
+      ap↓ ↓-='-in' (↓-='-in' e) ▹ ↓-='-in'-pres-comp {f = f} {g = g} q q'
+
 {- Identity type where the type is dependent -}
 
 ↓-=-in : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
