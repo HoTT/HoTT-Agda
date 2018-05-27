@@ -273,17 +273,67 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
 
 {- Identity type where the type is dependent -}
 
-↓-=-in : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
-  {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
-  → (u ◃ apd f p) == (apd g p ▹ v)
-  → (u == v [ (λ x → g x == f x) ↓ p ])
-↓-=-in {B = B} {p = idp} {u} {v} q = ! (◃idp {B = B} u) ∙ q ∙ idp▹ {B = B} v
+module _ {i j} {A : Type i} {B : A → Type j} {f g : Π A B} where
 
-↓-=-out : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
-  {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
-  → (u == v [ (λ x → g x == f x) ↓ p ])
-  → (u ◃ apd f p) == (apd g p ▹ v)
-↓-=-out {B = B} {p = idp} {u} {v} q = (◃idp {B = B} u) ∙ q ∙ ! (idp▹ {B = B} v)
+  abstract
+    private
+      ◃idp' = ◃idp {B = B}
+      idp▹' = idp▹ {B = B}
+
+    ↓-=-in : {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
+      → u ◃ apd f p == apd g p ▹ v
+      → (u == v [ (λ x → g x == f x) ↓ p ])
+    ↓-=-in {p = idp} {u} {v} q = ! (◃idp' u) ∙ q ∙ idp▹' v
+
+    ↓-=-out : {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
+      → (u == v [ (λ x → g x == f x) ↓ p ])
+      → u ◃ apd f p == apd g p ▹ v
+    ↓-=-out {p = idp} {u} {v} q = (◃idp' u) ∙ q ∙ ! (idp▹' v)
+
+    ↓-=-in-β : {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
+      → (q : u == v [ (λ x → g x == f x) ↓ p ])
+      → ↓-=-in (↓-=-out q) == q
+    ↓-=-in-β {p = idp} {u} {v} q =
+      ! (◃idp' u) ∙ (◃idp' u ∙ q ∙ ! (idp▹' v)) ∙ idp▹' v
+        =⟨ ap (! (◃idp' u) ∙_) (∙-assoc (◃idp' u) (q ∙ ! (idp▹' v)) (idp▹' v)) ⟩
+      ! (◃idp' u) ∙ ◃idp' u ∙ (q ∙ ! (idp▹' v)) ∙ idp▹' v
+        =⟨ ap (λ w → ! (◃idp' u) ∙ ◃idp' u ∙ w) (∙-assoc q (! (idp▹' v)) (idp▹' v)) ⟩
+      ! (◃idp' u) ∙ ◃idp' u ∙ (q ∙ ! (idp▹' v) ∙ idp▹' v)
+        =⟨ ap (λ w → ! (◃idp' u) ∙ ◃idp' u ∙ (q ∙ w)) (!-inv-l (idp▹' v)) ⟩
+      ! (◃idp' u) ∙ ◃idp' u ∙ q ∙ idp
+        =⟨ ap (λ w → ! (◃idp' u) ∙ ◃idp' u ∙ w) (∙-unit-r q) ⟩
+      ! (◃idp' u) ∙ ◃idp' u ∙ q
+        =⟨ ! (∙-assoc (! (◃idp' u)) (◃idp' u) q) ⟩
+      (! (◃idp' u) ∙ ◃idp' u) ∙ q
+        =⟨ ap (_∙ q) (!-inv-l (◃idp' u)) ⟩
+      q =∎
+
+    ↓-=-out-η : {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
+      → (q : u ◃ apd f p == apd g p ▹ v)
+      → q == ↓-=-out (↓-=-in q)
+    ↓-=-out-η {p = idp} {u} {v} q = ! $
+      ◃idp' u ∙ (! (◃idp' u) ∙ q ∙ idp▹' v) ∙ ! (idp▹' v)
+        =⟨ ap (λ w → ◃idp' u ∙ w) (∙-assoc (! (◃idp' u)) (q ∙ idp▹' v) (! (idp▹' v))) ⟩
+      ◃idp' u ∙ ! (◃idp' u) ∙ (q ∙ idp▹' v) ∙ ! (idp▹' v)
+        =⟨ ap (λ w → ◃idp' u ∙ ! (◃idp' u) ∙ w) (∙-assoc q (idp▹' v) (! (idp▹' v))) ⟩
+      ◃idp' u ∙ ! (◃idp' u) ∙ q ∙ idp▹' v ∙ ! (idp▹' v)
+        =⟨ ap (λ w → ◃idp' u ∙ ! (◃idp' u) ∙ q ∙ w) (!-inv-r (idp▹' v)) ⟩
+      ◃idp' u ∙ ! (◃idp' u) ∙ q ∙ idp
+        =⟨ ap (λ w → ◃idp' u ∙ ! (◃idp' u) ∙ w) (∙-unit-r q) ⟩
+      ◃idp' u ∙ ! (◃idp' u) ∙ q
+        =⟨ ! (∙-assoc (◃idp' u) (! (◃idp' u)) q) ⟩
+      (◃idp' u ∙ ! (◃idp' u)) ∙ q
+        =⟨ ap (_∙ q) (!-inv-r (◃idp' u)) ⟩
+      q =∎
+
+  ↓-=-in-is-equiv : {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
+    → is-equiv (↓-=-in {p = p} {u = u} {v = v})
+  ↓-=-in-is-equiv = is-eq _ ↓-=-out ↓-=-in-β λ q → ! (↓-=-out-η q)
+
+  ↓-=-equiv : {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
+    → (u ◃ apd f p == apd g p ▹ v) ≃ (u == v [ (λ x → g x == f x) ↓ p ])
+  ↓-=-equiv = ↓-=-in , ↓-=-in-is-equiv
+
 
 -- Dependent path in a type of the form [λ x → g (f x) == x]
 module _ {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
