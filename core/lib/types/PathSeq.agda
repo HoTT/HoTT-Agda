@@ -363,6 +363,22 @@ module _ {i} {A : Type i} {a a' : A} where
   _∎ₛ : (s : a =-= a') → s =ₛ s
   _∎ₛ _ = =ₛ-intro idp
 
+module _ {i} {A : Type i} where
+
+  post-rearrange'-in-=ₛ : {a a' a'' : A}
+    → {r : a =-= a''} {q : a' == a''} {p : a =-= a'}
+    → r =ₛ (p ∙▹ q)
+    → (r ∙▹ (! q)) =ₛ p
+  post-rearrange'-in-=ₛ {r = r} {q = q} {p = p} h =
+    =ₛ-intro (post-rearrange'-in r q p (=ₛ-path h))
+
+  post-rearrange-in-=ₛ : {a a' a'' : A}
+    → {p : a =-= a'} {r : a =-= a''} {q : a' == a''}
+    → (p ∙▹ q) =ₛ r
+    → p =ₛ (r ∙▹ (! q))
+  post-rearrange-in-=ₛ {p = p} {r = r} {q = q} h =
+    =ₛ-intro (post-rearrange-in p r q (=ₛ-path h))
+
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
   ap-seq : {a a' : A} → PathSeq a a' → PathSeq (f a) (f a')
