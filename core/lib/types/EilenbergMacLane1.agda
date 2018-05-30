@@ -386,9 +386,14 @@ module _ {G : Group i} where
 
       module M = EM₁Elim {P = λ _ → C} embase* emloop** emloop-comp** emloop-coh**
 
-    f = M.f
-
     abstract
+      f : EM₁ G → C
+      f = M.f
+
+      embase-β : f embase ↦ embase*
+      embase-β = M.embase-β
+      {-# REWRITE embase-β #-}
+
       emloop-β : (g : G.El) → ap f (emloop g) == emloop* g
       emloop-β g = apd=cst-in (M.emloop-β g)
 
