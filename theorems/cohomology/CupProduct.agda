@@ -13,8 +13,6 @@ module cohomology.CupProduct {i} (R : CRing i) where
   module R = CRing R
   open R using () renaming (add-group to R₊) public
 
-  -- open EM₁HSpace R.add-ab-group renaming (mult to EM₁-mult)
-  -- open EM₁HSpaceAssoc R.add-ab-group using (H-⊙EM₁-assoc; EM₁-2-semi-category)
   open EM₁HSpaceAssoc R.add-ab-group hiding (comp-functor) renaming (mult to EM₁-mult) public
 
   module CP₀₁ (g : R.El) where
@@ -233,7 +231,7 @@ module cohomology.CupProduct {i} (R : CRing i) where
     cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
     cp₁₁ = CP₁₁-Rec.f
 
-    cp₁₁-β : ∀ g → ap cp₁₁ (emloop g) == λ= (λ x → ap [_] (η (cp₀₁ g x)))
+    cp₁₁-β : ∀ g → ap cp₁₁ (emloop g) == λ= (λ y → ap [_] (η (cp₀₁ g y)))
     cp₁₁-β g = CP₁₁-Rec.emloop-β g -- takes a long time to check
 
     app=-ap-cp₁₁ : ∀ g y → app= (ap cp₁₁ (emloop g)) y == ap [_] (η (cp₀₁ g y))
