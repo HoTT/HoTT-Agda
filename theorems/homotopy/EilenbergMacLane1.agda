@@ -453,10 +453,8 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
               =⟨ ! (↯-∙∙ (e₁₃ ◃∙ e₃₄ ◃∙ (e₄₅ ◃∎)) (e₅₂ ◃∎)) ⟩
             e₁₃ ∙ e₃₄ ∙ e₄₅ ∙ e₅₂
               =⟨ rewrite-path (s₁ ∎∎) (e₁₃ ◃∎) (e₁₆ ◃∙ e₆₇ ◃∙ e₇₃ ◃∎) cd₁ (e₃₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎) ⟩
-            e₁₆ ∙ e₆₇ ∙ e₇₃ ∙ e₃₄ ∙ e₄₅ ∙ e₅₂
-              =⟨ rewrite-path (e₁₆ ◃∙ e₆₇ ◃∎)
-                              (e₇₃ ◃∙ e₃₄ ◃∎) (e₇₈ ◃∙ e₈₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∎) (=ₛ-path cd₂)
-                              (e₄₅ ◃∙ e₅₂ ◃∎) ⟩
+            e₁₆ ◃∙ e₆₇ ◃∙ e₇₃ ◃∙ e₃₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
+              =↯=⟨ 2 & 2 & cd₂ ⟩
             e₁₆ ∙ e₆₇ ∙ e₇₈ ∙ e₈₉ ∙ e₉₋₁₀ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂
               =⟨ rewrite-path (e₁₆ ◃∎)
                               (e₆₇ ◃∙ e₇₈ ◃∎) (e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∎) cd₃
