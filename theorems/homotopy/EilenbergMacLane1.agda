@@ -338,7 +338,6 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
                 pre-rotate-in (e₉₈ ∙ e₈₇ ∙ e₇₃ ∙ e₃₄) e₁₀₋₉ e₁₀₋₄ $
                 =ₛ-path {s = e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∙ e₇₃ ◃∙ e₃₄ ◃∎} {t = e₁₀₋₄ ◃∎} $
                 post-rearrange'-in-=ₛ $
-                post-rearrange'-in-=ₛ $
                 =ₛ-intro {s = e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∎} {t = e₁₀₋₄ ◃∙ e₄₃ ◃∙ e₃₇ ◃∎} (emloop-coh' G y g₁ g₂)
             where
             e₃₇ : s₃ == s₇

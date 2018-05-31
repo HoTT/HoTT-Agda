@@ -63,6 +63,17 @@ module _ {i} {A : Type i} where
   _∙∙_ (a ∎∎) t = t
   _∙∙_ (a =⟪ p ⟫ a') t = a =⟪ p ⟫ (a' ∙∙ t)
 
+  ∙∙-assoc : {a a' a'' a''' : A}
+    (s : a =-= a') (t : a' =-= a'') (u : a'' =-= a''')
+    → (s ∙∙ t) ∙∙ u == s ∙∙ (t ∙∙ u)
+  ∙∙-assoc (a ∎∎) t u = idp
+  ∙∙-assoc (a =⟪ p ⟫ s) t u = ap (a =⟪ p ⟫_) (∙∙-assoc s t u)
+
+  ∙∙-unit-r : {a a' : A} (s : a =-= a')
+    → s ∙∙ (a' ∎∎) == s
+  ∙∙-unit-r (a ∎∎) = idp
+  ∙∙-unit-r (a =⟪ p ⟫ s) = ap (a =⟪ p ⟫_) (∙∙-unit-r s)
+
   infixr 80 _◃∙_
   _◃∙_ : {a a' a'' : A}
     → a == a' → PathSeq a' a'' → PathSeq a a''
@@ -77,12 +88,17 @@ module _ {i} {A : Type i} where
   _◃∎ : {a a' : A} → a == a' → PathSeq a a'
   _◃∎ {a} {a'} p = a =⟪ p ⟫ a' ∎∎
 
+  seq-! : {a a' : A} → a =-= a' → a' =-= a
+  seq-! (a ∎∎) = a ∎∎
+  seq-! (a =⟪ p ⟫ s) = seq-! s ∙▹ ! p
+
+
   ↯-∙∙ : {a a' a'' : A} (s : PathSeq a a') (t : PathSeq a' a'')
     → (↯ (s ∙∙ t)) == (↯ s) ∙ (↯ t)
   ↯-∙∙ (a ∎∎) t = idp
   ↯-∙∙ (a =⟪ p ⟫ a' ∎∎) (.a' ∎∎) = ! (∙-unit-r p)
   ↯-∙∙ (a =⟪ p ⟫ a' ∎∎) (.a' =⟪ p' ⟫ t) = idp
-  ↯-∙∙ (a =⟪ p ⟫ a' =⟪ p' ⟫ s ) t =
+  ↯-∙∙ (a =⟪ p ⟫ a' =⟪ p' ⟫ s) t =
     ap (λ y → p ∙ y) (↯-∙∙ (a' =⟪ p' ⟫ s) t) ∙
     ! (∙-assoc p (↯ (a' =⟪ p' ⟫ s)) (↯ t))
 
@@ -92,7 +108,7 @@ module _ {i} {A : Type i} where
 
   abstract
     post-rearrange'-in : {a a' a'' : A}
-      → (r : PathSeq a a'') (q : a' == a'') (p : PathSeq a a')
+      → (r : a =-= a'') (q : a' == a'') (p : a =-= a')
       → r =↯= (p ∙▹ q)
       → (r ∙▹ (! q)) =↯= p
     post-rearrange'-in r idp p e =
@@ -109,10 +125,29 @@ module _ {i} {A : Type i} where
       (↯ p) =∎
 
     post-rearrange-in : {a a' a'' : A}
-      → (p : PathSeq a a') (r : PathSeq a a'') (q : a' == a'')
-      → (p ∙▹ q) =↯= r
-      → p =↯= (r ∙▹ (! q))
+      → (p : a =-= a') (r : a =-= a'') (q : a' == a'')
+      → p ∙▹ q =↯= r
+      → p =↯= r ∙▹ (! q)
     post-rearrange-in p r q e = ! (post-rearrange'-in r q p (! e))
+
+    post-rearrange'-in-seq : {a a' a'' : A}
+      → (r : a =-= a'') (q : a' =-= a'') (p : a =-= a')
+      → r =↯= p ∙∙ q
+      → r ∙∙ (seq-! q) =↯= p
+    post-rearrange'-in-seq r (a ∎∎) p e = ap ↯_ (∙∙-unit-r r) ∙ e ∙ ap ↯_ (∙∙-unit-r p)
+    post-rearrange'-in-seq r (a =⟪ q ⟫ s) p e =
+      (↯ r ∙∙ (seq-! s ∙▹ ! q))
+        =⟨ ap ↯_ (! (∙∙-assoc r (seq-! s) (! q ◃∎))) ⟩
+      (↯ (r ∙∙ seq-! s) ∙▹ ! q)
+        =⟨ post-rearrange'-in (r ∙∙ seq-! s) q p
+             (post-rearrange'-in-seq r s (p ∙▹ q) (e ∙ ap ↯_ (! (∙∙-assoc p (q ◃∎) s)))) ⟩
+      (↯ p) =∎
+
+    post-rearrange-in-seq : {a a' a'' : A}
+      → (p : a =-= a') (r : a =-= a'') (q : a' =-= a'')
+      → (p ∙∙ q) =↯= r
+      → p =↯= (r ∙∙ (seq-! q))
+    post-rearrange-in-seq p r q e = ! (post-rearrange'-in-seq r q p (! e))
 
     rewrite-path : {a a' a'' a''' : A}
       → (s : PathSeq a a')
@@ -365,19 +400,21 @@ module _ {i} {A : Type i} {a a' : A} where
 
 module _ {i} {A : Type i} where
 
+  -- pre-rotate-in-=ₛ : {a a' a'' : A}
+
   post-rearrange'-in-=ₛ : {a a' a'' : A}
-    → {r : a =-= a''} {q : a' == a''} {p : a =-= a'}
-    → r =ₛ (p ∙▹ q)
-    → (r ∙▹ (! q)) =ₛ p
+    → {r : a =-= a''} {q : a' =-= a''} {p : a =-= a'}
+    → r =ₛ p ∙∙ q
+    → r ∙∙ (seq-! q) =ₛ p
   post-rearrange'-in-=ₛ {r = r} {q = q} {p = p} h =
-    =ₛ-intro (post-rearrange'-in r q p (=ₛ-path h))
+    =ₛ-intro (post-rearrange'-in-seq r q p (=ₛ-path h))
 
   post-rearrange-in-=ₛ : {a a' a'' : A}
-    → {p : a =-= a'} {r : a =-= a''} {q : a' == a''}
-    → (p ∙▹ q) =ₛ r
-    → p =ₛ (r ∙▹ (! q))
+    → {p : a =-= a'} {r : a =-= a''} {q : a' =-= a''}
+    → p ∙∙ q =ₛ r
+    → p =ₛ r ∙∙ (seq-! q)
   post-rearrange-in-=ₛ {p = p} {r = r} {q = q} h =
-    =ₛ-intro (post-rearrange-in p r q (=ₛ-path h))
+    =ₛ-intro (post-rearrange-in-seq p r q (=ₛ-path h))
 
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
