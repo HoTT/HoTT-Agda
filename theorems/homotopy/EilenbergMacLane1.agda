@@ -331,13 +331,10 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
             cd₁' : e₁₆ ∙ e₆₇ == e₁₃ ∙ e₃₇
             cd₁' = homotopy-naturality (λ z → transp-emloop z y) (λ z → emloop y ∙ z) (λ p → transp-cst=idf p (emloop y)) (emloop-comp g₁ g₂)
 
-          cd₂ : e₇₃ ∙ e₃₄ == e₇₈ ∙ e₈₉ ∙ e₉₋₁₀ ∙ e₁₀₋₄
-          cd₂ = transport (λ z → e₇₃ ∙ e₃₄ == e₇₈ ∙ z ∙ e₉₋₁₀ ∙ e₁₀₋₄) (! e₈₉=!e₉₈) $
-                pre-rotate-in (e₇₃ ∙ e₃₄) e₈₇ (! e₉₈ ∙ e₉₋₁₀ ∙ e₁₀₋₄) $
-                pre-rotate-in (e₈₇ ∙ e₇₃ ∙ e₃₄) e₉₈ (e₉₋₁₀ ∙ e₁₀₋₄) $
-                pre-rotate-in (e₉₈ ∙ e₈₇ ∙ e₇₃ ∙ e₃₄) e₁₀₋₉ e₁₀₋₄ $
-                =ₛ-path {s = e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∙ e₇₃ ◃∙ e₃₄ ◃∎} {t = e₁₀₋₄ ◃∎} $
-                post-rearrange'-in-=ₛ $
+          cd₂ : e₇₃ ◃∙ e₃₄ ◃∎ =ₛ e₇₈ ◃∙ e₈₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∎
+          cd₂ = transport (λ z → e₇₃ ◃∙ e₃₄ ◃∎ =ₛ e₇₈ ◃∙ z ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∎) (! e₈₉=!e₉₈) $
+                pre-rotate-in-=ₛ {p = e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∎} $
+                post-rearrange'-in-=ₛ {p = e₁₀₋₄ ◃∎} $
                 =ₛ-intro {s = e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∎} {t = e₁₀₋₄ ◃∙ e₄₃ ◃∙ e₃₇ ◃∎} (emloop-coh' G y g₁ g₂)
             where
             e₃₇ : s₃ == s₇
@@ -458,7 +455,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
               =⟨ rewrite-path (s₁ ∎∎) (e₁₃ ◃∎) (e₁₆ ◃∙ e₆₇ ◃∙ e₇₃ ◃∎) cd₁ (e₃₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎) ⟩
             e₁₆ ∙ e₆₇ ∙ e₇₃ ∙ e₃₄ ∙ e₄₅ ∙ e₅₂
               =⟨ rewrite-path (e₁₆ ◃∙ e₆₇ ◃∎)
-                              (e₇₃ ◃∙ e₃₄ ◃∎) (e₇₈ ◃∙ e₈₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∎) cd₂
+                              (e₇₃ ◃∙ e₃₄ ◃∎) (e₇₈ ◃∙ e₈₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∎) (=ₛ-path cd₂)
                               (e₄₅ ◃∙ e₅₂ ◃∎) ⟩
             e₁₆ ∙ e₆₇ ∙ e₇₈ ∙ e₈₉ ∙ e₉₋₁₀ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂
               =⟨ rewrite-path (e₁₆ ◃∎)

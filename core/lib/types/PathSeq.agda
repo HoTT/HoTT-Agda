@@ -149,11 +149,24 @@ module _ {i} {A : Type i} where
       → p =↯= (r ∙∙ (seq-! q))
     post-rearrange-in-seq p r q e = ! (post-rearrange'-in-seq r q p (! e))
 
+    pre-rotate-in-seq : {a a' a'' : A}
+      → (q : a' =-= a'') (p : a =-= a') (r : a =-= a'')
+      → p ∙∙ q =↯= r
+      → q =↯= seq-! p ∙∙ r
+    pre-rotate-in-seq q (a ∎∎) r e = e
+    pre-rotate-in-seq q (a =⟪ p ⟫ s) r e =
+      (↯ q)
+        =⟨ pre-rotate-in-seq q s (! p ◃∙ r)
+             (pre-rotate-in (↯ s ∙∙ q) p (↯ r) (! (↯-∙∙ (p ◃∎) (s ∙∙ q)) ∙ e) ∙
+              ! (↯-∙∙ (! p ◃∎) r)) ⟩
+      (↯ seq-! s ∙∙ ! p ◃∙ r)
+        =⟨ ap ↯_ (! (∙∙-assoc (seq-! s) (! p ◃∎) r)) ⟩
+      (↯ seq-! (p ◃∙ s) ∙∙ r) =∎
+
     rewrite-path : {a a' a'' a''' : A}
-      → (s : PathSeq a a')
-      → (t₁ t₂ : PathSeq a' a'')
+      → (s : a =-= a') (t₁ t₂ : a' =-= a'')
       → t₁ =↯= t₂
-      → (u : PathSeq a'' a''')
+      → (u : a'' =-= a''')
       → s ∙∙ t₁ ∙∙ u =↯= s ∙∙ t₂ ∙∙ u
     rewrite-path s t₁ t₂ e u =
       (↯ (s ∙∙ t₁ ∙∙ u))
@@ -400,21 +413,25 @@ module _ {i} {A : Type i} {a a' : A} where
 
 module _ {i} {A : Type i} where
 
-  -- pre-rotate-in-=ₛ : {a a' a'' : A}
+  pre-rotate-in-=ₛ : {a a' a'' : A} {q : a' =-= a''} {p : a =-= a'} {r : a =-= a''}
+    → p ∙∙ q =ₛ r
+    → q =ₛ seq-! p ∙∙ r
+  pre-rotate-in-=ₛ {q = q} {p = p} {r = r} e =
+    =ₛ-intro (pre-rotate-in-seq q p r (=ₛ-path e))
 
   post-rearrange'-in-=ₛ : {a a' a'' : A}
     → {r : a =-= a''} {q : a' =-= a''} {p : a =-= a'}
     → r =ₛ p ∙∙ q
     → r ∙∙ (seq-! q) =ₛ p
-  post-rearrange'-in-=ₛ {r = r} {q = q} {p = p} h =
-    =ₛ-intro (post-rearrange'-in-seq r q p (=ₛ-path h))
+  post-rearrange'-in-=ₛ {r = r} {q = q} {p = p} e =
+    =ₛ-intro (post-rearrange'-in-seq r q p (=ₛ-path e))
 
   post-rearrange-in-=ₛ : {a a' a'' : A}
     → {p : a =-= a'} {r : a =-= a''} {q : a' =-= a''}
     → p ∙∙ q =ₛ r
     → p =ₛ r ∙∙ (seq-! q)
-  post-rearrange-in-=ₛ {p = p} {r = r} {q = q} h =
-    =ₛ-intro (post-rearrange-in-seq p r q (=ₛ-path h))
+  post-rearrange-in-=ₛ {p = p} {r = r} {q = q} e =
+    =ₛ-intro (post-rearrange-in-seq p r q (=ₛ-path e))
 
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
