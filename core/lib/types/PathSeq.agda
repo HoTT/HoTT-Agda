@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.types.Sigma
+open import lib.types.Paths
 
 module lib.types.PathSeq where
 
@@ -429,13 +430,31 @@ module _ {i} {A : Type i} where
   post-rearrange-in-=ₛ {p = p} {r = r} {q = q} e =
     =ₛ-intro (post-rearrange-in-seq p r q (=ₛ-path e))
 
+  homotopy-naturality-=ₛ : ∀ {k} {B : Type k} (f g : A → B)
+    (h : (x : A) → f x == g x) {x y : A} (p : x == y)
+    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
+  homotopy-naturality-=ₛ f g h p =
+   =ₛ-intro (homotopy-naturality f g h p)
+
+  homotopy-naturality-to-idf-=ₛ : (f : A → A)
+    (h : (x : A) → f x == x) {x y : A} (p : x == y)
+    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ p ◃∎
+  homotopy-naturality-to-idf-=ₛ f h p =
+    =ₛ-intro (homotopy-naturality-to-idf f h p)
+
+  homotopy-naturality-from-idf-=ₛ : (g : A → A)
+    (h : (x : A) → x == g x) {x y : A} (p : x == y)
+    → p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
+  homotopy-naturality-from-idf-=ₛ g h p =
+    =ₛ-intro (homotopy-naturality-from-idf g h p)
+
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
-  ap-seq : {a a' : A} → PathSeq a a' → PathSeq (f a) (f a')
+  ap-seq : {a a' : A} → a =-= a' → f a =-= f a'
   ap-seq (a ∎∎) = f a ∎∎
   ap-seq (a =⟪ p ⟫ s) = f a =⟪ ap f p ⟫ ap-seq s
 
-  ap-seq-∙ : {a a' : A} → (s : PathSeq a a')
+  ap-seq-∙ : {a a' : A} → (s : a =-= a')
     → ap f (↯ s) == (↯ ap-seq s)
   ap-seq-∙ (a ∎∎) = idp
   ap-seq-∙ (a =⟪ p ⟫ a' ∎∎) = idp
@@ -443,19 +462,19 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
     ap-∙ f p (↯ a' =⟪ p' ⟫ s) ∙
     ap (λ s → ap f p ∙ s) (ap-seq-∙ (a' =⟪ p' ⟫ s))
 
-  ∙-ap-seq : {a a' : A} (s : PathSeq a a')
+  ∙-ap-seq : {a a' : A} (s : a =-= a')
     → (↯ ap-seq s) == ap f (↯ s)
   ∙-ap-seq s = ! (ap-seq-∙ s)
 
-  ap-seq-∙-=ₛ : {a a' : A} → (s : PathSeq a a')
+  ap-seq-∙-=ₛ : {a a' : A} → (s : a =-= a')
     → (ap f (↯ s) ◃∎) =ₛ ap-seq s
   ap-seq-∙-=ₛ s = =ₛ-intro (ap-seq-∙ s)
 
-  ∙-ap-seq-=ₛ : {a a' : A} (s : PathSeq a a')
+  ∙-ap-seq-=ₛ : {a a' : A} (s : a =-= a')
     → ap-seq s =ₛ (ap f (↯ s) ◃∎)
   ∙-ap-seq-=ₛ s = !ₛ (ap-seq-∙-=ₛ s)
 
-  ap-seq-=↯= : {a a' : A} (s t : PathSeq a a')
+  ap-seq-=↯= : {a a' : A} (s t : a =-= a')
     → s =↯= t
     → ap-seq s =↯= ap-seq t
   ap-seq-=↯= s t e =
@@ -467,7 +486,7 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
       =⟨ ap-seq-∙ t ⟩
     (↯ (ap-seq t)) =∎
 
-  ap-seq-=ₛ : {a a' : A} {s t : PathSeq a a'}
+  ap-seq-=ₛ : {a a' : A} {s t : a =-= a'}
     → s =ₛ t
     → ap-seq s =ₛ ap-seq t
   ap-seq-=ₛ {s = s} {t = t} (=ₛ-intro p) = =ₛ-intro (ap-seq-=↯= s t p)
