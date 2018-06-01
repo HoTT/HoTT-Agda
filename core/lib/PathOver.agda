@@ -110,13 +110,13 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} where
 
 -- Dependent paths in the universal fibration over the universe
 ↓-idf-out : ∀ {i} {A B : Type i} (p : A == B) {u : A} {v : B}
-  → u == v [ (λ x → x) ↓ p ]
+  → u == v [ (λ X → X) ↓ p ]
   → coe p u == v
 ↓-idf-out idp = idf _
 
 ↓-idf-in : ∀ {i} {A B : Type i} (p : A == B) {u : A} {v : B}
   → coe p u == v
-  → u == v [ (λ x → x) ↓ p ]
+  → u == v [ (λ X → X) ↓ p ]
 ↓-idf-in idp = idf _
 
 -- Dependent paths over [ap f p]
