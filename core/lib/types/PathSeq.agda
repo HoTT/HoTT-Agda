@@ -163,24 +163,6 @@ module _ {i} {A : Type i} where
         =⟨ ap ↯_ (! (∙∙-assoc (seq-! s) (! p ◃∎) r)) ⟩
       (↯ seq-! (p ◃∙ s) ∙∙ r) =∎
 
-    rewrite-path : {a a' a'' a''' : A}
-      → (s : a =-= a') (t₁ t₂ : a' =-= a'')
-      → t₁ =↯= t₂
-      → (u : a'' =-= a''')
-      → s ∙∙ t₁ ∙∙ u =↯= s ∙∙ t₂ ∙∙ u
-    rewrite-path s t₁ t₂ e u =
-      (↯ (s ∙∙ t₁ ∙∙ u))
-        =⟨ ↯-∙∙ s (t₁ ∙∙ u) ⟩
-      (↯ s) ∙ (↯ (t₁ ∙∙ u))
-        =⟨ ap (λ y → (↯ s) ∙ y) (↯-∙∙ t₁ u) ⟩
-      (↯ s) ∙ (↯ t₁) ∙ (↯ u)
-        =⟨ ap (λ y → (↯ s) ∙ y ∙ (↯ u)) e ⟩
-      (↯ s) ∙ (↯ t₂) ∙ (↯ u)
-        =⟨ ! (ap (λ y → (↯ s) ∙ y) (↯-∙∙ t₂ u)) ⟩
-      (↯ s) ∙ (↯ (t₂ ∙∙ u))
-        =⟨ ! (↯-∙∙ s (t₂ ∙∙ u)) ⟩
-      (↯ (s ∙∙ t₂ ∙∙ u)) =∎
-
   point-from-start : (n : ℕ) {a a' : A} (s : PathSeq a a') → A
   point-from-start O {a} s = a
   point-from-start (S n) (a ∎∎) = a
