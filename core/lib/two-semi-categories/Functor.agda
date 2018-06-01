@@ -2,7 +2,6 @@
 
 open import lib.Basics
 open import lib.types.PathSeq
-open import lib.types.Paths using (homotopy-naturality)
 open import lib.types.TwoSemiCategory
 
 module lib.two-semi-categories.Functor where
@@ -96,12 +95,11 @@ comp-functors {C = C} {D = D} {E = E} F G =
         ◃∙ ap (λ s → E.comp (G.F₁ s) (F₁ h)) (F.pres-comp f g)
         ◃∙ ap (λ s → E.comp s (F₁ h)) (G.pres-comp (F.F₁ f) (F.F₁ g))
         ◃∙ E.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎)
-          =↯=⟨ 1 & 2 & (ap (λ s → G.F₁ (D.comp s (F.F₁ h))) (F.pres-comp f g)
-                      ◃∙ G.pres-comp (D.comp (F.F₁ f) (F.F₁ g)) (F.F₁ h) ◃∎)
-                & ! (homotopy-naturality (λ s → G.F₁ (D.comp s (F.F₁ h)))
-                                          (λ s → E.comp (G.F₁ s) (F₁ h))
-                                          (λ s → G.pres-comp s (F.F₁ h))
-                                          (F.pres-comp f g)) ⟩
+          =↯=⟨ 1 & 2 & !ₛ $
+               homotopy-naturality-=ₛ (λ s → G.F₁ (D.comp s (F.F₁ h)))
+                                      (λ s → E.comp (G.F₁ s) (F₁ h))
+                                      (λ s → G.pres-comp s (F.F₁ h))
+                                      (F.pres-comp f g) ⟩
         (ap G.F₁ (F.pres-comp (C.comp f g) h)
         ◃∙ ap (λ s → G.F₁ (D.comp s (F.F₁ h))) (F.pres-comp f g)
         ◃∙ G.pres-comp (D.comp (F.F₁ f) (F.F₁ g)) (F.F₁ h)
@@ -139,9 +137,8 @@ comp-functors {C = C} {D = D} {E = E} F G =
         ◃∙ ap (G.F₁ ∘ D.comp (F.F₁ f)) (F.pres-comp g h)
         ◃∙ G.pres-comp (F.F₁ f) (D.comp (F.F₁ g) (F.F₁ h))
         ◃∙ ap (E.comp (F₁ f)) (G.pres-comp (F.F₁ g) (F.F₁ h)) ◃∎)
-          =↯=⟨ 2 & 2 & G.pres-comp (F.F₁ f) (F.F₁ (C.comp g h))
-                      ◃∙ ap (λ s → E.comp (F₁ f) (G.F₁ s)) (F.pres-comp g h) ◃∎
-                & homotopy-naturality (G.F₁ ∘ D.comp (F.F₁ f))
+          =↯=⟨ 2 & 2 &
+               homotopy-naturality-=ₛ (G.F₁ ∘ D.comp (F.F₁ f))
                                       (E.comp (F₁ f) ∘ G.F₁)
                                       (G.pres-comp (F.F₁ f))
                                       (F.pres-comp g h) ⟩
