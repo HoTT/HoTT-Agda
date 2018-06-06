@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.types.PathSeq
 
 module lib.types.TwoSemiCategory where
 
@@ -14,8 +15,12 @@ module _ {i j} {El : Type i} (Arr : El → El → Type j)
         → comp (comp a b) c == comp a (comp b c)
       {- coherence -}
       pentagon-identity : ∀ {v w x y z} (a : Arr v w) (b : Arr w x) (c : Arr x y) (d : Arr y z)
-        → assoc (comp a b) c d ∙ assoc a b (comp c d)
-          == ap (λ s → comp s d) (assoc a b c) ∙ assoc a (comp b c) d ∙ ap (comp a) (assoc b c d)
+        → assoc (comp a b) c d ◃∙
+          assoc a b (comp c d) ◃∎
+          =ₛ
+          ap (λ s → comp s d) (assoc a b c) ◃∙
+          assoc a (comp b c) d ◃∙
+          ap (comp a) (assoc b c d) ◃∎
 
 record TwoSemiCategory i j : Type (lsucc (lmax i j)) where
   constructor two-semi-category

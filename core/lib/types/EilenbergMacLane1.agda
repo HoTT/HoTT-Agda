@@ -18,15 +18,39 @@ open import lib.two-semi-categories.GroupToCategory
 module lib.types.EilenbergMacLane1 {i} where
 
 module _ (G : Group i) where
+  private
+    module G = Group G
 
   postulate  -- HIT
     EM₁ : Type i
     embase' : EM₁
-    emloop' : Group.El G → embase' == embase'
-    emloop-comp' : ∀ g₁ g₂ → emloop' (Group.comp G g₁ g₂) == emloop' g₁ ∙ emloop' g₂
-    emloop-coh' : ∀ g₁ g₂ g₃ →
-      emloop-comp' (Group.comp G g₁ g₂) g₃ ∙ ap (λ l → l ∙ emloop' g₃) (emloop-comp' g₁ g₂) ∙ ∙-assoc (emloop' g₁) (emloop' g₂) (emloop' g₃)
-      == ap emloop' (Group.assoc G g₁ g₂ g₃) ∙ emloop-comp' g₁ (Group.comp G g₂ g₃) ∙ ap (λ l → emloop' g₁ ∙ l) (emloop-comp' g₂ g₃)
+    emloop' : G.El → embase' == embase'
+    emloop-comp' : ∀ g₁ g₂ → emloop' (G.comp g₁ g₂) == emloop' g₁ ∙ emloop' g₂
+
+  emloop-coh₁' : (g₁ g₂ g₃ : G.El)
+    → emloop' (G.comp (G.comp g₁ g₂) g₃) =-= emloop' g₁ ∙ (emloop' g₂ ∙ emloop' g₃)
+  emloop-coh₁' g₁ g₂ g₃ =
+    emloop' (G.comp (G.comp g₁ g₂) g₃)
+      =⟪ emloop-comp' (G.comp g₁ g₂) g₃ ⟫
+    emloop' (G.comp g₁ g₂) ∙ emloop' g₃
+      =⟪ ap (λ l → l ∙ emloop' g₃) (emloop-comp' g₁ g₂) ⟫
+    (emloop' g₁ ∙ emloop' g₂) ∙ emloop' g₃
+      =⟪ ∙-assoc (emloop' g₁) (emloop' g₂) (emloop' g₃) ⟫
+    emloop' g₁ ∙ (emloop' g₂ ∙ emloop' g₃) ∎∎
+
+  emloop-coh₂' : (g₁ g₂ g₃ : G.El)
+    → emloop' (G.comp (G.comp g₁ g₂) g₃) =-= emloop' g₁ ∙ (emloop' g₂ ∙ emloop' g₃)
+  emloop-coh₂' g₁ g₂ g₃ =
+    emloop' (G.comp (G.comp g₁ g₂) g₃)
+      =⟪ ap emloop' (Group.assoc G g₁ g₂ g₃) ⟫
+    emloop' (G.comp g₁ (G.comp g₂ g₃))
+      =⟪ emloop-comp' g₁ (Group.comp G g₂ g₃) ⟫
+    emloop' g₁ ∙ emloop' (G.comp g₂ g₃)
+      =⟪ ap (λ l → emloop' g₁ ∙ l) (emloop-comp' g₂ g₃) ⟫
+    emloop' g₁ ∙ (emloop' g₂ ∙ emloop' g₃) ∎∎
+
+  postulate
+    emloop-coh' : ∀ g₁ g₂ g₃ → emloop-coh₁' g₁ g₂ g₃ =ₛ emloop-coh₂' g₁ g₂ g₃
     EM₁-level' : has-level ⟨ 2 ⟩ EM₁
 
   ⊙EM₁ : Ptd i
@@ -39,6 +63,8 @@ module _ {G : Group i} where
   embase = embase' G
   emloop = emloop' G
   emloop-comp = emloop-comp' G
+  emloop-coh₁ = emloop-coh₁' G
+  emloop-coh₂ = emloop-coh₂' G
   emloop-coh = emloop-coh' G
 
   instance
@@ -62,7 +88,9 @@ module _ {G : Group i} where
     (emloop-coh* : (g₁ g₂ g₃ : G.El) →
       emloop-comp* (G.comp g₁ g₂) g₃ ∙ᵈ (emloop-comp* g₁ g₂ ∙ᵈᵣ emloop* g₃) ∙ᵈ ∙ᵈ-assoc (emloop* g₁) (emloop* g₂) (emloop* g₃)
       == ↓-ap-in (λ p → embase* == embase* [ P ↓ p ]) emloop (apd emloop* (G.assoc g₁ g₂ g₃)) ∙ᵈ emloop-comp* g₁ (G.comp g₂ g₃) ∙ᵈ (emloop* g₁ ∙ᵈₗ emloop-comp* g₂ g₃)
-      [ (λ e → emloop* (G.comp (G.comp g₁ g₂) g₃) == emloop* g₁ ∙ᵈ (emloop* g₂ ∙ᵈ emloop* g₃) [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e ]) ↓ emloop-coh g₁ g₂ g₃ ])
+      [ (λ e → emloop* (G.comp (G.comp g₁ g₂) g₃) == emloop* g₁ ∙ᵈ (emloop* g₂ ∙ᵈ emloop* g₃)
+               [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e ])
+        ↓ =ₛ-out (emloop-coh g₁ g₂ g₃) ])
     where
 
     postulate  -- HIT
@@ -126,8 +154,13 @@ module _ {G : Group i} where
     (emloop* : (g : G.El) → embase* == embase*)
     (emloop-comp* : (g₁ g₂ : G.El) → emloop* (G.comp g₁ g₂) == emloop* g₁ ∙ emloop* g₂)
     (emloop-coh* : (g₁ g₂ g₃ : G.El) →
-      emloop-comp* (G.comp g₁ g₂) g₃ ∙ ap (λ l → l ∙ emloop* g₃) (emloop-comp* g₁ g₂) ∙ ∙-assoc (emloop* g₁) (emloop* g₂) (emloop* g₃) ==
-      ap emloop* (G.assoc g₁ g₂ g₃) ∙ emloop-comp* g₁ (G.comp g₂ g₃) ∙ ap (λ l → emloop* g₁ ∙ l) (emloop-comp* g₂ g₃)) where
+      emloop-comp* (G.comp g₁ g₂) g₃ ◃∙
+      ap (λ l → l ∙ emloop* g₃) (emloop-comp* g₁ g₂) ◃∙
+      ∙-assoc (emloop* g₁) (emloop* g₂) (emloop* g₃) ◃∎
+      =ₛ
+      ap emloop* (G.assoc g₁ g₂ g₃) ◃∙
+      emloop-comp* g₁ (G.comp g₂ g₃) ◃∙
+      ap (λ l → emloop* g₁ ∙ l) (emloop-comp* g₂ g₃) ◃∎) where
 
     private
       P : EM₁ G → Type j
@@ -178,13 +211,13 @@ module _ {G : Group i} where
         e₅₃ = ap (λ l → emloop g₁ ∙ l) (emloop-comp g₂ g₃)
 
         φ : s₀ == s₃
-        φ = e₀₁ ∙ e₁₂ ∙ e₂₃
+        φ = ↯ e₀₁ ◃∙ e₁₂ ◃∙ e₂₃ ◃∎
 
         ψ : s₀ == s₃
-        ψ = e₀₄ ∙ e₄₅ ∙ e₅₃
+        ψ = ↯ e₀₄ ◃∙ e₄₅ ◃∙ e₅₃ ◃∎
 
         φ=ψ : φ == ψ
-        φ=ψ = emloop-coh g₁ g₂ g₃
+        φ=ψ = =ₛ-out (emloop-coh g₁ g₂ g₃)
 
         s₀* : embase* == embase*
         s₀* = emloop* (G.comp (G.comp g₁ g₂) g₃)
@@ -223,13 +256,13 @@ module _ {G : Group i} where
         e₅₃* = ap (λ l → emloop* g₁ ∙ l) (emloop-comp* g₂ g₃)
 
         φ* : s₀* == s₃*
-        φ* = e₀₁* ∙ e₁₂* ∙ e₂₃*
+        φ* = ↯ e₀₁* ◃∙ e₁₂* ◃∙ e₂₃* ◃∎
 
         ψ* : s₀* == s₃*
-        ψ* = e₀₄* ∙ e₄₅* ∙ e₅₃*
+        ψ* = ↯ e₀₄* ◃∙ e₄₅* ◃∙ e₅₃* ◃∎
 
         φ*=ψ* : φ* == ψ*
-        φ*=ψ* = emloop-coh* g₁ g₂ g₃
+        φ*=ψ* = =ₛ-out (emloop-coh* g₁ g₂ g₃)
 
         s₀** : embase* == embase* [ P ↓ s₀ ]
         s₀** = emloop** (G.comp (G.comp g₁ g₂) g₃)
@@ -504,7 +537,7 @@ module _ {G : Group i} where
 
     module M = EM₁Rec' {{raise-level 1 C-level}}
                        embase* (GroupHom.f hom*) (GroupHom.pres-comp hom*)
-                       (λ g₁ g₂ g₃ → prop-has-all-paths _ _)
+                       (λ g₁ g₂ g₃ → =ₛ-in (prop-has-all-paths _ _))
     open M public
 
   open EM₁Level₁Rec public using () renaming (f to EM₁-level₁-rec)

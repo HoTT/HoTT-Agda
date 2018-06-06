@@ -4,6 +4,7 @@ open import lib.Basics
 open import lib.types.Empty
 open import lib.types.Sigma
 open import lib.types.Paths
+open import lib.types.PathSeq
 
 module lib.types.Pi where
 
@@ -404,14 +405,25 @@ easy as it seems.
 module _ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B} where
 
   ∙-app= : (α : f == g) (β : g == h)
-    → α ∙ β == λ= (λ x → app= α x ∙ app= β x)
-  ∙-app= idp β = λ=-η β
+    → α ◃∙ β ◃∎ =ₛ λ= (λ x → app= α x ∙ app= β x) ◃∎
+  ∙-app= idp β = =ₛ-in (λ=-η β)
 
   ∙-λ= : (α : f ∼ g) (β : g ∼ h)
-    → λ= α ∙ λ= β == λ= (λ x → α x ∙ β x)
-  ∙-λ= α β = ∙-app= (λ= α) (λ= β)
-    ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)
-                    ∙ ap (λ w → α x ∙ w) (app=-β β x)))
+    → λ= α ◃∙ λ= β ◃∎ =ₛ λ= (λ x → α x ∙ β x) ◃∎
+  ∙-λ= α β = =ₛ-in $
+    =ₛ-out (∙-app= (λ= α) (λ= β)) ∙
+    ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x) ∙
+                     ap (λ w → α x ∙ w) (app=-β β x)))
+
+∙∙-λ= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h k : Π A B}
+  (α : f ∼ g) (β : g ∼ h) (γ : h ∼ k)
+  → λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎ =ₛ λ= (λ x → α x ∙ β x ∙ γ x) ◃∎
+∙∙-λ= α β γ =
+  λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎
+    =ₛ⟨ 1 & 2 & ∙-λ= β γ ⟩
+  λ= α ◃∙ λ= (λ x → β x ∙ γ x) ◃∎
+    =ₛ⟨ ∙-λ= α (λ x → β x ∙ γ x) ⟩
+  λ= (λ x → α x ∙ β x ∙ γ x) ◃∎ ∎ₛ
 
 module _ {i j} {A : Type i} {B : A → Type j} {f g : Π A B} where
 

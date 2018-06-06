@@ -164,6 +164,12 @@ module _ {i} {A : Type i} where
         =⟨ ap ↯_ (! (∙∙-assoc (seq-! s) (! p ◃∎) r)) ⟩
       (↯ seq-! (p ◃∙ s) ∙∙ r) =∎
 
+    pre-rotate-in'-seq : {a a' a'' : A}
+      → (p : a =-= a') (r : a =-= a'') (q : a' =-= a'')
+      → r =↯= p ∙∙ q
+      → seq-! p ∙∙ r =↯= q
+    pre-rotate-in'-seq p r q e = ! (pre-rotate-in-seq q p r (! e))
+
   point-from-start : (n : ℕ) {a a' : A} (s : PathSeq a a') → A
   point-from-start O {a} s = a
   point-from-start (S n) (a ∎∎) = a
@@ -316,26 +322,35 @@ module _ {i} {A : Type i} {a a' : A} where
 
   -- 'ₛ' is for sequence
   data _=ₛ_ (s t : a =-= a') : Type i where
-    =ₛ-intro : s =↯= t → s =ₛ t
+    =ₛ-in : s =↯= t → s =ₛ t
 
-  =ₛ-path : {s t : a =-= a'} → s =ₛ t → (↯ s) == (↯ t)
-  =ₛ-path (=ₛ-intro p) = p
+  =ₛ-out : {s t : a =-= a'} → s =ₛ t → s =↯= t
+  =ₛ-out (=ₛ-in p) = p
+
+  =-=ₛ-equiv : (s t : a =-= a') → (s =↯= t) ≃ (s =ₛ t)
+  =-=ₛ-equiv s t = equiv =ₛ-in =ₛ-out (λ {(=ₛ-in p) → idp}) (λ p → idp)
+
+  =ₛ-level : {s t : a =-= a'} {n : ℕ₋₂}
+    → has-level (S (S n)) A → has-level n (s =ₛ t)
+  =ₛ-level {s} {t} {n} A-level =
+    transport (has-level n) (ua (=-=ₛ-equiv s t)) $
+    has-level-apply (has-level-apply A-level _ _) _ _
 
   !ₛ : {s t : a =-= a'} → s =ₛ t → t =ₛ s
-  !ₛ (=ₛ-intro p) = =ₛ-intro (! p)
+  !ₛ (=ₛ-in p) = =ₛ-in (! p)
 
   _∙ₛ_ : {s t u : a =-= a'} → s =ₛ t → t =ₛ u → s =ₛ u
-  _∙ₛ_ (=ₛ-intro p) (=ₛ-intro q) = =ₛ-intro (p ∙ q)
+  _∙ₛ_ (=ₛ-in p) (=ₛ-in q) = =ₛ-in (p ∙ q)
 
-  {-
-    Note: While this enables more succinct chains of equations in comparison to
-    chains using _=↯=⟨_&_&_&_⟩_ (since it avoids having to spell out the target
-    subsequence), it is also results in significantly (~ one order of magnitude)
-    slower type checking. Therefore, this function should only be used for
-    developing new proofs, not to simplify old proofs.
-  -}
-  infixr 10 _=ₛ⟨_&_&_&_⟩_
   abstract
+    {-
+      Note: While this enables more succinct chains of equations in comparison to
+      chains using _=↯=⟨_&_&_&_⟩_ (since it avoids having to spell out the target
+      subsequence), it is also results in significantly (~ one order of magnitude)
+      slower type checking. Therefore, this function should only be used for
+      developing new proofs, not to simplify old proofs.
+    -}
+    infixr 10 _=ₛ⟨_&_&_&_⟩_
     _=ₛ⟨_&_&_&_⟩_ : (s : a =-= a') {t u : a =-= a'}
       → (m n o : ℕ)
       → {{init-matches : ((m -#) s) =ₛ-free-end ((m -#) t)}}
@@ -345,7 +360,7 @@ module _ {i} {A : Type i} {a a' : A} where
       → t =ₛ u
       → s =ₛ u
     _=ₛ⟨_&_&_&_⟩_ s {t} {u} m n o {{init-matches}} {{tail-matches}} path q =
-      =ₛ-intro $
+      =ₛ-in $
         (↯ s)
           =⟨ ap (λ v → ↯ v) (∙∙-#-! s m) ⟩
         (↯ (m -#) s ∙∙ (m -!) s)
@@ -377,7 +392,7 @@ module _ {i} {A : Type i} {a a' : A} where
         (↯ (m -#) t ∙∙ (m -!) t)
           =⟨ ! (ap (λ v → ↯ v) (∙∙-#-! t m)) ⟩
         (↯ t)
-          =⟨ =ₛ-path q ⟩
+          =⟨ =ₛ-out q ⟩
         (↯ u) =∎
       where
       module init-matches = _=ₛ-free-end_ init-matches
@@ -385,14 +400,14 @@ module _ {i} {A : Type i} {a a' : A} where
 
     infixr 10 _=ₛ⟨_⟩_
     _=ₛ⟨_⟩_ : (s : a =-= a') {t u : a =-= a'}
-      → s =↯= t
+      → s =ₛ t
       → t =ₛ u
       → s =ₛ u
-    _=ₛ⟨_⟩_ _ p q = =ₛ-intro p ∙ₛ q
+    _=ₛ⟨_⟩_ _ p q = p ∙ₛ q
 
   infix 15 _∎ₛ
   _∎ₛ : (s : a =-= a') → s =ₛ s
-  _∎ₛ _ = =ₛ-intro idp
+  _∎ₛ _ = =ₛ-in idp
 
 module _ {i} {A : Type i} where
 
@@ -406,7 +421,33 @@ module _ {i} {A : Type i} where
       → (↯ ((n -#) s) ∙∙ t ∙∙ ((m -!) ((n -!) s))) == q
       → (↯ s) == q
     _=↯=⟨_&_&_⟩_ {a} {a'} {q} s n m {t} p p' =
-      s =↯=⟨ n & m & t & =ₛ-path p ⟩ p'
+      s =↯=⟨ n & m & t & =ₛ-out p ⟩ p'
+
+    infixr 10 _=ₛ⟨_&_&_⟩_
+    _=ₛ⟨_&_&_⟩_ : {a a' : A} (s : a =-= a') {u : a =-= a'}
+      → (m n : ℕ)
+      → {r : point-from-start m s =-= point-from-start n ((m -!) s)}
+      → (n -#) ((m -!) s) =ₛ r
+      → (m -#) s ∙∙ r ∙∙ (n -!) ((m -!) s) =ₛ u
+      → s =ₛ u
+    _=ₛ⟨_&_&_⟩_ s m n p p' = =ₛ-in (s =↯=⟨ m & n & p ⟩ =ₛ-out p')
+
+    infixr 10 _=ₛ₁⟨_&_&_⟩_
+    _=ₛ₁⟨_&_&_⟩_ : {a a' : A} (s : a =-= a') {u : a =-= a'}
+      → (m n : ℕ)
+      → {r : point-from-start m s == point-from-start n ((m -!) s)}
+      → (↯ (n -#) ((m -!) s)) == r
+      → (m -#) s ∙∙ r ◃∙ (n -!) ((m -!) s) =ₛ u
+      → s =ₛ u
+    _=ₛ₁⟨_&_&_⟩_ s m n {r} p p' = s =ₛ⟨ m & n & =ₛ-in {t = r ◃∎} p ⟩ p'
+
+    infixr 10 _=ₛ₁⟨_⟩_
+    _=ₛ₁⟨_⟩_ : {a a' : A} (s : a =-= a') {u : a =-= a'}
+      → {r : a == a'}
+      → (↯ s) == r
+      → r ◃∎ =ₛ u
+      → s =ₛ u
+    _=ₛ₁⟨_⟩_ s {r} p p' = =ₛ-in p ∙ₛ p'
 
 module _ {i} {A : Type i} where
 
@@ -414,39 +455,45 @@ module _ {i} {A : Type i} where
     → p ∙∙ q =ₛ r
     → q =ₛ seq-! p ∙∙ r
   pre-rotate-in-=ₛ {q = q} {p = p} {r = r} e =
-    =ₛ-intro (pre-rotate-in-seq q p r (=ₛ-path e))
+    =ₛ-in (pre-rotate-in-seq q p r (=ₛ-out e))
+
+  pre-rotate'-in-=ₛ : {a a' a'' : A} {p : a =-= a'} {r : a =-= a''} {q : a' =-= a''}
+    → r =ₛ p ∙∙ q
+    → seq-! p ∙∙ r =ₛ q
+  pre-rotate'-in-=ₛ {p = p} {r = r} {q = q} e =
+    =ₛ-in (pre-rotate-in'-seq p r q (=ₛ-out e))
 
   post-rearrange'-in-=ₛ : {a a' a'' : A}
     → {r : a =-= a''} {q : a' =-= a''} {p : a =-= a'}
     → r =ₛ p ∙∙ q
     → r ∙∙ (seq-! q) =ₛ p
   post-rearrange'-in-=ₛ {r = r} {q = q} {p = p} e =
-    =ₛ-intro (post-rearrange'-in-seq r q p (=ₛ-path e))
+    =ₛ-in (post-rearrange'-in-seq r q p (=ₛ-out e))
 
   post-rearrange-in-=ₛ : {a a' a'' : A}
     → {p : a =-= a'} {r : a =-= a''} {q : a' =-= a''}
     → p ∙∙ q =ₛ r
     → p =ₛ r ∙∙ (seq-! q)
   post-rearrange-in-=ₛ {p = p} {r = r} {q = q} e =
-    =ₛ-intro (post-rearrange-in-seq p r q (=ₛ-path e))
+    =ₛ-in (post-rearrange-in-seq p r q (=ₛ-out e))
 
   homotopy-naturality-=ₛ : ∀ {k} {B : Type k} (f g : A → B)
     (h : (x : A) → f x == g x) {x y : A} (p : x == y)
     → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
   homotopy-naturality-=ₛ f g h p =
-   =ₛ-intro (homotopy-naturality f g h p)
+   =ₛ-in (homotopy-naturality f g h p)
 
   homotopy-naturality-to-idf-=ₛ : (f : A → A)
     (h : (x : A) → f x == x) {x y : A} (p : x == y)
     → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ p ◃∎
   homotopy-naturality-to-idf-=ₛ f h p =
-    =ₛ-intro (homotopy-naturality-to-idf f h p)
+    =ₛ-in (homotopy-naturality-to-idf f h p)
 
   homotopy-naturality-from-idf-=ₛ : (g : A → A)
     (h : (x : A) → x == g x) {x y : A} (p : x == y)
     → p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
   homotopy-naturality-from-idf-=ₛ g h p =
-    =ₛ-intro (homotopy-naturality-from-idf g h p)
+    =ₛ-in (homotopy-naturality-from-idf g h p)
 
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
@@ -468,7 +515,7 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
   ap-seq-∙-=ₛ : {a a' : A} → (s : a =-= a')
     → (ap f (↯ s) ◃∎) =ₛ ap-seq s
-  ap-seq-∙-=ₛ s = =ₛ-intro (ap-seq-∙ s)
+  ap-seq-∙-=ₛ s = =ₛ-in (ap-seq-∙ s)
 
   ∙-ap-seq-=ₛ : {a a' : A} (s : a =-= a')
     → ap-seq s =ₛ (ap f (↯ s) ◃∎)
@@ -489,7 +536,7 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
   ap-seq-=ₛ : {a a' : A} {s t : a =-= a'}
     → s =ₛ t
     → ap-seq s =ₛ ap-seq t
-  ap-seq-=ₛ {s = s} {t = t} (=ₛ-intro p) = =ₛ-intro (ap-seq-=↯= s t p)
+  ap-seq-=ₛ {s = s} {t = t} (=ₛ-in p) = =ₛ-in (ap-seq-=↯= s t p)
 
 apd= : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
        (p : f ∼ g) {a b : A} (q : a == b)

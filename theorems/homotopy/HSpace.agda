@@ -111,9 +111,9 @@ module _ {i} {X : Ptd i} (hX : HSpaceStructure X) where
 
   coh-assoc-pentagon-eq : (assoc : associator) → (a b c d : de⊙ X) → Type i
   coh-assoc-pentagon-eq assoc a b c d =
-    assoc (hX.μ a b) c d ∙ assoc a b (hX.μ c d)
-    ==
-    ap (λ s → hX.μ s d) (assoc a b c) ∙ assoc a (hX.μ b c) d ∙ ap (hX.μ a) (assoc b c d)
+    assoc (hX.μ a b) c d ◃∙ assoc a b (hX.μ c d) ◃∎
+    =ₛ
+    ap (λ s → hX.μ s d) (assoc a b c) ◃∙ assoc a (hX.μ b c) d ◃∙ ap (hX.μ a) (assoc b c d) ◃∎
 
   coh-assoc-pentagon : (assoc : associator) → Type i
   coh-assoc-pentagon assoc = ∀ a b c d → coh-assoc-pentagon-eq assoc a b c d

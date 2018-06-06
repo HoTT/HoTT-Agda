@@ -90,13 +90,13 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
     H-EM₁-assoc-pentagon : coh-assoc-pentagon H-⊙EM₁ H-⊙EM₁-assoc
     H-EM₁-assoc-pentagon w x y z =
       EM₁-prop-elim {P = λ w' → P w' x y z} {{λ w' → P-level w' x y z}}
-        (EM₁-prop-elim {P = λ x' → P embase x' y z} {{λ x' → P-level embase x' y z}} idp x)
+        (EM₁-prop-elim {P = λ x' → P embase x' y z} {{λ x' → P-level embase x' y z}} (=ₛ-in idp) x)
         w
       where
       P : (w x y z : EM₁ G.grp) → Type i
       P = coh-assoc-pentagon-eq H-⊙EM₁ H-⊙EM₁-assoc
       P-level : ∀ w x y z → is-prop (P w x y z)
-      P-level w x y z = has-level-apply (has-level-apply (EM₁-level₁ G.grp) _ _) _ _
+      P-level w x y z = =ₛ-level (EM₁-level₁ G.grp)
 
   EM₁-2-semi-category : TwoSemiCategory lzero i
   EM₁-2-semi-category = HSpace-2-semi-category H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-pentagon

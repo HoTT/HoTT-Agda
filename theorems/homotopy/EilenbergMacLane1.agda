@@ -352,7 +352,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
             e₁₀₋₉ : s₁₀ == s₉
             e₁₀₋₉ = emloop-comp (G.comp y g₁) g₂
             cd₂' : e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∎ =ₛ e₁₀₋₄ ◃∙ e₄₃ ◃∙ e₃₇ ◃∎
-            cd₂' = =ₛ-intro $ emloop-coh' G y g₁ g₂
+            cd₂' = emloop-coh' G y g₁ g₂
 
           cd₃ : e₆₇ ◃∙ e₇₈ ◃∎ =ₛ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∎
           cd₃ = post-rearrange'-in-=ₛ cd₃'
@@ -360,7 +360,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
             e₈₇ : s₈ == s₇
             e₈₇ = ∙-assoc (emloop y) (emloop g₁) (emloop g₂)
             cd₃' : e₆₇ ◃∎ =ₛ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∙ e₈₇ ◃∎
-            cd₃' = =ₛ-intro $ transp-cst=idf-pentagon (emloop g₁) (emloop g₂) (emloop y)
+            cd₃' = =ₛ-in $ transp-cst=idf-pentagon (emloop g₁) (emloop g₂) (emloop y)
 
           cd₄ : e₁₁₋₈ ◃∙ e₈₉ ◃∎ =ₛ e₁₁₋₁₂ ◃∙ e₁₂₋₉ ◃∎
           cd₄ = !ₛ $
@@ -381,7 +381,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
                                           (! (↓-Codes-loop-transp g₁ y))
 
           cd₆ : e₁₇₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎ =ₛ e₁₇₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-          cd₆ = =ₛ-intro $
+          cd₆ = =ₛ-in $
             e₁₇₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
               =↯=⟨ 0 & 1 & ap emloop i₁₇₋₁₀ ◃∎ &
                    ap (λ p → ! p) (ap-∘ emloop (λ z → G.comp z g₂) (! (↓-Codes-loop-transp g₁ y))) ∙ !-ap emloop i₁₀₋₁₇ ⟩
@@ -436,7 +436,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
                                        (! (↓-Codes-loop-transp g₁ y))
 
           cd₈ : e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅ ◃∎ =ₛ e₁₃₋₁₅ ◃∎
-          cd₈ = =ₛ-intro $
+          cd₈ = =ₛ-in $
             e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅ ◃∎
               =↯=⟨ 2 & 1 & e₁₂₋₁₅' ◃∎ & e₁₂₋₁₅=e₁₂₋₁₅' ⟩
             e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅' ◃∎

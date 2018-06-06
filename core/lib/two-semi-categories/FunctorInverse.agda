@@ -30,9 +30,14 @@ module _ {k l} {B : Type k} {C : B → B → Type l}
              → comp (comp f g) h == comp f (comp g h))
     → (p : b₁ == b₂) (p' : b₁' == b₂') (p'' : b₁'' == b₂'') (p''' : b₁''' == b₂''')
     → (f : C b₁ b₁') (g : C b₁' b₁'') (h : C b₁'' b₁''')
-    → coe-comp p p'' p''' (comp f g) h ∙ ap (λ s → comp s (coe-C p'' p''' h)) (coe-comp p p' p'' f g) ∙ assoc (coe-C p p' f) (coe-C p' p'' g) (coe-C p'' p''' h)
-      == ap (coe-C p p''') (assoc f g h) ∙ coe-comp p p' p''' f (comp g h) ∙ ap (comp (coe-C p p' f)) (coe-comp p' p'' p''' g h)
-  coe-comp-coh assoc idp idp idp idp f g h =
+    → coe-comp p p'' p''' (comp f g) h ◃∙
+      ap (λ s → comp s (coe-C p'' p''' h)) (coe-comp p p' p'' f g) ◃∙
+      assoc (coe-C p p' f) (coe-C p' p'' g) (coe-C p'' p''' h) ◃∎
+      =ₛ
+      ap (coe-C p p''') (assoc f g h) ◃∙
+      coe-comp p p' p''' f (comp g h) ◃∙
+      ap (comp (coe-C p p' f)) (coe-comp p' p'' p''' g h) ◃∎
+  coe-comp-coh assoc idp idp idp idp f g h = =ₛ-in $
     ! (ap-idf (assoc f g h)) ∙ ! (∙-unit-r (ap (coe-C idp idp) (assoc f g h)))
 
 functor-inverse : ∀ {i₁ j₁ i₂ j₂}
@@ -107,8 +112,9 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
     pres-comp f g = ↯ pres-comp-↯ f g
     F₁''-pres-comp-coh : {w x y z : D.El}
       (f : D.Arr w x) (g : D.Arr x y) (h : D.Arr y z)
-      → F₁''-pres-comp (D.comp f g) h ∙ ap (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g) ∙ D.assoc (F₁'' f) (F₁'' g) (F₁'' h)
-        == ap F₁'' (D.assoc f g h) ∙ F₁''-pres-comp f (D.comp g h) ∙ ap (D.comp (F₁'' f)) (F₁''-pres-comp g h)
+      → F₁''-pres-comp (D.comp f g) h ◃∙ ap (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g) ◃∙ D.assoc (F₁'' f) (F₁'' g) (F₁'' h) ◃∎
+        =ₛ
+        ap F₁'' (D.assoc f g h) ◃∙ F₁''-pres-comp f (D.comp g h) ◃∙ ap (D.comp (F₁'' f)) (F₁''-pres-comp g h) ◃∎
     F₁'-pres-comp-coh : {w x y z : D.El}
       (f : D.Arr (F.F₀ (F₀ w)) (F.F₀ (F₀ x)))
       (g : D.Arr (F.F₀ (F₀ x)) (F.F₀ (F₀ y)))
@@ -305,7 +311,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       where
         step₅ : ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-g-f (C.comp (F₁' f) (F₁' g))) ◃∎
                 =ₛ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (F.F₁ (C.comp (F₁' f) (F₁' g)))) ◃∎
-        step₅ = =ₛ-intro $
+        step₅ = =ₛ-in $
           ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-g-f (C.comp (F₁' f) (F₁' g)))
             =⟨ ap-∘ (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) F.F₁ (F₁'-g-f (C.comp (F₁' f) (F₁' g))) ⟩
           ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (ap F.F₁ (F₁'-g-f (C.comp (F₁' f) (F₁' g))))
@@ -319,7 +325,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
                 ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
                 ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
                 ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∎
-        step₈ = =ₛ-intro $
+        step₈ = =ₛ-in $
           (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
           ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g))
           ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎)
@@ -374,24 +380,23 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
                   D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h)) ◃∙
                   ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
                   ! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
-        step₁₀' = =ₛ-intro $
-          (ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g)))
-          ◃∙ ! e₀₋₁
-          ◃∙ e₀₋₄ ◃∎)
+        step₁₀' = =ₛ-in $
+          ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g))) ◃∙
+          ! e₀₋₁ ◃∙
+          e₀₋₄ ◃∎
             =↯=⟨ 0 & 1 & ! (ap (λ s → D.comp s (F.F₁ (F₁' h))) (F.pres-comp (F₁' f) (F₁' g))) ◃∎
                     & ap-! (λ s → D.comp s (F.F₁ (F₁' h))) (F.pres-comp (F₁' f) (F₁' g)) ⟩
-          (! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎)
-            ↯=⟨ post-rearrange-in (! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎) (e₂₋₃ ◃∙ ! e₅₋₃ ◃∎) e₄₋₅ $
-                post-rearrange-in (! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∙ e₄₋₅ ◃∎) (e₂₋₃ ◃∎) e₅₋₃ $
-                pre-rotate'-in e₁₋₂ (! e₀₋₁ ∙ e₀₋₄ ∙ e₄₋₅ ∙ e₅₋₃) e₂₋₃ $
-                pre-rotate'-in e₀₋₁ (e₀₋₄ ∙ e₄₋₅ ∙ e₅₋₃) (e₁₋₂ ∙ e₂₋₃) $
-                ! (F.pres-comp-coh (F₁' f) (F₁' g) (F₁' h)) ⟩
-          (e₂₋₃ ◃∙ ! e₅₋₃ ◃∙ ! e₄₋₅ ◃∎)
-            =↯=⟨ 1 & 1 & ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∎
-                    & !-ap (D.comp (F.F₁ (F₁' f))) (F.pres-comp (F₁' g) (F₁' h)) ⟩
-          (e₂₋₃
-          ◃∙ ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h)))
-          ◃∙ ! e₄₋₅ ◃∎) ↯∎
+          ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎
+            ↯=⟨ =ₛ-out {s = ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎} {t = e₂₋₃ ◃∙ ! e₅₋₃ ◃∙ ! e₄₋₅ ◃∎} $
+                post-rearrange-in-=ₛ {p = ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎} $
+                pre-rotate'-in-=ₛ {p = e₀₋₁ ◃∙ e₁₋₂ ◃∎} $
+                !ₛ $ F.pres-comp-coh (F₁' f) (F₁' g) (F₁' h) ⟩
+          e₂₋₃ ◃∙ ! e₅₋₃ ◃∙ ! e₄₋₅ ◃∎
+            =↯=⟨ 1 & 1 & ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∎ &
+                 !-ap (D.comp (F.F₁ (F₁' f))) (F.pres-comp (F₁' g) (F₁' h)) ⟩
+          e₂₋₃ ◃∙
+          ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
+          ! e₄₋₅ ◃∎ ↯∎
           where
             t₀ : D.Arr (F.F₀ (F₀ w)) (F.F₀ (F₀ z))
             t₀ = F.F₁ (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h))
@@ -423,7 +428,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
                  ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∙
                  ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
                  ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∎
-        step₁₀ = =ₛ-intro $
+        step₁₀ = =ₛ-in $
           (ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g)))
           ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
           ◃∙ ap (F₁' ∘ F.F₁) (C.assoc (F₁' f) (F₁' g) (F₁' h)) ◃∎)
@@ -437,7 +442,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
           (ap F₁' (ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g))))
           ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
           ◃∙ ap F₁' (ap F.F₁ (C.assoc (F₁' f) (F₁' g) (F₁' h))) ◃∎)
-            ↯=⟨ =ₛ-path (ap-seq-=ₛ F₁' step₁₀') ⟩
+            ↯=⟨ =ₛ-out (ap-seq-=ₛ F₁' step₁₀') ⟩
           (ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))
           ◃∙ ap F₁' (ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))))
           ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∎)
@@ -456,7 +461,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
           ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
           ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g) ◃∙
           ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎
-        step₁₁ = =ₛ-intro $
+        step₁₁ = =ₛ-in $
           (ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f)
           ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g)
           ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h)
@@ -495,7 +500,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
                  ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
                  ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
                  ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎
-        step₁₂ = =ₛ-intro $
+        step₁₂ = =ₛ-in $
           (ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f)
           ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g)
           ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎)
@@ -550,9 +555,10 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       coe-comp-coh D.comp D.assoc (F₀-f-g w) (F₀-f-g x) (F₀-f-g y) (F₀-f-g z) f g h
     pres-comp-coh : {w x y z : D.El}
       (f : D.Arr w x) (g : D.Arr x y) (h : D.Arr y z)
-      → pres-comp (D.comp f g) h ∙ ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ∙ C.assoc (F₁ f) (F₁ g) (F₁ h)
-        == ap F₁ (D.assoc f g h) ∙ pres-comp f (D.comp g h) ∙ ap (C.comp (F₁ f)) (pres-comp g h)
-    pres-comp-coh f g h =
+      → pres-comp (D.comp f g) h ◃∙ ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ◃∙ C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
+        =ₛ
+        ap F₁ (D.assoc f g h) ◃∙ pres-comp f (D.comp g h) ◃∙ ap (C.comp (F₁ f)) (pres-comp g h) ◃∎
+    pres-comp-coh f g h = =ₛ-in $
       (pres-comp (D.comp f g) h ◃∙ ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ◃∙ C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎)
         =↯=⟨ 0 & 1 & pres-comp-↯ (D.comp f g) h & idp ⟩
       (ap F₁' (F₁''-pres-comp (D.comp f g) h)
@@ -599,17 +605,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       ◃∙ ap F₁' (D.assoc (F₁'' f) (F₁'' g) (F₁'' h))
       ◃∙ F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h))
       ◃∙ ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎)
-        =↯=⟨ 0 & 3 & (ap F₁' (ap F₁'' (D.assoc f g h))
-                     ◃∙ ap F₁' (F₁''-pres-comp f (D.comp g h))
-                     ◃∙ ap F₁' (ap (D.comp (F₁'' f)) (F₁''-pres-comp g h)) ◃∎)
-               & ap-seq-=↯= F₁'
-                   (F₁''-pres-comp (D.comp f g) h
-                     ◃∙ ap (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g)
-                     ◃∙ D.assoc (F₁'' f) (F₁'' g) (F₁'' h) ◃∎)
-                   (ap F₁'' (D.assoc f g h)
-                     ◃∙ F₁''-pres-comp f (D.comp g h)
-                     ◃∙ ap (D.comp (F₁'' f)) (F₁''-pres-comp g h) ◃∎)
-                   (F₁''-pres-comp-coh f g h) ⟩
+        =↯=⟨ 0 & 3 & ap-seq-=ₛ F₁' (F₁''-pres-comp-coh f g h) ⟩
       (ap F₁' (ap F₁'' (D.assoc f g h))
       ◃∙ ap F₁' (F₁''-pres-comp f (D.comp g h))
       ◃∙ ap F₁' (ap (D.comp (F₁'' f)) (F₁''-pres-comp g h))

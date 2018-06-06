@@ -22,7 +22,7 @@ module _ {i} (A : Type i) where
     ; two-semi-cat-struct = record
       { comp = _∙_
       ; assoc = λ a b c → ∙-assoc a b c
-      ; pentagon-identity = ∙-assoc-pentagon
+      ; pentagon-identity = λ p q r s → =ₛ-in (∙-assoc-pentagon p q r s)
       }
     }
 
@@ -35,7 +35,7 @@ module _ {i} (A : Type i) where
     ; two-semi-cat-struct = record
       { comp = λ {ta} p q → _∙ₜ_ {ta = ta} p q
       ; assoc = λ {ta} p q r → ∙ₜ-assoc {ta = ta} p q r
-      ; pentagon-identity = λ {ta} p q r s → ∙ₜ-assoc-pentagon {ta = ta} p q r s
+      ; pentagon-identity = λ {ta} p q r s → =ₛ-in (∙ₜ-assoc-pentagon {ta = ta} p q r s)
       }
     }
 
@@ -52,7 +52,7 @@ module _ {i} (A : Type i) where
     ; pres-comp = –>-=ₜ-equiv-pres-∙
       -- TODO: The following line takes a really long time to check
       -- Can we optimize this somehow?
-    ; pres-comp-coh = λ {ta} p q r → –>-=ₜ-equiv-pres-∙-coh {ta = ta} p q r
+    ; pres-comp-coh = λ {ta} p q r → =ₛ-in $ –>-=ₜ-equiv-pres-∙-coh {ta = ta} p q r
     }
 
   =ₜ-to-2-type-fundamental-cat
@@ -80,7 +80,9 @@ module _ {i} (C : Type i) (c₀ : C) {{C-level : has-level 1 C}} where
     { F₀ = λ _ → c₀
     ; F₁ = λ p → p
     ; pres-comp = λ p q → idp
-    ; pres-comp-coh = λ p q r → prop-path (has-level-apply (has-level-apply C-level _ _) _ _) _ _
+    ; pres-comp-coh =
+        λ p q r → =ₛ-in $
+          prop-path (has-level-apply (has-level-apply C-level _ _) _ _) _ _
     }
 
 module _ {i j} (A : Type i) (B : Type j) {{B-level : has-level 2 B}} where
@@ -94,28 +96,28 @@ module _ {i j} (A : Type i) (B : Type j) {{B-level : has-level 2 B}} where
 
     abstract
       app=-pres-comp-coh : ∀ {f g h i : A → B} (α : f == g) (β : g == h) (γ : h == i)
-        → app=-pres-comp (α ∙ β) γ ∙
-          ap (λ s a → s a ∙ app= γ a) (app=-pres-comp α β) ∙
-          λ= (λ a → ∙-assoc (app= α a) (app= β a) (app= γ a))
-          ==
-          ap app= (∙-assoc α β γ) ∙
-          app=-pres-comp α (β ∙ γ) ∙
-          ap (λ s a → app= α a ∙ s a) (app=-pres-comp β γ)
-      app=-pres-comp-coh {f} idp idp γ =
-        (app=-pres-comp idp γ ◃∙
-         ap (λ s a → s a ∙ app= γ a) (app=-pres-comp idp idp) ◃∙
-         λ= (λ a → idp) ◃∎)
+        → app=-pres-comp (α ∙ β) γ ◃∙
+          ap (λ s a → s a ∙ app= γ a) (app=-pres-comp α β) ◃∙
+          λ= (λ a → ∙-assoc (app= α a) (app= β a) (app= γ a)) ◃∎
+          =ₛ
+          ap app= (∙-assoc α β γ) ◃∙
+          app=-pres-comp α (β ∙ γ) ◃∙
+          ap (λ s a → app= α a ∙ s a) (app=-pres-comp β γ) ◃∎
+      app=-pres-comp-coh {f} idp idp γ = =ₛ-in $
+        app=-pres-comp idp γ ◃∙
+        ap (λ s a → s a ∙ app= γ a) (app=-pres-comp idp idp) ◃∙
+        λ= (λ a → idp) ◃∎
           =↯=⟨ 2 & 1 & (_ ∎∎) & ! (λ=-η idp) ⟩
-        (app=-pres-comp idp γ ◃∙
-         ap (λ s a → s a ∙ app= γ a) (app=-pres-comp idp idp) ◃∎)
+        app=-pres-comp idp γ ◃∙
+        ap (λ s a → s a ∙ app= γ a) (app=-pres-comp idp idp) ◃∎
           =↯=⟨ 1 & 1 & app=-pres-comp idp γ ◃∎ &
                λ=-ap (λ a t → t ∙ app= γ a) (λ a → ap-∙ (λ f → f a) (idp {a = f}) idp) ⟩
-        (app=-pres-comp idp γ ◃∙
-         app=-pres-comp idp γ ◃∎)
+        app=-pres-comp idp γ ◃∙
+        app=-pres-comp idp γ ◃∎
           =↯=⟨ 1 & 1 & ap (λ s a → s a) (app=-pres-comp idp γ) ◃∎ &
                ! (ap-idf (app=-pres-comp idp γ)) ⟩
-        (app=-pres-comp idp γ ◃∙
-         ap (λ s a → s a) (app=-pres-comp idp γ) ◃∎) ↯∎
+        app=-pres-comp idp γ ◃∙
+        ap (λ s a → s a) (app=-pres-comp idp γ) ◃∎ ↯∎
 
   app=-functor : TwoSemiFunctor (2-type-fundamental-cat (A → B))
                                 (fun-cat A (2-type-fundamental-cat B))

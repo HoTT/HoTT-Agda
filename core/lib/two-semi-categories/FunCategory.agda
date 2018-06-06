@@ -33,41 +33,40 @@ module _ {i j k} (A : Type i) (G : TwoSemiCategory j k) where
   abstract
     fun-pentagon : {F G H I J : fun-El}
       (α : fun-Arr F G) (β : fun-Arr G H) (γ : fun-Arr H I) (δ : fun-Arr I J)
-      →  fun-assoc (fun-comp α β) γ δ ∙ fun-assoc α β (fun-comp γ δ)
-      == ap (λ s → fun-comp s δ) (fun-assoc α β γ) ∙
-        fun-assoc α (fun-comp β γ) δ ∙ ap (fun-comp α) (fun-assoc β γ δ)
+      → fun-assoc (fun-comp α β) γ δ ◃∙
+        fun-assoc α β (fun-comp γ δ) ◃∎
+        =ₛ
+        ap (λ s → fun-comp s δ) (fun-assoc α β γ) ◃∙
+        fun-assoc α (fun-comp β γ) δ ◃∙
+        ap (fun-comp α) (fun-assoc β γ δ) ◃∎
     fun-pentagon α β γ δ =
-      fun-assoc (fun-comp α β) γ δ ∙ fun-assoc α β (fun-comp γ δ)
-        =⟨ ∙-λ= (λ a → G.assoc (G.comp (α a) (β a)) (γ a) (δ a))
-                (λ a → G.assoc (α a) (β a) (G.comp (γ a) (δ a))) ⟩
-      λ= (λ a → G.assoc (G.comp (α a) (β a)) (γ a) (δ a) ∙ G.assoc (α a) (β a) (G.comp (γ a) (δ a)))
-        =⟨ ap λ= (λ= (λ a → G.pentagon-identity (α a) (β a) (γ a) (δ a))) ⟩
+      fun-assoc (fun-comp α β) γ δ ◃∙ fun-assoc α β (fun-comp γ δ) ◃∎
+        =ₛ⟨ ∙-λ= (λ a → G.assoc (G.comp (α a) (β a)) (γ a) (δ a))
+                 (λ a → G.assoc (α a) (β a) (G.comp (γ a) (δ a))) ⟩
+      λ= (λ a → G.assoc (G.comp (α a) (β a)) (γ a) (δ a) ∙ G.assoc (α a) (β a) (G.comp (γ a) (δ a))) ◃∎
+        =ₛ₁⟨ ap λ= (λ= (λ a → =ₛ-out (G.pentagon-identity (α a) (β a) (γ a) (δ a)))) ⟩
       λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)) ∙
                 G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
-                ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a)))
-        =⟨ ! (∙-λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))
-                  (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
-                          ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a)))) ⟩
-      (λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))◃∙
+                ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
+        =ₛ⟨ !ₛ (∙-λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))
+                     (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
+                            ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a)))) ⟩
+      λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))◃∙
       λ= (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
-                ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎)
-        =↯=⟨ 1 & 1 & (fun-assoc α (fun-comp β γ) δ ◃∙
-                      λ= (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎)
-              & ! (∙-λ= (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a))
-                        (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a)))) ⟩
-      (λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a))) ◃∙
+      ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
+        =ₛ⟨ 1 & 1 & !ₛ (∙-λ= (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a))
+                             (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a)))) ⟩
+      λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a))) ◃∙
       fun-assoc α (fun-comp β γ) δ ◃∙
-      λ= (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎)
-        =↯=⟨ 0 & 1 & ap (λ s → fun-comp s δ) (fun-assoc α β γ) ◃∎
-            & ! (λ=-ap (λ a s → G.comp s (δ a)) (λ a → G.assoc (α a) (β a) (γ a))) ⟩
-      (ap (λ s → fun-comp s δ) (fun-assoc α β γ) ◃∙
+      λ= (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
+        =ₛ₁⟨ 0 & 1 & ! (λ=-ap (λ a s → G.comp s (δ a)) (λ a → G.assoc (α a) (β a) (γ a))) ⟩
+      ap (λ s → fun-comp s δ) (fun-assoc α β γ) ◃∙
       fun-assoc α (fun-comp β γ) δ ◃∙
-      λ= (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎)
-        =↯=⟨ 2 & 1 & ap (fun-comp α) (fun-assoc β γ δ) ◃∎
-              & ! (λ=-ap (λ a → G.comp (α a)) (λ a → G.assoc (β a) (γ a) (δ a))) ⟩
-      (ap (λ s → fun-comp s δ) (fun-assoc α β γ) ◃∙
+      λ= (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
+        =ₛ₁⟨ 2 & 1 & ! (λ=-ap (λ a → G.comp (α a)) (λ a → G.assoc (β a) (γ a) (δ a))) ⟩
+      ap (λ s → fun-comp s δ) (fun-assoc α β γ) ◃∙
       fun-assoc α (fun-comp β γ) δ ◃∙
-      ap (fun-comp α) (fun-assoc β γ δ) ◃∎) ↯∎
+      ap (fun-comp α) (fun-assoc β γ δ) ◃∎ ∎ₛ
 
   fun-cat : TwoSemiCategory (lmax i j) (lmax i k)
   fun-cat =
@@ -106,62 +105,45 @@ module _ {i j₁ k₁ j₂ k₂} (A : Type i) {G : TwoSemiCategory j₁ k₁} {H
   abstract
     fun-pres-comp-coh : {I J K L : fun-G.El}
       (α : fun-G.Arr I J) (β : fun-G.Arr J K) (γ : fun-G.Arr K L)
-      → fun-pres-comp (fun-G.comp α β) γ ∙
-        ap (λ s → fun-H.comp s (fun-F₁ γ)) (fun-pres-comp α β) ∙
-        fun-H.assoc (fun-F₁ α) (fun-F₁ β) (fun-F₁ γ)
-        ==
-        ap fun-F₁ (fun-G.assoc α β γ) ∙
-        fun-pres-comp α (fun-G.comp β γ) ∙
-        ap (fun-H.comp (fun-F₁ α)) (fun-pres-comp β γ)
+      → fun-pres-comp (fun-G.comp α β) γ ◃∙
+        ap (λ s → fun-H.comp s (fun-F₁ γ)) (fun-pres-comp α β) ◃∙
+        fun-H.assoc (fun-F₁ α) (fun-F₁ β) (fun-F₁ γ) ◃∎
+        =ₛ
+        ap fun-F₁ (fun-G.assoc α β γ) ◃∙
+        fun-pres-comp α (fun-G.comp β γ) ◃∙
+        ap (fun-H.comp (fun-F₁ α)) (fun-pres-comp β γ) ◃∎
     fun-pres-comp-coh α β γ =
-      (fun-pres-comp (fun-G.comp α β) γ ◃∙
+      fun-pres-comp (fun-G.comp α β) γ ◃∙
       ap (λ s → fun-H.comp s (fun-F₁ γ)) (fun-pres-comp α β) ◃∙
-      fun-H.assoc (fun-F₁ α) (fun-F₁ β) (fun-F₁ γ) ◃∎)
-        =↯=⟨ 1 & 1 & λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a))) ◃∎
-              & λ=-ap (λ a s → H.comp s (fun-F₁ γ a) ) (λ a → F.pres-comp (α a) (β a)) ⟩
-      (fun-pres-comp (fun-G.comp α β) γ ◃∙
+      fun-H.assoc (fun-F₁ α) (fun-F₁ β) (fun-F₁ γ) ◃∎
+        =ₛ₁⟨ 1 & 1 & λ=-ap (λ a s → H.comp s (fun-F₁ γ a) ) (λ a → F.pres-comp (α a) (β a)) ⟩
+      fun-pres-comp (fun-G.comp α β) γ ◃∙
       λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a))) ◃∙
-      fun-H.assoc (fun-F₁ α) (fun-F₁ β) (fun-F₁ γ) ◃∎)
-        =↯=⟨ 1 & 2 & λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)) ∙
-                                H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ◃∎
-                & ∙-λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)))
-                      (λ a → H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ⟩
-      (fun-pres-comp (fun-G.comp α β) γ ◃∙
-      λ= (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)) ∙
-                H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ◃∎)
-        ↯=⟨ ∙-λ= (λ a → F.pres-comp (G.comp (α a) (β a)) (γ a))
-                (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)) ∙
-                        H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ⟩
+      fun-H.assoc (fun-F₁ α) (fun-F₁ β) (fun-F₁ γ) ◃∎
+        =ₛ⟨ ∙∙-λ= (λ a → F.pres-comp (G.comp (α a) (β a)) (γ a))
+                  (λ a → ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)))
+                  (λ a → H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ⟩
       λ= (λ a → F.pres-comp (G.comp (α a) (β a)) (γ a) ∙
                 ap (λ s → H.comp s (fun-F₁ γ a)) (F.pres-comp (α a) (β a)) ∙
-                H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a))
-        =⟨ ap λ= (λ= (λ a → F.pres-comp-coh (α a) (β a) (γ a))) ⟩
+                H.assoc (fun-F₁ α a) (fun-F₁ β a) (fun-F₁ γ a)) ◃∎
+        =ₛ₁⟨ ap λ= (λ= (λ a → =ₛ-out (F.pres-comp-coh (α a) (β a) (γ a)))) ⟩
       λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a)) ∙
                 F.pres-comp (α a) (G.comp (β a) (γ a)) ∙
-                ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a)))
-        =⟨ ! (∙-λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a)))
-                  (λ a → F.pres-comp (α a) (G.comp (β a) (γ a)) ∙
-                          ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a)))) ⟩
-      (λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a))) ◃∙
-      λ= (λ a → F.pres-comp (α a) (G.comp (β a) (γ a)) ∙
-                ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎)
-        =↯=⟨ 1 & 1 & (fun-pres-comp α (fun-G.comp β γ) ◃∙
-                      λ= (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎)
-                      & ! $ ∙-λ= (λ a → F.pres-comp (α a) (G.comp (β a) (γ a)))
-                                (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ⟩
-      (λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a))) ◃∙
+                ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎
+        =ₛ⟨ !ₛ (∙∙-λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a)))
+                      (λ a → F.pres-comp (α a) (G.comp (β a) (γ a)))
+                      (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a)))) ⟩
+      λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a))) ◃∙
       fun-pres-comp α (fun-G.comp β γ) ◃∙
-      λ= (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎)
-        =↯=⟨ 0 & 1 & ap fun-F₁ (fun-G.assoc α β γ) ◃∎
-              & ! $ λ=-ap (λ _ → F.F₁) (λ a → G.assoc (α a) (β a) (γ a)) ⟩
-      (ap fun-F₁ (fun-G.assoc α β γ) ◃∙
+      λ= (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎
+        =ₛ₁⟨ 0 & 1 & ! $ λ=-ap (λ _ → F.F₁) (λ a → G.assoc (α a) (β a) (γ a)) ⟩
+      ap fun-F₁ (fun-G.assoc α β γ) ◃∙
       fun-pres-comp α (fun-G.comp β γ) ◃∙
-      λ= (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎)
-        =↯=⟨ 2 & 1 & ap (fun-H.comp (fun-F₁ α)) (fun-pres-comp β γ) ◃∎
-              & ! $ λ=-ap (λ a → H.comp (fun-F₁ α a)) (λ a → F.pres-comp (β a) (γ a)) ⟩
-      (ap fun-F₁ (fun-G.assoc α β γ) ◃∙
+      λ= (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎
+        =ₛ₁⟨ 2 & 1 & ! $ λ=-ap (λ a → H.comp (fun-F₁ α a)) (λ a → F.pres-comp (β a) (γ a)) ⟩
+      ap fun-F₁ (fun-G.assoc α β γ) ◃∙
       fun-pres-comp α (fun-G.comp β γ) ◃∙
-      ap (fun-H.comp (fun-F₁ α)) (fun-pres-comp β γ) ◃∎) ↯∎
+      ap (fun-H.comp (fun-F₁ α)) (fun-pres-comp β γ) ◃∎ ∎ₛ
 
   fun-functor-map : TwoSemiFunctor (fun-cat A G) (fun-cat A H)
   fun-functor-map =

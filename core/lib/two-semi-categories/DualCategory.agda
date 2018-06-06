@@ -28,21 +28,22 @@ dual-cat C =
     abstract
       pentagon : {z y x w v : C.El}
         (f : C.Arr y z) (g : C.Arr x y) (h : C.Arr w x) (i : C.Arr v w)
-        → ! (C.assoc i h (C.comp g f)) ∙
-          ! (C.assoc (C.comp i h) g f)
-          ==
-          ap (C.comp i) (! (C.assoc h g f)) ∙
-          ! (C.assoc i (C.comp h g) f) ∙
-          ap (λ s → C.comp s f) (! (C.assoc i h g))
-      pentagon = λ f g h i → =ₛ-path $
+        → ! (C.assoc i h (C.comp g f)) ◃∙
+          ! (C.assoc (C.comp i h) g f) ◃∎
+          =ₛ
+          ap (C.comp i) (! (C.assoc h g f)) ◃∙
+          ! (C.assoc i (C.comp h g) f) ◃∙
+          ap (λ s → C.comp s f) (! (C.assoc i h g)) ◃∎
+      pentagon = λ f g h i →
         ! (C.assoc i h (C.comp g f)) ◃∙ ! (C.assoc (C.comp i h) g f) ◃∎
-          =ₛ⟨ ∙-! (C.assoc i h (C.comp g f)) (C.assoc (C.comp i h) g f) ⟩
+          =ₛ⟨ =ₛ-in (∙-! (C.assoc i h (C.comp g f)) (C.assoc (C.comp i h) g f)) ⟩
         ! (C.assoc (C.comp i h) g f ∙ C.assoc i h (C.comp g f)) ◃∎
-          =ₛ⟨ ap ! (C.pentagon-identity i h g f) ⟩
+          =ₛ⟨ =ₛ-in (ap ! (=ₛ-out (C.pentagon-identity i h g f))) ⟩
         ! (ap (λ s → C.comp s f) (C.assoc i h g) ∙
            C.assoc i (C.comp h g) f ∙
            ap (C.comp i) (C.assoc h g f)) ◃∎
-          =ₛ⟨ !-∙ (ap (λ s → C.comp s f) (C.assoc i h g))
+          =ₛ⟨ =ₛ-in $
+              !-∙ (ap (λ s → C.comp s f) (C.assoc i h g))
                   (C.assoc i (C.comp h g) f ∙ ap (C.comp i) (C.assoc h g f)) ⟩
         ! (C.assoc i (C.comp h g) f ∙
            ap (C.comp i) (C.assoc h g f)) ◃∙
@@ -76,22 +77,22 @@ dual-functor-map {C = C} {D = D} F =
     module D = TwoSemiCategory D
     abstract
       pres-comp-coh : {w x y z : C.El} → (f : C.Arr y z) (g : C.Arr x y) (h : C.Arr w x)
-        → F.pres-comp h (C.comp g f) ∙
-          ap (D.comp (F.F₁ h)) (F.pres-comp g f) ∙
-          ! (D.assoc (F.F₁ h) (F.F₁ g) (F.F₁ f))
-          ==
-          ap (λ f' → F.F₁ f') (! (C.assoc h g f)) ∙
-          F.pres-comp (C.comp h g) f ∙
-          ap (λ s → D.comp s (F.F₁ f)) (F.pres-comp h g)
+        → F.pres-comp h (C.comp g f) ◃∙
+          ap (D.comp (F.F₁ h)) (F.pres-comp g f) ◃∙
+          ! (D.assoc (F.F₁ h) (F.F₁ g) (F.F₁ f)) ◃∎
+          =ₛ
+          ap (λ f' → F.F₁ f') (! (C.assoc h g f)) ◃∙
+          F.pres-comp (C.comp h g) f ◃∙
+          ap (λ s → D.comp s (F.F₁ f)) (F.pres-comp h g) ◃∎
       pres-comp-coh f g h =
-        e₅₋₆ ∙ e₆₋₄ ∙ ! e₃₋₄
-          =⟨ post-rearrange'-in (e₅₋₆ ◃∙ e₆₋₄ ◃∎) e₃₋₄ (! e₁₋₅ ◃∙ e₁₋₂ ◃∙ e₂₋₃ ◃∎) $
-            pre-rotate-in (e₅₋₆ ∙ e₆₋₄) e₁₋₅ (e₁₋₂ ∙ e₂₋₃ ∙ e₃₋₄) $
-            ! (F.pres-comp-coh h g f) ⟩
-        ! e₁₋₅ ∙ e₁₋₂ ∙ e₂₋₃
-          =⟨ ap (λ s → s ∙ e₁₋₂ ∙ e₂₋₃)
-                (!-ap (λ f' → F.F₁ f') (C.assoc h g f)) ⟩
-        ap (λ f' → F.F₁ f') (! (C.assoc h g f)) ∙ e₁₋₂ ∙ e₂₋₃ =∎
+        e₅₋₆ ◃∙ e₆₋₄ ◃∙ ! e₃₋₄ ◃∎
+          =ₛ⟨ post-rearrange'-in-=ₛ {p = ! e₁₋₅ ◃∙ e₁₋₂ ◃∙ e₂₋₃ ◃∎} $
+             pre-rotate-in-=ₛ {p = e₁₋₅ ◃∎} $
+             !ₛ $ F.pres-comp-coh h g f ⟩
+        ! e₁₋₅ ◃∙ e₁₋₂ ◃∙ e₂₋₃ ◃∎
+          =ₛ⟨ =ₛ-in $
+              ap (λ s → s ∙ e₁₋₂ ∙ e₂₋₃) (!-ap (λ f' → F.F₁ f') (C.assoc h g f)) ⟩
+        ap (λ f' → F.F₁ f') (! (C.assoc h g f)) ◃∙ e₁₋₂ ◃∙ e₂₋₃ ◃∎ ∎ₛ
         where
         e₁₋₂ = F.pres-comp (C.comp h g) f
         e₂₋₃ = ap (λ s → D.comp s (F.F₁ f)) (F.pres-comp h g)
@@ -113,10 +114,10 @@ from-double-dual C =
     module C = TwoSemiCategory C
     abstract
       pres-comp-coh : ∀ {w x y z : C.El} (f : C.Arr w x) (g : C.Arr x y) (h : C.Arr y z)
-        → idp ∙ idp ∙ C.assoc f g h
-          ==
-          ap (λ f → f) (! (! (C.assoc f g h))) ∙ idp ∙ idp
-      pres-comp-coh f g h =
+        → idp ◃∙ idp ◃∙ C.assoc f g h ◃∎
+          =ₛ
+          ap (λ f → f) (! (! (C.assoc f g h))) ◃∙ idp ◃∙ idp ◃∎
+      pres-comp-coh f g h = =ₛ-in $
         C.assoc f g h
           =⟨ ! (!-! (C.assoc f g h)) ⟩
         ! (! (C.assoc f g h))
@@ -144,10 +145,10 @@ module _ {i j k} (A : Type i) (C : TwoSemiCategory j k) where
           (f : ∀ a → C.Arr (x a) (w a))
           (g : ∀ a → C.Arr (y a) (x a))
           (h : ∀ a → C.Arr (z a) (y a))
-          → idp ∙ idp ∙ λ= (λ a → ! (C.assoc (h a) (g a) (f a)))
-            ==
-            ap (λ x → x) (! (λ= (λ a → C.assoc (h a) (g a) (f a)))) ∙ idp ∙ idp
-        pres-comp-coh f g h =
+          → idp ◃∙ idp ◃∙ λ= (λ a → ! (C.assoc (h a) (g a) (f a))) ◃∎
+            =ₛ
+            ap (λ x → x) (! (λ= (λ a → C.assoc (h a) (g a) (f a)))) ◃∙ idp ◃∙ idp ◃∎
+        pres-comp-coh f g h = =ₛ-in $
           λ= (λ a → ! (C.assoc (h a) (g a) (f a)))
             =⟨ !-λ= (λ a → C.assoc (h a) (g a) (f a)) ⟩
           ! (λ= (λ a → C.assoc (h a) (g a) (f a)))

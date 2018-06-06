@@ -85,18 +85,19 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
 
     P : A → A → Type i
     P a a'' =
-      comp (μ a a') a'' ∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ∙ ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a)))
-      == ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ∙ comp a (μ a' a'') ∙ ap (λ v → v ∙₁ [ η a ]) (comp a' a'')
+      comp (μ a a') a'' ◃∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ◃∙ ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a))) ◃∎
+      =ₛ ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ◃∙ comp a (μ a' a'') ◃∙ ap (λ v → v ∙₁ [ η a ]) (comp a' a'') ◃∎
 
     P-is-prop : ∀ a a'' → is-prop (P a a'')
-    P-is-prop a a'' = has-level-apply (has-level-apply (Trunc-level {n = 1}) _ _) _ _
+    P-is-prop a a'' = =ₛ-level (Trunc-level {n = 1})
 
-    Q : A → A → hProp i
+    Q  : A → A → hProp i
     Q a a'' = P a a'' , P-is-prop a a''
 
-    inner-coh : comp-r (μ e a') ∙ ap (_∙_ (η e)) (comp-l a') ∙ ! (∙-assoc (η e) (η a') (η e))
-                == ap η (H-X-assoc e a' e) ∙ comp-l (μ a' e) ∙ ap (λ v → v ∙ η e) (comp-r a')
-    inner-coh =
+    inner-coh : comp-r (μ e a') ◃∙ ap (_∙_ (η e)) (comp-l a') ◃∙ ! (∙-assoc (η e) (η a') (η e)) ◃∎
+                =ₛ
+                ap η (H-X-assoc e a' e) ◃∙ comp-l (μ a' e) ◃∙ ap (λ v → v ∙ η e) (comp-r a') ◃∎
+    inner-coh = =ₛ-in $
       comp-r (μ e a') ◃∙ ap (_∙_ (η e)) (comp-l a') ◃∙ ! (∙-assoc (η e) (η a') (η e)) ◃∎
         =↯=⟨ 0 & 1 & (ap η (μ.unit-r (μ e a')) ◃∙ add-path-inverse-l (merid e) (η (μ e a')) ◃∎) & idp ⟩
       ap η (μ.unit-r (μ e a')) ◃∙
@@ -158,25 +159,21 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
 
     coh : P e e
     coh =
-      (comp (μ e a') e ◃∙ ap (_∙₁_ [ η e ]₁) (comp e a') ◃∙ ! (ap [_]₁ (∙-assoc (η e) (η a') (η e))) ◃∎)
-        =↯=⟨ 2 & 1 & ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎
-               & !-ap [_]₁ (∙-assoc (η e) (η a') (η e)) ⟩
-      (comp (μ e a') e ◃∙ ap (_∙₁_ [ η e ]₁) (comp e a') ◃∙ ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎)
-        =↯=⟨ 0 & 1 & (comp-r₁ (μ e a') ◃∎) & comp-unit-r (μ e a') ⟩
-      (comp-r₁ (μ e a') ◃∙ ap (_∙₁_ [ η e ]₁) (comp e a') ◃∙ ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎)
-        =↯=⟨ 1 & 1 & (ap [_]₁ (ap (_∙_ (η e)) (comp-l a')) ◃∎) & step₂ ⟩
-      (comp-r₁ (μ e a') ◃∙ ap [_]₁ (ap (_∙_ (η e)) (comp-l a')) ◃∙ ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎)
-        ↯=⟨ ap-seq-=↯= [_]₁
-              (comp-r (μ e a') ◃∙ ap (_∙_ (η e)) (comp-l a') ◃∙ ! (∙-assoc (η e) (η a') (η e)) ◃∎)
-              (ap η (H-X-assoc e a' e) ◃∙ comp-l (μ a' e) ◃∙ ap (λ v → v ∙ η e) (comp-r a') ◃∎)
-              inner-coh ⟩
-      (ap [_]₁ (ap η (H-X-assoc e a' e)) ◃∙ comp-l₁ (μ a' e) ◃∙ ap [_]₁ (ap (λ v → v ∙ η e) (comp-r a')) ◃∎)
-        =↯=⟨ 0 & 1 & (ap ([_]₁ ∘ η) (H-X-assoc e a' e) ◃∎) & ∘-ap [_]₁ η (H-X-assoc e a' e) ⟩
-      (ap ([_]₁ ∘ η) (H-X-assoc e a' e) ◃∙ comp-l₁ (μ a' e) ◃∙ ap [_]₁ (ap (λ v → v ∙ η e) (comp-r a')) ◃∎)
-        =↯=⟨ 1 & 1 & (comp e (μ a' e) ◃∎) & ! (comp-unit-l (μ a' e)) ⟩
-      (ap ([_]₁ ∘ η) (H-X-assoc e a' e) ◃∙ comp e (μ a' e) ◃∙ ap [_]₁ (ap (λ v → v ∙ η e) (comp-r a')) ◃∎)
-        =↯=⟨ 2 & 1 & (ap (λ v → v ∙₁ [ η e ]) (comp a' e) ◃∎) & step₈ ⟩
-      (ap ([_]₁ ∘ η) (H-X-assoc e a' e) ◃∙ comp e (μ a' e) ◃∙ ap (λ v → v ∙₁ [ η e ]) (comp a' e) ◃∎) ↯∎
+      comp (μ e a') e ◃∙ ap (_∙₁_ [ η e ]₁) (comp e a') ◃∙ ! (ap [_]₁ (∙-assoc (η e) (η a') (η e))) ◃∎
+        =ₛ₁⟨ 2 & 1 & !-ap [_]₁ (∙-assoc (η e) (η a') (η e)) ⟩
+      comp (μ e a') e ◃∙ ap (_∙₁_ [ η e ]₁) (comp e a') ◃∙ ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎
+        =ₛ₁⟨ 0 & 1 & comp-unit-r (μ e a') ⟩
+      comp-r₁ (μ e a') ◃∙ ap (_∙₁_ [ η e ]₁) (comp e a') ◃∙ ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎
+        =ₛ₁⟨ 1 & 1 & step₂ ⟩
+      comp-r₁ (μ e a') ◃∙ ap [_]₁ (ap (_∙_ (η e)) (comp-l a')) ◃∙ ap [_]₁ (! (∙-assoc (η e) (η a') (η e))) ◃∎
+        =ₛ⟨ 0 & 3 & ap-seq-=ₛ [_]₁ inner-coh ⟩
+      ap [_]₁ (ap η (H-X-assoc e a' e)) ◃∙ comp-l₁ (μ a' e) ◃∙ ap [_]₁ (ap (λ v → v ∙ η e) (comp-r a')) ◃∎
+        =ₛ₁⟨ 0 & 1 & ∘-ap [_]₁ η (H-X-assoc e a' e) ⟩
+      ap ([_]₁ ∘ η) (H-X-assoc e a' e) ◃∙ comp-l₁ (μ a' e) ◃∙ ap [_]₁ (ap (λ v → v ∙ η e) (comp-r a')) ◃∎
+        =ₛ₁⟨ 1 & 1 & ! (comp-unit-l (μ a' e)) ⟩
+      ap ([_]₁ ∘ η) (H-X-assoc e a' e) ◃∙ comp e (μ a' e) ◃∙ ap [_]₁ (ap (λ v → v ∙ η e) (comp-r a')) ◃∎
+        =ₛ₁⟨ 2 & 1 & step₈ ⟩
+      ap ([_]₁ ∘ η) (H-X-assoc e a' e) ◃∙ comp e (μ a' e) ◃∙ ap (λ v → v ∙₁ [ η e ]) (comp a' e) ◃∎ ∎ₛ
       where
       step₂ : ap (_∙₁_ [ η e ]₁) (comp e a') == ap [_]₁ (ap (_∙_ (η e)) (comp-l a'))
       step₂ =
@@ -199,8 +196,8 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
 
   abstract
     comp-coh : (a a' a'' : A)
-      →  comp (μ a a') a'' ∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ∙ ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a)))
-      == ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ∙ comp a (μ a' a'') ∙ ap (λ v → v ∙₁ [ η a ]) (comp a' a'')
+      →  comp (μ a a') a'' ◃∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ◃∙ ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a))) ◃∎
+      =ₛ ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ◃∙ comp a (μ a' a'') ◃∙ ap (λ v → v ∙₁ [ η a ]) (comp a' a'') ◃∎
     comp-coh a a' a'' =
       prop-over-connected {A = A} {a = e} {{is-0-connected}}
                           (λ a → CoherenceProof.Q a' a a'')

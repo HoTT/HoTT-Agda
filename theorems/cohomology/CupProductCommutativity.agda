@@ -108,8 +108,9 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
           apd (λ y → ap (λ x → cp₁₁ x y) (emloop g) ∙' comm-embase-elim y) (emloop h)
             =⟨ {!!} ⟩
           comm-emloop-embase ◃
-          apd {-{B = λ _ → [ north' (EM₁ R₊) ] == [ north ]}-} (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h) ∙'2ᵈ
+          apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h) ∙'2ᵈ
           apd comm-embase-elim (emloop h)
+          {-
             =⟨ ap (λ w → comm-emloop-embase ◃ apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h) ∙'2ᵈ w)
                   (CommEmbaseElim.emloop-β h) ⟩
           comm-emloop-embase ◃
@@ -117,6 +118,7 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
           ↓-='-in' (comm-embase-emloop h)
             =⟨ {!ap (λ (f : EM₁ R₊ → [ north' (EM₁ R₊) ] == [ north ]) → comm-emloop-embase ◃ apd f (emloop h) ∙'2ᵈ ↓-='-in' (comm-embase-emloop h))
                   (λ= (λ y → ap-∘ (λ g → g y) cp₁₁ (emloop g)))!} ⟩
+
           {!comm-emloop-embase ◃
           apd (app= (ap cp₁₁ (emloop g))) (emloop h) ∙'2ᵈ
           ↓-='-in' (comm-embase-emloop h)
@@ -129,7 +131,11 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
           ↓-cst-in (ap (λ y → ap [_] (η (cp₀₁ g y))) (emloop h)) ∙'2ᵈ
           ↓-='-in' (comm-embase-emloop h)
             =⟨ ? ⟩
-          ? !}
+          ?!}
+          -}
+            =⟨ {!!} ⟩
+          apd (λ y → comm-embase-elim y ∙ ap (λ x → antipodal-map (cp₁₁ y x)) (emloop g)) (emloop h) ▹
+          comm-emloop-embase =∎
 
       module CommEmloopElim =
         EM₁SetElim {P = λ y → P' y (emloop g) }

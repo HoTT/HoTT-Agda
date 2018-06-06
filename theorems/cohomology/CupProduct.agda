@@ -125,63 +125,45 @@ module cohomology.CupProduct {i} (R : CRing i) where
     where
     abstract
       pres-comp-coh : ∀ g₁ g₂ g₃ →
-        λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ∙
-        ap (λ s g' → EM₁-mult (s g') (cp₀₁ g₃ g')) (λ= (cp₀₁-distr-l g₁ g₂)) ∙
-        λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g'))
-        ==
-        ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ∙
-        λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ∙
-        ap (λ s g' → EM₁-mult (cp₀₁ g₁ g') (s g')) (λ= (cp₀₁-distr-l g₂ g₃))
+        λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ◃∙
+        ap (λ s g' → EM₁-mult (s g') (cp₀₁ g₃ g')) (λ= (cp₀₁-distr-l g₁ g₂)) ◃∙
+        λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎
+        =ₛ
+        ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ◃∙
+        λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
+        ap (λ s g' → EM₁-mult (cp₀₁ g₁ g') (s g')) (λ= (cp₀₁-distr-l g₂ g₃)) ◃∎
       pres-comp-coh g₁ g₂ g₃ =
-        (λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ◃∙
-         ap (λ s g' → EM₁-mult (s g') (cp₀₁ g₃ g')) (λ= (cp₀₁-distr-l g₁ g₂)) ◃∙
-         λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎)
-          =↯=⟨ 1 & 1 & λ= (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g')) ◃∎ &
-               λ=-ap (λ g' s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂) ⟩
-        (λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ◃∙
-         λ= (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g')) ◃∙
-         λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎)
-          =↯=⟨ 1 & 2 & λ= (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g') ∙
-                                  H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎ &
-               ∙-λ= (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g'))
+        λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ◃∙
+        ap (λ s g' → EM₁-mult (s g') (cp₀₁ g₃ g')) (λ= (cp₀₁-distr-l g₁ g₂)) ◃∙
+        λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎
+          =ₛ₁⟨ 1 & 1 & λ=-ap (λ g' s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂) ⟩
+        λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ◃∙
+        λ= (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g')) ◃∙
+        λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎
+          =ₛ⟨ ∙∙-λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃)
+                    (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g'))
                     (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ⟩
-        λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ∙
-        λ= (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g') ∙
-                    H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g'))
-          =⟨ ∙-λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃)
-                  (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g') ∙
-                          H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ⟩
-        λ= (cp₀₁-distr-l₁ g₁ g₂ g₃)
-          =⟨ ap λ= (λ= (cp₀₁-distr-l-coh g₁ g₂ g₃)) ⟩
-        λ= (cp₀₁-distr-l₂ g₁ g₂ g₃)
-          =⟨ ! (∙-λ= (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃))
-                     (λ g' → cp₀₁-distr-l g₁ (R.add g₂ g₃) g' ∙
-                             ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g'))) ⟩
-        (λ= (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃)) ◃∙
-         λ= (λ g' → cp₀₁-distr-l g₁ (R.add g₂ g₃) g' ∙
-                    ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎)
-          =↯=⟨ 1 & 1 & (λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-                        λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎) &
-               ! (∙-λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃))
-                       (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g'))) ⟩
-        (λ= (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃)) ◃∙
-         λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-         λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎)
-          =↯=⟨ 0 & 1 & λ= (app= (ap cp₀₁ (R.add-assoc g₁ g₂ g₃))) ◃∎ &
-               ap λ= (λ= (λ g' → ap-∘ (λ f → f g') cp₀₁ (R.add-assoc g₁ g₂ g₃))) ⟩
-        (λ= (app= (ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃))) ◃∙
-         λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-         λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎)
-          =↯=⟨ 0 & 1 & ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ◃∎ &
-               ! (λ=-η (ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃))) ⟩
-        (ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ◃∙
-         λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-         λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎)
-          =↯=⟨ 2 & 1 & ap (λ s g' → EM₁-mult (cp₀₁ g₁ g') (s g')) (λ= (cp₀₁-distr-l g₂ g₃)) ◃∎ &
-               ! (λ=-ap (λ g' s → EM₁-mult (cp₀₁ g₁ g') s) (cp₀₁-distr-l g₂ g₃)) ⟩
-        (ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ◃∙
-         λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-         ap (λ s g' → EM₁-mult (cp₀₁ g₁ g') (s g')) (λ= (cp₀₁-distr-l g₂ g₃)) ◃∎) ↯∎
+        λ= (cp₀₁-distr-l₁ g₁ g₂ g₃) ◃∎
+          =ₛ₁⟨ ap λ= (λ= (cp₀₁-distr-l-coh g₁ g₂ g₃)) ⟩
+        λ= (cp₀₁-distr-l₂ g₁ g₂ g₃) ◃∎
+          =ₛ⟨ !ₛ (∙∙-λ= (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃))
+                        (cp₀₁-distr-l g₁ (R.add g₂ g₃))
+                        (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g'))) ⟩
+        λ= (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃)) ◃∙
+        λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
+        λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎
+          =ₛ₁⟨ 0 & 1 & ap λ= (λ= (λ g' → ap-∘ (λ f → f g') cp₀₁ (R.add-assoc g₁ g₂ g₃))) ⟩
+        λ= (app= (ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃))) ◃∙
+        λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
+        λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎
+          =ₛ₁⟨ 0 & 1 & ! (λ=-η (ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃))) ⟩
+        ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ◃∙
+        λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
+        λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎
+          =ₛ₁⟨ 2 & 1 & ! (λ=-ap (λ g' s → EM₁-mult (cp₀₁ g₁ g') s) (cp₀₁-distr-l g₂ g₃)) ⟩
+        ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ◃∙
+        λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
+        ap (λ s g' → EM₁-mult (cp₀₁ g₁ g') (s g')) (λ= (cp₀₁-distr-l g₂ g₃)) ◃∎ ∎ₛ
 
   comp-functor :
     TwoSemiFunctor
