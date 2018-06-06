@@ -36,12 +36,14 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       ! (∙-unit-r p) ∙ ap (λ s → p ∙ s) (! (!-inv-r q))
 
     add-path-inverse-coh : {x y : B} (q : x == x) (p : x == y)
-      → add-path-inverse-l p q
-          ∙ ap (λ v → (p ∙ ! p) ∙ v) (add-path-inverse-r q p)
-          ∙ ! (∙-assoc (p ∙ ! p) q (p ∙ ! p))
-        == add-path-inverse-r q p
-          ∙ ap (λ v → v ∙ p ∙ ! p) (add-path-inverse-l p q)
-    add-path-inverse-coh q idp = ap (λ v → v ∙ idp) (ap-idf (add-path-inverse-r q idp))
+      → add-path-inverse-l p q ◃∙
+        ap (λ v → (p ∙ ! p) ∙ v) (add-path-inverse-r q p) ◃∙
+        ! (∙-assoc (p ∙ ! p) q (p ∙ ! p)) ◃∎
+        =ₛ
+        add-path-inverse-r q p ◃∙
+        ap (λ v → v ∙ p ∙ ! p) (add-path-inverse-l p q) ◃∎
+    add-path-inverse-coh q idp = =ₛ-in $
+      ap (λ v → v ∙ idp) (ap-idf (add-path-inverse-r q idp))
 
   comp-l : (a' : A) → η (μ e a') == η a' ∙ η e
   comp-l a' = ap η (μ.unit-l a') ∙ add-path-inverse-r (η a') (merid e)
@@ -85,8 +87,13 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
 
     P : A → A → Type i
     P a a'' =
-      comp (μ a a') a'' ◃∙ ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ◃∙ ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a))) ◃∎
-      =ₛ ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ◃∙ comp a (μ a' a'') ◃∙ ap (λ v → v ∙₁ [ η a ]) (comp a' a'') ◃∎
+      comp (μ a a') a'' ◃∙
+      ap (λ v → [ η a'' ]₁ ∙₁ v) (comp a a') ◃∙
+      ! (ap [_]₁ (∙-assoc (η a'') (η a') (η a))) ◃∎
+      =ₛ
+      ap ([_]₁ ∘ η) (H-X-assoc a a' a'') ◃∙
+      comp a (μ a' a'') ◃∙
+      ap (λ v → v ∙₁ [ η a ]) (comp a' a'') ◃∎
 
     P-is-prop : ∀ a a'' → is-prop (P a a'')
     P-is-prop a a'' = =ₛ-level (Trunc-level {n = 1})
@@ -94,68 +101,72 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
     Q  : A → A → hProp i
     Q a a'' = P a a'' , P-is-prop a a''
 
-    inner-coh : comp-r (μ e a') ◃∙ ap (_∙_ (η e)) (comp-l a') ◃∙ ! (∙-assoc (η e) (η a') (η e)) ◃∎
+    inner-coh : comp-r (μ e a') ◃∙
+                ap (_∙_ (η e)) (comp-l a') ◃∙
+                ! (∙-assoc (η e) (η a') (η e)) ◃∎
                 =ₛ
-                ap η (H-X-assoc e a' e) ◃∙ comp-l (μ a' e) ◃∙ ap (λ v → v ∙ η e) (comp-r a') ◃∎
-    inner-coh = =ₛ-in $
-      comp-r (μ e a') ◃∙ ap (_∙_ (η e)) (comp-l a') ◃∙ ! (∙-assoc (η e) (η a') (η e)) ◃∎
-        =↯=⟨ 0 & 1 & (ap η (μ.unit-r (μ e a')) ◃∙ add-path-inverse-l (merid e) (η (μ e a')) ◃∎) & idp ⟩
+                ap η (H-X-assoc e a' e) ◃∙
+                comp-l (μ a' e) ◃∙
+                ap (λ v → v ∙ η e) (comp-r a') ◃∎
+    inner-coh =
+      comp-r (μ e a') ◃∙
+      ap (_∙_ (η e)) (comp-l a') ◃∙
+      ! (∙-assoc (η e) (η a') (η e)) ◃∎
+        =ₛ⟨ 0 & 1 & =ₛ-in {t = ap η (μ.unit-r (μ e a')) ◃∙
+                               add-path-inverse-l (merid e) (η (μ e a')) ◃∎}
+                          idp ⟩
       ap η (μ.unit-r (μ e a')) ◃∙
       add-path-inverse-l (merid e) (η (μ e a')) ◃∙
       ap (_∙_ (η e)) (comp-l a') ◃∙
       ! (∙-assoc (η e) (η a') (η e)) ◃∎
-        =↯=⟨ 2 & 1
-            & (ap (_∙_ (η e)) (ap η (μ.unit-l a'))
-              ◃∙ ap (_∙_ (η e)) (add-path-inverse-r (η a') (merid e)) ◃∎)
-            & ap-∙ (_∙_ (η e)) (ap η (μ.unit-l a')) (add-path-inverse-r (η a') (merid e)) ⟩
+        =ₛ⟨ 2 & 1 & ap-seq-∙ (_∙_ (η e)) (ap η (μ.unit-l a') ◃∙
+                                             add-path-inverse-r (η a') (merid e) ◃∎) ⟩
       ap η (μ.unit-r (μ e a')) ◃∙
       add-path-inverse-l (merid e) (η (μ e a')) ◃∙
       ap (_∙_ (η e)) (ap η (μ.unit-l a')) ◃∙
       ap (_∙_ (η e)) (add-path-inverse-r (η a') (merid e)) ◃∙
       ! (∙-assoc (η e) (η a') (η e)) ◃∎
-        =↯=⟨ 1 & 2 & !ₛ $
-             homotopy-naturality-from-idf-=ₛ (_∙_ (η e))
-                                             (add-path-inverse-l (merid e))
-                                             (ap η (μ.unit-l a')) ⟩
+        =ₛ⟨ 1 & 2 & !ₛ $
+            homotopy-naturality-from-idf-=ₛ (_∙_ (η e))
+                                            (add-path-inverse-l (merid e))
+                                            (ap η (μ.unit-l a')) ⟩
       ap η (μ.unit-r (μ e a')) ◃∙
       ap η (μ.unit-l a') ◃∙
       add-path-inverse-l (merid e) (η a') ◃∙
       ap (_∙_ (η e)) (add-path-inverse-r (η a') (merid e)) ◃∙
       ! (∙-assoc (η e) (η a') (η e)) ◃∎
-        =↯=⟨ 2 & 3
-            & (add-path-inverse-r (η a') (merid e)
-              ◃∙ ap (λ v → v ∙ η e) (add-path-inverse-l (merid e) (η a')) ◃∎)
-            & add-path-inverse-coh (η a') (merid e) ⟩
+        =ₛ⟨ 2 & 3 & add-path-inverse-coh (η a') (merid e) ⟩
       ap η (μ.unit-r (μ e a')) ◃∙
       ap η (μ.unit-l a') ◃∙
       add-path-inverse-r (η a') (merid e) ◃∙
       ap (λ v → v ∙ η e) (add-path-inverse-l (merid e) (η a')) ◃∎
-        =↯=⟨ 0 & 2 & (ap η (H-X-assoc e a' e) ◃∙ ap η (μ.unit-l (μ a' e)) ◃∙ ap η (μ.unit-r a') ◃∎)
-              & ap-seq-=↯= η (μ.unit-r (μ e a') ◃∙ μ.unit-l a' ◃∎)
-                            (H-X-assoc e a' e ◃∙ μ.unit-l (μ a' e) ◃∙ μ.unit-r a' ◃∎)
-                            (coh-assoc-unit-l-r-pentagon a') ⟩
+        =ₛ⟨ 0 & 2 &
+            ap-seq-=ₛ η $
+            =ₛ-in {s = μ.unit-r (μ e a') ◃∙ μ.unit-l a' ◃∎}
+                  {t = H-X-assoc e a' e ◃∙ μ.unit-l (μ a' e) ◃∙ μ.unit-r a' ◃∎} $
+            coh-assoc-unit-l-r-pentagon a' ⟩
       ap η (H-X-assoc e a' e) ◃∙
       ap η (μ.unit-l (μ a' e)) ◃∙
       ap η (μ.unit-r a') ◃∙
       add-path-inverse-r (η a') (merid e) ◃∙
       ap (λ v → v ∙ η e) (add-path-inverse-l (merid e) (η a')) ◃∎
-        =↯=⟨ 2 & 2 &
-             homotopy-naturality-from-idf-=ₛ (λ v → v ∙ η e)
-                                             (λ v → add-path-inverse-r v (merid e))
-                                             (ap η (μ.unit-r a')) ⟩
+        =ₛ⟨ 2 & 2 &
+            homotopy-naturality-from-idf-=ₛ (λ v → v ∙ η e)
+                                            (λ v → add-path-inverse-r v (merid e))
+                                            (ap η (μ.unit-r a')) ⟩
       ap η (H-X-assoc e a' e) ◃∙
       ap η (μ.unit-l (μ a' e)) ◃∙
       add-path-inverse-r (η (μ a' e)) (merid e) ◃∙
       ap (λ v → v ∙ η e) (ap η (μ.unit-r a')) ◃∙
       ap (λ v → v ∙ η e) (add-path-inverse-l (merid e) (η a')) ◃∎
-        =↯=⟨ 3 & 2 & ap (λ v → v ∙ η e) (comp-r a') ◃∎
-            & ∙-ap (λ v → v ∙ η e) (ap η (μ.unit-r a')) (add-path-inverse-l (merid e) (η a')) ⟩
+        =ₛ⟨ 3 & 2 &
+            ∙-ap-seq (λ v → v ∙ η e) (ap η (μ.unit-r a') ◃∙ add-path-inverse-l (merid e) (η a') ◃∎) ⟩
       ap η (H-X-assoc e a' e) ◃∙
       ap η (μ.unit-l (μ a' e)) ◃∙
       add-path-inverse-r (η (μ a' e)) (merid e) ◃∙
       ap (λ v → v ∙ η e) (comp-r a') ◃∎
-        =↯=⟨ 1 & 2 & (comp-l (μ a' e) ◃∎) & idp ⟩
-      ap η (H-X-assoc e a' e) ◃∙ comp-l (μ a' e) ◃∙ ap (λ v → v ∙ η e) (comp-r a') ◃∎ ↯∎
+        =ₛ₁⟨ 1 & 2 & idp ⟩
+      ap η (H-X-assoc e a' e) ◃∙ comp-l (μ a' e) ◃∙ ap (λ v → v ∙ η e) (comp-r a') ◃∎ ∎ₛ
 
     coh : P e e
     coh =

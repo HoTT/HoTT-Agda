@@ -381,21 +381,21 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
                                           (! (↓-Codes-loop-transp g₁ y))
 
           cd₆ : e₁₇₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎ =ₛ e₁₇₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-          cd₆ = =ₛ-in $
+          cd₆ =
             e₁₇₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =↯=⟨ 0 & 1 & ap emloop i₁₇₋₁₀ ◃∎ &
-                   ap (λ p → ! p) (ap-∘ emloop (λ z → G.comp z g₂) (! (↓-Codes-loop-transp g₁ y))) ∙ !-ap emloop i₁₀₋₁₇ ⟩
+              =ₛ₁⟨ 0 & 1 & ap (λ p → ! p) (ap-∘ emloop (λ z → G.comp z g₂) (! (↓-Codes-loop-transp g₁ y))) ∙
+                           !-ap emloop i₁₀₋₁₇ ⟩
             ap emloop i₁₇₋₁₀ ◃∙ ap emloop i₁₀₋₄ ◃∙ ap emloop i₄₅ ◃∙ e₅₂ ◃∎
-              =↯=⟨ 3 & 1 & ap emloop i₅₂ ◃∎ & e₅₂=ap-emloop-i₅₂ ⟩
+              =ₛ₁⟨ 3 & 1 & e₅₂=ap-emloop-i₅₂ ⟩
             ap emloop i₁₇₋₁₀ ◃∙ ap emloop i₁₀₋₄ ◃∙ ap emloop i₄₅ ◃∙ ap emloop i₅₂ ◃∎
-              ↯=⟨ ! (ap-∙∙∙ emloop (! i₁₀₋₁₇) i₁₀₋₄ i₄₅ i₅₂) ⟩
-            ap emloop (i₁₇₋₁₀ ∙ i₁₀₋₄ ∙ i₄₅ ∙ i₅₂)
-              =⟨ ap (ap emloop) cd₆' ⟩
-            ap emloop (i₁₇₋₁₄ ∙ ! i₂₋₁₄)
-              =⟨ ap-∙ emloop i₁₇₋₁₄ (! i₂₋₁₄) ⟩
+              =ₛ⟨ ∙-ap-seq emloop (i₁₇₋₁₀ ◃∙ i₁₀₋₄ ◃∙ i₄₅ ◃∙ i₅₂ ◃∎) ⟩
+            ap emloop (i₁₇₋₁₀ ∙ i₁₀₋₄ ∙ i₄₅ ∙ i₅₂) ◃∎
+              =ₛ₁⟨ ap (ap emloop) cd₆' ⟩
+            ap emloop (i₁₇₋₁₄ ∙ ! i₂₋₁₄) ◃∎
+              =ₛ⟨ ap-seq-∙ emloop (i₁₇₋₁₄ ◃∙ ! i₂₋₁₄ ◃∎) ⟩
             ap emloop i₁₇₋₁₄ ◃∙ ap emloop (! i₂₋₁₄) ◃∎
-              =↯=⟨ 1 & 1 & ! (ap emloop i₂₋₁₄) ◃∎ & ap-! emloop i₂₋₁₄ ⟩
-            e₁₇₋₁₄ ◃∙ ! (ap emloop i₂₋₁₄) ◃∎ ↯∎
+              =ₛ₁⟨ 1 & 1 & ap-! emloop i₂₋₁₄ ⟩
+            e₁₇₋₁₄ ◃∙ ! (ap emloop i₂₋₁₄) ◃∎ ∎ₛ
             where
               h₁₇ : G.El
               h₁₇ = G.comp (transp-C (emloop g₁) y) g₂
@@ -436,14 +436,15 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
                                        (! (↓-Codes-loop-transp g₁ y))
 
           cd₈ : e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅ ◃∎ =ₛ e₁₃₋₁₅ ◃∎
-          cd₈ = =ₛ-in $
+          cd₈ =
             e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅ ◃∎
-              =↯=⟨ 2 & 1 & e₁₂₋₁₅' ◃∎ & e₁₂₋₁₅=e₁₂₋₁₅' ⟩
+              =ₛ₁⟨ 2 & 1 & e₁₂₋₁₅=e₁₂₋₁₅' ⟩
             e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅' ◃∎
-              ↯=⟨ ∙∙-ap (transp-PF (emloop g₂)) (transp-emloop=∙-emloop g₁ y)
-                                                (∙-emloop=emloop-comp g₁ y)
-                                                (emloop-comp=emloop-transp g₁ y) ⟩
-            e₁₃₋₁₅ =∎
+              =ₛ⟨ ∙-ap-seq (transp-PF (emloop g₂))
+                              (transp-emloop=∙-emloop g₁ y ◃∙
+                               ∙-emloop=emloop-comp g₁ y ◃∙
+                               emloop-comp=emloop-transp g₁ y ◃∎) ⟩
+            e₁₃₋₁₅ ◃∎ ∎ₛ
             where
             e₁₂₋₁₅' : s₁₂ == s₁₅
             e₁₂₋₁₅' = ap (transp-PF (emloop g₂)) (emloop-comp=emloop-transp g₁ y)
@@ -451,47 +452,47 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
             e₁₂₋₁₅=e₁₂₋₁₅' = ap-∘ (transp-PF (emloop g₂)) emloop (! (↓-Codes-loop-transp g₁ y))
 
           DD : e₁₂ == e₁₂'
-          DD =
-            e₁₂
-              =⟨ ∙'=∙ q₁₅ q₅₂ |in-ctx (λ z → app= z y) ⟩
-            app= (q₁₅ ∙ q₅₂) y
-              =⟨ ap-∙ (λ g → g y) q₁₅ q₅₂ ⟩
+          DD = =ₛ-out $
+            e₁₂ ◃∎
+              =ₛ₁⟨ ∙'=∙ q₁₅ q₅₂ |in-ctx (λ z → app= z y) ⟩
+            app= (q₁₅ ∙ q₅₂) y ◃∎
+              =ₛ⟨ ap-seq-∙ (λ g → g y) (q₁₅ ◃∙ q₅₂ ◃∎) ⟩
             app= q₁₅ y ◃∙ app= q₅₂ y ◃∎
-              =↯=⟨ 1 & 1 & e₅₂ ◃∎ & ∘-ap (λ g → g y) emloop-transp (emloop-comp g₁ g₂) ⟩
+              =ₛ₁⟨ 1 & 1 & ∘-ap (λ g → g y) emloop-transp (emloop-comp g₁ g₂) ⟩
             app= q₁₅ y ◃∙ e₅₂ ◃∎
-              =↯=⟨ 0 & 1 & e₁₃ ◃∙ e₃₄ ◃∙ e₄₅ ◃∎ &
-                   app=-β {f = f₁} {g = f₅} (transp-emloop=emloop-transp g₁g₂) y ⟩
+              =ₛ⟨ 0 & 1 &
+                  =ₛ-in {t = e₁₃ ◃∙ e₃₄ ◃∙ e₄₅ ◃∎}
+                        (app=-β {f = f₁} {g = f₅} (transp-emloop=emloop-transp g₁g₂) y) ⟩
             e₁₃ ◃∙ e₃₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =↯=⟨ 0 & 1 & cd₁ ⟩
+              =ₛ⟨ 0 & 1 & cd₁ ⟩
             e₁₆ ◃∙ e₆₇ ◃∙ e₇₃ ◃∙ e₃₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =↯=⟨ 2 & 2 & cd₂ ⟩
+              =ₛ⟨ 2 & 2 & cd₂ ⟩
             e₁₆ ◃∙ e₆₇ ◃∙ e₇₈ ◃∙ e₈₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =↯=⟨ 1 & 2 & cd₃ ⟩
+              =ₛ⟨ 1 & 2 & cd₃ ⟩
             e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∙ e₈₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =↯=⟨ 3 & 2 & cd₄ ⟩
+              =ₛ⟨ 3 & 2 & cd₄ ⟩
             e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =↯=⟨ 5 & 1 & cd₅ ⟩
+              =ₛ⟨ 5 & 1 & cd₅ ⟩
             e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₉ ◃∙ e₉₋₁₆ ◃∙ e₁₆₋₁₇ ◃∙ e₁₇₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =↯=⟨ 7 & 4 & cd₆ ⟩
+              =ₛ⟨ 7 & 4 & cd₆ ⟩
             e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₉ ◃∙ e₉₋₁₆ ◃∙ e₁₆₋₁₇ ◃∙ e₁₇₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =↯=⟨ 4 & 2 & cd₇ ⟩
+              =ₛ⟨ 4 & 2 & cd₇ ⟩
             e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅ ◃∙ e₁₅₋₁₆ ◃∙ e₁₆₋₁₇ ◃∙ e₁₇₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =↯=⟨ 2 & 3 & cd₈ ⟩
+              =ₛ⟨ 2 & 3 & cd₈ ⟩
             e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₅ ◃∙ e₁₅₋₁₆ ◃∙ e₁₆₋₁₇ ◃∙ e₁₇₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =↯=⟨ 3 & 3 & e₁₅₋₁₄ ◃∎ & idp ⟩
+              =ₛ₁⟨ 3 & 3 & idp ⟩
             e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₅ ◃∙ e₁₅₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =↯=⟨ 2 & 1 & e₁₃₋₁₅' ◃∎ & ! e₁₃₋₁₅'=e₁₃₋₁₅ ⟩
+              =ₛ₁⟨ 2 & 1 & ! e₁₃₋₁₅'=e₁₃₋₁₅ ⟩
             e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₅' ◃∙ e₁₅₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =↯=⟨ 3 & 1 & e₁₅₋₁₄' ◃∎ & ! e₁₅₋₁₄'=e₁₅₋₁₄ ⟩
+              =ₛ₁⟨ 3 & 1 & ! e₁₅₋₁₄'=e₁₅₋₁₄ ⟩
             e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₅' ◃∙ e₁₅₋₁₄' ◃∙ e₁₄₋₂ ◃∎
-              =↯=⟨ 1 & 4 & app= q₆₂ y ◃∎ &
+              =ₛ₁⟨ 1 & 4 &
                    ! (app=-β {f = f₆} {g = f₂} swap-transp-emloop-2 y) ⟩
             e₁₆ ◃∙ app= q₆₂ y ◃∎
-              =↯=⟨ 0 & 1 & app= q₁₆ y ◃∎ &
-                   ap-∘ (λ g → g y) transp-emloop (emloop-comp g₁ g₂) ⟩
-            app= q₁₆ y ∙ app= q₆₂ y
-              =⟨ ∙-ap (λ g → g y) q₁₆ q₆₂ ⟩
-            e₁₂' =∎
+              =ₛ₁⟨ 0 & 1 & ap-∘ (λ g → g y) transp-emloop (emloop-comp g₁ g₂) ⟩
+            app= q₁₆ y ◃∙ app= q₆₂ y ◃∎
+              =ₛ⟨ ∙-ap-seq (λ g → g y) (q₁₆ ◃∙ q₆₂ ◃∎) ⟩
+            e₁₂' ◃∎ ∎ₛ
 
         EE : q₁₂ == q₁₂'
         EE = –>-is-inj (app=-equiv {A = G.El} {P = λ _ → embase' G == embase} {f = f₁} {g = f₂})

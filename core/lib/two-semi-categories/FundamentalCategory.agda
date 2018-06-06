@@ -103,21 +103,23 @@ module _ {i j} (A : Type i) (B : Type j) {{B-level : has-level 2 B}} where
           ap app= (∙-assoc α β γ) ◃∙
           app=-pres-comp α (β ∙ γ) ◃∙
           ap (λ s a → app= α a ∙ s a) (app=-pres-comp β γ) ◃∎
-      app=-pres-comp-coh {f} idp idp γ = =ₛ-in $
+      app=-pres-comp-coh {f} idp idp γ =
         app=-pres-comp idp γ ◃∙
         ap (λ s a → s a ∙ app= γ a) (app=-pres-comp idp idp) ◃∙
         λ= (λ a → idp) ◃∎
-          =↯=⟨ 2 & 1 & (_ ∎∎) & ! (λ=-η idp) ⟩
+          =ₛ⟨ 2 & 1 & =ₛ-in {t = _ ∎∎} (! (λ=-η idp)) ⟩
         app=-pres-comp idp γ ◃∙
         ap (λ s a → s a ∙ app= γ a) (app=-pres-comp idp idp) ◃∎
-          =↯=⟨ 1 & 1 & app=-pres-comp idp γ ◃∎ &
-               λ=-ap (λ a t → t ∙ app= γ a) (λ a → ap-∙ (λ f → f a) (idp {a = f}) idp) ⟩
+          =ₛ₁⟨ 1 & 1 & λ=-ap (λ a t → t ∙ app= γ a) (λ a → ap-∙ (λ f → f a) (idp {a = f}) idp) ⟩
         app=-pres-comp idp γ ◃∙
         app=-pres-comp idp γ ◃∎
-          =↯=⟨ 1 & 1 & ap (λ s a → s a) (app=-pres-comp idp γ) ◃∎ &
-               ! (ap-idf (app=-pres-comp idp γ)) ⟩
+          =ₛ₁⟨ 1 & 1 & ! (ap-idf (app=-pres-comp idp γ)) ⟩
         app=-pres-comp idp γ ◃∙
-        ap (λ s a → s a) (app=-pres-comp idp γ) ◃∎ ↯∎
+        ap (λ s a → s a) (app=-pres-comp idp γ) ◃∎
+          =ₛ₁⟨ 0 & 0 & idp ⟩
+        idp ◃∙
+        app=-pres-comp idp γ ◃∙
+        ap (λ s a → s a) (app=-pres-comp idp γ) ◃∎ ∎ₛ
 
   app=-functor : TwoSemiFunctor (2-type-fundamental-cat (A → B))
                                 (fun-cat A (2-type-fundamental-cat B))

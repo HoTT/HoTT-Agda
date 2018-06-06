@@ -84,7 +84,7 @@ comp-functors {C = C} {D = D} {E = E} F G =
         G.pres-comp (F.F₁ (C.comp f g)) (F.F₁ h) ◃∙
         ap (λ s → E.comp s (F₁ h)) (pres-comp f g) ◃∙
         E.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
-          =ₛ⟨ 2 & 1 & ap-seq-∙-=ₛ (λ s → E.comp s (F₁ h)) (pres-comp↯ f g) ⟩
+          =ₛ⟨ 2 & 1 & ap-seq-∙ (λ s → E.comp s (F₁ h)) (pres-comp↯ f g) ⟩
         ap G.F₁ (F.pres-comp (C.comp f g) h) ◃∙
         G.pres-comp (F.F₁ (C.comp f g)) (F.F₁ h) ◃∙
         ap (λ s → E.comp s (F₁ h)) (ap G.F₁ (F.pres-comp f g)) ◃∙
@@ -150,7 +150,7 @@ comp-functors {C = C} {D = D} {E = E} F G =
         pres-comp f (C.comp g h) ◃∙
         ap (E.comp (F₁ f)) (ap G.F₁ (F.pres-comp g h)) ◃∙
         ap (E.comp (F₁ f)) (G.pres-comp (F.F₁ g) (F.F₁ h)) ◃∎
-          =ₛ⟨ 2 & 2 & ∙-ap-seq-=ₛ (E.comp (F₁ f)) (pres-comp↯ g h) ⟩
+          =ₛ⟨ 2 & 2 & ∙-ap-seq (E.comp (F₁ f)) (pres-comp↯ g h) ⟩
         ap G.F₁ (ap F.F₁ (C.assoc f g h)) ◃∙
         pres-comp f (C.comp g h) ◃∙
         ap (E.comp (F₁ f)) (pres-comp g h) ◃∎

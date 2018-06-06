@@ -210,46 +210,6 @@ module _ {i} {A : Type i} where
   ∙∙-#-! (a ∎∎) (S n) = idp
   ∙∙-#-! (a =⟪ p ⟫ s) (S n) = ap (λ v → p ◃∙ v) (∙∙-#-! s n)
 
-  abstract
-    infixr 10 _=↯=⟨_&_&_&_⟩_
-    _=↯=⟨_&_&_&_⟩_ : {a a' : A} {q : a == a'}
-      → (s : a =-= a')
-      → (n : ℕ) (m : ℕ)
-      → (t : point-from-start n s =-= point-from-start m ((n -!) s))
-      → (m -#) ((n -!) s) =↯= t
-      → (↯ ((n -#) s) ∙∙ t ∙∙ ((m -!) ((n -!) s))) == q
-      → (↯ s) == q
-    _=↯=⟨_&_&_&_⟩_ {a} {a'} {q} s n m t p p' =
-      (↯ s)
-        =⟨ ap (λ v → ↯ v) (∙∙-#-! s n) ⟩
-      (↯ (n -#) s ∙∙ (n -!) s)
-        =⟨ ap (λ v → ↯ (n -#) s ∙∙ v) (∙∙-#-! ((n -!) s) m) ⟩
-      (↯ (n -#) s ∙∙ (m -#) ((n -!) s) ∙∙ (m -!) ((n -!) s))
-        =⟨ ↯-∙∙ ((n -#) s) ((m -#) ((n -!) s) ∙∙ (m -!) ((n -!) s)) ⟩
-      (↯ (n -#) s) ∙ (↯ (m -#) ((n -!) s) ∙∙ (m -!) ((n -!) s))
-        =⟨ ap (λ v → (↯ (n -#) s) ∙ v) (↯-∙∙ ((m -#) ((n -!) s)) ((m -!) ((n -!) s))) ⟩
-      (↯ (n -#) s) ∙ (↯ (m -#) ((n -!) s)) ∙ (↯ (m -!) ((n -!) s))
-        =⟨ ap (λ v → (↯ (n -#) s) ∙ v ∙ (↯ (m -!) ((n -!) s))) p ⟩
-      (↯ (n -#) s) ∙ (↯ t) ∙ (↯ (m -!) ((n -!) s))
-        =⟨ ap (λ v → (↯ (n -#) s) ∙ v) (! (↯-∙∙ t ((m -!) ((n -!) s)))) ⟩
-      (↯ (n -#) s) ∙ (↯ t ∙∙ (m -!) ((n -!) s))
-        =⟨ ! (↯-∙∙ ((n -#) s) (t ∙∙ (m -!) ((n -!) s))) ⟩
-      (↯ (n -#) s ∙∙ t ∙∙ (m -!) ((n -!) s))
-        =⟨ p' ⟩
-      q =∎
-
-  infixr 10 _↯=⟨_⟩_
-  _↯=⟨_⟩_ : {a a' : A} {t : a == a'} {q : a == a'}
-    → (s : PathSeq a a')
-    → (↯ s) == t
-    → t == q
-    → (↯ s) == q
-  _↯=⟨_⟩_ s = _=⟨_⟩_ (↯ s)
-
-  infix 15 _↯∎
-  _↯∎ : {a a' : A} (s : PathSeq a a') → s =↯= s
-  _↯∎ s = (↯ s) =∎
-
   private
     split : {a a' : A} (s : PathSeq a a')
       → Σ A (λ a'' → (PathSeq a a'') × (a'' == a'))
@@ -412,16 +372,33 @@ module _ {i} {A : Type i} {a a' : A} where
 module _ {i} {A : Type i} where
 
   abstract
-    infixr 10 _=↯=⟨_&_&_⟩_
-    _=↯=⟨_&_&_⟩_ : {a a' : A} {q : a == a'}
-      → (s : a =-= a')
-      → (n : ℕ) (m : ℕ)
-      → {t : point-from-start n s =-= point-from-start m ((n -!) s)}
-      → (m -#) ((n -!) s) =ₛ t
-      → (↯ ((n -#) s) ∙∙ t ∙∙ ((m -!) ((n -!) s))) == q
-      → (↯ s) == q
-    _=↯=⟨_&_&_⟩_ {a} {a'} {q} s n m {t} p p' =
-      s =↯=⟨ n & m & t & =ₛ-out p ⟩ p'
+    private
+      infixr 10 _=↯=⟨_&_&_&_⟩_
+      _=↯=⟨_&_&_&_⟩_ : {a a' : A} {q : a == a'}
+        → (s : a =-= a')
+        → (n : ℕ) (m : ℕ)
+        → (t : point-from-start n s =-= point-from-start m ((n -!) s))
+        → (m -#) ((n -!) s) =↯= t
+        → (↯ ((n -#) s) ∙∙ t ∙∙ ((m -!) ((n -!) s))) == q
+        → (↯ s) == q
+      _=↯=⟨_&_&_&_⟩_ {a} {a'} {q} s n m t p p' =
+        (↯ s)
+          =⟨ ap (λ v → ↯ v) (∙∙-#-! s n) ⟩
+        (↯ (n -#) s ∙∙ (n -!) s)
+          =⟨ ap (λ v → ↯ (n -#) s ∙∙ v) (∙∙-#-! ((n -!) s) m) ⟩
+        (↯ (n -#) s ∙∙ (m -#) ((n -!) s) ∙∙ (m -!) ((n -!) s))
+          =⟨ ↯-∙∙ ((n -#) s) ((m -#) ((n -!) s) ∙∙ (m -!) ((n -!) s)) ⟩
+        (↯ (n -#) s) ∙ (↯ (m -#) ((n -!) s) ∙∙ (m -!) ((n -!) s))
+          =⟨ ap (λ v → (↯ (n -#) s) ∙ v) (↯-∙∙ ((m -#) ((n -!) s)) ((m -!) ((n -!) s))) ⟩
+        (↯ (n -#) s) ∙ (↯ (m -#) ((n -!) s)) ∙ (↯ (m -!) ((n -!) s))
+          =⟨ ap (λ v → (↯ (n -#) s) ∙ v ∙ (↯ (m -!) ((n -!) s))) p ⟩
+        (↯ (n -#) s) ∙ (↯ t) ∙ (↯ (m -!) ((n -!) s))
+          =⟨ ap (λ v → (↯ (n -#) s) ∙ v) (! (↯-∙∙ t ((m -!) ((n -!) s)))) ⟩
+        (↯ (n -#) s) ∙ (↯ t ∙∙ (m -!) ((n -!) s))
+          =⟨ ! (↯-∙∙ ((n -#) s) (t ∙∙ (m -!) ((n -!) s))) ⟩
+        (↯ (n -#) s ∙∙ t ∙∙ (m -!) ((n -!) s))
+          =⟨ p' ⟩
+        q =∎
 
     infixr 10 _=ₛ⟨_&_&_⟩_
     _=ₛ⟨_&_&_⟩_ : {a a' : A} (s : a =-= a') {u : a =-= a'}
@@ -430,7 +407,7 @@ module _ {i} {A : Type i} where
       → (n -#) ((m -!) s) =ₛ r
       → (m -#) s ∙∙ r ∙∙ (n -!) ((m -!) s) =ₛ u
       → s =ₛ u
-    _=ₛ⟨_&_&_⟩_ s m n p p' = =ₛ-in (s =↯=⟨ m & n & p ⟩ =ₛ-out p')
+    _=ₛ⟨_&_&_⟩_ s m n {r} p p' = =ₛ-in (s =↯=⟨ m & n & r & =ₛ-out p ⟩ =ₛ-out p')
 
     infixr 10 _=ₛ₁⟨_&_&_⟩_
     _=ₛ₁⟨_&_&_⟩_ : {a a' : A} (s : a =-= a') {u : a =-= a'}
@@ -501,42 +478,34 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
   ap-seq (a ∎∎) = f a ∎∎
   ap-seq (a =⟪ p ⟫ s) = f a =⟪ ap f p ⟫ ap-seq s
 
+  private
+    ap-seq-∙-= : {a a' : A} → (s : a =-= a')
+      → ap f (↯ s) == (↯ ap-seq s)
+    ap-seq-∙-= (a ∎∎) = idp
+    ap-seq-∙-= (a =⟪ p ⟫ a' ∎∎) = idp
+    ap-seq-∙-= (a =⟪ p ⟫ a' =⟪ p' ⟫ s) =
+      ap-∙ f p (↯ a' =⟪ p' ⟫ s) ∙
+      ap (λ s → ap f p ∙ s) (ap-seq-∙-= (a' =⟪ p' ⟫ s))
+
   ap-seq-∙ : {a a' : A} → (s : a =-= a')
-    → ap f (↯ s) == (↯ ap-seq s)
-  ap-seq-∙ (a ∎∎) = idp
-  ap-seq-∙ (a =⟪ p ⟫ a' ∎∎) = idp
-  ap-seq-∙ (a =⟪ p ⟫ a' =⟪ p' ⟫ s) =
-    ap-∙ f p (↯ a' =⟪ p' ⟫ s) ∙
-    ap (λ s → ap f p ∙ s) (ap-seq-∙ (a' =⟪ p' ⟫ s))
+    → (ap f (↯ s) ◃∎) =ₛ ap-seq s
+  ap-seq-∙ s = =ₛ-in (ap-seq-∙-= s)
 
   ∙-ap-seq : {a a' : A} (s : a =-= a')
-    → (↯ ap-seq s) == ap f (↯ s)
-  ∙-ap-seq s = ! (ap-seq-∙ s)
-
-  ap-seq-∙-=ₛ : {a a' : A} → (s : a =-= a')
-    → (ap f (↯ s) ◃∎) =ₛ ap-seq s
-  ap-seq-∙-=ₛ s = =ₛ-in (ap-seq-∙ s)
-
-  ∙-ap-seq-=ₛ : {a a' : A} (s : a =-= a')
     → ap-seq s =ₛ (ap f (↯ s) ◃∎)
-  ∙-ap-seq-=ₛ s = !ₛ (ap-seq-∙-=ₛ s)
-
-  ap-seq-=↯= : {a a' : A} (s t : a =-= a')
-    → s =↯= t
-    → ap-seq s =↯= ap-seq t
-  ap-seq-=↯= s t e =
-    (↯ (ap-seq s))
-      =⟨ ∙-ap-seq s ⟩
-    ap f (↯ s)
-      =⟨ ap (ap f) e ⟩
-    ap f (↯ t)
-      =⟨ ap-seq-∙ t ⟩
-    (↯ (ap-seq t)) =∎
+  ∙-ap-seq s = !ₛ (ap-seq-∙ s)
 
   ap-seq-=ₛ : {a a' : A} {s t : a =-= a'}
     → s =ₛ t
     → ap-seq s =ₛ ap-seq t
-  ap-seq-=ₛ {s = s} {t = t} (=ₛ-in p) = =ₛ-in (ap-seq-=↯= s t p)
+  ap-seq-=ₛ {s = s} {t = t} (=ₛ-in p) =
+    ap-seq s
+      =ₛ⟨ ∙-ap-seq s ⟩
+    ap f (↯ s) ◃∎
+      =ₛ₁⟨ ap (ap f) p ⟩
+    ap f (↯ t) ◃∎
+      =ₛ⟨ ap-seq-∙ t ⟩
+    ap-seq t ∎ₛ
 
 apd= : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
        (p : f ∼ g) {a b : A} (q : a == b)
