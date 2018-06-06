@@ -110,208 +110,200 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
     pres-comp : {x y z : D.El} (f : D.Arr x y) (g : D.Arr y z)
       → F₁ (D.comp f g) == C.comp (F₁ f) (F₁ g)
     pres-comp f g = ↯ pres-comp-↯ f g
-    F₁''-pres-comp-coh : {w x y z : D.El}
-      (f : D.Arr w x) (g : D.Arr x y) (h : D.Arr y z)
-      → F₁''-pres-comp (D.comp f g) h ◃∙ ap (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g) ◃∙ D.assoc (F₁'' f) (F₁'' g) (F₁'' h) ◃∎
-        =ₛ
-        ap F₁'' (D.assoc f g h) ◃∙ F₁''-pres-comp f (D.comp g h) ◃∙ ap (D.comp (F₁'' f)) (F₁''-pres-comp g h) ◃∎
     F₁'-pres-comp-coh : {w x y z : D.El}
       (f : D.Arr (F.F₀ (F₀ w)) (F.F₀ (F₀ x)))
       (g : D.Arr (F.F₀ (F₀ x)) (F.F₀ (F₀ y)))
       (h : D.Arr (F.F₀ (F₀ y)) (F.F₀ (F₀ z)))
-      → F₁'-pres-comp (D.comp f g) h ∙ ap (λ s → C.comp s (F₁' h)) (F₁'-pres-comp f g) ∙ C.assoc (F₁' f) (F₁' g) (F₁' h)
-        == ap F₁' (D.assoc f g h) ∙ F₁'-pres-comp f (D.comp g h) ∙ ap (C.comp (F₁' f)) (F₁'-pres-comp g h)
+      → F₁'-pres-comp (D.comp f g) h ◃∙
+        ap (λ s → C.comp s (F₁' h)) (F₁'-pres-comp f g) ◃∙
+        C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ
+        ap F₁' (D.assoc f g h) ◃∙
+        F₁'-pres-comp f (D.comp g h) ◃∙
+        ap (C.comp (F₁' f)) (F₁'-pres-comp g h) ◃∎
     F₁'-pres-comp-coh {w} {x} {y} {z} f g h =
-      (F₁'-pres-comp (D.comp f g) h
-      ◃∙ ap (λ s → C.comp s (F₁' h)) (F₁'-pres-comp f g)
-      ◃∙ C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎)
-        =↯=⟨ 0 & 1 & F₁'-pres-comp-↯ (D.comp f g) h & idp ⟩
-      (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' (D.comp f g)) (F₁' h)))
-      ◃∙ F₁'-g-f (C.comp (F₁' (D.comp f g)) (F₁' h))
-      ◃∙ ap (λ s → C.comp s (F₁' h)) (F₁'-pres-comp f g)
-      ◃∙ C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎)
-        =↯=⟨ 2 & 2 & !ₛ $
-             homotopy-naturality-=ₛ
-               (λ s → F₁' (F.F₁ (C.comp s (F₁' h))))
-               (λ s → C.comp s (F₁' h))
-               (λ s → F₁'-g-f (C.comp s (F₁' h)))
-               (F₁'-pres-comp f g) ⟩
-      (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' (D.comp f g)) (F₁' h)))
-      ◃∙ ap (λ s → F₁' (F.F₁ (C.comp s (F₁' h)))) (F₁'-pres-comp f g)
-      ◃∙ F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h))
-      ◃∙ C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎)
-        =↯=⟨ 1 & 2 & !ₛ $
-             homotopy-naturality-=ₛ
-               (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h))))
-               (λ s → F₁' (F.F₁ (C.comp s (F₁' h))))
-               (λ s → ap F₁' (! (F.pres-comp s (F₁' h))))
-               (F₁'-pres-comp f g) ⟩
-      (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-pres-comp f g)
-      ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-      ◃∙ F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h))
-      ◃∙ C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎)
-        =↯=⟨ 1 & 1 & ap-seq (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-pres-comp-↯ f g)
-               & ap-seq-∙ (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-pres-comp-↯ f g) ⟩
-      (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g))
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap F₁' (! (F.pres-comp (F₁' f) (F₁' g))))
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-g-f (C.comp (F₁' f) (F₁' g)))
-      ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-      ◃∙ F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h))
-      ◃∙ C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎)
-        =↯=⟨ 3 & 1 & step₅ ⟩
-      (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g))
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap F₁' (! (F.pres-comp (F₁' f) (F₁' g))))
-      ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (F.F₁ (C.comp (F₁' f) (F₁' g))))
-      ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-      ◃∙ F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h))
-      ◃∙ C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎)
-        =↯=⟨ 2 & 1 & (ap (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g))) ◃∎)
-               & ∘-ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h))))
-                      F₁' (! (F.pres-comp (F₁' f) (F₁' g))) ⟩
-      (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g))
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g)))
-      ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (F.F₁ (C.comp (F₁' f) (F₁' g))))
-      ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-      ◃∙ F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h))
-      ◃∙ C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎)
-        =↯=⟨ 2 & 2 &
-             homotopy-naturality-=ₛ
-               (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h))))
-               (λ s → F₁' (D.comp s (F.F₁ (F₁' h))))
-               (λ t → ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g t))
-               (! (F.pres-comp (F₁' f) (F₁' g))) ⟩
-      (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g))
-      ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))))
-      ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g)))
-      ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-      ◃∙ F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h))
-      ◃∙ C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎)
-        =↯=⟨ 0 & 3 & step₈ ⟩
-      (ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f)
-      ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g)
-      ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h)
-      ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g)))
-      ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-      ◃∙ F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h))
-      ◃∙ C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎)
-        =↯=⟨ 5 & 2 & !ₛ $
+      F₁'-pres-comp (D.comp f g) h ◃∙
+      ap (λ s → C.comp s (F₁' h)) (F₁'-pres-comp f g) ◃∙
+      C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ⟨ 0 & 1 & =ₛ-in {t = F₁'-pres-comp-↯ (D.comp f g) h} idp ⟩
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' (D.comp f g)) (F₁' h))) ◃∙
+      F₁'-g-f (C.comp (F₁' (D.comp f g)) (F₁' h)) ◃∙
+      ap (λ s → C.comp s (F₁' h)) (F₁'-pres-comp f g) ◃∙
+      C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ⟨ 2 & 2 & !ₛ $
+            homotopy-naturality-=ₛ
+              (λ s → F₁' (F.F₁ (C.comp s (F₁' h))))
+              (λ s → C.comp s (F₁' h))
+              (λ s → F₁'-g-f (C.comp s (F₁' h)))
+              (F₁'-pres-comp f g) ⟩
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' (D.comp f g)) (F₁' h))) ◃∙
+      ap (λ s → F₁' (F.F₁ (C.comp s (F₁' h)))) (F₁'-pres-comp f g) ◃∙
+      F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
+      C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ⟨ 1 & 2 & !ₛ $
+            homotopy-naturality-=ₛ
+              (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h))))
+              (λ s → F₁' (F.F₁ (C.comp s (F₁' h))))
+              (λ s → ap F₁' (! (F.pres-comp s (F₁' h))))
+              (F₁'-pres-comp f g) ⟩
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-pres-comp f g) ◃∙
+      ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+      F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
+      C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ⟨ 1 & 1 & ap-seq-∙-=ₛ (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-pres-comp-↯ f g) ⟩
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap F₁' (! (F.pres-comp (F₁' f) (F₁' g)))) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-g-f (C.comp (F₁' f) (F₁' g))) ◃∙
+      ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+      F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
+      C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ₁⟨ 3 & 1 & step₅ ⟩
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap F₁' (! (F.pres-comp (F₁' f) (F₁' g)))) ◃∙
+      ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (F.F₁ (C.comp (F₁' f) (F₁' g)))) ◃∙
+      ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+      F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
+      C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ₁⟨ 2 & 1 & ∘-ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) F₁' (! (F.pres-comp (F₁' f) (F₁' g))) ⟩
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g))) ◃∙
+      ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (F.F₁ (C.comp (F₁' f) (F₁' g)))) ◃∙
+      ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+      F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
+      C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ⟨ 2 & 2 & homotopy-naturality-=ₛ
+                      (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h))))
+                      (λ s → F₁' (D.comp s (F.F₁ (F₁' h))))
+                      (λ t → ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g t))
+                      (! (F.pres-comp (F₁' f) (F₁' g))) ⟩
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
+      ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∙
+      ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g))) ◃∙
+      ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+      F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
+      C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ⟨ 0 & 3 & step₈ ⟩
+      ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
+      ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
+      ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∙
+      ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g))) ◃∙
+      ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+      F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
+      C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
+        =ₛ⟨ 5 & 2 & !ₛ $
              homotopy-naturality-to-idf-=ₛ (F₁' ∘ F.F₁) F₁'-g-f (C.assoc (F₁' f) (F₁' g) (F₁' h)) ⟩
-      (ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f)
-      ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g)
-      ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h)
-      ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g)))
-      ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-      ◃∙ ap (F₁' ∘ F.F₁) (C.assoc (F₁' f) (F₁' g) (F₁' h))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 3 & 3 & step₁₀ ⟩
-      (ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f)
-      ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g)
-      ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h)
-      ◃∙ ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h)))
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 0 & 4 & step₁₁ ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f)
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g)
-      ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h)
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h)))
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 1 & 3 & step₁₂ ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h))))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h)))
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 3 & 2 & !ₛ $
-             homotopy-naturality-=ₛ
-               (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁')
-               (F₁' ∘ D.comp (F.F₁ (F₁' f)))
-               (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) ∘ F₁'-f-g)
-               (! (F.pres-comp (F₁' g) (F₁' h))) ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁') (! (F.pres-comp (F₁' g) (F₁' h)))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (F.F₁ (C.comp (F₁' g) (F₁' h))))
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 3 & 1 & ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap F₁' (! (F.pres-comp (F₁' g) (F₁' h)))) ◃∎
-               & ap-∘ (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) F₁' (! (F.pres-comp (F₁' g) (F₁' h))) ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap F₁' (! (F.pres-comp (F₁' g) (F₁' h))))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (F.F₁ (C.comp (F₁' g) (F₁' h))))
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 4 & 1 & ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (ap F.F₁ (F₁'-g-f (C.comp (F₁' g) (F₁' h)))) ◃∎
-          & ap (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))))
-               (! (is-equiv.adj (F₁-equiv (F₀ x) (F₀ z)) (C.comp (F₁' g) (F₁' h)))) ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap F₁' (! (F.pres-comp (F₁' g) (F₁' h))))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (ap F.F₁ (F₁'-g-f (C.comp (F₁' g) (F₁' h))))
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 4 & 1 & ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (F₁'-g-f (C.comp (F₁' g) (F₁' h))) ◃∎
-               & ∘-ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) F.F₁ (F₁'-g-f (C.comp (F₁' g) (F₁' h))) ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap F₁' (! (F.pres-comp (F₁' g) (F₁' h))))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (F₁'-g-f (C.comp (F₁' g) (F₁' h)))
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 2 & 3 & ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (F₁'-pres-comp g h) ◃∎
-               & ∙-ap-seq (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (F₁'-pres-comp-↯ g h) ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-      ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (F₁'-pres-comp g h)
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 2 & 2 &
-             homotopy-naturality-=ₛ
-               (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁)
-               (F₁' ∘ F.F₁ ∘ C.comp (F₁' f))
-               (λ s → ap F₁' (! (F.pres-comp (F₁' f) s)))
-               (F₁'-pres-comp g h) ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (F₁' (D.comp g h))))
-      ◃∙ ap (F₁' ∘ F.F₁ ∘ C.comp (F₁' f)) (F₁'-pres-comp g h)
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎)
-        =↯=⟨ 3 & 2 &
-             homotopy-naturality-=ₛ
-               (F₁' ∘ F.F₁ ∘ C.comp (F₁' f))
-               (C.comp (F₁' f))
-               (F₁'-g-f ∘ C.comp (F₁' f))
-               (F₁'-pres-comp g h) ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-      ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (F₁' (D.comp g h))))
-      ◃∙ F₁'-g-f (C.comp (F₁' f) (F₁' (D.comp g h)))
-      ◃∙ ap (C.comp (F₁' f)) (F₁'-pres-comp g h) ◃∎)
-        =↯=⟨ 1 & 3 & F₁'-pres-comp f (D.comp g h) ◃∎ & idp ⟩
-      (ap F₁' (D.assoc f g h)
-      ◃∙ F₁'-pres-comp f (D.comp g h)
-      ◃∙ ap (C.comp (F₁' f)) (F₁'-pres-comp g h) ◃∎) ↯∎
+      ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
+      ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
+      ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∙
+      ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g))) ◃∙
+      ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+      ap (F₁' ∘ F.F₁) (C.assoc (F₁' f) (F₁' g) (F₁' h)) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ⟨ 3 & 3 & step₁₀ ⟩
+      ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
+      ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
+      ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∙
+      ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ⟨ 0 & 4 & step₁₁ ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g) ◃∙
+      ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ⟨ 1 & 3 & step₁₂ ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ⟨ 3 & 2 & !ₛ $
+            homotopy-naturality-=ₛ
+              (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁')
+              (F₁' ∘ D.comp (F.F₁ (F₁' f)))
+              (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) ∘ F₁'-f-g)
+              (! (F.pres-comp (F₁' g) (F₁' h))) ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁') (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (F.F₁ (C.comp (F₁' g) (F₁' h)))) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ₁⟨ 3 & 1 & ap-∘ (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) F₁' (! (F.pres-comp (F₁' g) (F₁' h))) ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap F₁' (! (F.pres-comp (F₁' g) (F₁' h)))) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (F.F₁ (C.comp (F₁' g) (F₁' h)))) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ₁⟨ 4 & 1 & ap (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))))
+                        (! (is-equiv.adj (F₁-equiv (F₀ x) (F₀ z)) (C.comp (F₁' g) (F₁' h)))) ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap F₁' (! (F.pres-comp (F₁' g) (F₁' h)))) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (ap F.F₁ (F₁'-g-f (C.comp (F₁' g) (F₁' h)))) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ₁⟨ 4 & 1 & ∘-ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) F.F₁ (F₁'-g-f (C.comp (F₁' g) (F₁' h))) ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap F₁' (! (F.pres-comp (F₁' g) (F₁' h)))) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (F₁'-g-f (C.comp (F₁' g) (F₁' h))) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ⟨ 2 & 3 & ∙-ap-seq-=ₛ (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (F₁'-pres-comp-↯ g h) ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+      ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (F₁'-pres-comp g h) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ⟨ 2 & 2 &
+            homotopy-naturality-=ₛ
+              (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁)
+              (F₁' ∘ F.F₁ ∘ C.comp (F₁' f))
+              (λ s → ap F₁' (! (F.pres-comp (F₁' f) s)))
+              (F₁'-pres-comp g h) ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (F₁' (D.comp g h)))) ◃∙
+      ap (F₁' ∘ F.F₁ ∘ C.comp (F₁' f)) (F₁'-pres-comp g h) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
+        =ₛ⟨ 3 & 2 &
+            homotopy-naturality-=ₛ
+              (F₁' ∘ F.F₁ ∘ C.comp (F₁' f))
+              (C.comp (F₁' f))
+              (F₁'-g-f ∘ C.comp (F₁' f))
+              (F₁'-pres-comp g h) ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+      ap F₁' (! (F.pres-comp (F₁' f) (F₁' (D.comp g h)))) ◃∙
+      F₁'-g-f (C.comp (F₁' f) (F₁' (D.comp g h))) ◃∙
+      ap (C.comp (F₁' f)) (F₁'-pres-comp g h) ◃∎
+        =ₛ₁⟨ 1 & 3 & idp ⟩
+      ap F₁' (D.assoc f g h) ◃∙
+      F₁'-pres-comp f (D.comp g h) ◃∙
+      ap (C.comp (F₁' f)) (F₁'-pres-comp g h) ◃∎ ∎ₛ
       where
-        step₅ : ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-g-f (C.comp (F₁' f) (F₁' g))) ◃∎
-                =ₛ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (F.F₁ (C.comp (F₁' f) (F₁' g)))) ◃∎
-        step₅ = =ₛ-in $
+        step₅ : ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-g-f (C.comp (F₁' f) (F₁' g)))
+                == ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (F.F₁ (C.comp (F₁' f) (F₁' g))))
+        step₅ =
           ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (F₁'-g-f (C.comp (F₁' f) (F₁' g)))
             =⟨ ap-∘ (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) F.F₁ (F₁'-g-f (C.comp (F₁' f) (F₁' g))) ⟩
           ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (ap F.F₁ (F₁'-g-f (C.comp (F₁' f) (F₁' g))))
@@ -325,54 +317,52 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
                 ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
                 ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
                 ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∎
-        step₈ = =ₛ-in $
-          (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g))
-          ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎)
-            =↯=⟨ 1 & 1 & (ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap F₁' (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g))) ◃∎)
-                   & ap (ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))))
-                        (! (ap-ap2 F₁' D.comp (F₁'-f-g! f) (F₁'-f-g! g))) ⟩
-          (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap F₁' (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)))
-          ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎)
-            =↯=⟨ 1 & 1 & (ap (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h)))) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ◃∎)
-                   & ∘-ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) F₁' (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ⟩
-          (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h)))) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g))
-          ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎)
-            =↯=⟨ 0 & 2 & !ₛ $
-                 homotopy-naturality-=ₛ (λ s → F₁' (D.comp s h))
-                                        (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h))))
-                                        (λ s → ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! s) (F₁'-f-g! h))
-                                        (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ⟩
-          (ap (λ s → F₁' (D.comp s h)) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g))
-          ◃∙ ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) (F₁'-f-g! h)
-          ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎)
-            =↯=⟨ 1 & 1 & (ap (λ t → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) t)) (F₁'-f-g! h)
-                         ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎)
-                   & ap2-out' (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) (F₁'-f-g! h) ⟩
-          (ap (λ s → F₁' (D.comp s h)) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g))
-          ◃∙ ap (λ t → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) t)) (F₁'-f-g! h)
-          ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))))
-          ◃∙ ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎)
-            =↯=⟨ 2 & 2 & (F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) (F.F₁ (F₁' h))) ∎∎)
-            & ap-seq-=↯= (λ s → F₁' (D.comp s (F.F₁ (F₁' h))))
-                         (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))
-                           ◃∙ F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) ◃∎)
-                         (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) ∎∎)
-                         (!-inv-l (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))))) ⟩
-          (ap (λ s → F₁' (D.comp s h)) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g))
-          ◃∙ ap (λ t → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) t)) (F₁'-f-g! h) ◃∎)
-            =↯=⟨ 0 & 1 & (ap2 (λ s t → F₁' (D.comp (D.comp s t) h)) (F₁'-f-g! f) (F₁'-f-g! g) ◃∎)
-                   & ap-ap2 (λ s → F₁' (D.comp s h)) D.comp (F₁'-f-g! f) (F₁'-f-g! g) ⟩
-          (ap2 (λ s t → F₁' (D.comp (D.comp s t) h)) (F₁'-f-g! f) (F₁'-f-g! g)
-          ◃∙ ap (λ t → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) t)) (F₁'-f-g! h) ◃∎)
-            =↯=⟨ 0 & 1 & (ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f)
-                         ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∎)
-                   & ap2-out (λ s t → F₁' (D.comp (D.comp s t) h)) (F₁'-f-g! f) (F₁'-f-g! g) ⟩
-          (ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f)
-          ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g)
-          ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∎) ↯∎
+        step₈ =
+          ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
+          ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎
+            =ₛ₁⟨ 1 & 1 & ap (ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))))
+                            (! (ap-ap2 F₁' D.comp (F₁'-f-g! f) (F₁'-f-g! g))) ⟩
+          ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) (ap F₁' (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g))) ◃∙
+          ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎
+            =ₛ₁⟨ 1 & 1 & ∘-ap (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h)))) F₁' (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ⟩
+          ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h)))) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
+          ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎
+            =ₛ⟨ 0 & 2 & !ₛ $
+                homotopy-naturality-=ₛ (λ s → F₁' (D.comp s h))
+                                       (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h))))
+                                       (λ s → ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! s) (F₁'-f-g! h))
+                                       (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ⟩
+          ap (λ s → F₁' (D.comp s h)) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
+          ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) (F₁'-f-g! h) ◃∙
+          ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎
+            =ₛ⟨ 1 & 1 & =ₛ-in {t = ap (λ t → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) t)) (F₁'-f-g! h) ◃∙
+                                   ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎}
+                              (ap2-out' (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) (F₁'-f-g! h)) ⟩
+          ap (λ s → F₁' (D.comp s h)) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
+          ap (λ t → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) t)) (F₁'-f-g! h) ◃∙
+          ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∙
+          ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎
+            =ₛ⟨ 2 & 2 &
+                ap-seq-=ₛ (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) $
+                =ₛ-in {s = F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) ◃∙
+                           F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) ◃∎}
+                      {t = D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) ∎∎}
+                      (!-inv-l (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))))) ⟩
+          ap (λ s → F₁' (D.comp s h)) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
+          ap (λ t → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) t)) (F₁'-f-g! h) ◃∎
+            =ₛ₁⟨ 0 & 1 & ap-ap2 (λ s → F₁' (D.comp s h)) D.comp (F₁'-f-g! f) (F₁'-f-g! g) ⟩
+          ap2 (λ s t → F₁' (D.comp (D.comp s t) h)) (F₁'-f-g! f) (F₁'-f-g! g) ◃∙
+          ap (λ t → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) t)) (F₁'-f-g! h) ◃∎
+            =ₛ⟨ 0 & 1 &
+                =ₛ-in {t = ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
+                           ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∎}
+                      (ap2-out (λ s t → F₁' (D.comp (D.comp s t) h)) (F₁'-f-g! f) (F₁'-f-g! g)) ⟩
+          ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
+          ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
+          ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∎ ∎ₛ
         step₁₀' : ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g))) ◃∙
                   ! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
                   ap F.F₁ (C.assoc (F₁' f) (F₁' g) (F₁' h)) ◃∎
@@ -380,23 +370,20 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
                   D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h)) ◃∙
                   ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
                   ! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
-        step₁₀' = =ₛ-in $
+        step₁₀' =
           ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g))) ◃∙
           ! e₀₋₁ ◃∙
           e₀₋₄ ◃∎
-            =↯=⟨ 0 & 1 & ! (ap (λ s → D.comp s (F.F₁ (F₁' h))) (F.pres-comp (F₁' f) (F₁' g))) ◃∎
-                    & ap-! (λ s → D.comp s (F.F₁ (F₁' h))) (F.pres-comp (F₁' f) (F₁' g)) ⟩
+            =ₛ₁⟨ 0 & 1 & ap-! (λ s → D.comp s (F.F₁ (F₁' h))) (F.pres-comp (F₁' f) (F₁' g)) ⟩
           ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎
-            ↯=⟨ =ₛ-out {s = ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎} {t = e₂₋₃ ◃∙ ! e₅₋₃ ◃∙ ! e₄₋₅ ◃∎} $
-                post-rearrange-in-=ₛ {p = ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎} $
+            =ₛ⟨ post-rearrange-in-=ₛ {p = ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎} $
                 pre-rotate'-in-=ₛ {p = e₀₋₁ ◃∙ e₁₋₂ ◃∎} $
                 !ₛ $ F.pres-comp-coh (F₁' f) (F₁' g) (F₁' h) ⟩
           e₂₋₃ ◃∙ ! e₅₋₃ ◃∙ ! e₄₋₅ ◃∎
-            =↯=⟨ 1 & 1 & ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∎ &
-                 !-ap (D.comp (F.F₁ (F₁' f))) (F.pres-comp (F₁' g) (F₁' h)) ⟩
+            =ₛ₁⟨ 1 & 1 & !-ap (D.comp (F.F₁ (F₁' f))) (F.pres-comp (F₁' g) (F₁' h)) ⟩
           e₂₋₃ ◃∙
           ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
-          ! e₄₋₅ ◃∎ ↯∎
+          ! e₄₋₅ ◃∎ ∎ₛ
           where
             t₀ : D.Arr (F.F₀ (F₀ w)) (F.F₀ (F₀ z))
             t₀ = F.F₁ (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h))
@@ -428,29 +415,26 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
                  ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∙
                  ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
                  ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∎
-        step₁₀ = =ₛ-in $
-          (ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g)))
-          ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-          ◃∙ ap (F₁' ∘ F.F₁) (C.assoc (F₁' f) (F₁' g) (F₁' h)) ◃∎)
-            =↯=⟨ 0 & 1 & ap F₁' (ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g)))) ◃∎
-                    & ap-∘ F₁' (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g))) ⟩
-          (ap F₁' (ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g))))
-          ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-          ◃∙ ap (F₁' ∘ F.F₁) (C.assoc (F₁' f) (F₁' g) (F₁' h)) ◃∎)
-            =↯=⟨ 2 & 1 & ap F₁' (ap F.F₁ (C.assoc (F₁' f) (F₁' g) (F₁' h))) ◃∎
-                    & ap-∘ F₁' F.F₁ (C.assoc (F₁' f) (F₁' g) (F₁' h)) ⟩
-          (ap F₁' (ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g))))
-          ◃∙ ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h)))
-          ◃∙ ap F₁' (ap F.F₁ (C.assoc (F₁' f) (F₁' g) (F₁' h))) ◃∎)
-            ↯=⟨ =ₛ-out (ap-seq-=ₛ F₁' step₁₀') ⟩
-          (ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))
-          ◃∙ ap F₁' (ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))))
-          ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∎)
-            =↯=⟨ 1 & 1 & ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∎
-                    & ∘-ap F₁' (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ⟩
-          (ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h)))
-          ◃∙ ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∎) ↯∎
+        step₁₀ =
+          ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (! (F.pres-comp (F₁' f) (F₁' g))) ◃∙
+          ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+          ap (F₁' ∘ F.F₁) (C.assoc (F₁' f) (F₁' g) (F₁' h)) ◃∎
+            =ₛ₁⟨ 0 & 1 & ap-∘ F₁' (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g))) ⟩
+          ap F₁' (ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g)))) ◃∙
+          ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+          ap (F₁' ∘ F.F₁) (C.assoc (F₁' f) (F₁' g) (F₁' h)) ◃∎
+            =ₛ₁⟨ 2 & 1 & ap-∘ F₁' F.F₁ (C.assoc (F₁' f) (F₁' g) (F₁' h)) ⟩
+          ap F₁' (ap (λ s → D.comp s (F.F₁ (F₁' h))) (! (F.pres-comp (F₁' f) (F₁' g)))) ◃∙
+          ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
+          ap F₁' (ap F.F₁ (C.assoc (F₁' f) (F₁' g) (F₁' h))) ◃∎
+            =ₛ⟨ ap-seq-=ₛ F₁' step₁₀' ⟩
+          ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∙
+          ap F₁' (ap (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h)))) ◃∙
+          ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∎
+            =ₛ₁⟨ 1 & 1 & ∘-ap F₁' (D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ⟩
+          ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (! (F.pres-comp (F₁' g) (F₁' h))) ◃∙
+          ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∎ ∎ₛ
         step₁₁ :
           ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
           ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
@@ -461,38 +445,38 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
           ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
           ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g) ◃∙
           ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎
-        step₁₁ = =ₛ-in $
-          (ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f)
-          ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g)
-          ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h)
-          ◃∙ ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∎)
-            =↯=⟨ 2 & 2 &
-                 homotopy-naturality-=ₛ (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s))
-                                        (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s)))
-                                        (λ s → ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) s))
-                                        (F₁'-f-g! h) ⟩
-          (ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f)
-          ◃∙ ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g)
-          ◃∙ ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) h)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎)
-            =↯=⟨ 1 & 2 &
-                 homotopy-naturality-=ₛ (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h))
-                                        (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h)))
-                                        (λ s → ap F₁' (D.assoc (F.F₁ (F₁' f)) s h))
-                                        (F₁'-f-g! g) ⟩
-          (ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f)
-          ◃∙ ap F₁' (D.assoc (F.F₁ (F₁' f)) g h)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎)
-            =↯=⟨ 0 & 2 &
-                 homotopy-naturality-=ₛ (λ s → F₁' (D.comp (D.comp s g) h))
-                                        (λ s → F₁' (D.comp s (D.comp g h)))
-                                        (λ s → ap F₁' (D.assoc s g h))
-                                        (F₁'-f-g! f) ⟩
-          (ap F₁' (D.assoc f g h)
-          ◃∙ ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎) ↯∎
+        step₁₁ =
+          ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
+          ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
+          ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∙
+          ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∎
+            =ₛ⟨ 2 & 2 &
+                homotopy-naturality-=ₛ (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s))
+                                       (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s)))
+                                       (λ s → ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) s))
+                                       (F₁'-f-g! h) ⟩
+          ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
+          ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
+          ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) h) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎
+            =ₛ⟨ 1 & 2 &
+                homotopy-naturality-=ₛ (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h))
+                                       (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h)))
+                                       (λ s → ap F₁' (D.assoc (F.F₁ (F₁' f)) s h))
+                                       (F₁'-f-g! g) ⟩
+          ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
+          ap F₁' (D.assoc (F.F₁ (F₁' f)) g h) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎
+            =ₛ⟨ 0 & 2 &
+                homotopy-naturality-=ₛ (λ s → F₁' (D.comp (D.comp s g) h))
+                                       (λ s → F₁' (D.comp s (D.comp g h)))
+                                       (λ s → ap F₁' (D.assoc s g h))
+                                       (F₁'-f-g! f) ⟩
+          ap F₁' (D.assoc f g h) ◃∙
+          ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎ ∎ₛ
         step₁₂ : ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
                  ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g) ◃∙
                  ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎
@@ -500,150 +484,151 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
                  ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
                  ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
                  ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎
-        step₁₂ = =ₛ-in $
-          (ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g)
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎)
-            =↯=⟨ 1 & 2 & ap2 (λ s t → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s t))) (F₁'-f-g! g) (F₁'-f-g! h) ◃∎
-                    & ! (ap2-out (λ s t → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s t))) (F₁'-f-g! g) (F₁'-f-g! h)) ⟩
-          (ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f)
-          ◃∙ ap2 (λ s t → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s t))) (F₁'-f-g! g) (F₁'-f-g! h) ◃∎)
-            =↯=⟨ 1 & 1 & ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) s)) (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ◃∎
-                    & ! (ap-ap2 (F₁' ∘ D.comp (F.F₁ (F₁' f))) D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ⟩
-          (ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f)
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ◃∎)
-            =↯=⟨ 2 & 0 & (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g! (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h))))
-                          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎)
-                    & ap-seq-=↯= (F₁' ∘ D.comp (F.F₁ (F₁' f)))
-                                (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)) ∎∎)
-                                (F₁'-f-g! (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))
-                                  ◃∙ F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∎)
-                                (! (!-inv-l (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))))) ⟩
-          (ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f)
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h))
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g! (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h))))
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎)
-            =↯=⟨ 1 & 2 &
-                 homotopy-naturality-=ₛ (F₁' ∘ D.comp (F.F₁ (F₁' f)))
-                                        (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁')
-                                        (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) ∘ F₁'-f-g!)
-                                        (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ⟩
-          (ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f)
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g! (D.comp g h))
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁') (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h))
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎)
-            =↯=⟨ 0 & 2 & ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∎
-                    & ! (ap2-out (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))) ⟩
-          (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-          ◃∙ ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' s)))) (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h))
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎)
-            =↯=⟨ 1 & 1 & ap2 (λ s t → F₁' (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' (D.comp s t))))) (F₁'-f-g! g) (F₁'-f-g! h) ◃∎
-                    & ap-ap2 (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁')
-                            D.comp (F₁'-f-g! g) (F₁'-f-g! h) ⟩
-          (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-          ◃∙ ap2 (λ s t → F₁' (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' (D.comp s t))))) (F₁'-f-g! g) (F₁'-f-g! h)
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎)
-            =↯=⟨ 1 & 1 & ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h)) ◃∎
-                    & ! (ap-ap2 (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁)
-                                (λ s t → F₁' (D.comp s t))
-                                (F₁'-f-g! g)
-                                (F₁'-f-g! h)) ⟩
-          (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h))
-          ◃∙ ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎) ↯∎
+        step₁₂ =
+          ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎
+            =ₛ₁⟨ 1 & 2 & ! (ap2-out (λ s t → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s t))) (F₁'-f-g! g) (F₁'-f-g! h)) ⟩
+          ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
+          ap2 (λ s t → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s t))) (F₁'-f-g! g) (F₁'-f-g! h) ◃∎
+            =ₛ₁⟨ 1 & 1 & ! (ap-ap2 (F₁' ∘ D.comp (F.F₁ (F₁' f))) D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ⟩
+          ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ◃∎
+            =ₛ⟨ 2 & 0 &
+                 ap-seq-=ₛ (F₁' ∘ D.comp (F.F₁ (F₁' f))) $
+                 =ₛ-in {s = D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)) ∎∎}
+                       {t = F₁'-f-g! (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∙
+                            F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∎}
+                       (! (!-inv-l (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))))) ⟩
+          ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g! (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎
+            =ₛ⟨ 1 & 2 &
+                homotopy-naturality-=ₛ (F₁' ∘ D.comp (F.F₁ (F₁' f)))
+                                       (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁')
+                                       (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) ∘ F₁'-f-g!)
+                                       (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ⟩
+          ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g! (D.comp g h)) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁') (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎
+            =ₛ₁⟨ 0 & 2 & ! (ap2-out (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h))) ⟩
+          ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+          ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' s)))) (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎
+            =ₛ₁⟨ 1 & 1 & ap-ap2 (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁') D.comp (F₁'-f-g! g) (F₁'-f-g! h) ⟩
+          ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+          ap2 (λ s t → F₁' (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' (D.comp s t))))) (F₁'-f-g! g) (F₁'-f-g! h) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎
+            =ₛ₁⟨ 1 & 1 &
+                 ! (ap-ap2 (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁)
+                           (λ s t → F₁' (D.comp s t))
+                           (F₁'-f-g! g)
+                           (F₁'-f-g! h)) ⟩
+          ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! f) (F₁'-f-g! (D.comp g h)) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁) (ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
+          ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎ ∎ₛ
+    F₁''-pres-comp-coh : {w x y z : D.El}
+      (f : D.Arr w x) (g : D.Arr x y) (h : D.Arr y z)
+      → F₁''-pres-comp (D.comp f g) h ◃∙
+        ap (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g) ◃∙
+        D.assoc (F₁'' f) (F₁'' g) (F₁'' h) ◃∎
+        =ₛ
+        ap F₁'' (D.assoc f g h) ◃∙
+        F₁''-pres-comp f (D.comp g h) ◃∙
+        ap (D.comp (F₁'' f)) (F₁''-pres-comp g h) ◃∎
     F₁''-pres-comp-coh {w} {x} {y} {z} f g h =
       coe-comp-coh D.comp D.assoc (F₀-f-g w) (F₀-f-g x) (F₀-f-g y) (F₀-f-g z) f g h
     pres-comp-coh : {w x y z : D.El}
       (f : D.Arr w x) (g : D.Arr x y) (h : D.Arr y z)
-      → pres-comp (D.comp f g) h ◃∙ ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ◃∙ C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
+      → pres-comp (D.comp f g) h ◃∙
+        ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ◃∙
+        C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
         =ₛ
-        ap F₁ (D.assoc f g h) ◃∙ pres-comp f (D.comp g h) ◃∙ ap (C.comp (F₁ f)) (pres-comp g h) ◃∎
-    pres-comp-coh f g h = =ₛ-in $
-      (pres-comp (D.comp f g) h ◃∙ ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ◃∙ C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎)
-        =↯=⟨ 0 & 1 & pres-comp-↯ (D.comp f g) h & idp ⟩
-      (ap F₁' (F₁''-pres-comp (D.comp f g) h)
-      ◃∙ F₁'-pres-comp (F₁'' (D.comp f g)) (F₁'' h)
-      ◃∙ ap (λ s → C.comp s (F₁ h)) (pres-comp f g)
-      ◃∙ C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎)
-        =↯=⟨ 2 & 1 & ap-seq (λ s → C.comp s (F₁ h)) (pres-comp-↯ f g)
-               & ap-seq-∙ (λ s → C.comp s (F₁ h)) (pres-comp-↯ f g) ⟩
-      (ap F₁' (F₁''-pres-comp (D.comp f g) h)
-      ◃∙ F₁'-pres-comp (F₁'' (D.comp f g)) (F₁'' h)
-      ◃∙ ap (λ s → C.comp s (F₁ h)) (ap F₁' (F₁''-pres-comp f g))
-      ◃∙ ap (λ s → C.comp s (F₁ h)) (F₁'-pres-comp (F₁'' f) (F₁'' g))
-      ◃∙ C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎)
-        =↯=⟨ 2 & 1 & ap (λ s → C.comp (F₁' s) (F₁ h)) (F₁''-pres-comp f g) ◃∎
-               & ∘-ap (λ s → C.comp s (F₁ h)) F₁' (F₁''-pres-comp f g) ⟩
-      (ap F₁' (F₁''-pres-comp (D.comp f g) h)
-      ◃∙ F₁'-pres-comp (F₁'' (D.comp f g)) (F₁'' h)
-      ◃∙ ap (λ s → C.comp (F₁' s) (F₁ h)) (F₁''-pres-comp f g)
-      ◃∙ ap (λ s → C.comp s (F₁ h)) (F₁'-pres-comp (F₁'' f) (F₁'' g))
-      ◃∙ C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎)
-        =↯=⟨ 1 & 2 & !ₛ $
-             homotopy-naturality-=ₛ (λ s → F₁' (D.comp s (F₁'' h)))
-                                    (λ s → C.comp (F₁' s) (F₁ h))
-                                    (λ s → F₁'-pres-comp s (F₁'' h))
-                                    (F₁''-pres-comp f g) ⟩
-      (ap F₁' (F₁''-pres-comp (D.comp f g) h)
-      ◃∙ ap (λ s → F₁' (D.comp s (F₁'' h))) (F₁''-pres-comp f g)
-      ◃∙ F₁'-pres-comp (D.comp (F₁'' f) (F₁'' g)) (F₁'' h)
-      ◃∙ ap (λ s → C.comp s (F₁ h)) (F₁'-pres-comp (F₁'' f) (F₁'' g))
-      ◃∙ C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎)
-        =↯=⟨ 2 & 3 & (ap F₁' (D.assoc (F₁'' f) (F₁'' g) (F₁'' h))
-                     ◃∙ F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h))
-                     ◃∙ ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎)
-               & F₁'-pres-comp-coh (F₁'' f) (F₁'' g) (F₁'' h) ⟩
-      (ap F₁' (F₁''-pres-comp (D.comp f g) h)
-      ◃∙ ap (λ s → F₁' (D.comp s (F₁'' h))) (F₁''-pres-comp f g)
-      ◃∙ ap F₁' (D.assoc (F₁'' f) (F₁'' g) (F₁'' h))
-      ◃∙ F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h))
-      ◃∙ ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎)
-        =↯=⟨ 1 & 1 & ap F₁' (ap (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g)) ◃∎
-               & ap-∘ F₁' (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g) ⟩
-      (ap F₁' (F₁''-pres-comp (D.comp f g) h)
-      ◃∙ ap F₁' (ap (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g))
-      ◃∙ ap F₁' (D.assoc (F₁'' f) (F₁'' g) (F₁'' h))
-      ◃∙ F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h))
-      ◃∙ ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎)
-        =↯=⟨ 0 & 3 & ap-seq-=ₛ F₁' (F₁''-pres-comp-coh f g h) ⟩
-      (ap F₁' (ap F₁'' (D.assoc f g h))
-      ◃∙ ap F₁' (F₁''-pres-comp f (D.comp g h))
-      ◃∙ ap F₁' (ap (D.comp (F₁'' f)) (F₁''-pres-comp g h))
-      ◃∙ F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h))
-      ◃∙ ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎)
-        =↯=⟨ 2 & 1 & ap (F₁' ∘ D.comp (F₁'' f)) (F₁''-pres-comp g h) ◃∎
-               & ∘-ap F₁' (D.comp (F₁'' f)) (F₁''-pres-comp g h) ⟩
-      (ap F₁' (ap F₁'' (D.assoc f g h))
-      ◃∙ ap F₁' (F₁''-pres-comp f (D.comp g h))
-      ◃∙ ap (F₁' ∘ D.comp (F₁'' f)) (F₁''-pres-comp g h)
-      ◃∙ F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h))
-      ◃∙ ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎)
-        =↯=⟨ 2 & 2 &
-             homotopy-naturality-=ₛ (F₁' ∘ D.comp (F₁'' f))
-                                    (C.comp (F₁ f) ∘ F₁')
-                                    (F₁'-pres-comp (F₁'' f))
-                                    (F₁''-pres-comp g h) ⟩
-      (ap F₁' (ap F₁'' (D.assoc f g h))
-      ◃∙ ap F₁' (F₁''-pres-comp f (D.comp g h))
-      ◃∙ F₁'-pres-comp (F₁'' f) (F₁'' (D.comp g h))
-      ◃∙ ap (C.comp (F₁ f) ∘ F₁') (F₁''-pres-comp g h)
-      ◃∙ ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎)
-        =↯=⟨ 1 & 2 & pres-comp f (D.comp g h) ◃∎ & idp ⟩
-      (ap F₁' (ap F₁'' (D.assoc f g h))
-      ◃∙ pres-comp f (D.comp g h)
-      ◃∙ ap (C.comp (F₁ f) ∘ F₁') (F₁''-pres-comp g h)
-      ◃∙ ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎)
-        =↯=⟨ 2 & 1 & ap (C.comp (F₁ f)) (ap F₁' (F₁''-pres-comp g h)) ◃∎
-               & ap-∘ (C.comp (F₁ f)) F₁' (F₁''-pres-comp g h) ⟩
-      (ap F₁' (ap F₁'' (D.assoc f g h))
-      ◃∙ pres-comp f (D.comp g h)
-      ◃∙ ap (C.comp (F₁ f)) (ap F₁' (F₁''-pres-comp g h))
-      ◃∙ ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎)
-        =↯=⟨ 2 & 2 & ap (C.comp (F₁ f)) (pres-comp g h) ◃∎
-               & ∙-ap-seq (C.comp (F₁ f)) (pres-comp-↯ g h) ⟩
-      (ap F₁' (ap F₁'' (D.assoc f g h))
-      ◃∙ pres-comp f (D.comp g h)
-      ◃∙ ap (C.comp (F₁ f)) (pres-comp g h) ◃∎)
-        =↯=⟨ 0 & 1 & ap F₁ (D.assoc f g h) ◃∎
-               & ∘-ap F₁' F₁'' (D.assoc f g h) ⟩
-      (ap F₁ (D.assoc f g h) ◃∙ pres-comp f (D.comp g h) ◃∙ ap (C.comp (F₁ f)) (pres-comp g h) ◃∎) ↯∎
+        ap F₁ (D.assoc f g h) ◃∙
+        pres-comp f (D.comp g h) ◃∙
+        ap (C.comp (F₁ f)) (pres-comp g h) ◃∎
+    pres-comp-coh f g h =
+      pres-comp (D.comp f g) h ◃∙
+      ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ◃∙
+      C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
+        =ₛ⟨ 0 & 1 & =ₛ-in {t = pres-comp-↯ (D.comp f g) h} idp ⟩
+      ap F₁' (F₁''-pres-comp (D.comp f g) h) ◃∙
+      F₁'-pres-comp (F₁'' (D.comp f g)) (F₁'' h) ◃∙
+      ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ◃∙
+      C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
+        =ₛ⟨ 2 & 1 & ap-seq-∙-=ₛ (λ s → C.comp s (F₁ h)) (pres-comp-↯ f g) ⟩
+      ap F₁' (F₁''-pres-comp (D.comp f g) h) ◃∙
+      F₁'-pres-comp (F₁'' (D.comp f g)) (F₁'' h) ◃∙
+      ap (λ s → C.comp s (F₁ h)) (ap F₁' (F₁''-pres-comp f g)) ◃∙
+      ap (λ s → C.comp s (F₁ h)) (F₁'-pres-comp (F₁'' f) (F₁'' g)) ◃∙
+      C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
+        =ₛ₁⟨ 2 & 1 & ∘-ap (λ s → C.comp s (F₁ h)) F₁' (F₁''-pres-comp f g) ⟩
+      ap F₁' (F₁''-pres-comp (D.comp f g) h) ◃∙
+      F₁'-pres-comp (F₁'' (D.comp f g)) (F₁'' h) ◃∙
+      ap (λ s → C.comp (F₁' s) (F₁ h)) (F₁''-pres-comp f g) ◃∙
+      ap (λ s → C.comp s (F₁ h)) (F₁'-pres-comp (F₁'' f) (F₁'' g)) ◃∙
+      C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
+        =ₛ⟨ 1 & 2 & !ₛ $
+            homotopy-naturality-=ₛ (λ s → F₁' (D.comp s (F₁'' h)))
+                                   (λ s → C.comp (F₁' s) (F₁ h))
+                                   (λ s → F₁'-pres-comp s (F₁'' h))
+                                   (F₁''-pres-comp f g) ⟩
+      ap F₁' (F₁''-pres-comp (D.comp f g) h) ◃∙
+      ap (λ s → F₁' (D.comp s (F₁'' h))) (F₁''-pres-comp f g) ◃∙
+      F₁'-pres-comp (D.comp (F₁'' f) (F₁'' g)) (F₁'' h) ◃∙
+      ap (λ s → C.comp s (F₁ h)) (F₁'-pres-comp (F₁'' f) (F₁'' g)) ◃∙
+      C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
+        =ₛ⟨ 2 & 3 & F₁'-pres-comp-coh (F₁'' f) (F₁'' g) (F₁'' h) ⟩
+      ap F₁' (F₁''-pres-comp (D.comp f g) h) ◃∙
+      ap (λ s → F₁' (D.comp s (F₁'' h))) (F₁''-pres-comp f g) ◃∙
+      ap F₁' (D.assoc (F₁'' f) (F₁'' g) (F₁'' h)) ◃∙
+      F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h)) ◃∙
+      ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎
+        =ₛ₁⟨ 1 & 1 & ap-∘ F₁' (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g) ⟩
+      ap F₁' (F₁''-pres-comp (D.comp f g) h) ◃∙
+      ap F₁' (ap (λ s → D.comp s (F₁'' h)) (F₁''-pres-comp f g)) ◃∙
+      ap F₁' (D.assoc (F₁'' f) (F₁'' g) (F₁'' h)) ◃∙
+      F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h)) ◃∙
+      ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎
+        =ₛ⟨ 0 & 3 & ap-seq-=ₛ F₁' (F₁''-pres-comp-coh f g h) ⟩
+      ap F₁' (ap F₁'' (D.assoc f g h)) ◃∙
+      ap F₁' (F₁''-pres-comp f (D.comp g h)) ◃∙
+      ap F₁' (ap (D.comp (F₁'' f)) (F₁''-pres-comp g h)) ◃∙
+      F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h)) ◃∙
+      ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎
+        =ₛ₁⟨ 2 & 1 & ∘-ap F₁' (D.comp (F₁'' f)) (F₁''-pres-comp g h) ⟩
+      ap F₁' (ap F₁'' (D.assoc f g h)) ◃∙
+      ap F₁' (F₁''-pres-comp f (D.comp g h)) ◃∙
+      ap (F₁' ∘ D.comp (F₁'' f)) (F₁''-pres-comp g h) ◃∙
+      F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h)) ◃∙
+      ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎
+        =ₛ⟨ 2 & 2 &
+            homotopy-naturality-=ₛ (F₁' ∘ D.comp (F₁'' f))
+                                   (C.comp (F₁ f) ∘ F₁')
+                                   (F₁'-pres-comp (F₁'' f))
+                                   (F₁''-pres-comp g h) ⟩
+      ap F₁' (ap F₁'' (D.assoc f g h)) ◃∙
+      ap F₁' (F₁''-pres-comp f (D.comp g h)) ◃∙
+      F₁'-pres-comp (F₁'' f) (F₁'' (D.comp g h)) ◃∙
+      ap (C.comp (F₁ f) ∘ F₁') (F₁''-pres-comp g h) ◃∙
+      ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎
+        =ₛ₁⟨ 1 & 2 & idp ⟩
+      ap F₁' (ap F₁'' (D.assoc f g h)) ◃∙
+      pres-comp f (D.comp g h) ◃∙
+      ap (C.comp (F₁ f) ∘ F₁') (F₁''-pres-comp g h) ◃∙
+      ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎
+        =ₛ₁⟨ 2 & 1 & ap-∘ (C.comp (F₁ f)) F₁' (F₁''-pres-comp g h) ⟩
+      ap F₁' (ap F₁'' (D.assoc f g h)) ◃∙
+      pres-comp f (D.comp g h) ◃∙
+      ap (C.comp (F₁ f)) (ap F₁' (F₁''-pres-comp g h)) ◃∙
+      ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎
+        =ₛ₁⟨ 2 & 2 & ∙-ap-seq (C.comp (F₁ f)) (pres-comp-↯ g h) ⟩
+      ap F₁' (ap F₁'' (D.assoc f g h)) ◃∙
+      pres-comp f (D.comp g h) ◃∙
+      ap (C.comp (F₁ f)) (pres-comp g h) ◃∎
+        =ₛ₁⟨ 0 & 1 & ∘-ap F₁' F₁'' (D.assoc f g h) ⟩
+      ap F₁ (D.assoc f g h) ◃∙
+      pres-comp f (D.comp g h) ◃∙
+      ap (C.comp (F₁ f)) (pres-comp g h) ◃∎ ∎ₛ
