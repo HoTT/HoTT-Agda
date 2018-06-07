@@ -443,15 +443,29 @@ module _ {i j} {A : Type i} {B : A → Type j} where
 
   {- Exchange -}
 
-  ▹-∙'2ᵈ : {x y z : Π A B}
-    {a a' a'' : A} {p : a == a'} {p' : a' == a''}
-    {q0 : x a == y a} {q0' : x a' == y a'}
-    {r0 : y a == z a} {r0' : y a' == z a'}
-    {q0'' : x a'' == y a''} {r0'' : y a'' == z a''}
-    (q : q0 == q0' [ (λ a → x a == y a) ↓ p ])
-    (r : r0 == r0' [ (λ a → y a == z a) ↓ p ])
-    (s : q0' == q0'' [ (λ a → x a == y a) ↓ p' ])
-    (t : r0' == r0'' [ (λ a → y a == z a) ↓ p' ])
-    → (q ∙'2ᵈ r) ▹ (s ∙'2ᵈ t) == (q ▹ s) ∙'2ᵈ (r ▹ t)
-  ▹-∙'2ᵈ {p = idp} {p' = idp} {q0} {.q0} {r0} {.r0} idp idp idp idp =
-    ap (λ u → (idp {a = q0} ∙'2 idp {a = r0}) ∙' u) (idp∙'2idp q0 r0)
+  abstract
+    ▹-∙'2ᵈ : {x y z : Π A B}
+      {a a' a'' : A} {p : a == a'} {p' : a' == a''}
+      {q0 : x a == y a} {q0' : x a' == y a'}
+      {r0 : y a == z a} {r0' : y a' == z a'}
+      {q0'' : x a'' == y a''} {r0'' : y a'' == z a''}
+      (q : q0 == q0' [ (λ a → x a == y a) ↓ p ])
+      (r : r0 == r0' [ (λ a → y a == z a) ↓ p ])
+      (s : q0' == q0'' [ (λ a → x a == y a) ↓ p' ])
+      (t : r0' == r0'' [ (λ a → y a == z a) ↓ p' ])
+      → (q ∙'2ᵈ r) ▹ (s ∙'2ᵈ t) == (q ▹ s) ∙'2ᵈ (r ▹ t)
+    ▹-∙'2ᵈ {p = idp} {p' = idp} {q0} {.q0} {r0} {.r0} idp idp idp idp =
+      ap (λ u → (idp {a = q0} ∙'2 idp {a = r0}) ∙' u) (idp∙'2idp q0 r0)
+
+    ◃-∙'2ᵈ : {x y z : Π A B}
+      {a a' a'' : A} {p : a == a'} {p' : a' == a''}
+      {q0 : x a == y a} {q0' : x a' == y a'}
+      {r0 : y a == z a} {r0' : y a' == z a'}
+      {q0'' : x a'' == y a''} {r0'' : y a'' == z a''}
+      (q : q0 == q0' [ (λ a → x a == y a) ↓ p ])
+      (r : r0 == r0' [ (λ a → y a == z a) ↓ p ])
+      (s : q0' == q0'' [ (λ a → x a == y a) ↓ p' ])
+      (t : r0' == r0'' [ (λ a → y a == z a) ↓ p' ])
+      → (q ∙'2ᵈ r) ◃ (s ∙'2ᵈ t) == (q ◃ s) ∙'2ᵈ (r ◃ t)
+    ◃-∙'2ᵈ {p = idp} {p' = idp} {q0} {.q0} {r0} {.r0} idp idp idp idp =
+      ap (_∙ (idp {a = q0} ∙'2 idp {a = r0})) (idp∙'2idp q0 r0)
