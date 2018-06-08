@@ -23,3 +23,7 @@ import homotopy.ModalWedgeExtension
 
 {- conjecture 3.5.3 in favonia's thesis -}
 import groups.Int
+
+{- cup product -}
+import homotopy.CupProduct
+{-import homotopy.CupProductCommutativity-}
