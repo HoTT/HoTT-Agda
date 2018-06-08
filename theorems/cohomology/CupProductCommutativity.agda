@@ -114,10 +114,10 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
       P'-level p y = ↓-level (P-level embase y)
 
     module _ (g : R.El) where
-      comm-emloop-embase' :
-        ap (antipodal-map ∘ cp₁₁ embase) (emloop g) ==
-        ap (λ z → cp₁₁ z embase) (emloop g)
-      comm-emloop-embase' = ↯
+      comm-emloop-embase↯ :
+        ap (antipodal-map ∘ cp₁₁ embase) (emloop g) =-=
+        ap (λ x → cp₁₁ x embase) (emloop g)
+      comm-emloop-embase↯ =
         ap (cst [ north ]) (emloop g)
           =⟪ ap-cst [ north ] (emloop g) ⟫
         idp
@@ -128,7 +128,12 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
           =⟪ ! (app=-ap-cp₁₁ g embase) ⟫
         app= (ap cp₁₁ (emloop g)) embase
           =⟪ ∘-ap (λ f → f embase) cp₁₁ (emloop g) ⟫
-        ap (λ z → cp₁₁ z embase) (emloop g) ∎∎
+        ap (λ x → cp₁₁ x embase) (emloop g) ∎∎
+
+      comm-emloop-embase' :
+        ap (antipodal-map ∘ cp₁₁ embase) (emloop g) ==
+        ap (λ x → cp₁₁ x embase) (emloop g)
+      comm-emloop-embase' = ↯ comm-emloop-embase↯
 
       abstract
         comm-emloop-emloop' : ∀ h →
@@ -147,11 +152,6 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
           comm-emloop-embase' ◃
           apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h) ∙'2ᵈ
           apd comm-embase-elim (emloop h)
-            =⟨ ap (λ w → comm-emloop-embase' ◃ apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h) ∙'2ᵈ w)
-                  (comm-embase-elim-emloop-β h) ⟩
-          comm-emloop-embase' ◃
-          apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h) ∙'2ᵈ
-          ↓-='-in' {u = idp} {v = idp} (comm-embase-emloop' h)
             =⟨ ◃-∙'2ᵈ {x = λ _ → [ north ]}
                       {y = λ y → cp₁₁ embase y}
                       {z = λ y → antipodal-map (cp₁₁ y embase)}
@@ -165,20 +165,29 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
                       comm-emloop-embase'
                       idp
                       (apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h))
-                      (↓-='-in' {u = idp} {v = idp} (comm-embase-emloop' h)) ⟩
+                      (apd comm-embase-elim (emloop h)) ⟩
           (comm-emloop-embase' ◃
            apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h)) ∙'2ᵈ
-          (idp {a = idp} ◃ ↓-='-in' {u = idp} {v = idp} (comm-embase-emloop' h))
+          (idp {a = idp} ◃ apd comm-embase-elim (emloop h))
             =⟨ ap ((comm-emloop-embase' ◃ apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h)) ∙'2ᵈ_)
-                  (idp◃ (↓-='-in' {u = idp} {v = idp} (comm-embase-emloop' h))) ⟩
+                  (idp◃ (apd comm-embase-elim (emloop h))) ⟩
           (comm-emloop-embase' ◃
            apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h)) ∙'2ᵈ
+          apd comm-embase-elim (emloop h)
+            =⟨ ap (_∙'2ᵈ apd comm-embase-elim (emloop h)) step₁ ⟩
+          ((↯ (3 -#) comm-emloop-embase↯) ◃
+           apd (λ y → app= (ap cp₁₁ (emloop g)) y) (emloop h) ▹
+           ∘-ap (λ f → f embase) cp₁₁ (emloop g)) ∙'2ᵈ
+          apd comm-embase-elim (emloop h)
+            =⟨ ap (((↯ (3 -#) comm-emloop-embase↯) ◃
+                    apd (λ y → app= (ap cp₁₁ (emloop g)) y) (emloop h) ▹
+                    ∘-ap (λ f → f embase) cp₁₁ (emloop g)) ∙'2ᵈ_)
+                  (comm-embase-elim-emloop-β h) ⟩
+          ((↯ (3 -#) comm-emloop-embase↯) ◃
+           apd (λ y → app= (ap cp₁₁ (emloop g)) y) (emloop h) ▹
+           ∘-ap (λ f → f embase) cp₁₁ (emloop g)) ∙'2ᵈ
           ↓-='-in' {u = idp} {v = idp} (comm-embase-emloop' h)
           {-
-            =⟨ ? ⟩
-          comm-emloop-embase' ◃
-          apd (app= (ap cp₁₁ (emloop g))) (emloop h) ∙'2ᵈ
-          ↓-='-in' {u = idp} {v = idp} (comm-embase-emloop' h)
             =⟨ ? ⟩
           comm-emloop-embase ◃
           apd (λ y → ap [_] (η (cp₀₁ g y))) (emloop h) ∙'2ᵈ
@@ -192,11 +201,37 @@ module cohomology.CupProductCommutativity {i} (R : CRing i) where
             =⟨ {!!} ⟩
           apd (λ y → comm-embase-elim y ∙ ap (λ x → antipodal-map (cp₁₁ y x)) (emloop g)) (emloop h) ▹
           comm-emloop-embase' =∎
-          {-
           where
-            test : (λ y → ap (λ x → cp₁₁ x y) (emloop g)) == app= (ap cp₁₁ (emloop g))
-            test = λ= (λ y → ap-∘ (λ f → f y) cp₁₁ (emloop g))
-          -}
+            step₁ : comm-emloop-embase' ◃
+                    apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h)
+                    ==
+                    (↯ (3 -#) comm-emloop-embase↯) ◃
+                    apd (λ y → app= (ap cp₁₁ (emloop g)) y) (emloop h) ▹
+                    ∘-ap (λ f → f embase) cp₁₁ (emloop g)
+            step₁ =
+              comm-emloop-embase' ◃
+              apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h)
+                =⟨ ap (λ w → w ◃ apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h))
+                      (↯-#-! comm-emloop-embase↯ 3) ⟩
+              ((↯ (3 -#) comm-emloop-embase↯) ∙
+               ∘-ap (λ f → f embase) cp₁₁ (emloop g)) ◃
+              apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h)
+                =⟨ ∙ᵈ-assoc {e₀₁ = idp} {e₁₂ = idp} {e₂₃ = emloop h}
+                            (↯ (3 -#) comm-emloop-embase↯)
+                            (∘-ap (λ f → f embase) cp₁₁ (emloop g))
+                            (apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h)) ⟩
+              (↯ (3 -#) comm-emloop-embase↯) ◃
+              ∘-ap (λ f → f embase) cp₁₁ (emloop g) ◃
+              apd (λ y → ap (λ x → cp₁₁ x y) (emloop g)) (emloop h)
+                =⟨ ap ((↯ (3 -#) comm-emloop-embase↯) ◃_) $ ! $
+                   homotopy-naturality' (λ y → app= (ap cp₁₁ (emloop g)) y)
+                                        (λ y → ap (λ x → cp₁₁ x y) (emloop g))
+                                        (λ y → ∘-ap (λ f → f y) cp₁₁ (emloop g))
+                                        (emloop h) ⟩
+              (↯ (3 -#) comm-emloop-embase↯) ◃
+              apd (λ y → app= (ap cp₁₁ (emloop g)) y) (emloop h) ▹
+              ∘-ap (λ f → f embase) cp₁₁ (emloop g) =∎
+
 
       abstract
         comm-emloop-embase : P' (emloop g) embase
