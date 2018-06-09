@@ -43,14 +43,23 @@ module PushoutRec {i j k} {d : Span {i} {j} {k}} {l} {D : Type l}
   (left* : Span.A d → D) (right* : Span.B d → D)
   (glue* : (c : Span.C d) → left* (Span.f d c) == right* (Span.g d c)) where
 
-  private
-    module M = PushoutElim left* right* (λ c → ↓-cst-in (glue* c))
+  abstract
+    private
+      module M = PushoutElim left* right* (λ c → ↓-cst-in (glue* c))
 
-  f : Pushout d → D
-  f = M.f
+    f : Pushout d → D
+    f = M.f
 
-  glue-β : (c : Span.C d) → ap f (glue c) == glue* c
-  glue-β c = apd=cst-in {f = f} (M.glue-β c)
+    left-β : ∀ a → f (left a) ↦ left* a
+    left-β a = M.left-β a
+    {-# REWRITE left-β #-}
+
+    right-β : ∀ b → f (right b) ↦ right* b
+    right-β b = M.right-β b
+    {-# REWRITE right-β #-}
+
+    glue-β : (c : Span.C d) → ap f (glue c) == glue* c
+    glue-β c = apd=cst-in {f = f} (M.glue-β c)
 
 Pushout-rec = PushoutRec.f
 

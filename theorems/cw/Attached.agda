@@ -36,12 +36,24 @@ module _ {A : Type i} {B : Type j} {C : Type k} {attaching : Attaching A B C} wh
     (spoke* : (b : B) (c : C)
       → incl* (attaching b c) == hub* b [ P ↓ spoke b c ]) where
 
-    module P = PushoutElim
-      {d = attached-span attaching} {P = P}
-      incl* hub* (uncurry spoke*)
+    abstract
+      module P = PushoutElim
+        {d = attached-span attaching} {P = P}
+        incl* hub* (uncurry spoke*)
 
-    f = P.f
-    spoke-β = curry P.glue-β
+      f : (x : Attached attaching) → P x
+      f = P.f
+
+      incl-β : ∀ a → f (incl a) ↦ incl* a
+      incl-β a = P.left-β a
+      {-# REWRITE incl-β #-}
+
+      hub-β : ∀ b → f (hub b) ↦ hub* b
+      hub-β b = P.right-β b
+      {-# REWRITE hub-β #-}
+
+      spoke-β : ∀ b c → apd f (spoke b c) == spoke* b c
+      spoke-β = curry P.glue-β
 
   open AttachedElim public using () renaming (f to Attached-elim)
 
@@ -50,12 +62,23 @@ module _ {A : Type i} {B : Type j} {C : Type k} {attaching : Attaching A B C} wh
     (hub* : (b : B) → D)
     (spoke* : (b : B) (c : C) → incl* (attaching b c) == hub* b) where
 
-    module P = PushoutRec
-      {d = attached-span attaching} {D = D}
-      incl* hub* (uncurry spoke*)
+    abstract
+      module P = PushoutRec
+        {d = attached-span attaching} {D = D}
+        incl* hub* (uncurry spoke*)
 
-    f = P.f
-    spoke-β = curry P.glue-β
+      f : Attached attaching → D
+      f = P.f
+
+      incl-β : ∀ a → f (incl a) ↦ incl* a
+      incl-β a = P.left-β a
+      {-# REWRITE incl-β #-}
+
+      hub-β : ∀ b → f (hub b) ↦ hub* b
+      hub-β b = P.right-β b
+      {-# REWRITE hub-β #-}
+
+      spoke-β : ∀ b c → ap f (spoke b c) == spoke* b c
+      spoke-β = curry P.glue-β
 
   open AttachedRec public using () renaming (f to Attached-rec)
-
