@@ -118,10 +118,20 @@ module _ {G : Group i} where
       emloop* (G.comp g₁ g₂) == emloop* g₁ ∙ᵈ emloop* g₂
       [ (λ p → embase* == embase* [ P ↓ p ]) ↓ emloop-comp g₁ g₂ ]) where
 
-    module M = EM₁Elim {{λ x → raise-level 1 (is-1-type x)}}
-                       embase* emloop* emloop-comp*
-                       (λ g₁ g₂ g₃ → prop-has-all-paths-↓ {{↓-level (↓-level (is-1-type embase))}})
-    open M public
+    private
+      module M = EM₁Elim {{λ x → raise-level 1 (is-1-type x)}}
+                        embase* emloop* emloop-comp*
+                        (λ g₁ g₂ g₃ → prop-has-all-paths-↓ {{↓-level (↓-level (is-1-type embase))}})
+    abstract
+      f : Π (EM₁ G) P
+      f = M.f
+
+      embase-β : f embase ↦ embase*
+      embase-β = M.embase-β
+      {-# REWRITE embase-β #-}
+
+      emloop-β : (g : G.El) → apd f (emloop g) == emloop* g
+      emloop-β = M.emloop-β
 
   open EM₁Level₁Elim public using () renaming (f to EM₁-level₁-elim)
 
@@ -130,10 +140,11 @@ module _ {G : Group i} where
     (embase* : P embase)
     (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ]) where
 
-    module N = EM₁Level₁Elim {{λ x → raise-level 0 (is-set x)}}
-                             embase* emloop*
-                             (λ g₁ g₂ → set-↓-has-all-paths-↓ {{is-set embase}})
-    open N public
+    private
+      module M = EM₁Level₁Elim {P = P} {{λ x → raise-level 0 (is-set x)}}
+                               embase* emloop*
+                               (λ g₁ g₂ → set-↓-has-all-paths-↓ {{is-set embase}})
+    open M public
 
   open EM₁SetElim public using () renaming (f to EM₁-set-elim)
 
