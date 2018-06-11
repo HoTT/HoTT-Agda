@@ -8,7 +8,7 @@ open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.FunCategory
 open import lib.two-semi-categories.FundamentalCategory
 
-module cohomology.CupProduct {i} (R : CRing i) where
+module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
 
   module R = CRing R
   open R using () renaming (add-group to R₊) public

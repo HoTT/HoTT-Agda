@@ -25,5 +25,5 @@ import homotopy.ModalWedgeExtension
 import groups.Int
 
 {- cup product -}
-import homotopy.CupProduct
-{-import homotopy.CupProductCommutativity-}
+import homotopy.CupProduct.OnEM.Definition
+-- import homotopy.CupProduct.OnEM.Definition -- not finished yet

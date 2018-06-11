@@ -3,9 +3,9 @@
 open import HoTT
 open import homotopy.EilenbergMacLane
 
-module cohomology.CupProductCommutativity {i} (R : CRing i) where
+module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
 
-  open import cohomology.CupProduct R
+  open import cohomology.CupProduct.OnEM.Definition R
   open CP₁₁
 
   open EMExplicit R.add-ab-group
