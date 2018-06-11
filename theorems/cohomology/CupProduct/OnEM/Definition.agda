@@ -15,20 +15,26 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
 
   open EM₁HSpaceAssoc R.add-ab-group hiding (comp-functor) renaming (mult to EM₁-mult) public
 
-  module CP₀₁ (g : R.El) where
+  module _ (g : R.El) where
+    private
+      loop' : R.El → embase' R₊ == embase
+      loop' g' = emloop (R.mult g g')
 
-    loop' : R.El → embase' R₊ == embase
-    loop' g' = emloop (R.mult g g')
+      comp' : (g₁' g₂' : R.El) → loop' (R.add g₁' g₂') == loop' g₁' ∙ loop' g₂'
+      comp' g₁' g₂' = ap emloop (R.distr-r g g₁' g₂') ∙ emloop-comp _ _
 
-    comp' : (g₁' g₂' : R.El) → loop' (R.add g₁' g₂') == loop' g₁' ∙ loop' g₂'
-    comp' g₁' g₂' = ap emloop (R.distr-r g g₁' g₂') ∙ emloop-comp _ _
+      module Rec = EM₁Level₁Rec {G = R₊} {C = EM₁ R₊} {{EM₁-level₁ R₊}} embase (group-hom loop' comp')
 
-    module Rec = EM₁Level₁Rec {G = R₊} {C = EM₁ R₊} {{EM₁-level₁ R₊}} embase (group-hom loop' comp')
+    abstract
+      cp₀₁ : EM₁ R₊ → EM₁ R₊
+      cp₀₁ = Rec.f
 
-    cp₀₁ : EM₁ R₊ → EM₁ R₊
-    cp₀₁ = Rec.f
+      cp₀₁-embase-β : cp₀₁ embase ↦ embase
+      cp₀₁-embase-β = Rec.embase-β
+      {-# REWRITE cp₀₁-embase-β #-}
 
-  open CP₀₁ public using (cp₀₁)
+      cp₀₁-emloop-β : ∀ g' → ap cp₀₁ (emloop g') == emloop (R.mult g g')
+      cp₀₁-emloop-β = Rec.emloop-β
 
   module distr-l (g₁ g₂ : R.El) where
 
@@ -53,23 +59,23 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
         ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap (EM₁-mult ∘ cp₀₁ g₁) (emloop h)) (emloop h)
           =⟨ ap-∘ EM₁-mult (cp₀₁ g₁) (emloop h) |in-ctx (λ z → ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
         ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap EM₁-mult (ap (cp₀₁ g₁) (emloop h))) (emloop h)
-          =⟨ CP₀₁.Rec.emloop-β g₁ h |in-ctx (λ z → ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap EM₁-mult z) (emloop h)) ⟩
+          =⟨ cp₀₁-emloop-β g₁ h |in-ctx (λ z → ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap EM₁-mult z) (emloop h)) ⟩
         ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap EM₁-mult (emloop (R.mult g₁ h))) (emloop h)
-          =⟨ MultRec.emloop-β (R.mult g₁ h) |in-ctx (λ z → ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
-        ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (λ= (mult-loop (R.mult g₁ h))) (emloop h)
-          =⟨ ap2-out (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (λ= (mult-loop (R.mult g₁ h))) (emloop h) ⟩
-        ap (λ (f : EM₁ R₊ → EM₁ R₊) → f embase) (λ= (mult-loop (R.mult g₁ h))) ∙ ap (cp₀₁ g₂) (emloop h)
-          =⟨ app=-β (mult-loop (R.mult g₁ h)) embase |in-ctx (λ z → z ∙ ap (cp₀₁ g₂) (emloop h)) ⟩
-        mult-loop (R.mult g₁ h) embase ∙ ap (cp₀₁ g₂) (emloop h)
+          =⟨ mult-emloop-β (R.mult g₁ h) |in-ctx (λ z → ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
+        ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (mult-loop (R.mult g₁ h)) (emloop h)
+          =⟨ ap2-out (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (mult-loop (R.mult g₁ h)) (emloop h) ⟩
+        ap (λ (f : EM₁ R₊ → EM₁ R₊) → f embase) (mult-loop (R.mult g₁ h)) ∙ ap (cp₀₁ g₂) (emloop h)
+          =⟨ app=-β (mult-loop' (R.mult g₁ h)) embase |in-ctx (λ z → z ∙ ap (cp₀₁ g₂) (emloop h)) ⟩
+        mult-loop' (R.mult g₁ h) embase ∙ ap (cp₀₁ g₂) (emloop h)
           =⟨ idp ⟩
         emloop (R.mult g₁ h) ∙ ap (cp₀₁ g₂) (emloop h)
-          =⟨ CP₀₁.Rec.emloop-β g₂ h |in-ctx (λ z → emloop (R.mult g₁ h) ∙ z) ⟩
+          =⟨ cp₀₁-emloop-β g₂ h |in-ctx (λ z → emloop (R.mult g₁ h) ∙ z) ⟩
         emloop (R.mult g₁ h) ∙ emloop (R.mult g₂ h)
           =⟨ ! (emloop-comp (R.mult g₁ h) (R.mult g₂ h)) ⟩
         emloop (R.add (R.mult g₁ h) (R.mult g₂ h))
           =⟨ ap emloop (! (R.distr-l g₁ g₂ h)) ⟩
         emloop (R.mult (R.add g₁ g₂) h)
-          =⟨ ! (CP₀₁.Rec.emloop-β (R.add g₁ g₂) h) ⟩
+          =⟨ ! (cp₀₁-emloop-β (R.add g₁ g₂) h) ⟩
         ap f (emloop h)
           =⟨ ! (∙-unit-r (ap f (emloop h))) ⟩
         ap f (emloop h) ∙ base' =∎
@@ -97,17 +103,18 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
       cp₀₁-distr-l g₁ (R.add g₂ g₃) g' ∙
       ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')
 
-  cp₀₁-distr-l-coh : (g₁ g₂ g₃ : R.El) (g' : EM₁ R₊)
-    → cp₀₁-distr-l₁ g₁ g₂ g₃ g' == cp₀₁-distr-l₂ g₁ g₂ g₃ g'
-  cp₀₁-distr-l-coh g₁ g₂ g₃ =
-    EM₁-prop-elim
-      {P = λ g' → cp₀₁-distr-l₁ g₁ g₂ g₃ g' == cp₀₁-distr-l₂ g₁ g₂ g₃ g'}
-      {{λ g' → has-level-apply (has-level-apply (EM₁-level₁ R₊) _ _) _ _}}
-      (idp
-        =⟨ ! (ap-cst embase (R.add-assoc g₁ g₂ g₃)) ⟩
-      ap (cst embase) (R.add-assoc g₁ g₂ g₃)
-        =⟨ ! (∙-unit-r (ap (cst embase) (R.add-assoc g₁ g₂ g₃))) ⟩
-      ap (cst embase) (R.add-assoc g₁ g₂ g₃) ∙ idp =∎)
+  abstract
+    cp₀₁-distr-l-coh : (g₁ g₂ g₃ : R.El) (g' : EM₁ R₊)
+      → cp₀₁-distr-l₁ g₁ g₂ g₃ g' == cp₀₁-distr-l₂ g₁ g₂ g₃ g'
+    cp₀₁-distr-l-coh g₁ g₂ g₃ =
+      EM₁-prop-elim
+        {P = λ g' → cp₀₁-distr-l₁ g₁ g₂ g₃ g' == cp₀₁-distr-l₂ g₁ g₂ g₃ g'}
+        {{λ g' → has-level-apply (has-level-apply (EM₁-level₁ R₊) _ _) _ _}}
+        (idp
+          =⟨ ! (ap-cst embase (R.add-assoc g₁ g₂ g₃)) ⟩
+        ap (cst embase) (R.add-assoc g₁ g₂ g₃)
+          =⟨ ! (∙-unit-r (ap (cst embase) (R.add-assoc g₁ g₂ g₃))) ⟩
+        ap (cst embase) (R.add-assoc g₁ g₂ g₃) ∙ idp =∎)
 
   group-to-EM₁-endos :
     TwoSemiFunctor
@@ -177,7 +184,7 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
     ; pres-comp-coh = comp-coh
     }
     -- this is *exactly* the same as
-    --   `EM1HSpaceAssoc.comp-functor`
+    --   `EM₁HSpaceAssoc.comp-functor (R.add-ab-group)`
     -- inlined but Agda chokes on this shorter definition
 
   group-to-EM₁→EM₂-op :
@@ -200,22 +207,28 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
       C-level : has-level 2 C
       C-level = Π-level (λ _ → EM-level 2)
 
-    F : TwoSemiFunctor (group-to-cat R₊) (2-type-fundamental-cat (EM₁ R₊ → EM 2) {{C-level}})
-    F =
-      ab-group-cat-to-dual R.add-ab-group –F→
-      dual-functor-map group-to-EM₁→EM₂-op –F→
-      from-double-dual (fun-cat (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))) –F→
-      fun-functor-map (EM₁ R₊) (=ₜ-to-2-type-fundamental-cat (Susp (EM₁ R₊))) –F→
-      λ=-functor (EM₁ R₊) (EM 2)
+      F : TwoSemiFunctor (group-to-cat R₊) (2-type-fundamental-cat (EM₁ R₊ → EM 2) {{C-level}})
+      F =
+        ab-group-cat-to-dual R.add-ab-group –F→
+        dual-functor-map group-to-EM₁→EM₂-op –F→
+        from-double-dual (fun-cat (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))) –F→
+        fun-functor-map (EM₁ R₊) (=ₜ-to-2-type-fundamental-cat (Susp (EM₁ R₊))) –F→
+        λ=-functor (EM₁ R₊) (EM 2)
 
-    module CP₁₁-Rec = EM₁Rec {G = R₊} {C = C} {{C-level}} F
+      module CP₁₁-Rec = EM₁Rec {G = R₊} {C = C} {{C-level}} F
 
-    cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
-    cp₁₁ = CP₁₁-Rec.f
+    abstract
+      cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
+      cp₁₁ = CP₁₁-Rec.f
 
-    cp₁₁-β : ∀ g → ap cp₁₁ (emloop g) == λ= (λ y → ap [_] (η (cp₀₁ g y)))
-    cp₁₁-β g = CP₁₁-Rec.emloop-β g -- takes a long time to check
+      cp₁₁-embase-β : cp₁₁ embase ↦ (λ _ → [ north ])
+      cp₁₁-embase-β = CP₁₁-Rec.embase-β
+      {-# REWRITE cp₁₁-embase-β #-}
 
-    app=-ap-cp₁₁ : ∀ g y → app= (ap cp₁₁ (emloop g)) y == ap [_] (η (cp₀₁ g y))
-    app=-ap-cp₁₁ g y =
-      ap (λ z → app= z y) (cp₁₁-β g) ∙ app=-β (λ x → ap [_] (η (cp₀₁ g x))) y
+      cp₁₁-emloop-β : ∀ g → ap cp₁₁ (emloop g) == λ= (λ y → ap [_] (η (cp₀₁ g y)))
+      cp₁₁-emloop-β g = CP₁₁-Rec.emloop-β g
+
+      app=-ap-cp₁₁ : ∀ g y → app= (ap cp₁₁ (emloop g)) y == ap [_] (η (cp₀₁ g y))
+      app=-ap-cp₁₁ g y =
+        ap (λ z → app= z y) (cp₁₁-emloop-β g) ∙
+        app=-β (λ x → ap [_] (η (cp₀₁ g x))) y
