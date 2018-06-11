@@ -526,7 +526,25 @@ module _ {G : Group i} where
                          F.pres-comp
                          F.pres-comp-coh
 
-    open M public
+    abstract
+      f : EM₁ G → C
+      f = M.f
+
+      embase-β : f embase ↦ F.F₀ unit
+      embase-β = M.embase-β
+      {-# REWRITE embase-β #-}
+
+      emloop-β : (g : G.El) → ap f (emloop g) == F.F₁ g
+      emloop-β = M.emloop-β
+
+      emloop-comp-path : (g₁ g₂ : G.El)
+        → ap (ap f) (emloop-comp g₁ g₂) ∙
+          ap-∙ f (emloop g₁) (emloop g₂) ∙
+          ap2 _∙_ (emloop-β g₁) (emloop-β g₂)
+          ==
+          emloop-β (G.comp g₁ g₂) ∙
+          F.pres-comp g₁ g₂
+      emloop-comp-path = M.emloop-comp-path
 
   open EM₁Rec public using () renaming (f to EM₁-rec)
 
@@ -538,7 +556,17 @@ module _ {G : Group i} where
     module M = EM₁Rec' {{raise-level 1 C-level}}
                        embase* (GroupHom.f hom*) (GroupHom.pres-comp hom*)
                        (λ g₁ g₂ g₃ → =ₛ-in (prop-has-all-paths _ _))
-    open M public
+
+    abstract
+      f : EM₁ G → C
+      f = M.f
+
+      embase-β : f embase ↦ embase*
+      embase-β = M.embase-β
+      {-# REWRITE embase-β #-}
+
+      emloop-β : (g : G.El) → ap f (emloop g) == GroupHom.f hom* g
+      emloop-β = M.emloop-β
 
   open EM₁Level₁Rec public using () renaming (f to EM₁-level₁-rec)
 
