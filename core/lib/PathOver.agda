@@ -176,12 +176,24 @@ module _ {i j k} {A : Type i} {B : Type j} (C : B → Type k) (f : A → B) wher
   ↓-ap-in : {x y : A} {p : x == y} {u : C (f x)} {v : C (f y)}
     → u == v [ C ∘ f ↓ p ]
     → u == v [ C ↓ ap f p ]
-  ↓-ap-in {p = idp} idp = idp
+  ↓-ap-in {p = idp} q = q
 
   ↓-ap-out : {x y : A} (p : x == y) {u : C (f x)} {v : C (f y)}
     → u == v [ C ↓ ap f p ]
     → u == v [ C ∘ f ↓ p ]
-  ↓-ap-out idp idp = idp
+  ↓-ap-out idp q = q
+
+  ↓-ap-in-β : {x y : A} {p : x == y} {u : C (f x)} {v : C (f y)}
+    → ∀ q → ↓-ap-in {u = u} {v = v} (↓-ap-out p q) == q
+  ↓-ap-in-β {p = idp} q = idp
+
+  ↓-ap-in-η : {x y : A} {p : x == y} {u : C (f x)} {v : C (f y)}
+    → ∀ q → ↓-ap-out p (↓-ap-in {u = u} {v = v} q) == q
+  ↓-ap-in-η {p = idp} q = idp
+
+  ↓-ap-equiv : ∀ {x y : A} {p : x == y} {u : C (f x)} {v : C (f y)}
+    → (u == v [ C ∘ f ↓ p ]) ≃ (u == v [ C ↓ ap f p ])
+  ↓-ap-equiv {p = p} = equiv ↓-ap-in (↓-ap-out p) ↓-ap-in-β ↓-ap-in-η
 
 ↓-cst-in2-ap : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   {a a' : A} {b b' : B} {c c' : C}

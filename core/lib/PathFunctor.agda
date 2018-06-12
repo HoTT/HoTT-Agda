@@ -188,6 +188,13 @@ module _ {i j} {A : Type i} {B : Type j} where
     → ap2 f p p == ap (λ x → f x x) p
   ap2-diag f idp = idp
 
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
+
+  ap-comm : {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
+    → ap (λ a → f a b₀) p ∙' ap (λ z → f a₁ z) q ==
+      ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p
+  ap-comm {a₀} {a₁} p {b₀} {b₁} idp = idp
+
 module _ {i} {A : Type i} where
 
   -- unsure where this belongs

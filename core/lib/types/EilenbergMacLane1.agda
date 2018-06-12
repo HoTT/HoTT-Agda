@@ -120,8 +120,8 @@ module _ {G : Group i} where
 
     private
       module M = EM₁Elim {{λ x → raise-level 1 (is-1-type x)}}
-                        embase* emloop* emloop-comp*
-                        (λ g₁ g₂ g₃ → prop-has-all-paths-↓ {{↓-level (↓-level (is-1-type embase))}})
+                         embase* emloop* emloop-comp*
+                         (λ g₁ g₂ g₃ → prop-has-all-paths-↓ {{↓-level (↓-level (is-1-type embase))}})
     abstract
       f : Π (EM₁ G) P
       f = M.f
