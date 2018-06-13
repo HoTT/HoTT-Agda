@@ -12,7 +12,7 @@ module homotopy.EilenbergMacLane where
 
 -- EM(G,n) when G is π₁(A,a₀)
 module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
-  {{_ : has-level 1 (de⊙ X)}} (H-X : HSS X) where
+  {{X-level : has-level 1 (de⊙ X)}} (H-X : HSS X) where
 
   private
     A = de⊙ X
@@ -26,8 +26,8 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
     EM = de⊙ (⊙EM n)
 
   EM-level : (n : ℕ) → has-level ⟨ n ⟩ (EM n)
-  EM-level O = ⟨⟩
-  EM-level (S n) = ⟨⟩
+  EM-level O = has-level-apply X-level _ _
+  EM-level (S n) = Trunc-level
 
   instance
     EM-conn : (n : ℕ) → is-connected ⟨ n ⟩ (EM (S n))

@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Base
+open import lib.PathFunctor
 open import lib.PathGroupoid
 open import lib.PathOver
 
@@ -409,13 +410,55 @@ infixr 80 _⊡v_ _⊡v'_ _⊡h_ _⊡h'_
 infixr 80 _∙v⊡_ _∙h⊡_
 infixl 85 _⊡v∙_ _⊡h∙_
 
-horiz-degen-path-⊡h : ∀ {i} {A : Type i}
-  {a a' : A} {p q r : a == a'}
-  (sq₁ : Square p idp idp q)
-  (sq₂ : Square q idp idp r)
-  → horiz-degen-path (sq₁ ⊡h sq₂) ==
-    horiz-degen-path sq₁ ∙ horiz-degen-path sq₂
-horiz-degen-path-⊡h {p = idp} {q = .idp} ids sq₂ = idp
+module _ {i} {A : Type i} where
+
+  horiz-degen-path-⊡h : {a a' : A} {p q r : a == a'}
+    (sq₁ : Square p idp idp q)
+    (sq₂ : Square q idp idp r)
+    → horiz-degen-path (sq₁ ⊡h sq₂) ==
+      horiz-degen-path sq₁ ∙ horiz-degen-path sq₂
+  horiz-degen-path-⊡h {p = idp} {q = .idp} ids sq₂ = idp
+
+  vert-degen-square-⊡v∙ : {a a' : A} {p q r : a == a'}
+    → (s : p == q) (t : q == r)
+    → vert-degen-square s ⊡v∙ t == vert-degen-square (s ∙ t)
+  vert-degen-square-⊡v∙ idp idp = idp
+
+  vert-degen-square-∙v⊡ : {a a' : A} {p q r : a == a'}
+    → (s : p == q) (t : q == r)
+    → s ∙v⊡ vert-degen-square t == vert-degen-square (s ∙ t)
+  vert-degen-square-∙v⊡ idp idp = idp
+
+  vert-degen-square-⊡h : {a a' a'' : A}
+    {p p' : a == a'} {q q' : a' == a''}
+    (s : p == p') (t : q == q')
+    → vert-degen-square s ⊡h vert-degen-square t ==
+      vert-degen-square (ap2 _∙_ s t)
+  vert-degen-square-⊡h {p = idp} idp idp = idp
+
+module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
+
+  ↓-='-square-comp' : {x y z : A} {p : x == y} {q : y == z}
+    {u : f x == g x} {v : f y == g y} {w : f z == g z}
+    → Square u (ap f p) (ap g p) v
+    → Square v (ap f q) (ap g q) w
+    → Square u (ap f (p ∙ q)) (ap g (p ∙ q)) w
+  ↓-='-square-comp' {p = p} {q = q} sq₁ sq₂ =
+    ap-∙ f p q ∙v⊡ (sq₁ ⊡h sq₂) ⊡v∙ ∙-ap g p q
+
+  ↓-='-square-comp'=↓-='-square-comp : {x y z : A} {p : x == y} {q : y == z}
+    {u : f x == g x} {v : f y == g y} {w : f z == g z}
+    → (sq₁ : Square u (ap f p) (ap g p) v)
+    → (sq₂ : Square v (ap f q) (ap g q) w)
+    → ↓-='-square-comp' sq₁ sq₂ == ↓-='-square-comp sq₁ sq₂
+  ↓-='-square-comp'=↓-='-square-comp {p = idp} {q = idp} sq₁ sq₂ =
+    ↓-='-square-comp' sq₁ sq₂
+      =⟨ idp ⟩
+    sq₁ ⊡h sq₂
+      =⟨ ! (horiz-degen-square-β (sq₁ ⊡h sq₂)) ⟩
+    horiz-degen-square (horiz-degen-path (sq₁ ⊡h sq₂))
+      =⟨ ap horiz-degen-square (horiz-degen-path-⊡h sq₁ sq₂) ⟩
+    horiz-degen-square (horiz-degen-path sq₁ ∙ horiz-degen-path sq₂) =∎
 
 module _ {i} {A : Type i} where
   !□h : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
