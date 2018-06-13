@@ -239,6 +239,23 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
     → u == v [ (λ z → f z == g z) ↓ p ]
   ↓-='-from-square {p = idp} sq = horiz-degen-path sq
 
+  ↓-='-square-comp : {x y z : A} {p : x == y} {q : y == z}
+    {u : f x == g x} {v : f y == g y} {w : f z == g z}
+    → Square u (ap f p) (ap g p) v
+    → Square v (ap f q) (ap g q) w
+    → Square u (ap f (p ∙ q)) (ap g (p ∙ q)) w
+  ↓-='-square-comp {p = idp} {q = idp} sq₁ sq₂ =
+    horiz-degen-square (horiz-degen-path sq₁ ∙ horiz-degen-path sq₂)
+
+  ↓-='-from-square-comp : {x y z : A} {p : x == y} {q : y == z}
+    {u : f x == g x} {v : f y == g y} {w : f z == g z}
+    (sq₁ : Square u (ap f p) (ap g p) v)
+    (sq₂ : Square v (ap f q) (ap g q) w)
+    → ↓-='-from-square (↓-='-square-comp sq₁ sq₂) ==
+      ↓-='-from-square sq₁ ∙ᵈ ↓-='-from-square sq₂
+  ↓-='-from-square-comp {p = idp} {q = idp} sq₁ sq₂ =
+    horiz-degen-path-β _
+
 module _  {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
 
   ↓-cst=app-from-square : {x y : A} {p : x == y}
@@ -391,6 +408,14 @@ infixr 80 _⊡v_ _⊡v'_ _⊡h_ _⊡h'_
 
 infixr 80 _∙v⊡_ _∙h⊡_
 infixl 85 _⊡v∙_ _⊡h∙_
+
+horiz-degen-path-⊡h : ∀ {i} {A : Type i}
+  {a a' : A} {p q r : a == a'}
+  (sq₁ : Square p idp idp q)
+  (sq₂ : Square q idp idp r)
+  → horiz-degen-path (sq₁ ⊡h sq₂) ==
+    horiz-degen-path sq₁ ∙ horiz-degen-path sq₂
+horiz-degen-path-⊡h {p = idp} {q = .idp} ids sq₂ = idp
 
 module _ {i} {A : Type i} where
   !□h : {a₀₀ a₀₁ a₁₀ a₁₁ : A}

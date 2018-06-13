@@ -214,64 +214,6 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
       → (u ∙ ap g p) == (ap f p ∙' v)
     ↓-='-out' {p = idp} q = (∙-unit-r _) ∙ q ∙ ! (∙'-unit-l _)
 
-    -- TODO: better name
-    ↓-='-in'-∙ : ∀ {x y z : A} {p : x == y} {p' : y == z}
-      (u : f x == g x) (v : f y == g y) (w : f z == g z)
-      → u ∙ ap g p == ap f p ∙' v
-      → v ∙ ap g p' == ap f p' ∙' w
-      → u ∙ ap g (p ∙ p') == ap f (p ∙ p') ∙' w
-    ↓-='-in'-∙ {p = idp} {p' = idp} u v w q q' =
-      (q ∙ ∙'-unit-l v) ∙ ! (∙-unit-r v) ∙ q'
-    {-
-    ↓-='-in'-∙ {p = p} {p' = p'} u v w q q' =
-      ap (u ∙_) (ap-∙ g p p') ∙
-      ! (∙-assoc u (ap g p) (ap g p')) ∙
-      ap (_∙ ap g p') (q ∙ ∙'=∙ (ap f p) v) ∙
-      ∙-assoc (ap f p) v (ap g p') ∙
-      ap (ap f p ∙_) q' ∙
-      ! (∙-∙'-assoc (ap f p) (ap f p') w) ∙
-      ap (_∙' w) (∙-ap f p p')
-    -}
-
-    -- TODO: better name
-    ↓-='-in'-pres-comp : ∀ {x y z : A} {p : x == y} {p' : y == z}
-      {u : f x == g x} {v : f y == g y} {w : f z == g z}
-      (q : u ∙ ap g p == ap f p ∙' v) (q' : v ∙ ap g p' == ap f p' ∙' w)
-      → ↓-='-in' {u = u} {v = w} (↓-='-in'-∙ u v w q q') ==
-        ↓-='-in' {u = u} {v = v} q ∙ᵈ ↓-='-in' {u = v} {v = w} q'
-    ↓-='-in'-pres-comp {p = idp} {p' = idp} {u} {v} {w} q q' =
-      -- ! (∙-unit-r u) ∙ ↓-='-in'-∙ u v w q q' ∙ ∙'-unit-l w
-      --   =⟨ ap (λ s → ! (∙-unit-r u) ∙ s ∙ ∙'-unit-l w) h ⟩
-      ! (∙-unit-r u) ∙ ((q ∙ ∙'-unit-l v) ∙ ! (∙-unit-r v) ∙ q') ∙ ∙'-unit-l w
-        =⟨ ap (! (∙-unit-r u) ∙_) (∙-assoc (q ∙ ∙'-unit-l v) (! (∙-unit-r v) ∙ q') (∙'-unit-l w)) ⟩
-      ! (∙-unit-r u) ∙ (q ∙ ∙'-unit-l v) ∙ (! (∙-unit-r v) ∙ q') ∙ ∙'-unit-l w
-        =⟨ ! (∙-assoc (! (∙-unit-r u)) (q ∙ ∙'-unit-l v) ((! (∙-unit-r v) ∙ q') ∙ ∙'-unit-l w)) ⟩
-      (! (∙-unit-r u) ∙ q ∙ ∙'-unit-l v) ∙ (! (∙-unit-r v) ∙ q') ∙ ∙'-unit-l w
-        =⟨ ap ((! (∙-unit-r u) ∙ q ∙ ∙'-unit-l v) ∙_) (∙-assoc (! (∙-unit-r v)) q' (∙'-unit-l w)) ⟩
-      (! (∙-unit-r u) ∙ q ∙ ∙'-unit-l v) ∙ ! (∙-unit-r v) ∙ q' ∙ ∙'-unit-l w =∎
-      -- where
-      -- h : ↓-='-in'-∙ u v w q q' == q ∙ ∙'-unit-l v ∙ ! (∙-unit-r v) ∙ q'
-      -- h =
-      --   {!!}
-
-module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
-
-  {- A pattern that proved useful when using the elimination principle of EM₁ to construct a
-    (dependent) path -}
-  abstract
-    ↓-='-in'-weird : ∀ {x y z : A} {p : x == y} {p' : y == z} {p'' : x == z}
-      (p-comp : p'' == p ∙ p')
-      {u : f x == g x} {v : f y == g y} {w : f z == g z}
-      (q : u ∙ ap g p == ap f p ∙' v) (q' : v ∙ ap g p' == ap f p' ∙' w)
-      (q'' : u ∙ ap g p'' == ap f p'' ∙' w)
-      → q'' ∙ ap (λ z → ap f z ∙' w) p-comp ==
-        ap (λ z → u ∙ ap g z) p-comp ∙' ↓-='-in'-∙ {p = p} {p' = p'} u v w q q'
-      → ↓-='-in' {u = u} {v = w} q'' ==
-        ↓-='-in' {p = p} {u = u} {v = v} q ∙ᵈ ↓-='-in' {p = p'} {u = v} {v = w} q'
-          [ (λ p → u == w [ (λ x → f x == g x) ↓ p ]) ↓ p-comp ]
-    ↓-='-in'-weird p-comp q q' q'' e =
-      ap↓ ↓-='-in' (↓-='-in' e) ▹ ↓-='-in'-pres-comp {f = f} {g = g} q q'
-
 {- Identity type where the type is dependent -}
 
 module _ {i j} {A : Type i} {B : A → Type j} {f g : Π A B} where
