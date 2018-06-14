@@ -16,3 +16,7 @@ module index2stage2 where
 
 {- isomorphisms between different kinds of cohomology groups for finite CWs. -}
 import cw.cohomology.AxiomaticIsoCellular
+
+{- cup product -}
+import cohomology.CupProduct.OnEM.Definition
+-- import cohomology.CupProduct.OnEM.Definition -- not finished yet
