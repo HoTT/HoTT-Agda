@@ -222,10 +222,10 @@ module _ {G : Group i} where
         e₅₃ = ap (λ l → emloop g₁ ∙ l) (emloop-comp g₂ g₃)
 
         φ : s₀ == s₃
-        φ = ↯ e₀₁ ◃∙ e₁₂ ◃∙ e₂₃ ◃∎
+        φ = ↯ (e₀₁ ◃∙ e₁₂ ◃∙ e₂₃ ◃∎)
 
         ψ : s₀ == s₃
-        ψ = ↯ e₀₄ ◃∙ e₄₅ ◃∙ e₅₃ ◃∎
+        ψ = ↯ (e₀₄ ◃∙ e₄₅ ◃∙ e₅₃ ◃∎)
 
         φ=ψ : φ == ψ
         φ=ψ = =ₛ-out (emloop-coh g₁ g₂ g₃)
@@ -267,10 +267,10 @@ module _ {G : Group i} where
         e₅₃* = ap (λ l → emloop* g₁ ∙ l) (emloop-comp* g₂ g₃)
 
         φ* : s₀* == s₃*
-        φ* = ↯ e₀₁* ◃∙ e₁₂* ◃∙ e₂₃* ◃∎
+        φ* = ↯ (e₀₁* ◃∙ e₁₂* ◃∙ e₂₃* ◃∎)
 
         ψ* : s₀* == s₃*
-        ψ* = ↯ e₀₄* ◃∙ e₄₅* ◃∙ e₅₃* ◃∎
+        ψ* = ↯ (e₀₄* ◃∙ e₄₅* ◃∙ e₅₃* ◃∎)
 
         φ*=ψ* : φ* == ψ*
         φ*=ψ* = =ₛ-out (emloop-coh* g₁ g₂ g₃)

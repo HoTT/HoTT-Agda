@@ -239,7 +239,7 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
         ap [_] (η (cp₀₁ g y)) ∎∎
 
       app=-ap-cp₁₁ : ∀ g y → app= (ap cp₁₁ (emloop g)) y == ap [_] (η (cp₀₁ g y))
-      app=-ap-cp₁₁ g y = ↯ app=-ap-cp₁₁-seq g y
+      app=-ap-cp₁₁ g y = ↯ (app=-ap-cp₁₁-seq g y)
 
       app=-ap-cp₁₁-coh-seq₁ : ∀ g₁ g₂ y →
         app= (ap cp₁₁ (emloop (R.add g₁ g₂))) y =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))
@@ -271,7 +271,7 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
       ap-cp₁₁-seq g y = ap-∘ (λ f → f y) cp₁₁ (emloop g) ◃∙ app=-ap-cp₁₁-seq g y
 
       ap-cp₁₁ : ∀ g y → ap (λ x → cp₁₁ x y) (emloop g) == ap [_] (η (cp₀₁ g y))
-      ap-cp₁₁ g y = ↯ ap-cp₁₁-seq g y
+      ap-cp₁₁ g y = ↯ (ap-cp₁₁-seq g y)
 
       ap-cp₁₁-coh-seq₁ : ∀ g₁ g₂ y →
         ap (λ x → cp₁₁ x y) (emloop (R.add g₁ g₂)) =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))

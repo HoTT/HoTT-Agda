@@ -98,7 +98,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       (f : D.Arr (F.F₀ (F₀ x)) (F.F₀ (F₀ y)))
       (g : D.Arr (F.F₀ (F₀ y)) (F.F₀ (F₀ z)))
       → F₁' (D.comp f g) == C.comp (F₁' f) (F₁' g)
-    F₁'-pres-comp f g = ↯ F₁'-pres-comp-↯ f g
+    F₁'-pres-comp f g = ↯ (F₁'-pres-comp-↯ f g)
     pres-comp-↯ : {x y z : D.El} (f : D.Arr x y) (g : D.Arr y z)
       → F₁ (D.comp f g) =-= C.comp (F₁ f) (F₁ g)
     pres-comp-↯ {x} {y} {z} f g =
@@ -109,7 +109,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       C.comp (F₁ f) (F₁ g) ∎∎
     pres-comp : {x y z : D.El} (f : D.Arr x y) (g : D.Arr y z)
       → F₁ (D.comp f g) == C.comp (F₁ f) (F₁ g)
-    pres-comp f g = ↯ pres-comp-↯ f g
+    pres-comp f g = ↯ (pres-comp-↯ f g)
     F₁'-pres-comp-coh : {w x y z : D.El}
       (f : D.Arr (F.F₀ (F₀ w)) (F.F₀ (F₀ x)))
       (g : D.Arr (F.F₀ (F₀ x)) (F.F₀ (F₀ y)))
