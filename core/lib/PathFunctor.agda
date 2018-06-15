@@ -154,6 +154,18 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) wher
     → ap2 p (idp {a = w}) == ap (λ z → f z w) p
   ap2-idp-r idp = idp
 
+  ap2-∙ : {a a' a'' : A} {b b' b'' : B}
+    (p : a == a') (p' : a' == a'')
+    (q : b == b') (q' : b' == b'')
+    → ap2 (p ∙ p') (q ∙ q') == ap2 p q ∙ ap2 p' q'
+  ap2-∙ idp p' idp q' = idp
+
+  ∙-ap2 : {a a' a'' : A} {b b' b'' : B}
+    (p : a == a') (p' : a' == a'')
+    (q : b == b') (q' : b' == b'')
+    → ap2 p q ∙ ap2 p' q' == ap2 (p ∙ p') (q ∙ q')
+  ∙-ap2 idp p' idp q' = idp
+
 {- ap2 lemmas -}
 module _ {i j} {A : Type i} {B : Type j} where
 

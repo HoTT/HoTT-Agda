@@ -36,8 +36,8 @@ of steps from the beginning or the end:
 
 infixr 80 _◃∙_
 data PathSeq {i} {A : Type i} : A → A → Type i where
-  _◃∙_ : {a a' a'' : A} → a == a' → PathSeq a' a'' → PathSeq a a''
   [] : {a : A} → PathSeq a a
+  _◃∙_ : {a a' a'' : A} (p : a == a') (s : PathSeq a' a'') → PathSeq a a''
 
 infix 30 _=-=_
 _=-=_ = PathSeq
@@ -63,7 +63,7 @@ module _ {i} {A : Type i} where
   ↯ : {a a' : A} (s : a =-= a') → a == a'
   ↯ [] = idp
   ↯ (p ◃∙ []) = p
-  ↯ (p ◃∙ p' ◃∙ s) = p ∙ ↯ (p' ◃∙ s)
+  ↯ (p ◃∙ s@(_ ◃∙ _)) = p ∙ ↯ s
 
   {- concatenation -}
   infixr 80 _∙∙_
@@ -101,9 +101,9 @@ module _ {i} {A : Type i} where
   ↯-∙∙ [] t = idp
   ↯-∙∙ (p ◃∙ []) [] = ! (∙-unit-r p)
   ↯-∙∙ (p ◃∙ []) (p' ◃∙ t) = idp
-  ↯-∙∙ (p ◃∙ p' ◃∙ s) t =
-    ap (λ y → p ∙ y) (↯-∙∙ (p' ◃∙ s) t) ∙
-    ! (∙-assoc p (↯ (p' ◃∙ s)) (↯ t))
+  ↯-∙∙ (p ◃∙ s@(_ ◃∙ _)) t =
+    ap (λ y → p ∙ y) (↯-∙∙ s t) ∙
+    ! (∙-assoc p (↯ s) (↯ t))
 
   infix 30 _=↯=_
   _=↯=_ : {a a' : A} → a =-= a' → a =-= a' → Type i
@@ -186,12 +186,12 @@ module _ {i} {A : Type i} where
     last1 : {a a' : A} (s : a =-= a') → A
     last1 {a = a} [] = a
     last1 {a = a} (p ◃∙ []) = a
-    last1 (p ◃∙ p' ◃∙ s) = last1 (p' ◃∙ s)
+    last1 (p ◃∙ s@(_ ◃∙ _)) = last1 s
 
     strip : {a a' : A} (s : a =-= a') → a =-= last1 s
     strip [] = []
     strip (p ◃∙ []) = []
-    strip (p ◃∙ p' ◃∙ s) = p ◃∙ strip (p' ◃∙ s)
+    strip (p ◃∙ s@(_ ◃∙ _)) = p ◃∙ strip s
 
     point-from-end : (n : ℕ) {a a' : A} (s : a =-= a') → A
     point-from-end O {a} {a'} s = a'
@@ -227,8 +227,8 @@ module _ {i} {A : Type i} where
       → Σ A (λ a'' → (a =-= a'') × (a'' == a'))
     split {a = a} [] = (a , ([] , idp))
     split {a = a} (p ◃∙ []) = (a , ([] , p))
-    split (p ◃∙ p' ◃∙ s) =
-      let (a'' , (t , q)) = split (p' ◃∙ s)
+    split (p ◃∙ s@(_ ◃∙ _)) =
+      let (a'' , (t , q)) = split s
       in (a'' , (p ◃∙ t) , q)
 
     point-from-end' : (n : ℕ) {a a' : A} (s : a =-= a') → A
@@ -485,11 +485,11 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
       → ap f (↯ s) == ↯ (ap-seq s)
     ap-seq-∙-= [] = idp
     ap-seq-∙-= (p ◃∙ []) = idp
-    ap-seq-∙-= (p ◃∙ p' ◃∙ s) =
-      ap-∙ f p (↯ (p' ◃∙ s)) ∙
-      ap (λ s → ap f p ∙ s) (ap-seq-∙-= (p' ◃∙ s))
+    ap-seq-∙-= (p ◃∙ s@(_ ◃∙ _)) =
+      ap-∙ f p (↯ s) ∙
+      ap (λ u → ap f p ∙ u) (ap-seq-∙-= s)
 
-  ap-seq-∙ : {a a' : A} → (s : a =-= a')
+  ap-seq-∙ : {a a' : A} (s : a =-= a')
     → (ap f (↯ s) ◃∎) =ₛ ap-seq s
   ap-seq-∙ s = =ₛ-in (ap-seq-∙-= s)
 
@@ -508,6 +508,96 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
     ap f (↯ t) ◃∎
       =ₛ⟨ ap-seq-∙ t ⟩
     ap-seq t ∎ₛ
+
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
+
+  ap2-seq : {a a' : A} {b b' : B} → a =-= a' → b =-= b' → f a b =-= f a' b'
+  ap2-seq [] [] = []
+  ap2-seq {a = a} [] t@(_ ◃∙ _) = ap-seq (f a) t
+  ap2-seq {b = b} s@(_ ◃∙ _) [] = ap-seq (λ a → f a b) s
+  ap2-seq (p ◃∙ s) (q ◃∙ t) = ap2 f p q ◃∙ ap2-seq s t
+
+  private
+    ap2-seq-∙-= : {a a' : A} {b b' : B}
+      (s : a =-= a') (t : b =-= b')
+      → ap2 f (↯ s) (↯ t) == ↯ (ap2-seq s t)
+    ap2-seq-∙-= [] [] = idp
+    ap2-seq-∙-= {a = a} [] t@(_ ◃∙ _) =
+      ap2 f idp (↯ t)
+        =⟨ ap2-idp-l f (↯ t) ⟩
+      ap (f a) (↯ t)
+        =⟨ =ₛ-out (ap-seq-∙ (f a) t) ⟩
+      ↯ (ap-seq (f a) t) =∎
+    ap2-seq-∙-= {b = b} s@(_ ◃∙ _) [] =
+      ap2 f (↯ s) idp
+        =⟨ ap2-idp-r f (↯ s) ⟩
+      ap (λ a → f a b) (↯ s)
+        =⟨ =ₛ-out (ap-seq-∙ (λ a → f a b) s ) ⟩
+      ↯ (ap-seq (λ a → f a b) s) =∎
+    ap2-seq-∙-= (p ◃∙ []) (q ◃∙ []) = idp
+    ap2-seq-∙-= {a' = a'} (p ◃∙ []) (q ◃∙ t@(_ ◃∙ _)) =
+      ap2 f p (q ∙ ↯ t)
+        =⟨ ap (λ r → ap2 f r (q ∙ ↯ t)) (! (∙-unit-r p)) ⟩
+      ap2 f (p ∙ idp) (q ∙ ↯ t)
+        =⟨ ap2-∙ f p idp q (↯ t) ⟩
+      ap2 f p q ∙ ap2 f idp (↯ t)
+        =⟨ ap (ap2 f p q ∙_) (ap2-idp-l f (↯ t)) ⟩
+      ap2 f p q ∙ ap (f a') (↯ t)
+        =⟨ ap (ap2 f p q ∙_) (=ₛ-out (ap-seq-∙ (f a') t)) ⟩
+      ap2 f p q ∙ ↯ (ap-seq (f a') t) =∎
+    ap2-seq-∙-= {b' = b'} (p ◃∙ s@(_ ◃∙ _)) (q ◃∙ []) =
+      ap2 f (p ∙ ↯ s) q
+        =⟨ ap (ap2 f (p ∙ ↯ s)) (! (∙-unit-r q)) ⟩
+      ap2 f (p ∙ ↯ s) (q ∙ idp)
+        =⟨ ap2-∙ f p (↯ s) q idp ⟩
+      ap2 f p q ∙ ap2 f (↯ s) idp
+        =⟨ ap (ap2 f p q ∙_) (ap2-idp-r f (↯ s)) ⟩
+      ap2 f p q ∙ ap (λ a → f a b') (↯ s)
+        =⟨ ap (ap2 f p q ∙_) (=ₛ-out (ap-seq-∙ (λ a → f a b') s)) ⟩
+      ap2 f p q ∙ ↯ (ap-seq (λ a → f a b') s) =∎
+    ap2-seq-∙-= (p ◃∙ s@(_ ◃∙ _)) (q ◃∙ t@(_ ◃∙ _)) =
+      ap2 f (p ∙ ↯ s) (q ∙ ↯ t)
+        =⟨ ap2-∙ f p (↯ s) q (↯ t) ⟩
+      ap2 f p q ∙ ap2 f (↯ s) (↯ t)
+        =⟨ ap (ap2 f p q ∙_) (ap2-seq-∙-= s t) ⟩
+      ap2 f p q ∙ ↯ (ap2-seq s t) =∎
+
+  ap2-seq-∙ : {a a' : A} {b b' : B}
+    (s : a =-= a') (t : b =-= b')
+    → ap2 f (↯ s) (↯ t) ◃∎ =ₛ ap2-seq s t
+  ap2-seq-∙ s t = =ₛ-in (ap2-seq-∙-= s t)
+
+  ∙-ap2-seq : {a a' : A} {b b' : B}
+    (s : a =-= a') (t : b =-= b')
+    → ap2-seq s t =ₛ ap2 f (↯ s) (↯ t) ◃∎
+  ∙-ap2-seq s t = !ₛ (ap2-seq-∙ s t)
+
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B) where
+
+  module _ {a a' a'' : A} (p : a == a') (p' : a' == a'') where
+    ap-∘-∙-coh-seq₁ :
+      ap (g ∘ f) (p ∙ p') =-= ap g (ap f p) ∙ ap g (ap f p')
+    ap-∘-∙-coh-seq₁ =
+      ap (g ∘ f) (p ∙ p')
+        =⟪ ap-∙ (g ∘ f) p p' ⟫
+      ap (g ∘ f) p ∙ ap (g ∘ f) p'
+        =⟪ ap2 _∙_ (ap-∘ g f p) (ap-∘ g f p') ⟫
+      ap g (ap f p) ∙ ap g (ap f p') ∎∎
+
+    ap-∘-∙-coh-seq₂ :
+      ap (g ∘ f) (p ∙ p') =-= ap g (ap f p) ∙ ap g (ap f p')
+    ap-∘-∙-coh-seq₂ =
+      ap (g ∘ f) (p ∙ p')
+        =⟪ ap-∘ g f (p ∙ p') ⟫
+      ap g (ap f (p ∙ p'))
+        =⟪ ap (ap g) (ap-∙ f p p') ⟫
+      ap g (ap f p ∙ ap f p')
+        =⟪ ap-∙ g (ap f p) (ap f p') ⟫
+      ap g (ap f p) ∙ ap g (ap f p') ∎∎
+
+  ap-∘-∙-coh :  {a a' a'' : A} (p : a == a') (p' : a' == a'')
+    → ap-∘-∙-coh-seq₁ p p' =ₛ ap-∘-∙-coh-seq₂ p p'
+  ap-∘-∙-coh idp idp = =ₛ-in idp
 
 apd= : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
        (p : f ∼ g) {a b : A} (q : a == b)

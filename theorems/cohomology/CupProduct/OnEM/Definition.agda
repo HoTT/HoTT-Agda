@@ -268,7 +268,12 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
       app=-ap-cp₁₁-coh g₁ g₂ y = {!!}
 
       ap-cp₁₁-seq : ∀ g y → ap (λ x → cp₁₁ x y) (emloop g) =-= ap [_] (η (cp₀₁ g y))
-      ap-cp₁₁-seq g y = ap-∘ (λ f → f y) cp₁₁ (emloop g) ◃∙ app=-ap-cp₁₁-seq g y
+      ap-cp₁₁-seq g y =
+        ap (λ x → cp₁₁ x y) (emloop g)
+          =⟪ ap-∘ (λ f → f y) cp₁₁ (emloop g) ⟫
+        ap (λ f → f y) (ap cp₁₁ (emloop g))
+          =⟪ app=-ap-cp₁₁ g y ⟫
+        ap [_] (η (cp₀₁ g y)) ∎∎
 
       ap-cp₁₁ : ∀ g y → ap (λ x → cp₁₁ x y) (emloop g) == ap [_] (η (cp₀₁ g y))
       ap-cp₁₁ g y = ↯ (ap-cp₁₁-seq g y)
@@ -295,4 +300,33 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
 
       ap-cp₁₁-coh : ∀ g₁ g₂ y →
         ap-cp₁₁-coh-seq₁ g₁ g₂ y =ₛ ap-cp₁₁-coh-seq₂ g₁ g₂ y
-      ap-cp₁₁-coh g₁ g₂ y = {!!}
+      ap-cp₁₁-coh g₁ g₂ y =
+        ap (ap (λ x → cp₁₁ x y)) (emloop-comp g₁ g₂) ◃∙
+        ap-∙ (λ x → cp₁₁ x y) (emloop g₁) (emloop g₂) ◃∙
+        ap2 _∙_ (ap-cp₁₁ g₁ y) (ap-cp₁₁ g₂ y) ◃∎
+          =ₛ⟨ 2 & 1 & ap2-seq-∙ _∙_ (ap-cp₁₁-seq g₁ y) (ap-cp₁₁-seq g₂ y) ⟩
+        ap (ap (λ x → cp₁₁ x y)) (emloop-comp g₁ g₂) ◃∙
+        ap-∙ (λ x → cp₁₁ x y) (emloop g₁) (emloop g₂) ◃∙
+        ap2 _∙_ (ap-∘ (λ f → f y) cp₁₁ (emloop g₁)) (ap-∘ (λ f → f y) cp₁₁ (emloop g₂)) ◃∙
+        ap2 _∙_ (app=-ap-cp₁₁ g₁ y) (app=-ap-cp₁₁ g₂ y) ◃∎
+          =ₛ⟨ 1 & 2 & ap-∘-∙-coh (λ f → f y) cp₁₁ (emloop g₁) (emloop g₂) ⟩
+        ap (ap (λ x → cp₁₁ x y)) (emloop-comp g₁ g₂) ◃∙
+        ap-∘ (λ f → f y) cp₁₁ (emloop g₁ ∙ emloop g₂) ◃∙
+        ap (ap (λ f → f y)) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap-∙ (λ f → f y) (ap cp₁₁ (emloop g₁)) (ap cp₁₁ (emloop g₂)) ◃∙
+        ap2 _∙_ (app=-ap-cp₁₁ g₁ y) (app=-ap-cp₁₁ g₂ y) ◃∎
+          =ₛ⟨ 0 & 2 & homotopy-naturality-=ₛ {A = embase' R₊ == embase} {B = cp₁₁ embase y == cp₁₁ embase y}
+                                             (ap (λ x → cp₁₁ x y)) (λ p → app= (ap cp₁₁ p) y)
+                                             (ap-∘ (λ f → f y) cp₁₁) (emloop-comp g₁ g₂) ⟩
+        ap-∘ (λ f → f y) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙
+        ap (λ p → app= (ap cp₁₁ p) y) (emloop-comp g₁ g₂) ◃∙
+        ap (ap (λ f → f y)) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap-∙ (λ f → f y) (ap cp₁₁ (emloop g₁)) (ap cp₁₁ (emloop g₂)) ◃∙
+        ap2 _∙_ (app=-ap-cp₁₁ g₁ y) (app=-ap-cp₁₁ g₂ y) ◃∎
+          =ₛ⟨ 1 & 4 & app=-ap-cp₁₁-coh g₁ g₂ y ⟩
+        ap-∘ (λ f → f y) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙
+        app=-ap-cp₁₁ (R.add g₁ g₂) y ◃∙
+        app= (TwoSemiFunctor.pres-comp F' g₁ g₂) y ◃∎
+          =ₛ₁⟨ 0 & 2 & idp ⟩
+        ap-cp₁₁ (R.add g₁ g₂) y ◃∙
+        app= (TwoSemiFunctor.pres-comp F' g₁ g₂) y ◃∎ ∎ₛ
