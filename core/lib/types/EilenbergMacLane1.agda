@@ -8,7 +8,6 @@ open import lib.types.TLevel
 open import lib.types.Truncation
 open import lib.types.Group
 open import lib.groups.LoopSpace
-open import lib.types.PathSeq
 open import lib.groups.Homomorphism
 open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.FundamentalCategory

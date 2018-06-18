@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
-open import lib.types.PathSeq
+open import lib.types.Paths
 open import lib.types.TwoSemiCategory
 
 module lib.two-semi-categories.Functor where
@@ -97,10 +97,10 @@ comp-functors {C = C} {D = D} {E = E} F G =
         ap (λ s → E.comp s (F₁ h)) (G.pres-comp (F.F₁ f) (F.F₁ g)) ◃∙
         E.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
           =ₛ⟨ 1 & 2 & !ₛ $
-              homotopy-naturality-=ₛ (λ s → G.F₁ (D.comp s (F.F₁ h)))
-                                     (λ s → E.comp (G.F₁ s) (F₁ h))
-                                     (λ s → G.pres-comp s (F.F₁ h))
-                                     (F.pres-comp f g) ⟩
+              homotopy-naturality (λ s → G.F₁ (D.comp s (F.F₁ h)))
+                                  (λ s → E.comp (G.F₁ s) (F₁ h))
+                                  (λ s → G.pres-comp s (F.F₁ h))
+                                  (F.pres-comp f g) ⟩
         ap G.F₁ (F.pres-comp (C.comp f g) h) ◃∙
         ap (λ s → G.F₁ (D.comp s (F.F₁ h))) (F.pres-comp f g) ◃∙
         G.pres-comp (D.comp (F.F₁ f) (F.F₁ g)) (F.F₁ h) ◃∙
@@ -131,10 +131,10 @@ comp-functors {C = C} {D = D} {E = E} F G =
         G.pres-comp (F.F₁ f) (D.comp (F.F₁ g) (F.F₁ h)) ◃∙
         ap (E.comp (F₁ f)) (G.pres-comp (F.F₁ g) (F.F₁ h)) ◃∎
           =ₛ⟨ 2 & 2 &
-              homotopy-naturality-=ₛ (G.F₁ ∘ D.comp (F.F₁ f))
-                                     (E.comp (F₁ f) ∘ G.F₁)
-                                     (G.pres-comp (F.F₁ f))
-                                     (F.pres-comp g h) ⟩
+              homotopy-naturality (G.F₁ ∘ D.comp (F.F₁ f))
+                                  (E.comp (F₁ f) ∘ G.F₁)
+                                  (G.pres-comp (F.F₁ f))
+                                  (F.pres-comp g h) ⟩
         ap G.F₁ (ap F.F₁ (C.assoc f g h)) ◃∙
         ap G.F₁ (F.pres-comp f (C.comp g h)) ◃∙
         G.pres-comp (F.F₁ f) (F.F₁ (C.comp g h)) ◃∙

@@ -315,7 +315,7 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
         ap (ap (λ f → f y)) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
         ap-∙ (λ f → f y) (ap cp₁₁ (emloop g₁)) (ap cp₁₁ (emloop g₂)) ◃∙
         ap2 _∙_ (app=-ap-cp₁₁ g₁ y) (app=-ap-cp₁₁ g₂ y) ◃∎
-          =ₛ⟨ 0 & 2 & homotopy-naturality-=ₛ {A = embase' R₊ == embase} {B = cp₁₁ embase y == cp₁₁ embase y}
+          =ₛ⟨ 0 & 2 & homotopy-naturality {A = embase' R₊ == embase} {B = cp₁₁ embase y == cp₁₁ embase y}
                                              (ap (λ x → cp₁₁ x y)) (λ p → app= (ap cp₁₁ p) y)
                                              (ap-∘ (λ f → f y) cp₁₁) (emloop-comp g₁ g₂) ⟩
         ap-∘ (λ f → f y) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙

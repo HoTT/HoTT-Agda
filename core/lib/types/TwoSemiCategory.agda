@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
-open import lib.types.PathSeq
 
 module lib.types.TwoSemiCategory where
 

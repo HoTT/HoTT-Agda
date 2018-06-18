@@ -6,7 +6,6 @@ open import lib.groups.Homomorphism
 open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.Functor
 open import lib.two-semi-categories.DualCategory
-open import lib.types.PathSeq
 
 module lib.two-semi-categories.GroupToCategory where
 

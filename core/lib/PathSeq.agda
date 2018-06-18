@@ -1,10 +1,14 @@
 {-# OPTIONS --without-K --rewriting #-}
 
-open import lib.Basics
-open import lib.types.Sigma
-open import lib.types.Paths
+open import lib.Base
+open import lib.Equivalence
+open import lib.Function
+open import lib.NType
+open import lib.PathFunctor
+open import lib.PathGroupoid
+open import lib.Univalence
 
-module lib.types.PathSeq where
+module lib.PathSeq where
 
 {-
 This is a library on reified equational reasoning.
@@ -224,7 +228,7 @@ module _ {i} {A : Type i} where
 
   private
     split : {a a' : A} (s : a =-= a')
-      → Σ A (λ a'' → (a =-= a'') × (a'' == a'))
+      → Σ A (λ a'' → Σ (a =-= a'') (λ _ → a'' == a'))
     split {a = a} [] = (a , ([] , idp))
     split {a = a} (p ◃∙ []) = (a , ([] , p))
     split (p ◃∙ s@(_ ◃∙ _)) =
@@ -455,24 +459,6 @@ module _ {i} {A : Type i} where
     → p =ₛ r ∙∙ (seq-! q)
   post-rearrange-in-=ₛ {p = p} {r = r} {q = q} e =
     =ₛ-in (post-rearrange-in-seq p r q (=ₛ-out e))
-
-  homotopy-naturality-=ₛ : ∀ {k} {B : Type k} (f g : A → B)
-    (h : (x : A) → f x == g x) {x y : A} (p : x == y)
-    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
-  homotopy-naturality-=ₛ f g h p =
-   =ₛ-in (homotopy-naturality f g h p)
-
-  homotopy-naturality-to-idf-=ₛ : (f : A → A)
-    (h : (x : A) → f x == x) {x y : A} (p : x == y)
-    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ p ◃∎
-  homotopy-naturality-to-idf-=ₛ f h p =
-    =ₛ-in (homotopy-naturality-to-idf f h p)
-
-  homotopy-naturality-from-idf-=ₛ : (g : A → A)
-    (h : (x : A) → x == g x) {x y : A} (p : x == y)
-    → p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
-  homotopy-naturality-from-idf-=ₛ g h p =
-    =ₛ-in (homotopy-naturality-from-idf g h p)
 
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 

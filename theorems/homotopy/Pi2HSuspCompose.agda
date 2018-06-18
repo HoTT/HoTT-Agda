@@ -127,9 +127,9 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       ap (_∙_ (η e)) (add-path-inverse-r (η a') (merid e)) ◃∙
       ! (∙-assoc (η e) (η a') (η e)) ◃∎
         =ₛ⟨ 1 & 2 & !ₛ $
-            homotopy-naturality-from-idf-=ₛ (_∙_ (η e))
-                                            (add-path-inverse-l (merid e))
-                                            (ap η (μ.unit-l a')) ⟩
+            homotopy-naturality-from-idf (_∙_ (η e))
+                                         (add-path-inverse-l (merid e))
+                                         (ap η (μ.unit-l a')) ⟩
       ap η (μ.unit-r (μ e a')) ◃∙
       ap η (μ.unit-l a') ◃∙
       add-path-inverse-l (merid e) (η a') ◃∙
@@ -151,9 +151,9 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       add-path-inverse-r (η a') (merid e) ◃∙
       ap (λ v → v ∙ η e) (add-path-inverse-l (merid e) (η a')) ◃∎
         =ₛ⟨ 2 & 2 &
-            homotopy-naturality-from-idf-=ₛ (λ v → v ∙ η e)
-                                            (λ v → add-path-inverse-r v (merid e))
-                                            (ap η (μ.unit-r a')) ⟩
+            homotopy-naturality-from-idf (λ v → v ∙ η e)
+                                         (λ v → add-path-inverse-r v (merid e))
+                                         (ap η (μ.unit-r a')) ⟩
       ap η (H-X-assoc e a' e) ◃∙
       ap η (μ.unit-l (μ a' e)) ◃∙
       add-path-inverse-r (η (μ a' e)) (merid e) ◃∙

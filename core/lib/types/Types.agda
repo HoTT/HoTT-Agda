@@ -29,7 +29,6 @@ open import lib.types.List public
 open import lib.types.LoopSpace public
 open import lib.types.Modality public
 open import lib.types.Nat public
-open import lib.types.PathSeq public
 open import lib.types.PathSet public
 open import lib.types.Paths public
 open import lib.types.Pi public

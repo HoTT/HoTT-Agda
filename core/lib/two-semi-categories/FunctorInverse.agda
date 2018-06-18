@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
-open import lib.types.PathSeq
 open import lib.types.Paths
 open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.Functor
@@ -132,7 +131,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       ap (λ s → C.comp s (F₁' h)) (F₁'-pres-comp f g) ◃∙
       C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
         =ₛ⟨ 2 & 2 & !ₛ $
-            homotopy-naturality-=ₛ
+            homotopy-naturality
               (λ s → F₁' (F.F₁ (C.comp s (F₁' h))))
               (λ s → C.comp s (F₁' h))
               (λ s → F₁'-g-f (C.comp s (F₁' h)))
@@ -143,7 +142,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
       C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
         =ₛ⟨ 1 & 2 & !ₛ $
-            homotopy-naturality-=ₛ
+            homotopy-naturality
               (λ s → F₁' (D.comp (F.F₁ s) (F.F₁ (F₁' h))))
               (λ s → F₁' (F.F₁ (C.comp s (F₁' h))))
               (λ s → ap F₁' (! (F.pres-comp s (F₁' h))))
@@ -177,7 +176,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       ap F₁' (! (F.pres-comp (C.comp (F₁' f) (F₁' g)) (F₁' h))) ◃∙
       F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
       C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
-        =ₛ⟨ 2 & 2 & homotopy-naturality-=ₛ
+        =ₛ⟨ 2 & 2 & homotopy-naturality
                       (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h))))
                       (λ s → F₁' (D.comp s (F.F₁ (F₁' h))))
                       (λ t → ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g t))
@@ -198,7 +197,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       F₁'-g-f (C.comp (C.comp (F₁' f) (F₁' g)) (F₁' h)) ◃∙
       C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
         =ₛ⟨ 5 & 2 & !ₛ $
-             homotopy-naturality-to-idf-=ₛ (F₁' ∘ F.F₁) F₁'-g-f (C.assoc (F₁' f) (F₁' g) (F₁' h)) ⟩
+            homotopy-naturality-to-idf (F₁' ∘ F.F₁) F₁'-g-f (C.assoc (F₁' f) (F₁' g) (F₁' h)) ⟩
       ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
       ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
       ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∙
@@ -231,7 +230,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
       F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
         =ₛ⟨ 3 & 2 & !ₛ $
-            homotopy-naturality-=ₛ
+            homotopy-naturality
               (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁')
               (F₁' ∘ D.comp (F.F₁ (F₁' f)))
               (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) ∘ F₁'-f-g)
@@ -275,7 +274,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       ap F₁' (! (F.pres-comp (F₁' f) (C.comp (F₁' g) (F₁' h)))) ◃∙
       F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
         =ₛ⟨ 2 & 2 &
-            homotopy-naturality-=ₛ
+            homotopy-naturality
               (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁)
               (F₁' ∘ F.F₁ ∘ C.comp (F₁' f))
               (λ s → ap F₁' (! (F.pres-comp (F₁' f) s)))
@@ -286,7 +285,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       ap (F₁' ∘ F.F₁ ∘ C.comp (F₁' f)) (F₁'-pres-comp g h) ◃∙
       F₁'-g-f (C.comp (F₁' f) (C.comp (F₁' g) (F₁' h))) ◃∎
         =ₛ⟨ 3 & 2 &
-            homotopy-naturality-=ₛ
+            homotopy-naturality
               (F₁' ∘ F.F₁ ∘ C.comp (F₁' f))
               (C.comp (F₁' f))
               (F₁'-g-f ∘ C.comp (F₁' f))
@@ -331,10 +330,10 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
           ap (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h)))) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
           ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎
             =ₛ⟨ 0 & 2 & !ₛ $
-                homotopy-naturality-=ₛ (λ s → F₁' (D.comp s h))
-                                       (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h))))
-                                       (λ s → ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! s) (F₁'-f-g! h))
-                                       (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ⟩
+                homotopy-naturality (λ s → F₁' (D.comp s h))
+                                    (λ s → F₁' (D.comp (F.F₁ (F₁' s)) (F.F₁ (F₁' h))))
+                                    (λ s → ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! s) (F₁'-f-g! h))
+                                    (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ⟩
           ap (λ s → F₁' (D.comp s h)) (ap2 D.comp (F₁'-f-g! f) (F₁'-f-g! g)) ◃∙
           ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) (F₁'-f-g! h) ◃∙
           ap (λ s → F₁' (D.comp s (F.F₁ (F₁' h)))) (F₁'-f-g (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g)))) ◃∎
@@ -451,28 +450,28 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
           ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s)) (F₁'-f-g! h) ◃∙
           ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) (F.F₁ (F₁' h))) ◃∎
             =ₛ⟨ 2 & 2 &
-                homotopy-naturality-=ₛ (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s))
-                                       (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s)))
-                                       (λ s → ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) s))
-                                       (F₁'-f-g! h) ⟩
+                homotopy-naturality (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) (F.F₁ (F₁' g))) s))
+                                    (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s)))
+                                    (λ s → ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) s))
+                                    (F₁'-f-g! h) ⟩
           ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
           ap (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h)) (F₁'-f-g! g) ◃∙
           ap F₁' (D.assoc (F.F₁ (F₁' f)) (F.F₁ (F₁' g)) h) ◃∙
           ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎
             =ₛ⟨ 1 & 2 &
-                homotopy-naturality-=ₛ (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h))
-                                       (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h)))
-                                       (λ s → ap F₁' (D.assoc (F.F₁ (F₁' f)) s h))
-                                       (F₁'-f-g! g) ⟩
+                homotopy-naturality (λ s → F₁' (D.comp (D.comp (F.F₁ (F₁' f)) s) h))
+                                    (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h)))
+                                    (λ s → ap F₁' (D.assoc (F.F₁ (F₁' f)) s h))
+                                    (F₁'-f-g! g) ⟩
           ap (λ s → F₁' (D.comp (D.comp s g) h)) (F₁'-f-g! f) ◃∙
           ap F₁' (D.assoc (F.F₁ (F₁' f)) g h) ◃∙
           ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g) ◃∙
           ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp (F.F₁ (F₁' g)) s))) (F₁'-f-g! h) ◃∎
             =ₛ⟨ 0 & 2 &
-                homotopy-naturality-=ₛ (λ s → F₁' (D.comp (D.comp s g) h))
-                                       (λ s → F₁' (D.comp s (D.comp g h)))
-                                       (λ s → ap F₁' (D.assoc s g h))
-                                       (F₁'-f-g! f) ⟩
+                homotopy-naturality (λ s → F₁' (D.comp (D.comp s g) h))
+                                    (λ s → F₁' (D.comp s (D.comp g h)))
+                                    (λ s → ap F₁' (D.assoc s g h))
+                                    (F₁'-f-g! f) ⟩
           ap F₁' (D.assoc f g h) ◃∙
           ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
           ap (λ s → F₁' (D.comp (F.F₁ (F₁' f)) (D.comp s h))) (F₁'-f-g! g) ◃∙
@@ -505,10 +504,10 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
           ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g! (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∙
           ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g (D.comp (F.F₁ (F₁' g)) (F.F₁ (F₁' h)))) ◃∎
             =ₛ⟨ 1 & 2 &
-                homotopy-naturality-=ₛ (F₁' ∘ D.comp (F.F₁ (F₁' f)))
-                                       (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁')
-                                       (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) ∘ F₁'-f-g!)
-                                       (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ⟩
+                homotopy-naturality (F₁' ∘ D.comp (F.F₁ (F₁' f)))
+                                    (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁')
+                                    (ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) ∘ F₁'-f-g!)
+                                    (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ⟩
           ap (λ s → F₁' (D.comp s (D.comp g h))) (F₁'-f-g! f) ◃∙
           ap (F₁' ∘ D.comp (F.F₁ (F₁' f))) (F₁'-f-g! (D.comp g h)) ◃∙
           ap (F₁' ∘ D.comp (F.F₁ (F₁' f)) ∘ F.F₁ ∘ F₁') (ap2 D.comp (F₁'-f-g! g) (F₁'-f-g! h)) ◃∙
@@ -571,10 +570,10 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       ap (λ s → C.comp s (F₁ h)) (F₁'-pres-comp (F₁'' f) (F₁'' g)) ◃∙
       C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
         =ₛ⟨ 1 & 2 & !ₛ $
-            homotopy-naturality-=ₛ (λ s → F₁' (D.comp s (F₁'' h)))
-                                   (λ s → C.comp (F₁' s) (F₁ h))
-                                   (λ s → F₁'-pres-comp s (F₁'' h))
-                                   (F₁''-pres-comp f g) ⟩
+            homotopy-naturality (λ s → F₁' (D.comp s (F₁'' h)))
+                                (λ s → C.comp (F₁' s) (F₁ h))
+                                (λ s → F₁'-pres-comp s (F₁'' h))
+                                (F₁''-pres-comp f g) ⟩
       ap F₁' (F₁''-pres-comp (D.comp f g) h) ◃∙
       ap (λ s → F₁' (D.comp s (F₁'' h))) (F₁''-pres-comp f g) ◃∙
       F₁'-pres-comp (D.comp (F₁'' f) (F₁'' g)) (F₁'' h) ◃∙
@@ -605,10 +604,10 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       F₁'-pres-comp (F₁'' f) (D.comp (F₁'' g) (F₁'' h)) ◃∙
       ap (C.comp (F₁ f)) (F₁'-pres-comp (F₁'' g) (F₁'' h)) ◃∎
         =ₛ⟨ 2 & 2 &
-            homotopy-naturality-=ₛ (F₁' ∘ D.comp (F₁'' f))
-                                   (C.comp (F₁ f) ∘ F₁')
-                                   (F₁'-pres-comp (F₁'' f))
-                                   (F₁''-pres-comp g h) ⟩
+            homotopy-naturality (F₁' ∘ D.comp (F₁'' f))
+                                (C.comp (F₁ f) ∘ F₁')
+                                (F₁'-pres-comp (F₁'' f))
+                                (F₁''-pres-comp g h) ⟩
       ap F₁' (ap F₁'' (D.assoc f g h)) ◃∙
       ap F₁' (F₁''-pres-comp f (D.comp g h)) ◃∙
       F₁'-pres-comp (F₁'' f) (F₁'' (D.comp g h)) ◃∙

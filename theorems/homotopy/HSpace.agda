@@ -106,7 +106,7 @@ module _ {i} {X : Ptd i} (hX : HSpaceStructure X) where
       =⟨ ∙-assoc (assoc (pt X) a' (pt X)) (ap (hX.μ (pt X)) (hX.unit-r a')) (hX.unit-l a') ⟩
     assoc (pt X) a' (pt X) ∙ ap (hX.μ (pt X)) (hX.unit-r a') ∙ hX.unit-l a'
       =⟨ ap (λ v → assoc (pt X) a' (pt X) ∙ v)
-            (homotopy-naturality-to-idf (hX.μ (pt X)) hX.unit-l (hX.unit-r a')) ⟩
+            (=ₛ-out (homotopy-naturality-to-idf (hX.μ (pt X)) hX.unit-l (hX.unit-r a'))) ⟩
     assoc (pt X) a' (pt X) ∙ hX.unit-l (hX.μ a' (pt X)) ∙ hX.unit-r a' ∎
 
   coh-assoc-pentagon-eq : (assoc : associator) → (a b c d : de⊙ X) → Type i

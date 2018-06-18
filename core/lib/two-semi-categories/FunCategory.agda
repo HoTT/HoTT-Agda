@@ -3,7 +3,6 @@
 open import lib.Basics
 open import lib.types.Pi
 open import lib.types.TwoSemiCategory
-open import lib.types.PathSeq
 open import lib.two-semi-categories.Functor
 
 module lib.two-semi-categories.FunCategory where

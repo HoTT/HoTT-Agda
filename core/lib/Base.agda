@@ -290,7 +290,7 @@ _=⟨_⟩ is not definitionally the same thing as concatenation of paths _∙_ b
 we haven’t defined concatenation of paths yet, and also you probably shouldn’t
 reason on paths constructed with equational reasoning.
 If you do want to reason on paths constructed with equational reasoning, check
-out lib.types.PathSeq instead.
+out lib.PathSeq instead.
 -}
 
 infixr 10 _=⟨_⟩_

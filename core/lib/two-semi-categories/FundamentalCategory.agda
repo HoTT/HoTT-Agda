@@ -4,7 +4,6 @@ open import lib.Basics
 open import lib.types.Pi
 open import lib.types.Truncation
 open import lib.types.TwoSemiCategory
-open import lib.types.PathSeq
 open import lib.two-semi-categories.Functor
 open import lib.two-semi-categories.FunctorInverse
 open import lib.two-semi-categories.GroupToCategory

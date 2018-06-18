@@ -288,21 +288,21 @@ module _ {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
 module _ {i} {A : Type i} where
   homotopy-naturality : ∀ {k} {B : Type k} (f g : A → B)
     (h : (x : A) → f x == g x) {x y : A} (p : x == y)
-    → ap f p ∙ h y == h x ∙ ap g p
-  homotopy-naturality f g h {x} {y} p =
+    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
+  homotopy-naturality f g h {x} {y} p = =ₛ-in $
     ∙=∙' (ap f p) (h y) ∙ ! (↓-='-out' {f = f} {g = g} {p = p} {u = h x} {v = h y} (apd h p))
 
   homotopy-naturality-to-idf : (f : A → A)
     (h : (x : A) → f x == x) {x y : A} (p : x == y)
-    → ap f p ∙ h y == h x ∙ p
+    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ p ◃∎
   homotopy-naturality-to-idf f h {x} {y} p =
-    homotopy-naturality f (λ a → a) h p ∙ ap (λ w → h x ∙ w) (ap-idf p)
+    homotopy-naturality f (λ a → a) h p ∙ₛ =ₛ-in (ap (λ w → h x ∙ w) (ap-idf p))
 
   homotopy-naturality-from-idf : (g : A → A)
     (h : (x : A) → x == g x) {x y : A} (p : x == y)
-    → p ∙ h y == h x ∙ ap g p
+    → p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
   homotopy-naturality-from-idf g h {x} {y} p =
-    ap (λ w → w ∙ h y) (! (ap-idf p)) ∙ homotopy-naturality (λ a → a) g h p
+    =ₛ-in (ap (λ w → w ∙ h y) (! (ap-idf p))) ∙ₛ homotopy-naturality (λ a → a) g h p
 
 module _ {i} {j} {A : Type i} {B : A → Type j} where
 
