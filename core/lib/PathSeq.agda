@@ -588,6 +588,32 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A →
     → ap-∘-∙-coh-seq₁ p p' =ₛ ap-∘-∙-coh-seq₂ p p'
   ap-∘-∙-coh idp idp = =ₛ-in idp
 
+module _ {i} {A : Type i} where
+  homotopy-naturality : ∀ {k} {B : Type k} (f g : A → B)
+    (h : (x : A) → f x == g x) {x y : A} (p : x == y)
+    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
+  homotopy-naturality f g h {x} idp =
+    =ₛ-in (! (∙-unit-r (h x)))
+
+  homotopy-naturality-to-idf : (f : A → A)
+    (h : (x : A) → f x == x) {x y : A} (p : x == y)
+    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ p ◃∎
+  homotopy-naturality-to-idf f h {x} p =
+    homotopy-naturality f (λ a → a) h p ∙ₛ =ₛ-in (ap (λ w → h x ∙ w) (ap-idf p))
+
+  homotopy-naturality-from-idf : (g : A → A)
+    (h : (x : A) → x == g x) {x y : A} (p : x == y)
+    → p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
+  homotopy-naturality-from-idf g h {y = y} p =
+    =ₛ-in (ap (λ w → w ∙ h y) (! (ap-idf p))) ∙ₛ homotopy-naturality (λ a → a) g h p
+
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
+         (f g : A → B → C) (h : ∀ a b → f a b == g a b) where
+  homotopy-naturality2 : {a₀ a₁ : A} {b₀ b₁ : B} (p : a₀ == a₁) (q : b₀ == b₁)
+    → ap2 f p q ◃∙ h a₁ b₁ ◃∎ =ₛ h a₀ b₀ ◃∙ ap2 g p q ◃∎
+  homotopy-naturality2 {a₀ = a} {b₀ = b} idp idp =
+    =ₛ-in (! (∙-unit-r (h a b)))
+
 apd= : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
        (p : f ∼ g) {a b : A} (q : a == b)
        → apd f q ▹ p b == p a ◃ apd g q

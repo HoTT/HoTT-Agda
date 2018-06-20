@@ -195,6 +195,13 @@ module _ {i j} {A : Type i} {B : Type j} where
     → ap2 g p (ap f q) == ap2 (λ a b → g a (f b)) p q
   ap2-ap-r g f idp idp = idp
 
+  ap2-ap-lr : ∀ {k l m} {C : Type k} {D : Type l} {E : Type m}
+    (g : C → D → E) (f : A → C) (h : B → D)
+    {x y : A} {w z : B}
+    (p : x == y) (q : w == z)
+    → ap2 g (ap f p) (ap h q) == ap2 (λ a b → g (f a) (h b)) p q
+  ap2-ap-lr g f h idp idp = idp
+
   ap2-diag : (f : A → A → B)
     {x y : A} (p : x == y)
     → ap2 f p p == ap (λ x → f x x) p

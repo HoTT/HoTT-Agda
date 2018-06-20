@@ -265,8 +265,42 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
 
       app=-ap-cp₁₁-coh : ∀ g₁ g₂ y →
         app=-ap-cp₁₁-coh-seq₁ g₁ g₂ y =ₛ app=-ap-cp₁₁-coh-seq₂ g₁ g₂ y
-      app=-ap-cp₁₁-coh g₁ g₂ y = {!!}
-
+      app=-ap-cp₁₁-coh g₁ g₂ y =
+        ap (λ u → app= (ap cp₁₁ u) y) (emloop-comp g₁ g₂) ◃∙
+        ap (λ u → app= u y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap-∙ (λ f → f y) (ap cp₁₁ (emloop g₁)) (ap cp₁₁ (emloop g₂)) ◃∙
+        ap2 _∙_ (app=-ap-cp₁₁ g₁ y) (app=-ap-cp₁₁ g₂ y) ◃∎
+          =ₛ⟨ 3 & 2 & ap2-seq-∙ _∙_ (app=-ap-cp₁₁-seq g₁ y) (app=-ap-cp₁₁-seq g₂ y) ⟩
+        ap (λ u → app= (ap cp₁₁ u) y) (emloop-comp g₁ g₂) ◃∙
+        ap (λ u → app= u y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap-∙ (λ f → f y) (ap cp₁₁ (emloop g₁)) (ap cp₁₁ (emloop g₂)) ◃∙
+        ap2 _∙_ (ap (λ z → app= z y) (cp₁₁-emloop-β g₁)) (ap (λ z → app= z y) (cp₁₁-emloop-β g₂)) ◃∙
+        ap2 _∙_ (app=-β (λ x → ap [_] (η (cp₀₁ g₁ x))) y) (app=-β (λ x → ap [_] (η (cp₀₁ g₂ x))) y) ◃∎
+          =ₛ₁⟨ 3 & 1 & ap2-ap-lr _∙_ (λ z → app= z y) (λ z → app= z y) (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ⟩
+        ap (λ u → app= (ap cp₁₁ u) y) (emloop-comp g₁ g₂) ◃∙
+        ap (λ u → app= u y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap-∙ (λ f → f y) (ap cp₁₁ (emloop g₁)) (ap cp₁₁ (emloop g₂)) ◃∙
+        ap2 (λ a b → app= a y ∙ app= b y) (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ◃∙
+        ap2 _∙_ (app=-β (λ x → ap [_] (η (cp₀₁ g₁ x))) y) (app=-β (λ x → ap [_] (η (cp₀₁ g₂ x))) y) ◃∎
+          =ₛ⟨ 2 & 2 & !ₛ $
+              homotopy-naturality2 (λ a b → app= (a ∙ b) y)
+                                   (λ a b → app= a y ∙ app= b y)
+                                   (ap-∙ (λ f → f y))
+                                   (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ⟩
+        ap (λ u → app= (ap cp₁₁ u) y) (emloop-comp g₁ g₂) ◃∙
+        ap (λ u → app= u y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap2 (λ a b → app= (a ∙ b) y) (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ◃∙
+        ap-∙ (λ f → f y) (λ= (λ y' → ap [_] (η (cp₀₁ g₁ y')))) (λ= (λ y' → ap [_] (η (cp₀₁ g₂ y')))) ◃∙
+        ap2 _∙_ (app=-β (λ x → ap [_] (η (cp₀₁ g₁ x))) y) (app=-β (λ x → ap [_] (η (cp₀₁ g₂ x))) y) ◃∎
+          =ₛ⟨ 3 & 2 &
+              app=-β-coh (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) y ⟩
+        {!ap (λ u → app= (ap cp₁₁ u) y) (emloop-comp g₁ g₂) ◃∙
+        ap (λ u → app= u y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap2 (λ a b → app= (a ∙ b) y) (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ◃∙
+        ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∙
+        app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
+          =ₛ⟨ ? ⟩
+        ?!}
       ap-cp₁₁-seq : ∀ g y → ap (λ x → cp₁₁ x y) (emloop g) =-= ap [_] (η (cp₀₁ g y))
       ap-cp₁₁-seq g y =
         ap (λ x → cp₁₁ x y) (emloop g)
@@ -316,8 +350,8 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
         ap-∙ (λ f → f y) (ap cp₁₁ (emloop g₁)) (ap cp₁₁ (emloop g₂)) ◃∙
         ap2 _∙_ (app=-ap-cp₁₁ g₁ y) (app=-ap-cp₁₁ g₂ y) ◃∎
           =ₛ⟨ 0 & 2 & homotopy-naturality {A = embase' R₊ == embase} {B = cp₁₁ embase y == cp₁₁ embase y}
-                                             (ap (λ x → cp₁₁ x y)) (λ p → app= (ap cp₁₁ p) y)
-                                             (ap-∘ (λ f → f y) cp₁₁) (emloop-comp g₁ g₂) ⟩
+                                          (ap (λ x → cp₁₁ x y)) (λ p → app= (ap cp₁₁ p) y)
+                                          (ap-∘ (λ f → f y) cp₁₁) (emloop-comp g₁ g₂) ⟩
         ap-∘ (λ f → f y) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙
         ap (λ p → app= (ap cp₁₁ p) y) (emloop-comp g₁ g₂) ◃∙
         ap (ap (λ f → f y)) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙

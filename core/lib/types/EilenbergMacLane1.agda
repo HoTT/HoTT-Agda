@@ -492,13 +492,13 @@ module _ {G : Group i} where
           ∙-unit-r (r₀₂ ∙ q-comp)
 
       emloop-comp-path : (g₁ g₂ : G.El)
-        → ap (ap f) (emloop-comp g₁ g₂) ∙
-          ap-∙ f (emloop g₁) (emloop g₂) ∙
-          ap2 _∙_ (emloop-β g₁) (emloop-β g₂)
-          ==
-          emloop-β (G.comp g₁ g₂) ∙
-          emloop-comp* g₁ g₂
-      emloop-comp-path g₁ g₂ =
+        → ap (ap f) (emloop-comp g₁ g₂) ◃∙
+          ap-∙ f (emloop g₁) (emloop g₂) ◃∙
+          ap2 _∙_ (emloop-β g₁) (emloop-β g₂) ◃∎
+          =ₛ
+          emloop-β (G.comp g₁ g₂) ◃∙
+          emloop-comp* g₁ g₂ ◃∎
+      emloop-comp-path g₁ g₂ = =ₛ-in $
         ap (ap f) (emloop-comp g₁ g₂) ∙
         ap-∙ f (emloop g₁) (emloop g₂) ∙
         ap2 _∙_ (emloop-β g₁) (emloop-β g₂)
@@ -548,12 +548,12 @@ module _ {G : Group i} where
       emloop-β = M.emloop-β
 
       emloop-comp-path : (g₁ g₂ : G.El)
-        → ap (ap f) (emloop-comp g₁ g₂) ∙
-          ap-∙ f (emloop g₁) (emloop g₂) ∙
-          ap2 _∙_ (emloop-β g₁) (emloop-β g₂)
-          ==
-          emloop-β (G.comp g₁ g₂) ∙
-          F.pres-comp g₁ g₂
+        → ap (ap f) (emloop-comp g₁ g₂) ◃∙
+          ap-∙ f (emloop g₁) (emloop g₂) ◃∙
+          ap2 _∙_ (emloop-β g₁) (emloop-β g₂) ◃∎
+          =ₛ
+          emloop-β (G.comp g₁ g₂) ◃∙
+          F.pres-comp g₁ g₂ ◃∎
       emloop-comp-path = M.emloop-comp-path
 
   open EM₁Rec public using () renaming (f to EM₁-rec)
