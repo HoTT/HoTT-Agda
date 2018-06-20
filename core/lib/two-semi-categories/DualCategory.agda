@@ -85,9 +85,9 @@ dual-functor-map {C = C} {D = D} F =
           ap (λ s → D.comp s (F.F₁ f)) (F.pres-comp h g) ◃∎
       pres-comp-coh f g h =
         e₅₋₆ ◃∙ e₆₋₄ ◃∙ ! e₃₋₄ ◃∎
-          =ₛ⟨ post-rearrange'-in-=ₛ {p = ! e₁₋₅ ◃∙ e₁₋₂ ◃∙ e₂₋₃ ◃∎} $
-             pre-rotate-in-=ₛ {p = e₁₋₅ ◃∎} $
-             !ₛ $ F.pres-comp-coh h g f ⟩
+          =ₛ⟨ post-rotate'-seq-in {p = ! e₁₋₅ ◃∙ e₁₋₂ ◃∙ e₂₋₃ ◃∎} $
+              pre-rotate-in $
+              !ₛ $ F.pres-comp-coh h g f ⟩
         ! e₁₋₅ ◃∙ e₁₋₂ ◃∙ e₂₋₃ ◃∎
           =ₛ⟨ =ₛ-in $
               ap (λ s → s ∙ e₁₋₂ ∙ e₂₋₃) (!-ap (λ f' → F.F₁ f') (C.assoc h g f)) ⟩

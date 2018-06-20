@@ -113,69 +113,6 @@ module _ {i} {A : Type i} where
   _=↯=_ : {a a' : A} → a =-= a' → a =-= a' → Type i
   _=↯=_ s t = (↯ s) == (↯ t)
 
-  abstract
-    post-rearrange'-in : {a a' a'' : A}
-      → (r : a =-= a'') (q : a' == a'') (p : a =-= a')
-      → r =↯= p ∙▹ q
-      → r ∙▹ (! q) =↯= p
-    post-rearrange'-in r idp p e =
-      ↯ (r ∙▹ idp)
-        =⟨ ↯-∙∙ r (idp ◃∎) ⟩
-      ↯ r ∙ idp
-        =⟨ ∙-unit-r (↯ r) ⟩
-      ↯ r
-        =⟨ e ⟩
-      ↯ (p ∙▹ idp)
-        =⟨ ↯-∙∙ p (idp ◃∎) ⟩
-      ↯ p ∙ idp
-        =⟨ ∙-unit-r (↯ p) ⟩
-      ↯ p =∎
-
-    post-rearrange-in : {a a' a'' : A}
-      → (p : a =-= a') (r : a =-= a'') (q : a' == a'')
-      → p ∙▹ q =↯= r
-      → p =↯= r ∙▹ (! q)
-    post-rearrange-in p r q e = ! (post-rearrange'-in r q p (! e))
-
-    post-rearrange'-in-seq : {a a' a'' : A}
-      → (r : a =-= a'') (q : a' =-= a'') (p : a =-= a')
-      → r =↯= p ∙∙ q
-      → r ∙∙ (seq-! q) =↯= p
-    post-rearrange'-in-seq r [] p e = ap ↯ (∙∙-unit-r r) ∙ e ∙ ap ↯ (∙∙-unit-r p)
-    post-rearrange'-in-seq r (q ◃∙ s) p e =
-      ↯ (r ∙∙ (seq-! s ∙▹ ! q))
-        =⟨ ap ↯ (! (∙∙-assoc r (seq-! s) (! q ◃∎))) ⟩
-      ↯ ((r ∙∙ seq-! s) ∙▹ ! q)
-        =⟨ post-rearrange'-in (r ∙∙ seq-! s) q p
-             (post-rearrange'-in-seq r s (p ∙▹ q) (e ∙ ap ↯ (! (∙∙-assoc p (q ◃∎) s)))) ⟩
-      (↯ p) =∎
-
-    post-rearrange-in-seq : {a a' a'' : A}
-      → (p : a =-= a') (r : a =-= a'') (q : a' =-= a'')
-      → (p ∙∙ q) =↯= r
-      → p =↯= (r ∙∙ (seq-! q))
-    post-rearrange-in-seq p r q e = ! (post-rearrange'-in-seq r q p (! e))
-
-    pre-rotate-in-seq : {a a' a'' : A}
-      → (q : a' =-= a'') (p : a =-= a') (r : a =-= a'')
-      → p ∙∙ q =↯= r
-      → q =↯= seq-! p ∙∙ r
-    pre-rotate-in-seq q [] r e = e
-    pre-rotate-in-seq q (p ◃∙ s) r e =
-      ↯ q
-        =⟨ pre-rotate-in-seq q s (! p ◃∙ r)
-             (pre-rotate-in (↯ (s ∙∙ q)) p (↯ r) (! (↯-∙∙ (p ◃∎) (s ∙∙ q)) ∙ e) ∙
-              ! (↯-∙∙ (! p ◃∎) r)) ⟩
-      ↯ (seq-! s ∙∙ ! p ◃∙ r)
-        =⟨ ap ↯ (! (∙∙-assoc (seq-! s) (! p ◃∎) r)) ⟩
-      ↯ (seq-! (p ◃∙ s) ∙∙ r) =∎
-
-    pre-rotate-in'-seq : {a a' a'' : A}
-      → (p : a =-= a') (r : a =-= a'') (q : a' =-= a'')
-      → r =↯= p ∙∙ q
-      → seq-! p ∙∙ r =↯= q
-    pre-rotate-in'-seq p r q e = ! (pre-rotate-in-seq q p r (! e))
-
   point-from-start : (n : ℕ) {a a' : A} (s : a =-= a') → A
   point-from-start O {a} s = a
   point-from-start (S n) {a = a} [] = a
@@ -433,32 +370,98 @@ module _ {i} {A : Type i} where
     _=ₛ₁⟨_⟩_ s {r} p p' = =ₛ-in p ∙ₛ p'
 
 module _ {i} {A : Type i} where
+  {-
+  The order of the arguments p, q, r follows the occurrences
+  of these variables in the output type
+  -}
 
-  pre-rotate-in-=ₛ : {a a' a'' : A} {q : a' =-= a''} {p : a =-= a'} {r : a =-= a''}
+  pre-rotate-in : {a a' a'' : A} {q : a' =-= a''} {p : a == a'} {r : a =-= a''}
+    → p ◃∙ q =ₛ r
+    → q =ₛ ! p ◃∙ r
+  pre-rotate-in {q = q} {p = idp} {r = r} e =
+    q
+      =ₛ⟨ =ₛ-in (! (↯-∙∙ (idp ◃∎) q)) ⟩
+    idp ◃∙ q
+      =ₛ⟨ e ⟩
+    r
+      =ₛ⟨ =ₛ-in (! (↯-∙∙ (idp ◃∎) r)) ⟩
+    idp ◃∙ r ∎ₛ
+
+  pre-rotate'-in : {a a' a'' : A} {p : a == a'} {r : a =-= a''} {q : a' =-= a''}
+    → r =ₛ p ◃∙ q
+    → ! p ◃∙ r =ₛ q
+  pre-rotate'-in e =
+    !ₛ (pre-rotate-in (!ₛ e))
+
+  pre-rotate-seq-in : {a a' a'' : A} {q : a' =-= a''} {p : a =-= a'} {r : a =-= a''}
     → p ∙∙ q =ₛ r
     → q =ₛ seq-! p ∙∙ r
-  pre-rotate-in-=ₛ {q = q} {p = p} {r = r} e =
-    =ₛ-in (pre-rotate-in-seq q p r (=ₛ-out e))
+  pre-rotate-seq-in {q = q} {p = []} {r = r} e = e
+  pre-rotate-seq-in {q = q} {p = p ◃∙ s} {r = r} e =
+    q
+      =ₛ⟨ pre-rotate-seq-in {q = q} {p = s} {r = ! p ◃∙ r} (pre-rotate-in e) ⟩
+    seq-! s ∙∙ ! p ◃∙ r
+      =ₛ⟨ =ₛ-in (ap ↯ (! (∙∙-assoc (seq-! s) (! p ◃∎) r))) ⟩
+    seq-! (p ◃∙ s) ∙∙ r ∎ₛ
 
-  pre-rotate'-in-=ₛ : {a a' a'' : A} {p : a =-= a'} {r : a =-= a''} {q : a' =-= a''}
+  pre-rotate'-seq-in : {a a' a'' : A} {p : a =-= a'} {r : a =-= a''} {q : a' =-= a''}
     → r =ₛ p ∙∙ q
     → seq-! p ∙∙ r =ₛ q
-  pre-rotate'-in-=ₛ {p = p} {r = r} {q = q} e =
-    =ₛ-in (pre-rotate-in'-seq p r q (=ₛ-out e))
+  pre-rotate'-seq-in {p = p} {r = r} {q = q} e =
+    !ₛ (pre-rotate-seq-in {q = q} {p} {r} (!ₛ e))
 
-  post-rearrange'-in-=ₛ : {a a' a'' : A}
+  post-rotate'-in : {a a' a'' : A}
+    → {r : a =-= a''} {q : a' == a''} {p : a =-= a'}
+    → r =ₛ p ∙▹ q
+    → r ∙▹ ! q =ₛ p
+  post-rotate'-in {r = r} {q = idp} {p = p} e =
+    r ∙▹ idp
+      =ₛ⟨ =ₛ-in (↯-∙∙ r (idp ◃∎) ∙ ∙-unit-r (↯ r)) ⟩
+    r
+      =ₛ⟨ e ⟩
+    p ∙▹ idp
+      =ₛ⟨ =ₛ-in (↯-∙∙ p (idp ◃∎) ∙ ∙-unit-r (↯ p)) ⟩
+    p ∎ₛ
+
+  post-rotate-in : {a a' a'' : A}
+    → {p : a =-= a'} {r : a =-= a''} {q : a' == a''}
+    → p ∙▹ q =ₛ r
+    → p =ₛ r ∙▹ ! q
+  post-rotate-in {p = p} {r = r} {q = q} e =
+    !ₛ (post-rotate'-in (!ₛ e))
+
+  post-rotate'-seq-in : {a a' a'' : A}
     → {r : a =-= a''} {q : a' =-= a''} {p : a =-= a'}
     → r =ₛ p ∙∙ q
     → r ∙∙ (seq-! q) =ₛ p
-  post-rearrange'-in-=ₛ {r = r} {q = q} {p = p} e =
-    =ₛ-in (post-rearrange'-in-seq r q p (=ₛ-out e))
+  post-rotate'-seq-in {r = r} {q = []} {p = p} e =
+    r ∙∙ []
+      =ₛ⟨ =ₛ-in (ap ↯ (∙∙-unit-r r)) ⟩
+    r
+      =ₛ⟨ e ⟩
+    p ∙∙ []
+      =ₛ⟨ =ₛ-in (ap ↯ (∙∙-unit-r p)) ⟩
+    p ∎ₛ
+  post-rotate'-seq-in {r = r} {q = q ◃∙ s} {p = p} e =
+    r ∙∙ (seq-! s ∙▹ ! q)
+      =ₛ⟨ =ₛ-in (ap ↯ (! (∙∙-assoc r (seq-! s) (! q ◃∎)))) ⟩
+    (r ∙∙ seq-! s) ∙▹ ! q
+      =ₛ⟨ post-rotate'-in {r = r ∙∙ seq-! s} {q = q} {p = p} $
+          post-rotate'-seq-in {r = r} {s} {p ∙▹ q} $
+          r
+            =ₛ⟨ e ⟩
+          p ∙∙ (q ◃∙ s)
+            =ₛ⟨ =ₛ-in (ap ↯ (! (∙∙-assoc p (q ◃∎) s))) ⟩
+          (p ∙▹ q) ∙∙ s ∎ₛ
+        ⟩
+    p ∎ₛ
 
-  post-rearrange-in-=ₛ : {a a' a'' : A}
+  post-rotate-seq-in : {a a' a'' : A}
     → {p : a =-= a'} {r : a =-= a''} {q : a' =-= a''}
     → p ∙∙ q =ₛ r
     → p =ₛ r ∙∙ (seq-! q)
-  post-rearrange-in-=ₛ {p = p} {r = r} {q = q} e =
-    =ₛ-in (post-rearrange-in-seq p r q (=ₛ-out e))
+  post-rotate-seq-in {p = p} {r = r} {q = q} e =
+    !ₛ (post-rotate'-seq-in {r = r} {q = q} {p = p} (!ₛ e))
 
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 

@@ -375,8 +375,8 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
           e₀₋₄ ◃∎
             =ₛ₁⟨ 0 & 1 & ap-! (λ s → D.comp s (F.F₁ (F₁' h))) (F.pres-comp (F₁' f) (F₁' g)) ⟩
           ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎
-            =ₛ⟨ post-rearrange-in-=ₛ {p = ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎} $
-                pre-rotate'-in-=ₛ {p = e₀₋₁ ◃∙ e₁₋₂ ◃∎} $
+            =ₛ⟨ post-rotate-seq-in {p = ! e₁₋₂ ◃∙ ! e₀₋₁ ◃∙ e₀₋₄ ◃∎} $
+                pre-rotate'-seq-in {p = e₀₋₁ ◃∙ e₁₋₂ ◃∎} $
                 !ₛ $ F.pres-comp-coh (F₁' f) (F₁' g) (F₁' h) ⟩
           e₂₋₃ ◃∙ ! e₅₋₃ ◃∙ ! e₄₋₅ ◃∎
             =ₛ₁⟨ 1 & 1 & !-ap (D.comp (F.F₁ (F₁' f))) (F.pres-comp (F₁' g) (F₁' h)) ⟩
