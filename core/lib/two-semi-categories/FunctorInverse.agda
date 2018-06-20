@@ -124,7 +124,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       F₁'-pres-comp (D.comp f g) h ◃∙
       ap (λ s → C.comp s (F₁' h)) (F₁'-pres-comp f g) ◃∙
       C.assoc (F₁' f) (F₁' g) (F₁' h) ◃∎
-        =ₛ⟨ 0 & 1 & =ₛ-in {t = F₁'-pres-comp-↯ (D.comp f g) h} idp ⟩
+        =ₛ⟨ 0 & 1 & expand (F₁'-pres-comp-↯ (D.comp f g) h) ⟩
       ap2 (λ s t → F₁' (D.comp s t)) (F₁'-f-g! (D.comp f g)) (F₁'-f-g! h) ◃∙
       ap F₁' (! (F.pres-comp (F₁' (D.comp f g)) (F₁' h))) ◃∙
       F₁'-g-f (C.comp (F₁' (D.comp f g)) (F₁' h)) ◃∙
@@ -552,7 +552,7 @@ functor-inverse {C = C} {D = D} F F₀-equiv F₁-equiv =
       pres-comp (D.comp f g) h ◃∙
       ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ◃∙
       C.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
-        =ₛ⟨ 0 & 1 & =ₛ-in {t = pres-comp-↯ (D.comp f g) h} idp ⟩
+        =ₛ⟨ 0 & 1 & expand (pres-comp-↯ (D.comp f g) h) ⟩
       ap F₁' (F₁''-pres-comp (D.comp f g) h) ◃∙
       F₁'-pres-comp (F₁'' (D.comp f g)) (F₁'' h) ◃∙
       ap (λ s → C.comp s (F₁ h)) (pres-comp f g) ◃∙

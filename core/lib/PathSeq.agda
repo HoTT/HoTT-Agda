@@ -257,6 +257,12 @@ module _ {i} {A : Type i} {a a' : A} where
   _∙ₛ_ : {s t u : a =-= a'} → s =ₛ t → t =ₛ u → s =ₛ u
   _∙ₛ_ (=ₛ-in p) (=ₛ-in q) = =ₛ-in (p ∙ q)
 
+  expand : (s : a =-= a') → ↯ s ◃∎ =ₛ s
+  expand s = =ₛ-in idp
+
+  contract : {s : a =-= a'} → s =ₛ ↯ s ◃∎
+  contract = =ₛ-in idp
+
   abstract
     {-
       Note: While this enables more succinct chains of equations in comparison to

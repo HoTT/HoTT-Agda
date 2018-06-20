@@ -112,9 +112,8 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       comp-r (μ e a') ◃∙
       ap (_∙_ (η e)) (comp-l a') ◃∙
       ! (∙-assoc (η e) (η a') (η e)) ◃∎
-        =ₛ⟨ 0 & 1 & =ₛ-in {t = ap η (μ.unit-r (μ e a')) ◃∙
-                               add-path-inverse-l (merid e) (η (μ e a')) ◃∎}
-                          idp ⟩
+        =ₛ⟨ 0 & 1 & expand (ap η (μ.unit-r (μ e a')) ◃∙
+                            add-path-inverse-l (merid e) (η (μ e a')) ◃∎) ⟩
       ap η (μ.unit-r (μ e a')) ◃∙
       add-path-inverse-l (merid e) (η (μ e a')) ◃∙
       ap (_∙_ (η e)) (comp-l a') ◃∙

@@ -51,7 +51,7 @@ module EM₁HSpace {i} (G : AbGroup i) where
             Group.comp EM₁-endo-Ω-group (mult-loop g₁) (mult-loop g₂)
         pres-comp g₁ g₂ =
           ap λ= (λ= (pres-comp' g₁ g₂)) ∙
-          =ₛ-out (!ₛ (∙-λ= (mult-loop' g₁) (mult-loop' g₂)))
+          =ₛ-out (λ=-∙ (mult-loop' g₁) (mult-loop' g₂))
 
     module MultRec = EM₁Level₁Rec {G = G.grp} {C = EM₁ G.grp → EM₁ G.grp} (λ x → x) mult-hom
 
