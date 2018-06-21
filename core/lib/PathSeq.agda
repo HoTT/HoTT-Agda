@@ -349,6 +349,12 @@ module _ {i} {A : Type i} where
           =⟨ p' ⟩
         q =∎
 
+    infixr 10 _=ₛ⟨id⟩_
+    _=ₛ⟨id⟩_ : {a a' : A} (s : a =-= a') {u : a =-= a'}
+      → s =ₛ u
+      → s =ₛ u
+    _=ₛ⟨id⟩_ s e = e
+
     infixr 10 _=ₛ⟨_&_&_⟩_
     _=ₛ⟨_&_&_⟩_ : {a a' : A} (s : a =-= a') {u : a =-= a'}
       → (m n : ℕ)

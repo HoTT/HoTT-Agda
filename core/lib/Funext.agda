@@ -193,13 +193,28 @@ module _ where
     → (f == g) ≃ (f ∼ g)
   app=-equiv {f = f} {g = g} = (app= , app=-is-equiv)
     where
+    app=-λ= : ∀ (h : f ∼ g) → app= (λ= h) == h
+    app=-λ= h = λ= (app=-β h)
+    λ=-app= : ∀ (h : f == g) → λ= (app= h) == h
+    λ=-app= = ! ∘ λ=-η
     abstract
-      app=-λ= : ∀ (h : f ∼ g) → app= (λ= h) == h
-      app=-λ= h = FunextDep.λ= (app=-β h)
-      λ=-app= : ∀ (h : f == g) → λ= (app= h) == h
-      λ=-app= = ! ∘ λ=-η
+      adj : ∀ p → ap app= (λ=-app= p) == app=-λ= (app= p)
+      adj p =
+        ap app= (λ=-app= p)
+          =⟨ ap-! app= (λ=-η p) ⟩
+        ! (ap app= (λ=-η p))
+          =⟨ ap ! (λ=-app=-adj' p) ⟩
+        ! (! (app=-λ= (app= p)))
+          =⟨ !-! (app=-λ= (app= p)) ⟩
+        app=-λ= (app= p) =∎
     app=-is-equiv : is-equiv app=
-    app=-is-equiv = is-eq _ λ= app=-λ= λ=-app=
+    app=-is-equiv = -- is-eq _ λ= app=-λ= λ=-app=
+      record
+      { g = λ=
+      ; f-g = app=-λ=
+      ; g-f = λ=-app=
+      ; adj = adj
+      }
 
 {- Functoriality of application and function extensionality -}
 
@@ -217,6 +232,9 @@ module _ {j} {B : A → Type j} {f g h : Π A B}
 
   ∙-λ= : λ= α ◃∙ λ= β ◃∎ =ₛ λ= (λ x → α x ∙ β x) ◃∎
   ∙-λ= = =ₛ-in (↯ ∙-λ=-seq)
+
+  λ=-∙ : λ= (λ x → α x ∙ β x) ◃∎ =ₛ λ= α ◃∙ λ= β ◃∎
+  λ=-∙ = !ₛ ∙-λ=
 
 module _ {j} {B : A → Type j} {f g h : Π A B}
          (α : f ∼ g) (β : g ∼ h) (a : A) where
@@ -293,15 +311,19 @@ module _ {j} {B : A → Type j} {f g h : Π A B}
         =⟨ ∘-ap (λ f → f a) app= (λ=-η (λ= α ∙ λ= β)) ⟩
       ap (λ p → app= p a) (λ=-η (λ= α ∙ λ= β)) =∎
 
-∙∙-λ= : ∀ {j} {B : A → Type j} {f g h k : Π A B}
-  (α : f ∼ g) (β : g ∼ h) (γ : h ∼ k)
-  → λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎ =ₛ λ= (λ x → α x ∙ β x ∙ γ x) ◃∎
-∙∙-λ= α β γ =
-  λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎
-    =ₛ⟨ 1 & 2 & ∙-λ= β γ ⟩
-  λ= α ◃∙ λ= (λ x → β x ∙ γ x) ◃∎
-    =ₛ⟨ ∙-λ= α (λ x → β x ∙ γ x) ⟩
-  λ= (λ x → α x ∙ β x ∙ γ x) ◃∎ ∎ₛ
+module _ {j} {B : A → Type j} {f g h k : Π A B}
+         (α : f ∼ g) (β : g ∼ h) (γ : h ∼ k) where
+
+  ∙∙-λ= : λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎ =ₛ λ= (λ x → α x ∙ β x ∙ γ x) ◃∎
+  ∙∙-λ= =
+    λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎
+      =ₛ⟨ 1 & 2 & ∙-λ= β γ ⟩
+    λ= α ◃∙ λ= (λ x → β x ∙ γ x) ◃∎
+      =ₛ⟨ ∙-λ= α (λ x → β x ∙ γ x) ⟩
+    λ= (λ x → α x ∙ β x ∙ γ x) ◃∎ ∎ₛ
+
+  λ=-∙∙ : λ= (λ x → α x ∙ β x ∙ γ x) ◃∎ =ₛ λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎
+  λ=-∙∙ = !ₛ ∙∙-λ=
 
 module _ {j} {B : A → Type j} {f g : Π A B} where
 

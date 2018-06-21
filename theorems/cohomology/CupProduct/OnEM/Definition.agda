@@ -153,9 +153,9 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
         λ= (cp₀₁-distr-l₁ g₁ g₂ g₃) ◃∎
           =ₛ₁⟨ ap λ= (λ= (cp₀₁-distr-l-coh g₁ g₂ g₃)) ⟩
         λ= (cp₀₁-distr-l₂ g₁ g₂ g₃) ◃∎
-          =ₛ⟨ !ₛ (∙∙-λ= (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃))
-                        (cp₀₁-distr-l g₁ (R.add g₂ g₃))
-                        (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g'))) ⟩
+          =ₛ⟨ λ=-∙∙ (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃))
+                    (cp₀₁-distr-l g₁ (R.add g₂ g₃))
+                    (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ⟩
         λ= (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃)) ◃∙
         λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
         λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎
@@ -233,8 +233,8 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
       app=-ap-cp₁₁-seq : ∀ g y → app= (ap cp₁₁ (emloop g)) y =-= ap [_] (η (cp₀₁ g y))
       app=-ap-cp₁₁-seq g y =
         app= (ap cp₁₁ (emloop g)) y
-          =⟪ ap (λ z → app= z y) (cp₁₁-emloop-β g) ⟫
-        app= (λ= (λ y₁ → ap [_] (η (cp₀₁ g y₁)))) y
+          =⟪ ap (λ p → app= p y) (cp₁₁-emloop-β g) ⟫
+        app= (λ= (λ x → ap [_] (η (cp₀₁ g x)))) y
           =⟪ app=-β (λ x → ap [_] (η (cp₀₁ g x))) y ⟫
         ap [_] (η (cp₀₁ g y)) ∎∎
 
@@ -294,13 +294,67 @@ module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
         ap2 _∙_ (app=-β (λ x → ap [_] (η (cp₀₁ g₁ x))) y) (app=-β (λ x → ap [_] (η (cp₀₁ g₂ x))) y) ◃∎
           =ₛ⟨ 3 & 2 &
               app=-β-coh (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) y ⟩
-        {!ap (λ u → app= (ap cp₁₁ u) y) (emloop-comp g₁ g₂) ◃∙
-        ap (λ u → app= u y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap (λ x → app= (ap cp₁₁ x) y) (emloop-comp g₁ g₂) ◃∙
+        ap (λ p → app= p y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
         ap2 (λ a b → app= (a ∙ b) y) (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ◃∙
         ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∙
         app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
-          =ₛ⟨ ? ⟩
-        ?!}
+          =ₛ₁⟨ 0 & 1 & ap-∘ (λ p → app= p y) (ap cp₁₁) (emloop-comp g₁ g₂) ⟩
+        ap (λ p → app= p y) (ap (ap cp₁₁) (emloop-comp g₁ g₂)) ◃∙
+        ap (λ p → app= p y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap2 (λ a b → app= (a ∙ b) y) (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ◃∙
+        ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∙
+        app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
+          =ₛ₁⟨ 2 & 1 & ! (ap-ap2 (λ p → app= p y) _∙_ (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂)) ⟩
+        ap (λ p → app= p y) (ap (ap cp₁₁) (emloop-comp g₁ g₂)) ◃∙
+        ap (λ p → app= p y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
+        ap (λ p → app= p y) (ap2 _∙_ (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂)) ◃∙
+        ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∙
+        app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
+          =ₛ⟨ 0 & 3 & ap-seq-=ₛ (λ p → app= p y) (CP₁₁-Rec.emloop-comp-path g₁ g₂) ⟩
+        ap (λ p → app= p y) (cp₁₁-emloop-β (R.add g₁ g₂)) ◃∙
+        ap (λ p → app= p y) (TwoSemiFunctor.pres-comp F g₁ g₂) ◃∙
+        ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∙
+        app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
+          =ₛ⟨ 1 & 2 & step₈ ⟩
+        ap (λ p → app= p y) (cp₁₁-emloop-β (R.add g₁ g₂)) ◃∙
+        ap (λ p → app= p y) (ap λ= (TwoSemiFunctor.pres-comp F' g₁ g₂)) ◃∙
+        app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
+          =ₛ₁⟨ 1 & 1 & ∘-ap (λ p → app= p y) λ= (TwoSemiFunctor.pres-comp F' g₁ g₂) ⟩
+        ap (λ p → app= p y) (cp₁₁-emloop-β (R.add g₁ g₂)) ◃∙
+        ap (λ γ → app= (λ= γ) y) (TwoSemiFunctor.pres-comp F' g₁ g₂) ◃∙
+        app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
+          =ₛ⟨ 1 & 2 &
+              homotopy-naturality (λ γ → app= (λ= γ) y)
+                                  (λ γ → γ y)
+                                  (λ γ → app=-β γ y)
+                                  (TwoSemiFunctor.pres-comp F' g₁ g₂) ⟩
+        ap (λ p → app= p y) (cp₁₁-emloop-β (R.add g₁ g₂)) ◃∙
+        app=-β (λ x → ap [_] (η (cp₀₁ (R.add g₁ g₂) x))) y ◃∙
+        app= (TwoSemiFunctor.pres-comp F' g₁ g₂) y ◃∎
+          =ₛ⟨ 0 & 2 & contract ⟩
+        app=-ap-cp₁₁ (R.add g₁ g₂) y ◃∙
+        app= (TwoSemiFunctor.pres-comp F' g₁ g₂) y ◃∎ ∎ₛ
+        where
+        step₈ :
+          ap (λ p → app= p y) (TwoSemiFunctor.pres-comp F g₁ g₂) ◃∙
+          ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∎
+          =ₛ
+          ap (λ p → app= p y) (ap λ= (TwoSemiFunctor.pres-comp F' g₁ g₂)) ◃∎
+        step₈ = ap-seq-=ₛ (λ p → app= p y) $
+          TwoSemiFunctor.pres-comp F g₁ g₂ ◃∙
+          =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
+            =ₛ⟨ 0 & 1 & expand (comp-functors-pres-comp-seq F' (λ=-functor (EM₁ R₊) (EM 2)) g₁ g₂) ⟩
+          ap λ= (TwoSemiFunctor.pres-comp F' g₁ g₂) ◃∙
+          TwoSemiFunctor.pres-comp (λ=-functor (EM₁ R₊) (EM 2)) (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ◃∙
+          =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
+            =ₛ₁⟨ 1 & 1 & λ=-functor-pres-comp=λ=-∙ (EM₁ R₊) (EM 2) (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ⟩
+          ap λ= (TwoSemiFunctor.pres-comp F' g₁ g₂) ◃∙
+          =ₛ-out (λ=-∙ (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∙
+          =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
+            =ₛ⟨ 1 & 2 & =ₛ-in {t = []} (!-inv-l (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))))) ⟩
+          ap λ= (TwoSemiFunctor.pres-comp F' g₁ g₂) ◃∎ ∎ₛ
+
       ap-cp₁₁-seq : ∀ g y → ap (λ x → cp₁₁ x y) (emloop g) =-= ap [_] (η (cp₀₁ g y))
       ap-cp₁₁-seq g y =
         ap (λ x → cp₁₁ x y) (emloop g)

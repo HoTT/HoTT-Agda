@@ -39,22 +39,24 @@ module _ {i j k} (A : Type i) (G : TwoSemiCategory j k) where
         fun-assoc α (fun-comp β γ) δ ◃∙
         ap (fun-comp α) (fun-assoc β γ δ) ◃∎
     fun-pentagon α β γ δ =
-      fun-assoc (fun-comp α β) γ δ ◃∙ fun-assoc α β (fun-comp γ δ) ◃∎
+      fun-assoc (fun-comp α β) γ δ ◃∙
+      fun-assoc α β (fun-comp γ δ) ◃∎
         =ₛ⟨ ∙-λ= (λ a → G.assoc (G.comp (α a) (β a)) (γ a) (δ a))
                  (λ a → G.assoc (α a) (β a) (G.comp (γ a) (δ a))) ⟩
-      λ= (λ a → G.assoc (G.comp (α a) (β a)) (γ a) (δ a) ∙ G.assoc (α a) (β a) (G.comp (γ a) (δ a))) ◃∎
+      λ= (λ a → G.assoc (G.comp (α a) (β a)) (γ a) (δ a) ∙
+                G.assoc (α a) (β a) (G.comp (γ a) (δ a))) ◃∎
         =ₛ₁⟨ ap λ= (λ= (λ a → =ₛ-out (G.pentagon-identity (α a) (β a) (γ a) (δ a)))) ⟩
       λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)) ∙
                 G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
                 ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
-        =ₛ⟨ !ₛ (∙-λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))
-                     (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
-                            ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a)))) ⟩
+        =ₛ⟨ λ=-∙ (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))
+                 (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
+                        ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ⟩
       λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))◃∙
       λ= (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
       ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
-        =ₛ⟨ 1 & 1 & !ₛ (∙-λ= (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a))
-                             (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a)))) ⟩
+        =ₛ⟨ 1 & 1 & λ=-∙ (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a))
+                         (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ⟩
       λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a))) ◃∙
       fun-assoc α (fun-comp β γ) δ ◃∙
       λ= (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
@@ -129,9 +131,9 @@ module _ {i j₁ k₁ j₂ k₂} (A : Type i) {G : TwoSemiCategory j₁ k₁} {H
       λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a)) ∙
                 F.pres-comp (α a) (G.comp (β a) (γ a)) ∙
                 ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎
-        =ₛ⟨ !ₛ (∙∙-λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a)))
-                      (λ a → F.pres-comp (α a) (G.comp (β a) (γ a)))
-                      (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a)))) ⟩
+        =ₛ⟨ λ=-∙∙ (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a)))
+                  (λ a → F.pres-comp (α a) (G.comp (β a) (γ a)))
+                  (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ⟩
       λ= (λ a → ap F.F₁ (G.assoc (α a) (β a) (γ a))) ◃∙
       fun-pres-comp α (fun-G.comp β γ) ◃∙
       λ= (λ a → ap (H.comp (fun-F₁ α a)) (F.pres-comp (β a) (γ a))) ◃∎

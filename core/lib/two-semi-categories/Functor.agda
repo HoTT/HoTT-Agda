@@ -43,33 +43,37 @@ record TwoSemiFunctor {i₁ j₁ i₂ j₂} (C : TwoSemiCategory i₁ j₁) (D :
     pres-comp-coh : {w x y z : C.El} (f : C.Arr w x) (g : C.Arr x y) (h : C.Arr y z)
       → pres-comp-coh-seq₁ f g h =ₛ pres-comp-coh-seq₂ f g h
 
-comp-functors : ∀ {i₁ j₁ i₂ j₂ i₃ j₃}
-  {C : TwoSemiCategory i₁ j₁} {D : TwoSemiCategory i₂ j₂} {E : TwoSemiCategory i₃ j₃}
-  (F : TwoSemiFunctor C D) (G : TwoSemiFunctor D E)
-  → TwoSemiFunctor C E
-comp-functors {C = C} {D = D} {E = E} F G =
-  record { F₀ = F₀; F₁ = F₁; pres-comp = pres-comp; pres-comp-coh = pres-comp-coh }
-  where
+module FunctorComposition
+  {i₁ j₁ i₂ j₂ i₃ j₃} {C : TwoSemiCategory i₁ j₁} {D : TwoSemiCategory i₂ j₂} {E : TwoSemiCategory i₃ j₃}
+  (F : TwoSemiFunctor C D) (G : TwoSemiFunctor D E) where
+
+  private
     module C = TwoSemiCategory C
     module D = TwoSemiCategory D
     module E = TwoSemiCategory E
     module F = TwoSemiFunctor F
     module G = TwoSemiFunctor G
+
     F₀ : C.El → E.El
     F₀ = G.F₀ ∘ F.F₀
+
     F₁ : {x y : C.El} → C.Arr x y → E.Arr (F₀ x) (F₀ y)
     F₁ f = G.F₁ (F.F₁ f)
-    pres-comp↯ : {x y z : C.El} (f : C.Arr x y) (g : C.Arr y z)
-      → G.F₁ (F.F₁ (C.comp f g)) =-= E.comp (G.F₁ (F.F₁ f)) (G.F₁ (F.F₁ g))
-    pres-comp↯ f g =
-      G.F₁ (F.F₁ (C.comp f g))
-        =⟪ ap G.F₁ (F.pres-comp f g) ⟫
-      G.F₁ (D.comp (F.F₁ f) (F.F₁ g))
-        =⟪ G.pres-comp (F.F₁ f) (F.F₁ g) ⟫
-      E.comp (G.F₁ (F.F₁ f)) (G.F₁ (F.F₁ g)) ∎∎
+
+  pres-comp-seq : {x y z : C.El} (f : C.Arr x y) (g : C.Arr y z)
+    → G.F₁ (F.F₁ (C.comp f g)) =-= E.comp (G.F₁ (F.F₁ f)) (G.F₁ (F.F₁ g))
+  pres-comp-seq f g =
+    G.F₁ (F.F₁ (C.comp f g))
+      =⟪ ap G.F₁ (F.pres-comp f g) ⟫
+    G.F₁ (D.comp (F.F₁ f) (F.F₁ g))
+      =⟪ G.pres-comp (F.F₁ f) (F.F₁ g) ⟫
+    E.comp (G.F₁ (F.F₁ f)) (G.F₁ (F.F₁ g)) ∎∎
+
+  private
     pres-comp : {x y z : C.El} (f : C.Arr x y) (g : C.Arr y z)
       → G.F₁ (F.F₁ (C.comp f g)) == E.comp (G.F₁ (F.F₁ f)) (G.F₁ (F.F₁ g))
-    pres-comp f g = ↯ (pres-comp↯ f g)
+    pres-comp f g = ↯ (pres-comp-seq f g)
+
     abstract
       pres-comp-coh : {w x y z : C.El} (f : C.Arr w x) (g : C.Arr x y) (h : C.Arr y z)
         → pres-comp (C.comp f g) h ◃∙ ap (λ s → E.comp s (F₁ h)) (pres-comp f g) ◃∙ E.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
@@ -84,7 +88,7 @@ comp-functors {C = C} {D = D} {E = E} F G =
         G.pres-comp (F.F₁ (C.comp f g)) (F.F₁ h) ◃∙
         ap (λ s → E.comp s (F₁ h)) (pres-comp f g) ◃∙
         E.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
-          =ₛ⟨ 2 & 1 & ap-seq-∙ (λ s → E.comp s (F₁ h)) (pres-comp↯ f g) ⟩
+          =ₛ⟨ 2 & 1 & ap-seq-∙ (λ s → E.comp s (F₁ h)) (pres-comp-seq f g) ⟩
         ap G.F₁ (F.pres-comp (C.comp f g) h) ◃∙
         G.pres-comp (F.F₁ (C.comp f g)) (F.F₁ h) ◃∙
         ap (λ s → E.comp s (F₁ h)) (ap G.F₁ (F.pres-comp f g)) ◃∙
@@ -150,7 +154,7 @@ comp-functors {C = C} {D = D} {E = E} F G =
         pres-comp f (C.comp g h) ◃∙
         ap (E.comp (F₁ f)) (ap G.F₁ (F.pres-comp g h)) ◃∙
         ap (E.comp (F₁ f)) (G.pres-comp (F.F₁ g) (F.F₁ h)) ◃∎
-          =ₛ⟨ 2 & 2 & ∙-ap-seq (E.comp (F₁ f)) (pres-comp↯ g h) ⟩
+          =ₛ⟨ 2 & 2 & ∙-ap-seq (E.comp (F₁ f)) (pres-comp-seq g h) ⟩
         ap G.F₁ (ap F.F₁ (C.assoc f g h)) ◃∙
         pres-comp f (C.comp g h) ◃∙
         ap (E.comp (F₁ f)) (pres-comp g h) ◃∎
@@ -158,6 +162,20 @@ comp-functors {C = C} {D = D} {E = E} F G =
         ap F₁ (C.assoc f g h) ◃∙
         pres-comp f (C.comp g h) ◃∙
         ap (E.comp (F₁ f)) (pres-comp g h) ◃∎ ∎ₛ
+
+  composition : TwoSemiFunctor C E
+  composition =
+    record
+    { F₀ = F₀
+    ; F₁ = F₁
+    ; pres-comp = pres-comp
+    ; pres-comp-coh = pres-comp-coh
+    }
+
+open FunctorComposition
+  renaming ( composition to comp-functors
+           ; pres-comp-seq to comp-functors-pres-comp-seq
+           ) public
 
 infixr 80 _–F→_
 _–F→_ = comp-functors

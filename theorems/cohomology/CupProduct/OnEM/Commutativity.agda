@@ -62,12 +62,12 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
       comm-embase-emloop' : ∀ h →
         ap (cp₁₁ embase) (emloop h) ==
         ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h)
-      comm-embase-emloop' h = ! (↯ comm-embase-emloop↯ h)
+      comm-embase-emloop' h = ! (↯ (comm-embase-emloop↯ h))
 
       comm-emloop-embase' : ∀ g →
         ap (λ x → cp₁₁ x embase) (emloop g) ==
         ap (antipodal-map ∘ cp₁₁ embase) (emloop g)
-      comm-emloop-embase' g = ! (↯ comm-emloop-embase↯ g)
+      comm-emloop-embase' g = ! (↯ (comm-emloop-embase↯ g))
 
       comm-embase-emloop-comp' : ∀ h₁ h₂ →
         comm-embase-emloop' (R.add h₁ h₂) ◃∙
