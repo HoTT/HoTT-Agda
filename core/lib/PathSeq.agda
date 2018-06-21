@@ -469,6 +469,24 @@ module _ {i} {A : Type i} where
   post-rotate-seq-in {p = p} {r = r} {q = q} e =
     !ₛ (post-rotate'-seq-in {r = r} {q = q} {p = p} (!ₛ e))
 
+module _ {i} {A : Type i} where
+
+  !-∙-seq : {a a' : A} (s : a =-= a')
+    → ! (↯ s) ◃∎ =ₛ seq-! s
+  !-∙-seq [] = =ₛ-in idp
+  !-∙-seq (p ◃∙ s) =
+    ! (↯ (p ◃∙ s)) ◃∎
+      =ₛ₁⟨ ap ! (↯-∙∙ (p ◃∎) s) ⟩
+    ! (p ∙ ↯ s) ◃∎
+      =ₛ⟨ =ₛ-in {t = ! (↯ s) ◃∙ ! p ◃∎} (!-∙ p (↯ s)) ⟩
+    ! (↯ s) ◃∙ ! p ◃∎
+      =ₛ⟨ 0 & 1 & !-∙-seq s ⟩
+    seq-! s ∙▹ ! p ∎ₛ
+
+  ∙-!-seq : {a a' : A} (s : a =-= a')
+    → seq-! s =ₛ ! (↯ s) ◃∎
+  ∙-!-seq s = !ₛ (!-∙-seq s)
+
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
   ap-seq : {a a' : A} → a =-= a' → f a =-= f a'

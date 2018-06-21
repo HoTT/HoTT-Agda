@@ -34,21 +34,18 @@ dual-cat C =
           ! (C.assoc i (C.comp h g) f) ◃∙
           ap (λ s → C.comp s f) (! (C.assoc i h g)) ◃∎
       pentagon = λ f g h i →
-        ! (C.assoc i h (C.comp g f)) ◃∙ ! (C.assoc (C.comp i h) g f) ◃∎
-          =ₛ⟨ =ₛ-in (∙-! (C.assoc i h (C.comp g f)) (C.assoc (C.comp i h) g f)) ⟩
+        ! (C.assoc i h (C.comp g f)) ◃∙
+        ! (C.assoc (C.comp i h) g f) ◃∎
+          =ₛ⟨ ∙-!-seq (C.assoc (C.comp i h) g f ◃∙ C.assoc i h (C.comp g f) ◃∎) ⟩
         ! (C.assoc (C.comp i h) g f ∙ C.assoc i h (C.comp g f)) ◃∎
-          =ₛ⟨ =ₛ-in (ap ! (=ₛ-out (C.pentagon-identity i h g f))) ⟩
+          =ₛ₁⟨ ap ! (=ₛ-out (C.pentagon-identity i h g f)) ⟩
         ! (ap (λ s → C.comp s f) (C.assoc i h g) ∙
            C.assoc i (C.comp h g) f ∙
            ap (C.comp i) (C.assoc h g f)) ◃∎
-          =ₛ⟨ =ₛ-in $
-              !-∙ (ap (λ s → C.comp s f) (C.assoc i h g))
-                  (C.assoc i (C.comp h g) f ∙ ap (C.comp i) (C.assoc h g f)) ⟩
-        ! (C.assoc i (C.comp h g) f ∙
-           ap (C.comp i) (C.assoc h g f)) ◃∙
-        ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎
-          =ₛ⟨ 0 & 1 & 2 &
-              !-∙ (C.assoc i (C.comp h g) f) (ap (C.comp i) (C.assoc h g f)) ⟩
+          =ₛ⟨ !-∙-seq $
+              ap (λ s → C.comp s f) (C.assoc i h g) ◃∙
+              C.assoc i (C.comp h g) f ◃∙
+              ap (C.comp i) (C.assoc h g f) ◃∎ ⟩
         ! (ap (C.comp i) (C.assoc h g f)) ◃∙
         ! (C.assoc i (C.comp h g) f) ◃∙
         ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎
