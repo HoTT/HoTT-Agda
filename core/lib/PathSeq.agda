@@ -493,6 +493,17 @@ module _ {i} {A : Type i} where
     → seq-! s =ₛ ! (↯ s) ◃∎
   ∙-!-seq s = !ₛ (!-∙-seq s)
 
+  !-=ₛ : {a a' : A} {s t : a =-= a'} (e : s =ₛ t)
+    → seq-! s =ₛ seq-! t
+  !-=ₛ {s = s} {t = t} e =
+    seq-! s
+      =ₛ⟨ ∙-!-seq s ⟩
+    ! (↯ s) ◃∎
+      =ₛ₁⟨ ap ! (=ₛ-out e) ⟩
+    ! (↯ t) ◃∎
+      =ₛ⟨ !-∙-seq t ⟩
+    seq-! t ∎ₛ
+
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
   ap-seq : {a a' : A} → a =-= a' → f a =-= f a'

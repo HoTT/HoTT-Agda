@@ -24,6 +24,10 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
     → ap f (p ∙ q) == ap f p ∙ ap f q
   ap-∙ idp q = idp
 
+  !ap-∙=∙-ap : {x y z : A} (p : x == y) (q : y == z)
+    → ! (ap-∙ p q) == ∙-ap p q
+  !ap-∙=∙-ap idp q = idp
+
   ∙∙-ap : {x y z w : A} (p : x == y) (q : y == z) (r : z == w)
     → ap f p ∙ ap f q ∙ ap f r == ap f (p ∙ q ∙ r)
   ∙∙-ap idp idp r = idp
@@ -79,10 +83,6 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
 ap-∘ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
   {x y : A} (p : x == y) → ap (g ∘ f) p == ap g (ap f p)
 ap-∘ f g idp = idp
-
-ap-cst : ∀ {i j} {A : Type i} {B : Type j} (b : B) {x y : A} (p : x == y)
-  → ap (cst b) p == idp
-ap-cst b idp = idp
 
 ap-idf : ∀ {i} {A : Type i} {u v : A} (p : u == v) → ap (idf A) p == p
 ap-idf idp = idp
@@ -210,6 +210,16 @@ module _ {i j} {A : Type i} {B : Type j} where
     {x y : A} (p : x == y)
     → ap2 f p p == ap (λ x → f x x) p
   ap2-diag f idp = idp
+
+module _ {i j} {A : Type i} {B : Type j} (b : B) where
+
+  ap-cst : {x y : A} (p : x == y)
+    → ap (cst b) p == idp
+  ap-cst idp = idp
+
+  ap-cst-coh : {x y z : A} (p : x == y) (q : y == z)
+    → ap-cst (p ∙ q) == ap-∙ (cst b) p q ∙ ap2 _∙_ (ap-cst p) (ap-cst q)
+  ap-cst-coh idp idp = idp
 
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
 
