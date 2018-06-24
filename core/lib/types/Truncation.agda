@@ -92,8 +92,7 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
   =ₜ-level a b = snd (Trunc= a b)
 
   =ₜ-equiv : (a b : Trunc (S n) A) → (a == b) ≃ (a =ₜ b)
-  =ₜ-equiv a b = equiv (to a b) (from a b) (to-from a b) (from-to a b) where
-
+  =ₜ-equiv a b = to a b , to-is-equiv a b where
     to-aux : (a : Trunc (S n) A) → a =ₜ a
     to-aux = Trunc-elim {{λ x → raise-level _ (=ₜ-level x x)}}
                         (λ a → [ idp ])
@@ -107,21 +106,37 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
     from : (a b : Trunc (S n) A) → a =ₜ b → a == b
     from = Trunc-elim (λ a → Trunc-elim (λ b → Trunc-rec (from-aux a b)))
 
-    abstract
-      to-from-aux : (a b : A) → (p : a == b) → to _ _ (from-aux a b p) == [ p ]
-      to-from-aux a .a idp = idp
+    to-from-aux : (a b : A) → (p : a == b) → to _ _ (from-aux a b p) == [ p ]
+    to-from-aux a .a idp = idp
 
-      to-from : (a b : Trunc (S n) A) (x : a =ₜ b) → to a b (from a b x) == x
-      to-from = Trunc-elim {{λ x → Π-level (λ y → Π-level (λ _ → =-preserves-level (raise-level _ (=ₜ-level x y))))}}
-                (λ a → Trunc-elim {{λ x → Π-level (λ _ → =-preserves-level (raise-level _ (=ₜ-level [ a ] x)))}}
-                (λ b → Trunc-elim
-                (to-from-aux a b)))
+    to-from : (a b : Trunc (S n) A) (x : a =ₜ b) → to a b (from a b x) == x
+    to-from = Trunc-elim {{λ x → Π-level (λ y → Π-level (λ _ → =-preserves-level (raise-level _ (=ₜ-level x y))))}}
+              (λ a → Trunc-elim {{λ x → Π-level (λ _ → =-preserves-level (raise-level _ (=ₜ-level [ a ] x)))}}
+              (λ b → Trunc-elim
+              (to-from-aux a b)))
 
-      from-to-aux : (a : Trunc (S n) A) → from a a (to-aux a) == idp
-      from-to-aux = Trunc-elim (λ _ → idp)
+    from-to-aux : (a : Trunc (S n) A) → from a a (to-aux a) == idp
+    from-to-aux = Trunc-elim (λ _ → idp)
 
-      from-to : (a b : Trunc (S n) A) (p : a == b) → from a b (to a b p) == p
-      from-to a .a idp = from-to-aux a
+    from-to : (a b : Trunc (S n) A) (p : a == b) → from a b (to a b p) == p
+    from-to a .a idp = from-to-aux a
+
+    adj : (ta tb : Trunc (S n) A) (p : ta == tb)
+      → ap (to ta tb) (from-to ta tb p) == to-from ta tb (to ta tb p)
+    adj ta .ta idp =
+      Trunc-elim {P = λ ta → ap (to ta ta) (from-to ta ta idp) == to-from ta ta (to ta ta idp)}
+                 {{λ x → =-preserves-level $ =-preserves-level $ raise-level _ $ =ₜ-level x x}}
+                 (λ _ → idp)
+                 ta
+
+    to-is-equiv : ∀ a b → is-equiv (to a b)
+    to-is-equiv a b =
+      record
+      { g = from a b
+      ; f-g = to-from a b
+      ; g-f = from-to a b
+      ; adj = adj a b
+      }
 
   =ₜ-path : (a b : Trunc (S n) A) → (a == b) == (a =ₜ b)
   =ₜ-path a b = ua (=ₜ-equiv a b)
@@ -332,57 +347,45 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
           ) tb
         ) ta
 
-  abstract
-    –>-=ₜ-equiv-pres-∙ : {ta tb tc : Trunc (S n) A}
-      (p : ta == tb) (q : tb == tc)
-      →  –> (=ₜ-equiv ta tc) (p ∙ q)
-      == _∙ₜ_ {ta = ta} (–> (=ₜ-equiv ta tb) p) (–> (=ₜ-equiv tb tc) q)
-    –>-=ₜ-equiv-pres-∙ {ta = ta} idp idp =
-      Trunc-elim
-        {P = λ ta → –> (=ₜ-equiv ta ta) idp
-                == _∙ₜ_ {ta = ta} (–> (=ₜ-equiv ta ta) idp)
-                                  (–> (=ₜ-equiv ta ta) idp)}
-        {{λ ta → raise-level _ $ =-preserves-level $ =ₜ-level ta ta}}
-        (λ a → idp)
-        ta
+  –>-=ₜ-equiv-pres-∙ : {ta tb tc : Trunc (S n) A}
+    (p : ta == tb) (q : tb == tc)
+    →  –> (=ₜ-equiv ta tc) (p ∙ q)
+    == _∙ₜ_ {ta = ta} (–> (=ₜ-equiv ta tb) p) (–> (=ₜ-equiv tb tc) q)
+  –>-=ₜ-equiv-pres-∙ {ta = ta} idp idp =
+    Trunc-elim
+      {P = λ ta → –> (=ₜ-equiv ta ta) idp
+              == _∙ₜ_ {ta = ta} (–> (=ₜ-equiv ta ta) idp)
+                                (–> (=ₜ-equiv ta ta) idp)}
+      {{λ ta → raise-level _ $ =-preserves-level $ =ₜ-level ta ta}}
+      (λ a → idp)
+      ta
 
+  abstract
     –>-=ₜ-equiv-pres-∙-coh : {ta tb tc td : Trunc (S n) A}
       (p : ta == tb) (q : tb == tc) (r : tc == td)
-      → –>-=ₜ-equiv-pres-∙ (p ∙ q) r
-          ∙ ap (λ u → _∙ₜ_ {ta = ta} u (–> (=ₜ-equiv tc td) r)) (–>-=ₜ-equiv-pres-∙ p q)
-          ∙ ∙ₜ-assoc {ta = ta} (–> (=ₜ-equiv ta tb) p) (–> (=ₜ-equiv tb tc) q) (–> (=ₜ-equiv tc td) r)
-        == ap (–> (=ₜ-equiv ta td)) (∙-assoc p q r)
-          ∙ –>-=ₜ-equiv-pres-∙ p (q ∙ r)
-          ∙ ap (_∙ₜ_ {ta = ta} (–> (=ₜ-equiv ta tb) p)) (–>-=ₜ-equiv-pres-∙ q r)
+      → –>-=ₜ-equiv-pres-∙ (p ∙ q) r ◃∙
+        ap (λ u → _∙ₜ_ {ta = ta} u (–> (=ₜ-equiv tc td) r)) (–>-=ₜ-equiv-pres-∙ p q) ◃∙
+        ∙ₜ-assoc {ta = ta} (–> (=ₜ-equiv ta tb) p) (–> (=ₜ-equiv tb tc) q) (–> (=ₜ-equiv tc td) r) ◃∎
+        =ₛ
+        ap (–> (=ₜ-equiv ta td)) (∙-assoc p q r) ◃∙
+        –>-=ₜ-equiv-pres-∙ p (q ∙ r) ◃∙
+        ap (_∙ₜ_ {ta = ta} (–> (=ₜ-equiv ta tb) p)) (–>-=ₜ-equiv-pres-∙ q r) ◃∎
     –>-=ₜ-equiv-pres-∙-coh {ta = ta} idp idp idp =
       Trunc-elim
         {P = λ ta → P ta ta ta ta idp idp idp}
-        {{λ ta → raise-level n $ =-preserves-level $ =-preserves-level $ =ₜ-level ta ta}}
-        (λ a → idp)
+        {{λ ta → =ₛ-level $ raise-level (S (S n)) $ raise-level (S n) $ raise-level n $ =ₜ-level ta ta}}
+        (λ a → =ₛ-in idp)
         ta
       where
       P : (ta tb tc td : Trunc (S n) A) (p : ta == tb) (q : tb == tc) (r : tc == td) → Type i
       P ta tb tc td p q r =
-        –>-=ₜ-equiv-pres-∙ (p ∙ q) r
-          ∙ ap (λ u → _∙ₜ_ {ta = ta} u (–> (=ₜ-equiv tc td) r)) (–>-=ₜ-equiv-pres-∙ p q)
-          ∙ ∙ₜ-assoc {ta = ta} (–> (=ₜ-equiv ta tb) p) (–> (=ₜ-equiv tb tc) q) (–> (=ₜ-equiv tc td) r)
-        == ap (–> (=ₜ-equiv ta td)) (∙-assoc p q r)
-          ∙ –>-=ₜ-equiv-pres-∙ p (q ∙ r)
-          ∙ ap (_∙ₜ_ {ta = ta} (–> (=ₜ-equiv ta tb) p)) (–>-=ₜ-equiv-pres-∙ q r)
-
-  -- TODO: still needed? follows from –>-=ₜ-equiv-pres-∙ and the inverse functor machinery
-  <–-=ₜ-equiv-pres-∙ₜ : {x y z : Trunc (S n) A } (p : x =ₜ y) (q : y =ₜ z)
-    →  <– (=ₜ-equiv x z) (_∙ₜ_ {x} p q)
-    == <– (=ₜ-equiv x y) p ∙ <– (=ₜ-equiv y z) q
-  <–-=ₜ-equiv-pres-∙ₜ {x} {y} {z} p q =
-    –>-is-inj (=ₜ-equiv x z) (<– (=ₜ-equiv x z) (_∙ₜ_ {x} p q)) (<– (=ₜ-equiv x y) p ∙ <– (=ₜ-equiv y z) q) $
-      –> (=ₜ-equiv x z) (<– (=ₜ-equiv x z) (_∙ₜ_ {x} p q))
-        =⟨ <–-inv-r (=ₜ-equiv x z) (_∙ₜ_ {x} p q) ⟩
-      _∙ₜ_ {x} p q
-        =⟨ ! (ap2 (_∙ₜ_ {x}) (<–-inv-r (=ₜ-equiv x y) p) (<–-inv-r (=ₜ-equiv y z) q)) ⟩
-      _∙ₜ_ {x} (–> (=ₜ-equiv x y) (<– (=ₜ-equiv x y) p)) (–> (=ₜ-equiv y z) (<– (=ₜ-equiv y z) q))
-        =⟨ ! (–>-=ₜ-equiv-pres-∙ (<– (=ₜ-equiv x y) p) (<– (=ₜ-equiv y z) q)) ⟩
-      –> (=ₜ-equiv x z) (<– (=ₜ-equiv x y) p ∙ <– (=ₜ-equiv y z) q) =∎
+        –>-=ₜ-equiv-pres-∙ (p ∙ q) r ◃∙
+        ap (λ u → _∙ₜ_ {ta = ta} u (–> (=ₜ-equiv tc td) r)) (–>-=ₜ-equiv-pres-∙ p q) ◃∙
+        ∙ₜ-assoc {ta = ta} (–> (=ₜ-equiv ta tb) p) (–> (=ₜ-equiv tb tc) q) (–> (=ₜ-equiv tc td) r) ◃∎
+        =ₛ
+        ap (–> (=ₜ-equiv ta td)) (∙-assoc p q r) ◃∙
+        –>-=ₜ-equiv-pres-∙ p (q ∙ r) ◃∙
+        ap (_∙ₜ_ {ta = ta} (–> (=ₜ-equiv ta tb) p)) (–>-=ₜ-equiv-pres-∙ q r) ◃∎
 
 {- naturality of =ₜ-equiv -}
 

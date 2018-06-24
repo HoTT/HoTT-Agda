@@ -71,7 +71,7 @@ module _ {i j} (A : Type i) (B : Type j) {{B-level : has-level 2 B}} where
     → app=-inverse.pres-comp α β == =ₛ-out (λ=-∙ α β)
   λ=-functor-pres-comp=λ=-∙ α β = =ₛ-out {t = =ₛ-out (λ=-∙ α β) ◃∎} $
     pres-comp α β ◃∎
-      =ₛ⟨ expand (pres-comp-↯ α β) ⟩
+      =ₛ⟨ pres-comp-β α β ⟩
     ap G₁' (G₁''-pres-comp α β) ◃∙
     G₁'-pres-comp (G₁'' α) (G₁'' β) ◃∎
       =ₛ⟨id⟩
@@ -79,7 +79,7 @@ module _ {i j} (A : Type i) (B : Type j) {{B-level : has-level 2 B}} where
     G₁'-pres-comp α β ◃∎
       =ₛ⟨ 0 & 1 & expand [] ⟩
     G₁'-pres-comp α β ◃∎
-      =ₛ⟨ expand (G₁'-pres-comp-↯ α β) ⟩
+      =ₛ⟨ G₁'-pres-comp-β α β ⟩
     ap2 (λ s t → G₁' (λ a → s a ∙ t a)) (F₁-η α) (F₁-η β) ◃∙
     ap G₁' (! (app=-functor.pres-comp (G₁' α) (G₁' β))) ◃∙
     G₁'-β (G₁' α ∙ G₁' β) ◃∎

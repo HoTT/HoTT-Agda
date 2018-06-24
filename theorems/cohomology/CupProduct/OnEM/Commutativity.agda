@@ -44,36 +44,36 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
         ap (cp₁₁ embase) (emloop h) ∎∎
 
       comm-emloop-embase↯ : ∀ g →
-        ap (antipodal-map ∘ cp₁₁ embase) (emloop g) =-=
-        ap (λ x → cp₁₁ x embase) (emloop g)
+        ap (λ x → cp₁₁ x embase) (emloop g) =-=
+        ap (antipodal-map ∘ cp₁₁ embase) (emloop g)
       comm-emloop-embase↯ g =
-        ap (cst [ north ]) (emloop g)
-          =⟪ ap-cst [ north ] (emloop g) ⟫
-        idp
-          =⟪ ! (ap (ap [_]) (!-inv-r (merid embase))) ⟫
-        ap [_] (η embase)
-          =⟪idp⟫
-        ap [_] (η (cp₀₁ g embase))
-          =⟪ ! (app=-ap-cp₁₁ g embase) ⟫
+        ap (λ x → cp₁₁ x embase) (emloop g)
+          =⟪ ap-∘ (λ f → f embase) cp₁₁ (emloop g) ⟫
         app= (ap cp₁₁ (emloop g)) embase
-          =⟪ ∘-ap (λ f → f embase) cp₁₁ (emloop g) ⟫
-        ap (λ x → cp₁₁ x embase) (emloop g) ∎∎
+          =⟪ app=-ap-cp₁₁ g embase ⟫
+        ap [_] (η (cp₀₁ g embase))
+          =⟪idp⟫
+        ap [_] (η embase)
+          =⟪ ap (ap [_]) (!-inv-r (merid embase)) ⟫
+        idp
+          =⟪ ! (ap-cst [ north ] (emloop g)) ⟫
+        ap (cst [ north ]) (emloop g) ∎∎
 
       comm-embase-emloop' : ∀ h →
-        ap (cp₁₁ embase) (emloop h) ==
+        ap (λ y → cp₁₁ embase y) (emloop h) ==
         ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h)
       comm-embase-emloop' h = ! (↯ (comm-embase-emloop↯ h))
 
       comm-emloop-embase' : ∀ g →
         ap (λ x → cp₁₁ x embase) (emloop g) ==
-        ap (antipodal-map ∘ cp₁₁ embase) (emloop g)
-      comm-emloop-embase' g = ! (↯ (comm-emloop-embase↯ g))
+        ap (λ x → antipodal-map (cp₁₁ embase x)) (emloop g)
+      comm-emloop-embase' g = ↯ (comm-emloop-embase↯ g)
 
       comm-embase-emloop-comp' : ∀ h₁ h₂ →
         comm-embase-emloop' (R.add h₁ h₂) ◃∙
         ap (ap (λ y → antipodal-map (cp₁₁ y embase))) (emloop-comp h₁ h₂) ◃∎
         =ₛ
-        ap (ap (λ y → cp₁₁ embase y)) (emloop-comp' R₊ h₁ h₂) ◃∙
+        ap (ap (λ y → cp₁₁ embase y)) (emloop-comp h₁ h₂) ◃∙
         ap-∙ (λ y → cp₁₁ embase y) (emloop h₁) (emloop h₂) ◃∙
         ap2 _∙_ (comm-embase-emloop' h₁) (comm-embase-emloop' h₂) ◃∙
         ∙-ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h₁) (emloop h₂) ◃∎
@@ -89,6 +89,37 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
         ap2 _∙_ (comm-emloop-embase' g₁) (comm-emloop-embase' g₂) ◃∙
         ∙-ap (λ x → antipodal-map (cp₁₁ embase x)) (emloop g₁) (emloop g₂) ◃∎
       comm-emloop-comp-embase' g₁ g₂ =
+        comm-emloop-embase' (R.add g₁ g₂) ◃∙
+        ap (ap (λ x → antipodal-map (cp₁₁ embase x))) (emloop-comp g₁ g₂) ◃∎
+          =ₛ⟨ 0 & 1 & expand (comm-emloop-embase↯ (R.add g₁ g₂)) ⟩
+        ap-∘ (λ f → f embase) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙
+        app=-ap-cp₁₁ (R.add g₁ g₂) embase ◃∙
+        ap (ap [_]) (!-inv-r (merid embase)) ◃∙
+        ! (ap-cst [ north ] (emloop (R.add g₁ g₂))) ◃∙
+        ap (ap (λ x → antipodal-map (cp₁₁ embase x))) (emloop-comp g₁ g₂) ◃∎
+          =ₛ⟨ 3 & 2 & !ₛ $
+              homotopy-naturality
+                (λ _ → idp)
+                (ap (cst [ north ]))
+                (λ p → ! (ap-cst [ north ] p))
+                (emloop-comp g₁ g₂) ⟩
+        ap-∘ (λ f → f embase) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙
+        app=-ap-cp₁₁ (R.add g₁ g₂) embase ◃∙
+        ap (ap [_]) (!-inv-r (merid embase)) ◃∙
+        ap (λ _ → idp) (emloop-comp g₁ g₂) ◃∙
+        ! (ap-cst [ north ] (emloop g₁ ∙ emloop g₂)) ◃∎
+          =ₛ⟨ 3 & 1 & =ₛ-in {t = []} (ap-cst idp (emloop-comp g₁ g₂)) ⟩
+        ap-∘ (λ f → f embase) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙
+        app=-ap-cp₁₁ (R.add g₁ g₂) embase ◃∙
+        ap (ap [_]) (!-inv-r (merid embase)) ◃∙
+        ! (ap-cst [ north ] (emloop g₁ ∙ emloop g₂)) ◃∎
+          =ₛ⟨ 2 & 1 & !ₛ (app=-F₀₄-pres-comp-embase-coh g₁ g₂) ⟩
+        ap-∘ (λ f → f embase) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙
+        app=-ap-cp₁₁ (R.add g₁ g₂) embase ◃∙
+        app= (TwoSemiFunctor.pres-comp F₀₄ g₁ g₂) embase ◃∙
+        ap2 _∙_ (ap (ap [_]) (!-inv-r (merid embase))) (ap (ap [_]) (!-inv-r (merid embase))) ◃∙
+        ! (ap-cst [ north ] (emloop g₁ ∙ emloop g₂)) ◃∎
+          =ₛ⟨id⟩
         {!!}
 
       comm-emloop-emloop' : ∀ g h →

@@ -69,11 +69,16 @@ module FunctorComposition
       =⟪ G.pres-comp (F.F₁ f) (F.F₁ g) ⟫
     E.comp (G.F₁ (F.F₁ f)) (G.F₁ (F.F₁ g)) ∎∎
 
-  private
+  abstract
     pres-comp : {x y z : C.El} (f : C.Arr x y) (g : C.Arr y z)
       → G.F₁ (F.F₁ (C.comp f g)) == E.comp (G.F₁ (F.F₁ f)) (G.F₁ (F.F₁ g))
     pres-comp f g = ↯ (pres-comp-seq f g)
 
+    pres-comp-β : {x y z : C.El} (f : C.Arr x y) (g : C.Arr y z)
+      → pres-comp f g ◃∎ =ₛ pres-comp-seq f g
+    pres-comp-β f g = =ₛ-in idp
+
+  private
     abstract
       pres-comp-coh : {w x y z : C.El} (f : C.Arr w x) (g : C.Arr x y) (h : C.Arr y z)
         → pres-comp (C.comp f g) h ◃∙ ap (λ s → E.comp s (F₁ h)) (pres-comp f g) ◃∙ E.assoc (F₁ f) (F₁ g) (F₁ h) ◃∎
@@ -175,6 +180,8 @@ module FunctorComposition
 open FunctorComposition
   renaming ( composition to comp-functors
            ; pres-comp-seq to comp-functors-pres-comp-seq
+           ; pres-comp to comp-functors-pres-comp
+           ; pres-comp-β to comp-functors-pres-comp-β
            ) public
 
 infixr 80 _–F→_

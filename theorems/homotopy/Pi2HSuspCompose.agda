@@ -51,6 +51,16 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   comp-r : (a : A) → η (μ a e) == η e ∙ η a
   comp-r a = ap η (μ.unit-r a) ∙ add-path-inverse-l (merid e) (η a)
 
+  comp-lr-coh : comp-r e == comp-l e
+  comp-lr-coh =
+    ap2 (λ p₁ p₂ → ap η p₁ ∙ p₂)
+        (! μ.coh)
+        (add-path-inverse-lr-coh (merid e))
+    where
+    add-path-inverse-lr-coh : {B : Type i} {b b' : B} (p : b == b')
+      → add-path-inverse-l p (p ∙ ! p) == add-path-inverse-r (p ∙ ! p) p
+    add-path-inverse-lr-coh idp = idp
+
   comp-l₁ : (a' : A) → [ η (μ e a') ]₁ == [ η a' ∙ η e ]₁
   comp-l₁ = ap [_]₁ ∘ comp-l
 
@@ -64,15 +74,11 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       P = λ a a' → (Q a a' , ⟨⟩);
       f = comp-r₁;
       g = comp-l₁;
-      p = ap (λ {(p₁ , p₂) → ap [_] (ap η p₁ ∙ p₂)})
-      (pair×= (! μ.coh) (coh (merid e)))
+      p = ap (ap [_]₁) comp-lr-coh
     }
     where
     Q : A → A → Type i
     Q a a' = [ η (μ a a' ) ]₁ == [ η a' ∙ η a ]₁
-    coh : {B : Type i} {b b' : B} (p : b == b')
-      → add-path-inverse-l p (p ∙ ! p) == add-path-inverse-r (p ∙ ! p) p
-    coh idp = idp
 
   comp : (a a' : A) → [ η (μ a a') ]₁ == [ η a' ]₁ ∙₁ [ η a ]₁
   comp = WedgeExt.ext comp-args

@@ -93,11 +93,11 @@ module FunctorInverse
   G₁''-pres-comp {x} {y} {z} f g =
     coe-comp D.comp (F₀-η x) (F₀-η y) (F₀-η z) f g
 
-  G₁'-pres-comp-↯ : {x y z : D.El}
+  G₁'-pres-comp-seq : {x y z : D.El}
     (f : D.Arr (F₀ (G₀ x)) (F₀ (G₀ y)))
     (g : D.Arr (F₀ (G₀ y)) (F₀ (G₀ z)))
     → G₁' (D.comp f g) =-= C.comp (G₁' f) (G₁' g)
-  G₁'-pres-comp-↯ {x} {y} {z} f g =
+  G₁'-pres-comp-seq {x} {y} {z} f g =
     G₁' (D.comp f g)
       =⟪ ap2 (λ s t → G₁' (D.comp s t)) (F₁-η f) (F₁-η g) ⟫
     G₁' (D.comp (F₁ (G₁' f)) (F₁ (G₁' g)))
@@ -106,24 +106,37 @@ module FunctorInverse
       =⟪ G₁'-β (C.comp (G₁' f) (G₁' g)) ⟫
     C.comp (G₁' f) (G₁' g) ∎∎
 
-  G₁'-pres-comp : {x y z : D.El}
-    (f : D.Arr (F₀ (G₀ x)) (F₀ (G₀ y)))
-    (g : D.Arr (F₀ (G₀ y)) (F₀ (G₀ z)))
-    → G₁' (D.comp f g) == C.comp (G₁' f) (G₁' g)
-  G₁'-pres-comp f g = ↯ (G₁'-pres-comp-↯ f g)
+  abstract
+    G₁'-pres-comp : {x y z : D.El}
+      (f : D.Arr (F₀ (G₀ x)) (F₀ (G₀ y)))
+      (g : D.Arr (F₀ (G₀ y)) (F₀ (G₀ z)))
+      → G₁' (D.comp f g) == C.comp (G₁' f) (G₁' g)
+    G₁'-pres-comp f g = ↯ (G₁'-pres-comp-seq f g)
 
-  pres-comp-↯ : {x y z : D.El} (f : D.Arr x y) (g : D.Arr y z)
+    G₁'-pres-comp-β : {x y z : D.El}
+      (f : D.Arr (F₀ (G₀ x)) (F₀ (G₀ y)))
+      (g : D.Arr (F₀ (G₀ y)) (F₀ (G₀ z)))
+      → G₁'-pres-comp f g ◃∎ =ₛ G₁'-pres-comp-seq f g
+    G₁'-pres-comp-β f g = =ₛ-in idp
+
+
+  pres-comp-seq : {x y z : D.El} (f : D.Arr x y) (g : D.Arr y z)
     → G₁ (D.comp f g) =-= C.comp (G₁ f) (G₁ g)
-  pres-comp-↯ {x} {y} {z} f g =
+  pres-comp-seq {x} {y} {z} f g =
     G₁' (G₁'' (D.comp f g))
       =⟪ ap G₁' (G₁''-pres-comp f g) ⟫
     G₁' (D.comp (G₁'' f) (G₁'' g))
       =⟪ G₁'-pres-comp (G₁'' f) (G₁'' g) ⟫
     C.comp (G₁ f) (G₁ g) ∎∎
 
-  pres-comp : {x y z : D.El} (f : D.Arr x y) (g : D.Arr y z)
-    → G₁ (D.comp f g) == C.comp (G₁ f) (G₁ g)
-  pres-comp f g = ↯ (pres-comp-↯ f g)
+  abstract
+    pres-comp : {x y z : D.El} (f : D.Arr x y) (g : D.Arr y z)
+      → G₁ (D.comp f g) == C.comp (G₁ f) (G₁ g)
+    pres-comp f g = ↯ (pres-comp-seq f g)
+
+    pres-comp-β : {x y z : D.El} (f : D.Arr x y) (g : D.Arr y z)
+      → pres-comp f g ◃∎ =ₛ pres-comp-seq f g
+    pres-comp-β f g = =ₛ-in idp
 
   private
 
@@ -142,7 +155,7 @@ module FunctorInverse
       G₁'-pres-comp (D.comp f g) h ◃∙
       ap (λ s → C.comp s (G₁' h)) (G₁'-pres-comp f g) ◃∙
       C.assoc (G₁' f) (G₁' g) (G₁' h) ◃∎
-        =ₛ⟨ 0 & 1 & expand (G₁'-pres-comp-↯ (D.comp f g) h) ⟩
+        =ₛ⟨ 0 & 1 & G₁'-pres-comp-β (D.comp f g) h ⟩
       ap2 (λ s t → G₁' (D.comp s t)) (F₁-η (D.comp f g)) (F₁-η h) ◃∙
       ap G₁' (! (F.pres-comp (G₁' (D.comp f g)) (G₁' h))) ◃∙
       G₁'-β (C.comp (G₁' (D.comp f g)) (G₁' h)) ◃∙
@@ -170,7 +183,7 @@ module FunctorInverse
       ap G₁' (! (F.pres-comp (C.comp (G₁' f) (G₁' g)) (G₁' h))) ◃∙
       G₁'-β (C.comp (C.comp (G₁' f) (G₁' g)) (G₁' h)) ◃∙
       C.assoc (G₁' f) (G₁' g) (G₁' h) ◃∎
-        =ₛ⟨ 1 & 1 & ap-seq-∙ (λ s → G₁' (D.comp (F₁ s) (F₁ (G₁' h)))) (G₁'-pres-comp-↯ f g) ⟩
+        =ₛ⟨ 1 & 1 & ap-seq-=ₛ (λ s → G₁' (D.comp (F₁ s) (F₁ (G₁' h)))) (G₁'-pres-comp-β f g) ⟩
       ap2 (λ s t → G₁' (D.comp s t)) (F₁-η (D.comp f g)) (F₁-η h) ◃∙
       ap (λ s → G₁' (D.comp (F₁ s) (F₁ (G₁' h)))) (ap2 (λ s t → G₁' (D.comp s t)) (F₁-η f) (F₁-η g)) ◃∙
       ap (λ s → G₁' (D.comp (F₁ s) (F₁ (G₁' h)))) (ap G₁' (! (F.pres-comp (G₁' f) (G₁' g)))) ◃∙
@@ -286,7 +299,7 @@ module FunctorInverse
       ap (G₁' ∘ D.comp (F₁ (G₁' f)) ∘ F₁) (G₁'-β (C.comp (G₁' g) (G₁' h))) ◃∙
       ap G₁' (! (F.pres-comp (G₁' f) (C.comp (G₁' g) (G₁' h)))) ◃∙
       G₁'-β (C.comp (G₁' f) (C.comp (G₁' g) (G₁' h))) ◃∎
-        =ₛ⟨ 2 & 3 & ∙-ap-seq (G₁' ∘ D.comp (F₁ (G₁' f)) ∘ F₁) (G₁'-pres-comp-↯ g h) ⟩
+        =ₛ⟨ 2 & 3 & ap-seq-=ₛ (G₁' ∘ D.comp (F₁ (G₁' f)) ∘ F₁) (!ₛ (G₁'-pres-comp-β g h)) ⟩
       ap G₁' (D.assoc f g h) ◃∙
       ap2 (λ s t → G₁' (D.comp s t)) (F₁-η f) (F₁-η (D.comp g h)) ◃∙
       ap (G₁' ∘ D.comp (F₁ (G₁' f)) ∘ F₁) (G₁'-pres-comp g h) ◃∙
@@ -314,7 +327,7 @@ module FunctorInverse
       ap G₁' (! (F.pres-comp (G₁' f) (G₁' (D.comp g h)))) ◃∙
       G₁'-β (C.comp (G₁' f) (G₁' (D.comp g h))) ◃∙
       ap (C.comp (G₁' f)) (G₁'-pres-comp g h) ◃∎
-        =ₛ₁⟨ 1 & 3 & idp ⟩
+        =ₛ⟨ 1 & 3 & !ₛ (G₁'-pres-comp-β f (D.comp g h)) ⟩
       ap G₁' (D.assoc f g h) ◃∙
       G₁'-pres-comp f (D.comp g h) ◃∙
       ap (C.comp (G₁' f)) (G₁'-pres-comp g h) ◃∎ ∎ₛ
@@ -574,12 +587,12 @@ module FunctorInverse
       pres-comp (D.comp f g) h ◃∙
       ap (λ s → C.comp s (G₁ h)) (pres-comp f g) ◃∙
       C.assoc (G₁ f) (G₁ g) (G₁ h) ◃∎
-        =ₛ⟨ 0 & 1 & expand (pres-comp-↯ (D.comp f g) h) ⟩
+        =ₛ⟨ 0 & 1 & pres-comp-β (D.comp f g) h ⟩
       ap G₁' (G₁''-pres-comp (D.comp f g) h) ◃∙
       G₁'-pres-comp (G₁'' (D.comp f g)) (G₁'' h) ◃∙
       ap (λ s → C.comp s (G₁ h)) (pres-comp f g) ◃∙
       C.assoc (G₁ f) (G₁ g) (G₁ h) ◃∎
-        =ₛ⟨ 2 & 1 & ap-seq-∙ (λ s → C.comp s (G₁ h)) (pres-comp-↯ f g) ⟩
+        =ₛ⟨ 2 & 1 & ap-seq-=ₛ (λ s → C.comp s (G₁ h)) (pres-comp-β f g) ⟩
       ap G₁' (G₁''-pres-comp (D.comp f g) h) ◃∙
       G₁'-pres-comp (G₁'' (D.comp f g)) (G₁'' h) ◃∙
       ap (λ s → C.comp s (G₁ h)) (ap G₁' (G₁''-pres-comp f g)) ◃∙
@@ -635,7 +648,7 @@ module FunctorInverse
       G₁'-pres-comp (G₁'' f) (G₁'' (D.comp g h)) ◃∙
       ap (C.comp (G₁ f) ∘ G₁') (G₁''-pres-comp g h) ◃∙
       ap (C.comp (G₁ f)) (G₁'-pres-comp (G₁'' g) (G₁'' h)) ◃∎
-        =ₛ⟨ 1 & 2 & contract ⟩
+        =ₛ⟨ 1 & 2 & !ₛ (pres-comp-β f (D.comp g h)) ⟩
       ap G₁' (ap G₁'' (D.assoc f g h)) ◃∙
       pres-comp f (D.comp g h) ◃∙
       ap (C.comp (G₁ f) ∘ G₁') (G₁''-pres-comp g h) ◃∙
@@ -645,7 +658,7 @@ module FunctorInverse
       pres-comp f (D.comp g h) ◃∙
       ap (C.comp (G₁ f)) (ap G₁' (G₁''-pres-comp g h)) ◃∙
       ap (C.comp (G₁ f)) (G₁'-pres-comp (G₁'' g) (G₁'' h)) ◃∎
-        =ₛ⟨ 2 & 2 & ∙-ap-seq (C.comp (G₁ f)) (pres-comp-↯ g h) ⟩
+        =ₛ⟨ 2 & 2 & !ₛ (ap-seq-=ₛ (C.comp (G₁ f)) (pres-comp-β g h)) ⟩
       ap G₁' (ap G₁'' (D.assoc f g h)) ◃∙
       pres-comp f (D.comp g h) ◃∙
       ap (C.comp (G₁ f)) (pres-comp g h) ◃∎

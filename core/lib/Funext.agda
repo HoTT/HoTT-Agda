@@ -338,6 +338,9 @@ module _ {j} {B : A → Type j} {f g : Π A B} where
       =⟨ !-app= (λ= α) ⟩
     ! (λ= α) =∎
 
+  λ=-! : (α : f ∼ g) → ! (λ= α) == λ= (! ∘ α)
+  λ=-! α = ! (!-λ= α)
+
 module _ {j k} {B : A → Type j} {C : A → Type k}
   {f g : Π A B} (h : (a : A) → B a → C a) where
 
