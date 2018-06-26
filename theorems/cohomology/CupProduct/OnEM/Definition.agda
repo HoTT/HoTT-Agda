@@ -654,6 +654,8 @@ module CP₁₁ where
       =⟪idp⟫
     ap [_] (η embase)
       =⟪ ap (ap [_]) (!-inv-r (merid embase)) ⟫
+    ap [_] (idp {a = north})
+      =⟪idp⟫
     idp ∎∎
 
   ap-cp₁₁-embase : ∀ g →

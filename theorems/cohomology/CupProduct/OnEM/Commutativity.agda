@@ -22,26 +22,20 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
     abstract
 
       comm-embase-emloop↯ : ∀ h →
-        ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) =-=
-        ap (cp₁₁ embase) (emloop h)
-      comm-embase-emloop↯ h =
+        ap (cp₁₁ embase) (emloop h) =-=
         ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h)
-          =⟪ ap-∘ (λ f → antipodal-map (f embase)) cp₁₁ (emloop h) ⟫
-        ap (λ f → antipodal-map (f embase)) (ap cp₁₁ (emloop h))
-          =⟪ ap-∘ antipodal-map (λ f → f embase) (ap cp₁₁ (emloop h)) ⟫
-        ap antipodal-map (app= (ap cp₁₁ (emloop h)) embase)
-          =⟪ ap (ap antipodal-map) (app=-ap-cp₁₁ h embase) ⟫
-        ap antipodal-map (ap [_] (η (cp₀₁ h embase)))
+      comm-embase-emloop↯ h =
+        ap (cp₁₁ embase) (emloop h)
           =⟪idp⟫
-        ap antipodal-map (ap [_] (η embase))
-          =⟪ ap (ap antipodal-map ∘ ap [_]) (!-inv-r (merid embase)) ⟫
-        ap antipodal-map (ap [_] (idp {a = north}))
-          =⟪idp⟫
-        idp
-          =⟪ ! (ap-cst [ north ] (emloop h)) ⟫
         ap (cst [ north ]) (emloop h)
+          =⟪ ap-cst [ north ] (emloop h) ⟫
+        idp
           =⟪idp⟫
-        ap (cp₁₁ embase) (emloop h) ∎∎
+        ap antipodal-map (idp {a = [ north ]})
+          =⟪ ! (ap (ap antipodal-map) (ap-cp₁₁-embase h)) ⟫
+        ap antipodal-map (ap (λ y → cp₁₁ y embase) (emloop h))
+          =⟪ ∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h) ⟫
+        ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∎∎
 
       comm-emloop-embase↯ : ∀ g →
         ap (λ x → cp₁₁ x embase) (emloop g) =-=
@@ -56,7 +50,7 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
       comm-embase-emloop' : ∀ h →
         ap (λ y → cp₁₁ embase y) (emloop h) ==
         ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h)
-      comm-embase-emloop' h = ! (↯ (comm-embase-emloop↯ h))
+      comm-embase-emloop' h = ↯ (comm-embase-emloop↯ h)
 
       comm-emloop-embase' : ∀ g →
         ap (λ x → cp₁₁ x embase) (emloop g) ==
@@ -72,7 +66,43 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
         ap2 _∙_ (comm-embase-emloop' h₁) (comm-embase-emloop' h₂) ◃∙
         ∙-ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h₁) (emloop h₂) ◃∎
       comm-embase-emloop-comp' h₁ h₂ =
-        {!!}
+        comm-embase-emloop' (R.add h₁ h₂) ◃∙
+        ap (ap (λ y → antipodal-map (cp₁₁ y embase))) (emloop-comp h₁ h₂) ◃∎
+          =ₛ⟨ 0 & 1 & expand (comm-embase-emloop↯ (R.add h₁ h₂)) ⟩
+        ap-cst [ north ] (emloop (R.add h₁ h₂)) ◃∙
+        ! (ap (ap antipodal-map) (ap-cp₁₁-embase (R.add h₁ h₂))) ◃∙
+        ∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop (R.add h₁ h₂)) ◃∙
+        ap (ap (λ y → antipodal-map (cp₁₁ y embase))) (emloop-comp h₁ h₂) ◃∎
+          =ₛ⟨ 2 & 2 & !ₛ $
+              homotopy-naturality (ap antipodal-map ∘ ap (λ y → cp₁₁ y embase))
+                                  (ap (λ y → antipodal-map (cp₁₁ y embase)))
+                                  (∘-ap antipodal-map (λ y → cp₁₁ y embase))
+                                  (emloop-comp h₁ h₂) ⟩
+        ap-cst [ north ] (emloop (R.add h₁ h₂)) ◃∙
+        ! (ap (ap antipodal-map) (ap-cp₁₁-embase (R.add h₁ h₂))) ◃∙
+        ap (ap antipodal-map ∘ ap (λ y → cp₁₁ y embase)) (emloop-comp h₁ h₂) ◃∙
+        ∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h₁ ∙ emloop h₂) ◃∎
+          =ₛ₁⟨ 1 & 1 & !-ap (ap antipodal-map) (ap-cp₁₁-embase (R.add h₁ h₂)) ⟩
+        ap-cst [ north ] (emloop (R.add h₁ h₂)) ◃∙
+        ap (ap antipodal-map) (! (ap-cp₁₁-embase (R.add h₁ h₂))) ◃∙
+        ap (ap antipodal-map ∘ ap (λ y → cp₁₁ y embase)) (emloop-comp h₁ h₂) ◃∙
+        ∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h₁ ∙ emloop h₂) ◃∎
+          =ₛ₁⟨ 2 & 1 & ap-∘ (ap antipodal-map) (ap (λ y → cp₁₁ y embase)) (emloop-comp h₁ h₂) ⟩
+        ap-cst [ north ] (emloop (R.add h₁ h₂)) ◃∙
+        ap (ap antipodal-map) (! (ap-cp₁₁-embase (R.add h₁ h₂))) ◃∙
+        ap (ap antipodal-map) (ap (ap (λ y → cp₁₁ y embase)) (emloop-comp h₁ h₂)) ◃∙
+        ∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h₁ ∙ emloop h₂) ◃∎
+          =ₛ⟨ 1 & 2 &
+              ap-seq-=ₛ (ap antipodal-map) $
+              post-rotate-seq-in {p = _ ◃∙ _ ◃∎} $
+              pre-rotate'-in $
+              !ₛ $ ap-cp₁₁-embase-coh h₁ h₂ ⟩
+        {!ap-cst [ north ] (emloop (R.add h₁ h₂)) ◃∙
+        ap (ap antipodal-map) (! (ap2 _∙_ (ap-cp₁₁-embase h₁) (ap-cp₁₁-embase h₂))) ◃∙
+        ap (ap antipodal-map) (! (ap-∙ (λ x → cp₁₁ x embase) (emloop h₁) (emloop h₂))) ◃∙
+        ∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h₁ ∙ emloop h₂) ◃∎
+          =ₛ⟨id⟩
+        ?!}
 
       comm-emloop-comp-embase' : ∀ g₁ g₂ →
         comm-emloop-embase' (R.add g₁ g₂) ◃∙
