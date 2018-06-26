@@ -287,9 +287,6 @@ module CP₁₁ where
     F₃₄ : TwoSemiFunctor D₃ D₄
     F₃₄ = fun-functor-map (EM₁ R₊) F₃₄'
 
-    F₄₅ : TwoSemiFunctor D₄ D₅
-    F₄₅ = λ=-functor (EM₁ R₊) (EM 2)
-
     F₂₄ : TwoSemiFunctor D₂ D₄
     F₂₄ = F₂₃ –F→ F₃₄
 
@@ -299,17 +296,22 @@ module CP₁₁ where
   F₀₄ : TwoSemiFunctor D₀ D₄
   F₀₄ = F₀₁ –F→ F₁₄
 
+  F₄₅ : TwoSemiFunctor D₄ D₅
+  F₄₅ = λ=-functor (EM₁ R₊) (EM 2)
+
+  module F₀₄ = TwoSemiFunctor F₀₄
+  module F₄₅ = TwoSemiFunctor F₄₅
+
   private
     module F₀₅-Comp = FunctorComposition F₀₄ F₄₅
     F₀₅ : TwoSemiFunctor D₀ D₅
-    F₀₅ = F₀₅-Comp.composition -- F₀₄ –F→ F₄₅
+    F₀₅ = F₀₅-Comp.composition
 
     module F₁₂  = TwoSemiFunctor F₁₂
     module F₃₄' = TwoSemiFunctor F₃₄'
     module F₃₄  = TwoSemiFunctor F₃₄
     module F₂₄  = TwoSemiFunctor F₂₄
     module F₁₄  = TwoSemiFunctor F₁₄
-    module F₀₄  = TwoSemiFunctor F₀₄
     module F₀₅  = TwoSemiFunctor F₀₅
 
     module CP₁₁-Rec = EM₁Rec {G = R₊} {C = C} {{C-level}} F₀₅
@@ -569,7 +571,7 @@ module CP₁₁ where
         =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
           =ₛ⟨ 0 & 1 & F₀₅-Comp.pres-comp-β g₁ g₂ ⟩
         ap λ= (F₀₄.pres-comp g₁ g₂) ◃∙
-        TwoSemiFunctor.pres-comp (λ=-functor (EM₁ R₊) (EM 2)) (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ◃∙
+        F₄₅.pres-comp (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ◃∙
         =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
           =ₛ₁⟨ 1 & 1 & λ=-functor-pres-comp=λ=-∙ (EM₁ R₊) (EM 2) (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ⟩
         ap λ= (F₀₄.pres-comp g₁ g₂) ◃∙
@@ -642,3 +644,50 @@ module CP₁₁ where
         =ₛ₁⟨ 0 & 2 & idp ⟩
       ap-cp₁₁ (R.add g₁ g₂) y ◃∙
       app= (F₀₄.pres-comp g₁ g₂) y ◃∎ ∎ₛ
+
+  ap-cp₁₁-embase-seq : ∀ g →
+    ap (λ x → cp₁₁ x embase) (emloop g) =-= idp
+  ap-cp₁₁-embase-seq g =
+    ap (λ x → cp₁₁ x embase) (emloop g)
+      =⟪ ap-cp₁₁ g embase ⟫
+    ap [_] (η (cp₀₁ g embase))
+      =⟪idp⟫
+    ap [_] (η embase)
+      =⟪ ap (ap [_]) (!-inv-r (merid embase)) ⟫
+    idp ∎∎
+
+  ap-cp₁₁-embase : ∀ g →
+    ap (λ x → cp₁₁ x embase) (emloop g) == idp
+  ap-cp₁₁-embase g = ↯ (ap-cp₁₁-embase-seq g)
+
+  ap-cp₁₁-embase-coh-seq : ∀ g₁ g₂ →
+    ap (λ x → cp₁₁ x embase) (emloop (R.add g₁ g₂)) =-= idp
+  ap-cp₁₁-embase-coh-seq g₁ g₂ =
+    ap (λ x → cp₁₁ x embase) (emloop (R.add g₁ g₂))
+      =⟪ ap (ap (λ x → cp₁₁ x embase)) (emloop-comp g₁ g₂) ⟫
+    ap (λ x → cp₁₁ x embase) (emloop g₁ ∙ emloop g₂)
+      =⟪ ap-∙ (λ x → cp₁₁ x embase) (emloop g₁) (emloop g₂) ⟫
+    ap (λ x → cp₁₁ x embase) (emloop g₁) ∙ ap (λ x → cp₁₁ x embase) (emloop g₂)
+      =⟪ ap2 _∙_ (ap-cp₁₁-embase g₁) (ap-cp₁₁-embase g₂) ⟫
+    idp ∎∎
+
+  ap-cp₁₁-embase-coh : ∀ g₁ g₂ →
+    ap-cp₁₁-embase (R.add g₁ g₂) ◃∎ =ₛ ap-cp₁₁-embase-coh-seq g₁ g₂
+  ap-cp₁₁-embase-coh g₁ g₂ =
+    ap-cp₁₁-embase (R.add g₁ g₂) ◃∎
+      =ₛ⟨ expand (ap-cp₁₁-embase-seq (R.add g₁ g₂)) ⟩
+    ap-cp₁₁ (R.add g₁ g₂) embase ◃∙
+    ap (ap [_]) (!-inv-r (merid embase)) ◃∎
+      =ₛ⟨ 1 & 1 & !ₛ (app=-F₀₄-pres-comp-embase-coh g₁ g₂) ⟩
+    ap-cp₁₁ (R.add g₁ g₂) embase ◃∙
+    app= (F₀₄.pres-comp g₁ g₂) embase ◃∙
+    ap2 _∙_ (ap (ap [_]) (!-inv-r (merid embase))) (ap (ap [_]) (!-inv-r (merid embase))) ◃∎
+      =ₛ⟨ 0 & 2 & !ₛ (ap-cp₁₁-coh g₁ g₂ embase) ⟩
+    ap (ap (λ x → cp₁₁ x embase)) (emloop-comp g₁ g₂) ◃∙
+    ap-∙ (λ x → cp₁₁ x embase) (emloop g₁) (emloop g₂) ◃∙
+    ap2 _∙_ (ap-cp₁₁ g₁ embase) (ap-cp₁₁ g₂ embase) ◃∙
+    ap2 _∙_ (ap (ap [_]) (!-inv-r (merid embase))) (ap (ap [_]) (!-inv-r (merid embase))) ◃∎
+      =ₛ⟨ 2 & 2 & ∙-ap2-seq _∙_ (ap-cp₁₁-embase-seq g₁) (ap-cp₁₁-embase-seq g₂) ⟩
+    ap (ap (λ x → cp₁₁ x embase)) (emloop-comp g₁ g₂) ◃∙
+    ap-∙ (λ x → cp₁₁ x embase) (emloop g₁) (emloop g₂) ◃∙
+    ap2 _∙_ (ap-cp₁₁-embase g₁) (ap-cp₁₁-embase g₂) ◃∎ ∎ₛ
