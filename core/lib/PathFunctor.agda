@@ -76,13 +76,15 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   ap↓-▹! {p = idp} {p' = idp} idp idp = idp
 
 {- Fuse and unfuse -}
-∘-ap : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
-  {x y : A} (p : x == y) → ap g (ap f p) == ap (g ∘ f) p
-∘-ap f g idp = idp
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B) where
+  ∘-ap : {x y : A} (p : x == y) → ap g (ap f p) == ap (g ∘ f) p
+  ∘-ap idp = idp
 
-ap-∘ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
-  {x y : A} (p : x == y) → ap (g ∘ f) p == ap g (ap f p)
-ap-∘ f g idp = idp
+  ap-∘ : {x y : A} (p : x == y) → ap (g ∘ f) p == ap g (ap f p)
+  ap-∘ idp = idp
+
+  !ap-∘=∘-ap : {x y : A} (p : x == y) → ! (ap-∘ p) == ∘-ap p
+  !ap-∘=∘-ap idp = idp
 
 ap-idf : ∀ {i} {A : Type i} {u v : A} (p : u == v) → ap (idf A) p == p
 ap-idf idp = idp
@@ -157,6 +159,10 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) wher
   ap2-! : {a a' : A} {b b' : B} (p : a == a') (q : b == b')
     → ap2 (! p) (! q) == ! (ap2 p q)
   ap2-! idp idp = idp
+
+  !-ap2 : {a a' : A} {b b' : B} (p : a == a') (q : b == b')
+    → ! (ap2 p q) == ap2 (! p) (! q)
+  !-ap2 idp idp = idp
 
   ap2-∙ : {a a' a'' : A} {b b' b'' : B}
     (p : a == a') (p' : a' == a'')
