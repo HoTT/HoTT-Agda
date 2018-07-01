@@ -285,15 +285,6 @@ module _ {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
     → (u == v [ (λ x → g (f x) == x) ↓ p ])
   ↓-∘=idf-in' {p = idp} q = ! (∙-unit-r _) ∙ (! q) ∙ (∙'-unit-l _)
 
-module _ {i} {j} {A : Type i} {B : A → Type j} where
-
-  -- NOT USED
-  homotopy-naturality' : (f g : Π A B)
-    (h : (x : A) → f x == g x) {x y : A} (p : x == y)
-    → apd f p ▹ h y == h x ◃ apd g p
-  homotopy-naturality' f g h {x} {y} p =
-    ! (↓-=-out {f = g} {g = f} {p = p} {u = h x} {v = h y} (apd h p))
-
 -- WIP, derive it from more primitive principles
 -- ↓-∘=id-in f g {p = p} {u} {v} q =
 --   ↓-=-in (u ◃ apd (λ x → g (f x)) p =⟨ apd-∘ f g p |in-ctx (λ t → u ◃ t) ⟩

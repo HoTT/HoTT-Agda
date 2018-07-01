@@ -13,11 +13,7 @@ module _ {i} {A : Type i} where
   sometimes useful to have both (in particular in lib.types.Paths).
   -}
 
-  infixr 80 _∙_ _∙'_
-
-  _∙_ : {x y z : A}
-    → (x == y → y == z → x == z)
-  idp ∙ q = q
+  infixr 80 _∙'_
 
   _∙'_ : {x y z : A}
     → (x == y → y == z → x == z)

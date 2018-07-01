@@ -129,9 +129,20 @@ transp-∙' : ∀ {i j} {A : Type i} {B : A → Type j} {x y z : A}
   → transport B (p ∙' q) b == transport B q (transport B p b)
 transp-∙' _ idp _ = idp
 
-{- Naturality of homotopies -}
+{- Naturality of transport -}
+transp-naturality : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  (u : {a : A} → B a → C a)
+  {a₀ a₁ : A} (p : a₀ == a₁)
+  → u ∘ transport B p == transport C p ∘ u
+transp-naturality f idp = idp
 
-{- see 'homotopy-naturality' in lib.types.Paths -}
+ap-transport : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  (f : A → B → C)
+  {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B}
+  (h : f a₀ b₀ == f a₀ b₁)
+  → h ∙ ap (λ a → f a b₁) p ==
+    ap (λ a → f a b₀) p ∙ transport (λ a → f a b₀ == f a b₁) p h
+ap-transport f idp h = ∙-unit-r h
 
 {- for functions with two arguments -}
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
@@ -217,6 +228,40 @@ module _ {i j} {A : Type i} {B : Type j} where
     → ap2 f p p == ap (λ x → f x x) p
   ap2-diag f idp = idp
 
+{- Naturality of homotopies -}
+
+module _ {i} {A : Type i} where
+  homotopy-naturality : ∀ {k} {B : Type k} (f g : A → B)
+    (h : (x : A) → f x == g x) {x y : A} (p : x == y)
+    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
+  homotopy-naturality f g h {x} idp =
+    =ₛ-in (! (∙-unit-r (h x)))
+
+  homotopy-naturality' : ∀ {k} {B : Type k} (f g : A → B)
+    (h : (x : A) → f x == g x) {x y : A} (p : x == y)
+    → ap f p ◃∎ =ₛ h x ◃∙ ap g p ◃∙ ! (h y) ◃∎
+  homotopy-naturality' f g h {x} idp =
+    =ₛ-in (! (!-inv-r (h x)))
+
+  homotopy-naturality-to-idf : (f : A → A)
+    (h : (x : A) → f x == x) {x y : A} (p : x == y)
+    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ p ◃∎
+  homotopy-naturality-to-idf f h {x} p = =ₛ-in $
+    =ₛ-out (homotopy-naturality f (λ a → a) h p) ∙ ap (λ w → h x ∙ w) (ap-idf p)
+
+  homotopy-naturality-from-idf : (g : A → A)
+    (h : (x : A) → x == g x) {x y : A} (p : x == y)
+    → p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
+  homotopy-naturality-from-idf g h {y = y} p = =ₛ-in $
+    ap (λ w → w ∙ h y) (! (ap-idf p)) ∙ =ₛ-out (homotopy-naturality (λ a → a) g h p)
+
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
+         (f g : A → B → C) (h : ∀ a b → f a b == g a b) where
+  homotopy-naturality2 : {a₀ a₁ : A} {b₀ b₁ : B} (p : a₀ == a₁) (q : b₀ == b₁)
+    → ap2 f p q ◃∙ h a₁ b₁ ◃∎ =ₛ h a₀ b₀ ◃∙ ap2 g p q ◃∎
+  homotopy-naturality2 {a₀ = a} {b₀ = b} idp idp =
+    =ₛ-in (! (∙-unit-r (h a b)))
+
 module _ {i j} {A : Type i} {B : Type j} (b : B) where
 
   ap-cst : {x y : A} (p : x == y)
@@ -224,8 +269,11 @@ module _ {i j} {A : Type i} {B : Type j} (b : B) where
   ap-cst idp = idp
 
   ap-cst-coh : {x y z : A} (p : x == y) (q : y == z)
-    → ap-cst (p ∙ q) == ap-∙ (cst b) p q ∙ ap2 _∙_ (ap-cst p) (ap-cst q)
-  ap-cst-coh idp idp = idp
+    → ap-cst (p ∙ q) ◃∎
+      =ₛ
+      ap-∙ (cst b) p q ◃∙
+      ap2 _∙_ (ap-cst p) (ap-cst q) ◃∎
+  ap-cst-coh idp idp = =ₛ-in idp
 
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
 
@@ -248,11 +296,13 @@ module _ {i} {A : Type i} where
 
   transp-cst=idf-pentagon : {a x y z : A}
     (p : x == y) (q : y == z) (r : a == x)
-    → transp-cst=idf (p ∙ q) r == transp-∙ p q r ∙
-                                  ap (transport (λ x → a == x) q) (transp-cst=idf p r) ∙
-                                  transp-cst=idf q (r ∙ p) ∙
-                                  ∙-assoc r p q
-  transp-cst=idf-pentagon idp q idp = ! (∙-unit-r (transp-cst=idf q idp))
+    → transp-cst=idf (p ∙ q) r ◃∎ =ₛ
+      transp-∙ p q r ◃∙
+      ap (transport (λ x → a == x) q) (transp-cst=idf p r) ◃∙
+      transp-cst=idf q (r ∙ p) ◃∙
+      ∙-assoc r p q ◃∎
+  transp-cst=idf-pentagon idp q idp =
+    =ₛ-in (! (∙-unit-r (transp-cst=idf q idp)))
 
 {- for functions with more arguments -}
 module _ {i₀ i₁ i₂ j} {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂}

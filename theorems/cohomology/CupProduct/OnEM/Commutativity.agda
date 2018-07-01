@@ -45,7 +45,9 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
           =⟪ ap-cp₁₁-embase g ⟫
         idp
           =⟪ ! (ap-cst [ north ] (emloop g)) ⟫
-        ap (cst [ north ]) (emloop g) ∎∎
+        ap (cst [ north ]) (emloop g)
+          =⟪idp⟫
+        ap (antipodal-map ∘ cp₁₁ embase) (emloop g) ∎∎
 
       comm-embase-emloop' : ∀ h →
         ap (λ y → cp₁₁ embase y) (emloop h) ==
@@ -185,9 +187,7 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
                 =ₛ⟨ !ₛ (homotopy-naturality (ap (cp₁₁ embase)) (λ _ → idp) (ap-cst [ north ]) (emloop-comp h₁ h₂)) ⟩
               ap (ap (cp₁₁ embase)) (emloop-comp h₁ h₂) ◃∙
               ap-cst [ north ] (emloop h₁ ∙ emloop h₂) ◃∎
-                =ₛ⟨ 1 & 1 & =ₛ-in {t = ap-∙ (cst [ north ]) (emloop h₁) (emloop h₂) ◃∙
-                                       ap2 _∙_ (ap-cst [ north ] (emloop h₁)) (ap-cst [ north ] (emloop h₂)) ◃∎} $
-                            ap-cst-coh [ north ] (emloop h₁) (emloop h₂) ⟩
+                =ₛ⟨ 1 & 1 & ap-cst-coh [ north ] (emloop h₁) (emloop h₂) ⟩
               ap (ap (cp₁₁ embase)) (emloop-comp h₁ h₂) ◃∙
               ap-∙ (cst [ north ]) (emloop h₁) (emloop h₂) ◃∙
               ap2 _∙_ (ap-cst [ north ] (emloop h₁)) (ap-cst [ north ] (emloop h₂)) ◃∎ ∎ₛ
@@ -238,13 +238,7 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
         ap-∙ (λ x → cp₁₁ x embase) (emloop g₁) (emloop g₂) ◃∙
         ap2 _∙_ (ap-cp₁₁-embase g₁) (ap-cp₁₁-embase g₂) ◃∙
         ! (ap-cst [ north ] (emloop g₁ ∙ emloop g₂)) ◃∎
-          =ₛ⟨ 3 & 1 &
-              !-=ₛ $
-              =ₛ-in {s = ap-cst [ north ] (emloop g₁ ∙ emloop g₂) ◃∎}
-                    {t = ap-∙ (cst [ north ]) (emloop g₁) (emloop g₂) ◃∙
-                         ap2 _∙_ (ap-cst [ north ] (emloop g₁))
-                                 (ap-cst [ north ] (emloop g₂)) ◃∎} $
-              ap-cst-coh [ north ] (emloop g₁) (emloop g₂) ⟩
+          =ₛ⟨ 3 & 1 & !-=ₛ $ ap-cst-coh [ north ] (emloop g₁) (emloop g₂) ⟩
         ap (ap (λ x → cp₁₁ x embase)) (emloop-comp g₁ g₂) ◃∙
         ap-∙ (λ x → cp₁₁ x embase) (emloop g₁) (emloop g₂) ◃∙
         ap2 _∙_ (ap-cp₁₁-embase g₁) (ap-cp₁₁-embase g₂) ◃∙

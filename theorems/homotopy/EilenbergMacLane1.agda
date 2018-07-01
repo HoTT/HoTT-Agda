@@ -355,12 +355,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
             cd₂' = emloop-coh' G y g₁ g₂
 
           cd₃ : e₆₇ ◃∙ e₇₈ ◃∎ =ₛ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∎
-          cd₃ = post-rotate'-in cd₃'
-            where
-            e₈₇ : s₈ == s₇
-            e₈₇ = ∙-assoc (emloop y) (emloop g₁) (emloop g₂)
-            cd₃' : e₆₇ ◃∎ =ₛ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∙ e₈₇ ◃∎
-            cd₃' = =ₛ-in $ transp-cst=idf-pentagon (emloop g₁) (emloop g₂) (emloop y)
+          cd₃ = post-rotate'-in (transp-cst=idf-pentagon (emloop g₁) (emloop g₂) (emloop y))
 
           cd₄ : e₁₁₋₈ ◃∙ e₈₉ ◃∎ =ₛ e₁₁₋₁₂ ◃∙ e₁₂₋₉ ◃∎
           cd₄ = !ₛ $

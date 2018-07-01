@@ -88,6 +88,12 @@ J' : ∀ {i j} {A : Type i} {a : A} (B : (a' : A) (p : a' == a) → Type j) (d :
   {a' : A} (p : a' == a) → B a' p
 J' B d idp = d
 
+infixr 80 _∙_
+
+_∙_ : ∀ {i} {A : Type i} {x y z : A}
+  → (x == y → y == z → x == z)
+idp ∙ q = q
+
 {- Rewriting
 
 This is a new pragma added to Agda to help create higher inductive types.
@@ -305,6 +311,37 @@ _ =∎ = idp
 infixl 40 ap
 syntax ap f p = p |in-ctx f
 
+{- Path sequences
+
+These are useful when constructing paths between paths.
+-}
+
+module _ {i} {A : Type i} where
+  infixr 80 _◃∙_
+  data PathSeq : A → A → Type i where
+    [] : {a : A} → PathSeq a a
+    _◃∙_ : {a a' a'' : A} (p : a == a') (s : PathSeq a' a'') → PathSeq a a''
+
+  infix 30 _=-=_
+  _=-=_ = PathSeq
+
+  infix 90 _◃∎
+  _◃∎ : {a a' : A} → a == a' → a =-= a'
+  _◃∎ {a} {a'} p = p ◃∙ []
+
+  ↯ : {a a' : A} (s : a =-= a') → a == a'
+  ↯ [] = idp
+  ↯ (p ◃∙ []) = p
+  ↯ (p ◃∙ s@(_ ◃∙ _)) = p ∙ ↯ s
+
+  {- 'ₛ' is for sequence -}
+  record _=ₛ_ {a a' : A} (s t : a =-= a') : Type i where
+    constructor =ₛ-in
+    field
+      =ₛ-out : ↯ s == ↯ t
+
+  open _=ₛ_ public
+
 {- Various basic functions and function operations
 
 The identity function on a type [A] is [idf A] and the constant function at some
@@ -453,4 +490,3 @@ instance
   FromNeg.read TLevel-neg-reader 1 = S ⟨-2⟩
   FromNeg.read TLevel-neg-reader 2 = ⟨-2⟩
   FromNeg.read TLevel-neg-reader (S (S (S _))) ⦃()⦄
-

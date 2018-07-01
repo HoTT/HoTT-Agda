@@ -38,13 +38,6 @@ of steps from the beginning or the end:
   ↯ t !2
 -}
 
-infixr 80 _◃∙_
-data PathSeq {i} {A : Type i} : A → A → Type i where
-  [] : {a : A} → PathSeq a a
-  _◃∙_ : {a a' a'' : A} (p : a == a') (s : PathSeq a' a'') → PathSeq a a''
-
-infix 30 _=-=_
-_=-=_ = PathSeq
 
 module _ {i} {A : Type i} where
   infix 15 _∎∎
@@ -62,12 +55,6 @@ module _ {i} {A : Type i} where
 
 module _ {i} {A : Type i} where
 
-  infix 0 ↯
-
-  ↯ : {a a' : A} (s : a =-= a') → a == a'
-  ↯ [] = idp
-  ↯ (p ◃∙ []) = p
-  ↯ (p ◃∙ s@(_ ◃∙ _)) = p ∙ ↯ s
 
   {- concatenation -}
   infixr 80 _∙∙_
@@ -91,10 +78,6 @@ module _ {i} {A : Type i} where
   _∙▹_ : {a a' a'' : A}
     → a =-= a' → a' == a'' → a =-= a''
   _∙▹_ {a} {a'} {a''} s p = s ∙∙ (p ◃∙ [])
-
-  infix 90 _◃∎
-  _◃∎ : {a a' : A} → a == a' → a =-= a'
-  _◃∎ {a} {a'} p = p ◃∙ []
 
   seq-! : {a a' : A} → a =-= a' → a' =-= a
   seq-! [] = []
@@ -235,15 +218,8 @@ module _ {i} {A : Type i} where
 
 module _ {i} {A : Type i} {a a' : A} where
 
-  -- 'ₛ' is for sequence
-  data _=ₛ_ (s t : a =-= a') : Type i where
-    =ₛ-in : s =↯= t → s =ₛ t
-
-  =ₛ-out : {s t : a =-= a'} → s =ₛ t → s =↯= t
-  =ₛ-out (=ₛ-in p) = p
-
   =-=ₛ-equiv : (s t : a =-= a') → (s =↯= t) ≃ (s =ₛ t)
-  =-=ₛ-equiv s t = equiv =ₛ-in =ₛ-out (λ {(=ₛ-in p) → idp}) (λ p → idp)
+  =-=ₛ-equiv s t = equiv =ₛ-in =ₛ-out (λ _ → idp) (λ _ → idp)
 
   =ₛ-level : {s t : a =-= a'} {n : ℕ₋₂}
     → has-level (S (S n)) A → has-level n (s =ₛ t)
@@ -629,62 +605,6 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A →
     → ap-∘-∙-coh-seq₁ p p' =ₛ ap-∘-∙-coh-seq₂ p p'
   ap-∘-∙-coh idp idp = =ₛ-in idp
 
-module _ {i} {A : Type i} where
-  homotopy-naturality : ∀ {k} {B : Type k} (f g : A → B)
-    (h : (x : A) → f x == g x) {x y : A} (p : x == y)
-    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
-  homotopy-naturality f g h {x} idp =
-    =ₛ-in (! (∙-unit-r (h x)))
-
-  homotopy-naturality' : ∀ {k} {B : Type k} (f g : A → B)
-    (h : (x : A) → f x == g x) {x y : A} (p : x == y)
-    → ap f p ◃∎ =ₛ h x ◃∙ ap g p ◃∙ ! (h y) ◃∎
-  homotopy-naturality' f g h {x} idp =
-    =ₛ-in (! (!-inv-r (h x)))
-
-  homotopy-naturality-to-idf : (f : A → A)
-    (h : (x : A) → f x == x) {x y : A} (p : x == y)
-    → ap f p ◃∙ h y ◃∎ =ₛ h x ◃∙ p ◃∎
-  homotopy-naturality-to-idf f h {x} p =
-    homotopy-naturality f (λ a → a) h p ∙ₛ =ₛ-in (ap (λ w → h x ∙ w) (ap-idf p))
-
-  homotopy-naturality-from-idf : (g : A → A)
-    (h : (x : A) → x == g x) {x y : A} (p : x == y)
-    → p ◃∙ h y ◃∎ =ₛ h x ◃∙ ap g p ◃∎
-  homotopy-naturality-from-idf g h {y = y} p =
-    =ₛ-in (ap (λ w → w ∙ h y) (! (ap-idf p))) ∙ₛ homotopy-naturality (λ a → a) g h p
-
-module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
-         (f g : A → B → C) (h : ∀ a b → f a b == g a b) where
-  homotopy-naturality2 : {a₀ a₁ : A} {b₀ b₁ : B} (p : a₀ == a₁) (q : b₀ == b₁)
-    → ap2 f p q ◃∙ h a₁ b₁ ◃∎ =ₛ h a₀ b₀ ◃∙ ap2 g p q ◃∎
-  homotopy-naturality2 {a₀ = a} {b₀ = b} idp idp =
-    =ₛ-in (! (∙-unit-r (h a b)))
-
-foo : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C)
-  {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B}
-  (h : f a₀ b₀ == f a₀ b₁)
-  → h ∙ ap (λ a → f a b₁) p ==
-    ap (λ a → f a b₀) p ∙ transport (λ a → f a b₀ == f a b₁) p h
-foo f idp h = ∙-unit-r h
-
-{-
-bar : ∀ {i j k l} {A : Type i} {B : A → Type j} {C : A → Type k} {D : (a : A) → Type l}
-  → (f : (a : A) → B a → C a → D a)
-  → {a₀ a₁ : A} (p : a₀ == a₁)
-  → (b₀ : B a₀) (c₀ : C a₀)
-  → f a₁ (transport B p b₀) (transport C p c₀) ==
-    transport D p (f a₀ b₀ c₀)
-bar f idp b₀ c₀ = idp
--}
-
-bar : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
-  (f : {a : A} → B a → C a)
-  {a₀ a₁ : A} (p : a₀ == a₁)
-  (b₀ : B a₀)
-  → f (transport B p b₀) == transport C p (f b₀)
-bar f idp b₀ = idp
-
 ap-comm-cst : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C)
   {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
   (c : C) (h : ∀ b → f a₀ b == c)
@@ -692,30 +612,22 @@ ap-comm-cst : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B �
     ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p
 ap-comm-cst f {a₀} {a₁} p {b₀} {b₁} q c h =
   ap (λ a → f a b₀) p ∙ ap (λ b → f a₁ b) q
-    =⟪ ap (ap (λ a → f a b₀) p ∙_) $
-       =ₛ-out $
-       -- post-rotate-in {p = ap (λ b → f a₁ b) q ◃∎} $
-       -- homotopy-naturality (λ b → f a₁ b) (λ _ → c) h' q
+    =⟪ ap (ap (λ a → f a b₀) p ∙_) $ =ₛ-out $
        homotopy-naturality' (λ b → f a₁ b) (λ _ → c) h' q ⟫
   ap (λ a → f a b₀) p ∙ h' b₀ ∙ ap (λ _ → c) q ∙ ! (h' b₁)
     =⟪ ap (ap (λ a → f a b₀) p ∙_) $
-       bar {B = λ a → ∀ b → f a b == c} (λ hh → hh b₀ ∙ ap (λ _ → c) q ∙ ! (hh b₁)) p h ⟫
-  ap (λ a → f a b₀) p ∙ k₁
-    =⟪ ! (foo f p k₀) ⟫
+       ap (_$ h) (transp-naturality {B = λ a → ∀ b → f a b == c} (λ hh → hh b₀ ∙ ap (λ _ → c) q ∙ ! (hh b₁)) p) ⟫
+  ap (λ a → f a b₀) p ∙ transport (λ a → f a b₀ == f a b₁) p k₀
+    =⟪ ! (ap-transport f p k₀) ⟫
   k₀ ∙ ap (λ a → f a b₁) p
-    =⟪ ap (_∙ ap (λ a → f a b₁) p) $ ! $
-        =ₛ-out $
-        -- post-rotate-in {p = ap (λ b → f a₀ b) q ◃∎} $
-        -- homotopy-naturality (λ b → f a₀ b) (λ _ → c) h q
-        homotopy-naturality' (λ b → f a₀ b) (λ _ → c) h q ⟫
+    =⟪ ap (_∙ ap (λ a → f a b₁) p) $ ! $ =ₛ-out $
+       homotopy-naturality' (λ b → f a₀ b) (λ _ → c) h q ⟫
   ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p ∎∎
   where
     h' : ∀ b → f a₁ b == c
     h' = transport (λ a → ∀ b → f a b == c) p h
     k₀ : f a₀ b₀ == f a₀ b₁
     k₀ = h b₀ ∙ ap (λ _ → c) q ∙ ! (h b₁)
-    k₁ : f a₁ b₀ == f a₁ b₁
-    k₁ = transport (λ a → f a b₀ == f a b₁) p k₀
 
 ap-comm-cst-coh : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C)
   {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
