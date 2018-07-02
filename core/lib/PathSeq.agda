@@ -480,6 +480,28 @@ module _ {i} {A : Type i} where
       =ₛ⟨ !-∙-seq t ⟩
     seq-! t ∎ₛ
 
+  seq-!-inv-l : {a a' : A} (s : a =-= a')
+    → seq-! s ∙∙ s =ₛ []
+  seq-!-inv-l s = =ₛ-in $
+    ↯ (seq-! s ∙∙ s)
+      =⟨ ↯-∙∙ (seq-! s) s ⟩
+    ↯ (seq-! s) ∙ ↯ s
+      =⟨ ap (_∙ ↯ s) (=ₛ-out (∙-!-seq s)) ⟩
+    ! (↯ s) ∙ ↯ s
+      =⟨ !-inv-l (↯ s) ⟩
+    idp =∎
+
+  seq-!-inv-r : {a a' : A} (s : a =-= a')
+    → s ∙∙ seq-! s =ₛ []
+  seq-!-inv-r s = =ₛ-in $
+    ↯ (s ∙∙ seq-! s)
+      =⟨ ↯-∙∙ s (seq-! s) ⟩
+    ↯ s ∙ ↯ (seq-! s)
+      =⟨ ap (↯ s ∙_) (=ₛ-out (∙-!-seq s)) ⟩
+    ↯ s ∙ ! (↯ s)
+      =⟨ !-inv-r (↯ s) ⟩
+    idp =∎
+
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
   ap-seq : {a a' : A} → a =-= a' → f a =-= f a'

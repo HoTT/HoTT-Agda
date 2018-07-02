@@ -577,7 +577,7 @@ module CP₁₁ where
         ap λ= (F₀₄.pres-comp g₁ g₂) ◃∙
         =ₛ-out (λ=-∙ (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∙
         =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
-          =ₛ⟨ 1 & 2 & =ₛ-in {t = []} (!-inv-l (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))))) ⟩
+          =ₛ⟨ 1 & 2 & seq-!-inv-l (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎) ⟩
         ap λ= (F₀₄.pres-comp g₁ g₂) ◃∎ ∎ₛ
 
     ap-cp₁₁-seq : ∀ g y → ap (λ x → cp₁₁ x y) (emloop g) =-= ap [_] (η (cp₀₁ g y))
