@@ -629,53 +629,49 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A →
 
 ap-comm-cst : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C)
   {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
-  (c : C) (h : ∀ b → f a₀ b == c)
+  (c : C) (h₀ : ∀ b → f a₀ b == c)
   → ap (λ a → f a b₀) p ∙ ap (λ b → f a₁ b) q =-=
     ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p
-ap-comm-cst f {a₀} {a₁} p {b₀} {b₁} q c h =
+ap-comm-cst f {a₀} {a₁} p {b₀} {b₁} q c h₀ =
   ap (λ a → f a b₀) p ∙ ap (λ b → f a₁ b) q
-    =⟪ ap (ap (λ a → f a b₀) p ∙_) $ =ₛ-out $
-       homotopy-naturality' (λ b → f a₁ b) (λ _ → c) h' q ⟫
-  ap (λ a → f a b₀) p ∙ h' b₀ ∙ ap (λ _ → c) q ∙ ! (h' b₁)
     =⟪ ap (ap (λ a → f a b₀) p ∙_) $
-       ap (_$ h) (transp-naturality {B = λ a → ∀ b → f a b == c} (λ hh → hh b₀ ∙ ap (λ _ → c) q ∙ ! (hh b₁)) p) ⟫
-  ap (λ a → f a b₀) p ∙ transport (λ a → f a b₀ == f a b₁) p k₀
-    =⟪ ! (ap-transport f p k₀) ⟫
-  k₀ ∙ ap (λ a → f a b₁) p
-    =⟪ ap (_∙ ap (λ a → f a b₁) p) $ ! $ =ₛ-out $
-       homotopy-naturality' (λ b → f a₀ b) (λ _ → c) h q ⟫
+       homotopy-naturality-to-cst (λ b → f a₁ b) c h₁ q ⟫
+  ap (λ a → f a b₀) p ∙ h₁ b₀ ∙ ! (h₁ b₁)
+    =⟪ ap (λ k → ap (λ a → f a b₀) p ∙ k h₀) $
+       transp-naturality {B = λ a → ∀ b → f a b == c} (λ h → h b₀ ∙ ! (h b₁)) p ⟫
+  ap (λ a → f a b₀) p ∙ transport (λ a → f a b₀ == f a b₁) p (h₀ b₀ ∙ ! (h₀ b₁))
+    =⟪ ! (ap-transport f p (h₀ b₀ ∙ ! (h₀ b₁))) ⟫
+  (h₀ b₀ ∙ ! (h₀ b₁)) ∙ ap (λ a → f a b₁) p
+    =⟪ ap (_∙ ap (λ a → f a b₁) p) $ ! $
+       homotopy-naturality-to-cst (λ b → f a₀ b) c h₀ q ⟫
   ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p ∎∎
   where
-    h' : ∀ b → f a₁ b == c
-    h' = transport (λ a → ∀ b → f a b == c) p h
-    k₀ : f a₀ b₀ == f a₀ b₁
-    k₀ = h b₀ ∙ ap (λ _ → c) q ∙ ! (h b₁)
+    h₁ : ∀ b → f a₁ b == c
+    h₁ = transport (λ a → ∀ b → f a b == c) p h₀
 
 ap-comm-cst-coh : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C)
   {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
-  (c : C) (h : ∀ b → f a₀ b == c)
+  (c : C) (h₀ : ∀ b → f a₀ b == c)
   → ap-comm f p q ◃∎ =ₛ
-    ap-comm-cst f p q c h
-ap-comm-cst-coh f {a₀} p@idp {b₀} q@idp c h = !ₛ $
-  ap (idp ∙_) (! (!-inv-r (h b₀))) ◃∙
+    ap-comm-cst f p q c h₀
+ap-comm-cst-coh f p@idp {b₀} q@idp c h₀ = !ₛ $
+  ap (idp ∙_) (! (!-inv-r (h₀ b₀))) ◃∙
   idp ◃∙
-  ! (∙-unit-r (h b₀ ∙ ! (h b₀))) ◃∙
-  ap (_∙ idp) (! (! (!-inv-r (h b₀)))) ◃∎
+  ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ◃∙
+  ap (_∙ idp) (! (! (!-inv-r (h₀ b₀)))) ◃∎
     =ₛ⟨ 1 & 1 & expand [] ⟩
-  ap (idp ∙_) (! (!-inv-r (h b₀))) ◃∙
-  ! (∙-unit-r (h b₀ ∙ ! (h b₀))) ◃∙
-  ap (_∙ idp) (! (! (!-inv-r (h b₀)))) ◃∎
-    =ₛ₁⟨ 0 & 1 & ap-idf (! (!-inv-r (h b₀))) ⟩
-  ! (!-inv-r (h b₀)) ◃∙
-  ! (∙-unit-r (h b₀ ∙ ! (h b₀))) ◃∙
-  ap (_∙ idp) (! (! (!-inv-r (h b₀)))) ◃∎
-    =ₛ⟨ 1 & 2 & !ₛ (homotopy-naturality-from-idf (_∙ idp) (λ p → ! (∙-unit-r p)) (! (! (!-inv-r (h b₀))))) ⟩
-  ! (!-inv-r (h b₀)) ◃∙
-  ! (! (!-inv-r (h b₀))) ◃∙
+  ap (idp ∙_) (! (!-inv-r (h₀ b₀))) ◃∙
+  ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ◃∙
+  ap (_∙ idp) (! (! (!-inv-r (h₀ b₀)))) ◃∎
+    =ₛ₁⟨ 0 & 1 & ap-idf (! (!-inv-r (h₀ b₀))) ⟩
+  ! (!-inv-r (h₀ b₀)) ◃∙
+  ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ◃∙
+  ap (_∙ idp) (! (! (!-inv-r (h₀ b₀)))) ◃∎
+    =ₛ⟨ 1 & 2 & !ₛ (homotopy-naturality-from-idf (_∙ idp) (λ p → ! (∙-unit-r p)) (! (! (!-inv-r (h₀ b₀))))) ⟩
+  ! (!-inv-r (h₀ b₀)) ◃∙
+  ! (! (!-inv-r (h₀ b₀))) ◃∙
   idp ◃∎
-    =ₛ₁⟨ 0 & 2 & !-inv-r (! (!-inv-r (h b₀))) ⟩
-  idp ◃∙ idp ◃∎
-    =ₛ⟨ 0 & 1 & expand [] ⟩
+    =ₛ⟨ 0 & 2 & seq-!-inv-r (! (!-inv-r (h₀ b₀)) ◃∎) ⟩
   idp ◃∎ ∎ₛ
 
 apd= : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
