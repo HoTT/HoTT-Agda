@@ -22,10 +22,10 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
     abstract
 
       comm-embase-emloop↯ : ∀ h →
-        ap (cp₁₁ embase) (emloop h) =-=
+        ap (λ y → cp₁₁ embase y) (emloop h) =-=
         ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h)
       comm-embase-emloop↯ h =
-        ap (cp₁₁ embase) (emloop h)
+        ap (λ y → cp₁₁ embase y) (emloop h)
           =⟪idp⟫
         ap (cst [ north ]) (emloop h)
           =⟪ ap-cst [ north ] (emloop h) ⟫
@@ -214,7 +214,6 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
         ap2 _∙_ (comm-emloop-embase' g₁) (comm-emloop-embase' g₂) ◃∙
         ∙-ap (λ x → antipodal-map (cp₁₁ embase x)) (emloop g₁) (emloop g₂) ◃∎
       comm-emloop-comp-embase' g₁ g₂ =
-
         comm-emloop-embase' (R.add g₁ g₂) ◃∙
         ap (ap (λ x → antipodal-map (cp₁₁ embase x))) (emloop-comp g₁ g₂) ◃∎
           =ₛ⟨ 0 & 1 & expand (comm-emloop-embase↯ (R.add g₁ g₂)) ⟩
@@ -268,7 +267,136 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
         ap2 _∙_ (comm-emloop-embase' g) (comm-embase-emloop' h) ◃∙
         ap-comm (λ x y → antipodal-map (cp₁₁ y x)) (emloop g) (emloop h) ◃∎
       comm-emloop-emloop' g h =
-        {!!}
+        ap-comm (λ x y → cp₁₁ x y) (emloop g) (emloop h) ◃∙
+        ap2 _∙_ (comm-embase-emloop' h) (comm-emloop-embase' g) ◃∎
+          =ₛ⟨ 1 & 1 & ap2-out _∙_ (comm-embase-emloop' h) (comm-emloop-embase' g) ⟩
+        ap-comm (λ x y → cp₁₁ x y) (emloop g) (emloop h) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (comm-embase-emloop' h) ◃∙
+        ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
+          =ₛ⟨ 1 & 1 & ap-seq-∙ (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (comm-embase-emloop↯ h) ⟩
+        ap-comm (λ x y → cp₁₁ x y) (emloop g) (emloop h) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (ap-cst [ north ] (emloop h)) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (! (ap (ap antipodal-map) (ap-cp₁₁-embase h))) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h)) ◃∙
+        ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
+          =ₛ₁⟨ 1 & 1 & ap (ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)))
+                          (! (homotopy-naturality-cst-to-cst {A = EM₁ R₊} {B = EM 2} [ north ]₂ (emloop' R₊ h))) ⟩
+        ap-comm (λ x y → cp₁₁ x y) (emloop g) (emloop h) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ (λ y → idp) (emloop' R₊ h)) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (! (ap (ap antipodal-map) (ap-cp₁₁-embase h))) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h)) ◃∙
+        ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
+          =ₛ⟨ 0 & 2 & post-rotate-out {r = _ ◃∙ _ ◃∙ _ ◃∎} $
+                      ap-comm-cst-coh cp₁₁ (emloop g) (emloop h) [ north ]₂ (λ y → idp) ⟩
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_)
+            (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_)
+           (ap (λ k → k (λ y → idp))
+               (transp-naturality {B = λ x → ∀ y → cp₁₁ x y == [ north ]₂} {C = λ x → cp₁₁ x embase == cp₁₁ x embase}
+                                  (λ h → h embase ∙ ! (h embase)) (emloop g))) ◃∙
+        ! (ap-transp (λ x → cp₁₁ x embase) (λ x → cp₁₁ x embase) (emloop g) idp) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (! (ap (ap antipodal-map) (ap-cp₁₁-embase h))) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h)) ◃∙
+        ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
+          =ₛ⟨ 0 & 2 & ap-seq-=ₛ (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) step₅' ⟩
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (! (transp-idp (λ a → cp₁₁ a embase) (emloop g))) ◃∙
+        ! (ap-transp (λ x → cp₁₁ x embase) (λ x → cp₁₁ x embase) (emloop g) idp) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (! (ap (ap antipodal-map) (ap-cp₁₁-embase h))) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h)) ◃∙
+        ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
+          =ₛ₁⟨ 2 & 1 & ap-! (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ⟩
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
+        ! (ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (transp-idp (λ x → cp₁₁ x embase) (emloop g))) ◃∙
+        ! (ap-transp (λ x → cp₁₁ x embase) (λ x → cp₁₁ x embase) (emloop g) idp) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (! (ap (ap antipodal-map) (ap-cp₁₁-embase h))) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h)) ◃∙
+        ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
+          =ₛ⟨ 2 & 2 & pre-rotate'-seq-in {p = _ ◃∙ _ ◃∎} {r = []} $
+                      !ₛ $ ap-transp-idp (λ x → cp₁₁ x embase) (emloop g) ⟩
+        {!ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
+        ∙-unit-r (ap (λ x → cp₁₁ x embase) (emloop g)) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (! (ap (ap antipodal-map) (ap-cp₁₁-embase h))) ◃∙
+        ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h)) ◃∙
+        ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
+          =ₛ⟨ ? ⟩
+        ?!}
+        where
+          h₀ : ∀ y → cp₁₁ embase y == [ north ]₂
+          h₀ y = idp
+          h₁ : ∀ y → cp₁₁ embase y == [ north ]₂
+          h₁ = transport (λ x → ∀ y → cp₁₁ x y == [ north ]₂) (emloop g) h₀
+          h₁-path : ∀ y → h₁ y == ! (ap [_] (η (cp₀₁ g y)))
+          h₁-path y =
+            transport (λ x → ∀ y → cp₁₁ x y == [ north ]₂) (emloop g) h₀ y
+              =⟨ app= (Π-transp (emloop g) h₀) y ⟩
+            transport (λ x → cp₁₁ x y == [ north ]₂) (emloop g) (h₀ y)
+              =⟨ to-transp {B = λ x → cp₁₁ x y == [ north ]₂} {p = emloop g} $
+                 ↓-app=cst-in' {f = λ x → cp₁₁ x y} {p = emloop g} {u = idp} {v = ! (ap (λ x → cp₁₁ x y) (emloop g))} $
+                 ! (!-inv-r (ap (λ x → cp₁₁ x y) (emloop g))) ∙
+                 ∙=∙' (ap (λ x → cp₁₁ x y) (emloop g)) (! (ap (λ x → cp₁₁ x y) (emloop g))) ⟩
+            ! (ap (λ x → cp₁₁ x y) (emloop g))
+              =⟨ ap ! (ap-cp₁₁ g y) ⟩
+            ! (ap [_] (η (cp₀₁ g y))) =∎
+          foo : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C)
+            {a₀ a₁ : A} (p : a₀ == a₁) (b : B)
+            (c : C) (h₀ : ∀ b' → f a₀ b' == c)
+            → ap (λ k → k h₀) (transp-naturality {B = λ a → ∀ b → f a b == c} (λ h → h b ∙ ! (h b)) p) ◃∎
+              =ₛ
+              !-inv-r (transport (λ a → ∀ b → f a b == c) p h₀ b) ◃∙
+              ! (transp-idp (λ a → f a b) p) ◃∙
+              ap (transport (λ a → f a b == f a b) p) (! (!-inv-r (h₀ b))) ◃∎
+          foo f p@idp b c h₀ = !ₛ $
+            !-inv-r (h₀ b) ◃∙
+            idp ◃∙
+            ap (λ r → r) (! (!-inv-r (h₀ b))) ◃∎
+              =ₛ⟨ 1 & 1 & expand [] ⟩
+            !-inv-r (h₀ b) ◃∙
+            ap (λ r → r) (! (!-inv-r (h₀ b))) ◃∎
+              =ₛ₁⟨ 1 & 1 & ap-idf (! (!-inv-r (h₀ b))) ⟩
+            !-inv-r (h₀ b) ◃∙
+            ! (!-inv-r (h₀ b)) ◃∎
+              =ₛ₁⟨ !-inv-r (!-inv-r (h₀ b)) ⟩
+            idp ◃∎ ∎ₛ
+          step₅' :
+            homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h) ◃∙
+            ap (λ k → k (λ y → idp))
+               (transp-naturality {B = λ x → ∀ y → cp₁₁ x y == [ north ]₂} {C = λ x → cp₁₁ x embase == cp₁₁ x embase}
+                                  (λ h → h embase ∙ ! (h embase)) (emloop g)) ◃∎
+            =ₛ
+            homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h) ◃∙
+            !-inv-r (h₁ embase) ◃∙
+            ! (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ◃∎
+            -- ap-cst [ north ]₂ (emloop h) ◃∙
+            -- ! (transp-idp (λ x → cp₁₁ x embase) (emloop g)) ◃∎
+          step₅' =
+            homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h) ◃∙
+            app= (transp-naturality {B = λ x → ∀ y → cp₁₁ x y == [ north ]₂} {C = λ x → cp₁₁ x embase == cp₁₁ x embase}
+                                    (λ h → h embase ∙ ! (h embase)) (emloop g))
+                 (λ y → idp) ◃∎
+              =ₛ⟨ 1 & 1 & foo cp₁₁ (emloop g) embase [ north ]₂ (λ y → idp) ⟩
+            homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h) ◃∙
+            !-inv-r (h₁ embase) ◃∙
+            ! (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ◃∙
+            idp ◃∎
+              =ₛ⟨ 3 & 1 & expand [] ⟩
+            homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h) ◃∙
+            !-inv-r (h₁ embase) ◃∙
+            ! (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ◃∎ ∎ₛ
+            {-
+            ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h) =∎
+             =⟨ ? ⟩
+            ap (_∙ ! (h₁ embase)) (ap h₁ (emloop h))
+             =⟨ ? ⟩
+            ap (_∙ ! (h₁ embase)) (h₁-path embase ∙ ap (λ y → ! (ap [_] (η (cp₀₁ g y)))) (emloop h) ∙ ! (h₁-path embase))
+             =⟨ ? ⟩
+            ap (_∙ ! (h₁ embase)) (h₁-path embase ∙ ap (! ∘ ap [_] ∘ η) (ap (cp₀₁ g) (emloop h)) ∙ ! (h₁-path embase))
+             =⟨ ? ⟩
+            ap (_∙ ! (h₁ embase)) (h₁-path embase ∙ ap (! ∘ ap [_] ∘ η) (emloop (R.mult g h)) ∙ ! (h₁-path embase))
+            -}
 
     abstract
 

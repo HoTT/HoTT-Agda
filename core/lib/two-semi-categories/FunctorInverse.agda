@@ -370,9 +370,7 @@ module FunctorInverse
           ap (λ s → G₁' (D.comp s h)) (ap2 D.comp (F₁-η f) (F₁-η g)) ◃∙
           ap2 (λ s t → G₁' (D.comp s t)) (F₁-η (D.comp (F₁ (G₁' f)) (F₁ (G₁' g)))) (F₁-η h) ◃∙
           ap (λ s → G₁' (D.comp s (F₁ (G₁' h)))) (F₁-β (D.comp (F₁ (G₁' f)) (F₁ (G₁' g)))) ◃∎
-            =ₛ⟨ 1 & 1 & =ₛ-in {t = ap (λ t → G₁' (D.comp (D.comp (F₁ (G₁' f)) (F₁ (G₁' g))) t)) (F₁-η h) ◃∙
-                                   ap (λ s → G₁' (D.comp s (F₁ (G₁' h)))) (F₁-η (D.comp (F₁ (G₁' f)) (F₁ (G₁' g)))) ◃∎}
-                              (ap2-out' (λ s t → G₁' (D.comp s t)) (F₁-η (D.comp (F₁ (G₁' f)) (F₁ (G₁' g)))) (F₁-η h)) ⟩
+            =ₛ⟨ 1 & 1 & ap2-out' (λ s t → G₁' (D.comp s t)) (F₁-η (D.comp (F₁ (G₁' f)) (F₁ (G₁' g)))) (F₁-η h) ⟩
           ap (λ s → G₁' (D.comp s h)) (ap2 D.comp (F₁-η f) (F₁-η g)) ◃∙
           ap (λ t → G₁' (D.comp (D.comp (F₁ (G₁' f)) (F₁ (G₁' g))) t)) (F₁-η h) ◃∙
           ap (λ s → G₁' (D.comp s (F₁ (G₁' h)))) (F₁-η (D.comp (F₁ (G₁' f)) (F₁ (G₁' g)))) ◃∙
@@ -388,10 +386,7 @@ module FunctorInverse
             =ₛ₁⟨ 0 & 1 & ap-ap2 (λ s → G₁' (D.comp s h)) D.comp (F₁-η f) (F₁-η g) ⟩
           ap2 (λ s t → G₁' (D.comp (D.comp s t) h)) (F₁-η f) (F₁-η g) ◃∙
           ap (λ t → G₁' (D.comp (D.comp (F₁ (G₁' f)) (F₁ (G₁' g))) t)) (F₁-η h) ◃∎
-            =ₛ⟨ 0 & 1 &
-                =ₛ-in {t = ap (λ s → G₁' (D.comp (D.comp s g) h)) (F₁-η f) ◃∙
-                           ap (λ s → G₁' (D.comp (D.comp (F₁ (G₁' f)) s) h)) (F₁-η g) ◃∎}
-                      (ap2-out (λ s t → G₁' (D.comp (D.comp s t) h)) (F₁-η f) (F₁-η g)) ⟩
+            =ₛ⟨ 0 & 1 & ap2-out (λ s t → G₁' (D.comp (D.comp s t) h)) (F₁-η f) (F₁-η g) ⟩
           ap (λ s → G₁' (D.comp (D.comp s g) h)) (F₁-η f) ◃∙
           ap (λ s → G₁' (D.comp (D.comp (F₁ (G₁' f)) s) h)) (F₁-η g) ◃∙
           ap (λ s → G₁' (D.comp (D.comp (F₁ (G₁' f)) (F₁ (G₁' g))) s)) (F₁-η h) ◃∎ ∎ₛ
@@ -520,7 +515,7 @@ module FunctorInverse
           ap (λ s → G₁' (D.comp s (D.comp g h))) (F₁-η f) ◃∙
           ap (λ s → G₁' (D.comp (F₁ (G₁' f)) (D.comp s h))) (F₁-η g) ◃∙
           ap (λ s → G₁' (D.comp (F₁ (G₁' f)) (D.comp (F₁ (G₁' g)) s))) (F₁-η h) ◃∎
-            =ₛ₁⟨ 1 & 2 & ! (ap2-out (λ s t → G₁' (D.comp (F₁ (G₁' f)) (D.comp s t))) (F₁-η g) (F₁-η h)) ⟩
+            =ₛ⟨ 1 & 2 & !ₛ (ap2-out (λ s t → G₁' (D.comp (F₁ (G₁' f)) (D.comp s t))) (F₁-η g) (F₁-η h)) ⟩
           ap (λ s → G₁' (D.comp s (D.comp g h))) (F₁-η f) ◃∙
           ap2 (λ s t → G₁' (D.comp (F₁ (G₁' f)) (D.comp s t))) (F₁-η g) (F₁-η h) ◃∎
             =ₛ₁⟨ 1 & 1 & ! (ap-ap2 (G₁' ∘ D.comp (F₁ (G₁' f))) D.comp (F₁-η g) (F₁-η h)) ⟩
@@ -545,7 +540,7 @@ module FunctorInverse
           ap (G₁' ∘ D.comp (F₁ (G₁' f))) (F₁-η (D.comp g h)) ◃∙
           ap (G₁' ∘ D.comp (F₁ (G₁' f)) ∘ F₁ ∘ G₁') (ap2 D.comp (F₁-η g) (F₁-η h)) ◃∙
           ap (G₁' ∘ D.comp (F₁ (G₁' f))) (F₁-β (D.comp (F₁ (G₁' g)) (F₁ (G₁' h)))) ◃∎
-            =ₛ₁⟨ 0 & 2 & ! (ap2-out (λ s t → G₁' (D.comp s t)) (F₁-η f) (F₁-η (D.comp g h))) ⟩
+            =ₛ⟨ 0 & 2 & !ₛ (ap2-out (λ s t → G₁' (D.comp s t)) (F₁-η f) (F₁-η (D.comp g h))) ⟩
           ap2 (λ s t → G₁' (D.comp s t)) (F₁-η f) (F₁-η (D.comp g h)) ◃∙
           ap (λ s → G₁' (D.comp (F₁ (G₁' f)) (F₁ (G₁' s)))) (ap2 D.comp (F₁-η g) (F₁-η h)) ◃∙
           ap (G₁' ∘ D.comp (F₁ (G₁' f))) (F₁-β (D.comp (F₁ (G₁' g)) (F₁ (G₁' h)))) ◃∎

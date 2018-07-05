@@ -455,7 +455,7 @@ module _ {i j} where
 module _ {i} {X : Ptd i} where
 
   Ω-fmap2-∙ : (α β : Ω^ 2 X) → ap2 _∙_ α β == Ω^S-∙ 1 α β
-  Ω-fmap2-∙ α β = ap2-out _∙_ α β ∙ ap2 _∙_ (lemma α) (ap-idf β)
+  Ω-fmap2-∙ α β = =ₛ-out (ap2-out _∙_ α β) ∙ ap2 _∙_ (lemma α) (ap-idf β)
     where
     lemma : ∀ {i} {A : Type i} {x y : A} {p q : x == y} (α : p == q)
       → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α ∙' ! (∙-unit-r q)

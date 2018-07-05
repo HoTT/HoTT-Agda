@@ -320,6 +320,19 @@ apd-∘'' : ∀ {i j k} {A : Type i} {B : Type j} {C : (b : B) → Type k}
   → apd (g ∘ f) p == ↓-ap-out= C f p r (apd g q) --(apd↓ g q)
 apd-∘'' g f idp idp = idp
 
+→-transp : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  {a₀ a₁ : A} (p : a₀ == a₁)
+  (g : B a₀ → C a₀)
+  → transport (λ a → B a → C a) p g ==
+    transport C p ∘ g ∘ transport! B p
+→-transp p@idp g = idp
+
+Π-transp : ∀ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k}
+  {a₀ a₁ : A} (p : a₀ == a₁)
+  (g : (b : B) → C a₀ b)
+  → transport (λ a → ∀ b → C a b) p g ==
+    λ b → transport (λ a → C a b) p (g b)
+Π-transp p@idp g = idp
 
 {- 2-dimensional coherence conditions -}
 

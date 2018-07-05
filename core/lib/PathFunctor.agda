@@ -136,13 +136,25 @@ transp-naturality : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type 
   → u ∘ transport B p == transport C p ∘ u
 transp-naturality f idp = idp
 
-ap-transport : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
-  (f : A → B → C)
-  {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B}
-  (h : f a₀ b₀ == f a₀ b₁)
-  → h ∙ ap (λ a → f a b₁) p ==
-    ap (λ a → f a b₀) p ∙ transport (λ a → f a b₀ == f a b₁) p h
-ap-transport f idp h = ∙-unit-r h
+transp-idp : ∀ {i j} {A : Type i} {B : Type j}
+  (f : A → B) {x y : A} (p : x == y)
+  → transport (λ a → f a == f a) p idp == idp
+transp-idp f idp = idp
+
+module _ {i j} {A : Type i} {B : Type j} where
+
+  ap-transp : (f g : A → B) {a₀ a₁ : A} (p : a₀ == a₁) (h : f a₀ == g a₀)
+    → h ∙ ap g p == ap f p ∙ transport (λ a → f a == g a) p h
+  ap-transp f g p@idp h = ∙-unit-r h
+
+  ap-transp-idp : (f : A → B)
+    {a₀ a₁ : A} (p : a₀ == a₁)
+    → ap-transp f f p idp ◃∙
+      ap (ap f p ∙_) (transp-idp f p) ◃∙
+      ∙-unit-r (ap f p) ◃∎
+      =ₛ
+      []
+  ap-transp-idp f p@idp = =ₛ-in idp
 
 {- for functions with two arguments -}
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
@@ -152,12 +164,12 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) wher
   ap2 idp idp = idp
 
   ap2-out : {x y : A} {w z : B} (p : x == y) (q : w == z)
-    → ap2 p q == ap (λ u → f u w) p ∙ ap (λ v → f y v) q
-  ap2-out idp idp = idp
+    → ap2 p q ◃∎ =ₛ ap (λ u → f u w) p ◃∙ ap (λ v → f y v) q ◃∎
+  ap2-out idp idp = =ₛ-in idp
 
   ap2-out' : {x y : A} {w z : B} (p : x == y) (q : w == z)
-    → ap2 p q == ap (λ u → f x u) q ∙ ap (λ v → f v z) p
-  ap2-out' idp idp = idp
+    → ap2 p q ◃∎ =ₛ ap (λ u → f x u) q ◃∙ ap (λ v → f v z) p ◃∎
+  ap2-out' idp idp = =ₛ-in idp
 
   ap2-idp-l : {x : A} {w z : B} (q : w == z)
     → ap2 (idp {a = x}) q == ap (f x) q
@@ -228,6 +240,19 @@ module _ {i j} {A : Type i} {B : Type j} where
     → ap2 f p p == ap (λ x → f x x) p
   ap2-diag f idp = idp
 
+module _ {i j} {A : Type i} {B : Type j} (b : B) where
+
+  ap-cst : {x y : A} (p : x == y)
+    → ap (cst b) p == idp
+  ap-cst idp = idp
+
+  ap-cst-coh : {x y z : A} (p : x == y) (q : y == z)
+    → ap-cst (p ∙ q) ◃∎
+      =ₛ
+      ap-∙ (cst b) p q ◃∙
+      ap2 _∙_ (ap-cst p) (ap-cst q) ◃∎
+  ap-cst-coh idp idp = =ₛ-in idp
+
 {- Naturality of homotopies -}
 
 module _ {i} {A : Type i} where
@@ -252,7 +277,45 @@ module _ {i} {A : Type i} where
   homotopy-naturality-to-cst : ∀ {k} {B : Type k} (f : A → B) (b : B)
     (h : (x : A) → f x == b) {x y : A} (p : x == y)
     → ap f p == h x ∙ ! (h y)
-  homotopy-naturality-to-cst f b h {x} idp = ! (!-inv-r (h x))
+  homotopy-naturality-to-cst f b h {x} p@idp = ! (!-inv-r (h x))
+
+  homotopy-naturality-cst-to-cst : ∀ {k} {B : Type k}
+    (b : B) {x y : A} (p : x == y)
+    → homotopy-naturality-to-cst (cst b) b (λ a → idp) p ==
+      ap-cst b p
+  homotopy-naturality-cst-to-cst b p@idp = idp
+
+  homotopy-naturality-cst-to-cst' : ∀ {k} {B : Type k}
+    (b₀ b₁ : B) (h : A → b₀ == b₁) {x y : A} (p : x == y)
+    → homotopy-naturality-to-cst (cst b₀) b₁ h p ◃∙
+      ap (λ v → h v ∙ ! (h y)) p ◃∙
+      !-inv-r (h y) ◃∎
+      =ₛ
+      ap-cst b₀ p ◃∎
+  homotopy-naturality-cst-to-cst' b₀ b₁ h {x} p@idp =
+    =ₛ-in (!-inv-l (!-inv-r (h x)))
+
+  homotopy-naturality-cst-to-cst-comp : ∀ {k} {B : Type k}
+    (b₀ b₁ : B) (h : A → b₀ == b₁) {x y z : A} (p : x == y) (q : y == z)
+    → homotopy-naturality-to-cst (cst b₀) b₁ h (p ∙ q) ◃∙
+      ap (λ v → h v ∙ ! (h z)) p ◃∎
+      =ₛ
+      ap-∙ (cst b₀) p q ◃∙
+      ap (_∙ ap (cst b₀) q) (ap-cst b₀ p) ◃∙
+      homotopy-naturality-to-cst (cst b₀) b₁ h q ◃∎
+  homotopy-naturality-cst-to-cst-comp b₀ b₁ h {x} p@idp q@idp =
+    =ₛ-in (∙-unit-r (! (!-inv-r (h x))))
+
+  homotopy-naturality-cst-to-cst-comp' : ∀ {k} {B : Type k}
+    (b₀ b₁ : B) (h : A → b₀ == b₁) {x y z : A} (p : x == z) (q : x == y)
+    → homotopy-naturality-to-cst (cst b₀) b₁ h p ◃∙
+      ap (λ v → h v ∙ ! (h z)) q ◃∎
+      =ₛ
+      ap-cst b₀ p ◃∙
+      ! (ap-cst b₀ (! q ∙ p)) ◃∙
+      homotopy-naturality-to-cst (cst b₀) b₁ h (! q ∙ p) ◃∎
+  homotopy-naturality-cst-to-cst-comp' b₀ b₁ h {x} p@idp q@idp =
+    =ₛ-in (∙-unit-r (! (!-inv-r (h x))))
 
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
          (f g : A → B → C) (h : ∀ a b → f a b == g a b) where
@@ -261,25 +324,12 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
   homotopy-naturality2 {a₀ = a} {b₀ = b} idp idp =
     =ₛ-in (! (∙-unit-r (h a b)))
 
-module _ {i j} {A : Type i} {B : Type j} (b : B) where
-
-  ap-cst : {x y : A} (p : x == y)
-    → ap (cst b) p == idp
-  ap-cst idp = idp
-
-  ap-cst-coh : {x y z : A} (p : x == y) (q : y == z)
-    → ap-cst (p ∙ q) ◃∎
-      =ₛ
-      ap-∙ (cst b) p q ◃∙
-      ap2 _∙_ (ap-cst p) (ap-cst q) ◃∎
-  ap-cst-coh idp idp = =ₛ-in idp
-
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
 
   ap-comm : {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
     → ap (λ a → f a b₀) p ∙ ap (λ z → f a₁ z) q ==
       ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p
-  ap-comm idp idp = idp
+  ap-comm p q = ! (=ₛ-out (ap2-out f p q)) ∙ =ₛ-out (ap2-out' f p q)
 
   ap-comm' : {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
     → ap (λ a → f a b₀) p ∙' ap (λ z → f a₁ z) q ==

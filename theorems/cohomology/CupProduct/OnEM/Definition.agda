@@ -63,7 +63,7 @@ module distr-l (g₁ g₂ : R.El) where
       ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap EM₁-mult (emloop (R.mult g₁ h))) (emloop h)
         =⟨ mult-emloop-β (R.mult g₁ h) |in-ctx (λ z → ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
       ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (mult-loop (R.mult g₁ h)) (emloop h)
-        =⟨ ap2-out (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (mult-loop (R.mult g₁ h)) (emloop h) ⟩
+        =⟨ =ₛ-out (ap2-out (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (mult-loop (R.mult g₁ h)) (emloop h)) ⟩
       ap (λ (f : EM₁ R₊ → EM₁ R₊) → f embase) (mult-loop (R.mult g₁ h)) ∙ ap (cp₀₁ g₂) (emloop h)
         =⟨ app=-β (mult-loop' (R.mult g₁ h)) embase |in-ctx (λ z → z ∙ ap (cp₀₁ g₂) (emloop h)) ⟩
       mult-loop' (R.mult g₁ h) embase ∙ ap (cp₀₁ g₂) (emloop h)

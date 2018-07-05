@@ -418,6 +418,17 @@ module _ {i} {A : Type i} where
   post-rotate-in {p = p} {r = r} {q = q} e =
     !ₛ (post-rotate'-in (!ₛ e))
 
+  post-rotate-out : {a a' a'' : A}
+    → {p : a =-= a'} {q : a' == a''} {r : a =-= a''}
+    → p =ₛ r ∙▹ ! q
+    → p ∙▹ q =ₛ r
+  post-rotate-out {p = p} {q = q} {r = r} e = =ₛ-in $
+    ↯ (p ∙▹ q)
+      =⟨ ap (λ v → ↯ (p ∙▹ v)) (! (!-! q)) ⟩
+    ↯ (p ∙▹ ! (! q))
+      =⟨ =ₛ-out (post-rotate'-in {r = p} {q = ! q} {p = r} e) ⟩
+    ↯ r =∎
+
   post-rotate'-seq-in : {a a' a'' : A}
     → {r : a =-= a''} {q : a' =-= a''} {p : a =-= a'}
     → r =ₛ p ∙∙ q
@@ -627,23 +638,23 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A →
     → ap-∘-∙-coh-seq₁ p p' =ₛ ap-∘-∙-coh-seq₂ p p'
   ap-∘-∙-coh idp idp = =ₛ-in idp
 
-ap-comm-cst : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C)
+ap-comm-cst-seq : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C)
   {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
   (c : C) (h₀ : ∀ b → f a₀ b == c)
   → ap (λ a → f a b₀) p ∙ ap (λ b → f a₁ b) q =-=
     ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p
-ap-comm-cst f {a₀} {a₁} p {b₀} {b₁} q c h₀ =
+ap-comm-cst-seq f {a₀} {a₁} p {b₀} {b₁} q c h₀ =
   ap (λ a → f a b₀) p ∙ ap (λ b → f a₁ b) q
     =⟪ ap (ap (λ a → f a b₀) p ∙_) $
        homotopy-naturality-to-cst (λ b → f a₁ b) c h₁ q ⟫
   ap (λ a → f a b₀) p ∙ h₁ b₀ ∙ ! (h₁ b₁)
-    =⟪ ap (λ k → ap (λ a → f a b₀) p ∙ k h₀) $
+    =⟪ ap (ap (λ a → f a b₀) p ∙_) $ ap (λ k → k h₀) $
        transp-naturality {B = λ a → ∀ b → f a b == c} (λ h → h b₀ ∙ ! (h b₁)) p ⟫
   ap (λ a → f a b₀) p ∙ transport (λ a → f a b₀ == f a b₁) p (h₀ b₀ ∙ ! (h₀ b₁))
-    =⟪ ! (ap-transport f p (h₀ b₀ ∙ ! (h₀ b₁))) ⟫
+    =⟪ ! (ap-transp (λ a → f a b₀) (λ a → f a b₁) p (h₀ b₀ ∙ ! (h₀ b₁))) ⟫
   (h₀ b₀ ∙ ! (h₀ b₁)) ∙ ap (λ a → f a b₁) p
-    =⟪ ap (_∙ ap (λ a → f a b₁) p) $ ! $
-       homotopy-naturality-to-cst (λ b → f a₀ b) c h₀ q ⟫
+    =⟪ ! (ap (_∙ ap (λ a → f a b₁) p) $
+             (homotopy-naturality-to-cst (λ b → f a₀ b) c h₀ q)) ⟫
   ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p ∎∎
   where
     h₁ : ∀ b → f a₁ b == c
@@ -653,21 +664,21 @@ ap-comm-cst-coh : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → 
   {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
   (c : C) (h₀ : ∀ b → f a₀ b == c)
   → ap-comm f p q ◃∎ =ₛ
-    ap-comm-cst f p q c h₀
+    ap-comm-cst-seq f p q c h₀
 ap-comm-cst-coh f p@idp {b₀} q@idp c h₀ = !ₛ $
   ap (idp ∙_) (! (!-inv-r (h₀ b₀))) ◃∙
   idp ◃∙
   ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ◃∙
-  ap (_∙ idp) (! (! (!-inv-r (h₀ b₀)))) ◃∎
+  ! (ap (_∙ idp) (! (!-inv-r (h₀ b₀)))) ◃∎
     =ₛ⟨ 1 & 1 & expand [] ⟩
   ap (idp ∙_) (! (!-inv-r (h₀ b₀))) ◃∙
   ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ◃∙
-  ap (_∙ idp) (! (! (!-inv-r (h₀ b₀)))) ◃∎
+  ! (ap (_∙ idp) (! (!-inv-r (h₀ b₀)))) ◃∎
     =ₛ₁⟨ 0 & 1 & ap-idf (! (!-inv-r (h₀ b₀))) ⟩
   ! (!-inv-r (h₀ b₀)) ◃∙
   ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ◃∙
-  ap (_∙ idp) (! (! (!-inv-r (h₀ b₀)))) ◃∎
-    =ₛ⟨ 1 & 2 & !ₛ (homotopy-naturality-from-idf (_∙ idp) (λ p → ! (∙-unit-r p)) (! (! (!-inv-r (h₀ b₀))))) ⟩
+  ! (ap (_∙ idp) (! (!-inv-r (h₀ b₀)))) ◃∎
+    =ₛ⟨ 1 & 2 & !-=ₛ (homotopy-naturality-to-idf (_∙ idp) (λ p → ∙-unit-r p) (! (!-inv-r (h₀ b₀)))) ⟩
   ! (!-inv-r (h₀ b₀)) ◃∙
   ! (! (!-inv-r (h₀ b₀))) ◃∙
   idp ◃∎
