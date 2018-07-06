@@ -299,24 +299,30 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
         ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h)) ◃∙
         ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
           =ₛ⟨ 0 & 2 & ap-seq-=ₛ (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) step₅' ⟩
-        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (ap-cst [ north ]₂ (emloop h)) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (! (!-inv-r (h₁ embase))) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (! (ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h))) ◃∙
         ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
         ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (! (transp-idp (λ a → cp₁₁ a embase) (emloop g))) ◃∙
         ! (ap-transp (λ x → cp₁₁ x embase) (λ x → cp₁₁ x embase) (emloop g) idp) ◃∙
         ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (! (ap (ap antipodal-map) (ap-cp₁₁-embase h))) ◃∙
         ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h)) ◃∙
         ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
-          =ₛ₁⟨ 2 & 1 & ap-! (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ⟩
-        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
+          =ₛ₁⟨ 4 & 1 & ap-! (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ⟩
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (ap-cst [ north ]₂ (emloop h)) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (! (!-inv-r (h₁ embase))) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (! (ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h))) ◃∙
         ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
-        ! (ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (transp-idp (λ x → cp₁₁ x embase) (emloop g))) ◃∙
+        ! (ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (transp-idp (λ a → cp₁₁ a embase) (emloop g))) ◃∙
         ! (ap-transp (λ x → cp₁₁ x embase) (λ x → cp₁₁ x embase) (emloop g) idp) ◃∙
         ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (! (ap (ap antipodal-map) (ap-cp₁₁-embase h))) ◃∙
         ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (∘-ap antipodal-map (λ y → cp₁₁ y embase) (emloop h)) ◃∙
         ap (ap (λ y → antipodal-map (cp₁₁ y embase)) (emloop h) ∙_) (comm-emloop-embase' g) ◃∎
-          =ₛ⟨ 2 & 2 & pre-rotate'-seq-in {p = _ ◃∙ _ ◃∎} {r = []} $
+          =ₛ⟨ 4 & 2 & pre-rotate'-seq-in {p = _ ◃∙ _ ◃∎} {r = []} $
                       !ₛ $ ap-transp-idp (λ x → cp₁₁ x embase) (emloop g) ⟩
-        {!ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
+        {!ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (ap-cst [ north ]₂ (emloop h)) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (! (!-inv-r (h₁ embase))) ◃∙
+        ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (! (ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h))) ◃∙
         ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
         ∙-unit-r (ap (λ x → cp₁₁ x embase) (emloop g)) ◃∙
         ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g)) (! (ap (ap antipodal-map) (ap-cp₁₁-embase h))) ◃∙
@@ -367,11 +373,11 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
                (transp-naturality {B = λ x → ∀ y → cp₁₁ x y == [ north ]₂} {C = λ x → cp₁₁ x embase == cp₁₁ x embase}
                                   (λ h → h embase ∙ ! (h embase)) (emloop g)) ◃∎
             =ₛ
-            homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h) ◃∙
+            ap-cst [ north ]₂ (emloop h) ◃∙
+            ! (!-inv-r (h₁ embase)) ◃∙
+            ! (ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h)) ◃∙
             !-inv-r (h₁ embase) ◃∙
             ! (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ◃∎
-            -- ap-cst [ north ]₂ (emloop h) ◃∙
-            -- ! (transp-idp (λ x → cp₁₁ x embase) (emloop g)) ◃∎
           step₅' =
             homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h) ◃∙
             app= (transp-naturality {B = λ x → ∀ y → cp₁₁ x y == [ north ]₂} {C = λ x → cp₁₁ x embase == cp₁₁ x embase}
@@ -384,6 +390,20 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
             idp ◃∎
               =ₛ⟨ 3 & 1 & expand [] ⟩
             homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h) ◃∙
+            !-inv-r (h₁ embase) ◃∙
+            ! (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ◃∎
+              =ₛ⟨ 1 & 0 & !ₛ $ seq-!-inv-r (ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h) ◃∙ !-inv-r (h₁ embase) ◃∎) ⟩
+            homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h) ◃∙
+            ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h) ◃∙
+            !-inv-r (h₁ embase) ◃∙
+            ! (!-inv-r (h₁ embase)) ◃∙
+            ! (ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h)) ◃∙
+            !-inv-r (h₁ embase) ◃∙
+            ! (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ◃∎
+              =ₛ⟨ 0 & 3 & homotopy-naturality-cst-to-cst' [ north ]₂ [ north ]₂ h₁ (emloop h) ⟩
+            ap-cst [ north ]₂ (emloop h) ◃∙
+            ! (!-inv-r (h₁ embase)) ◃∙
+            ! (ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h)) ◃∙
             !-inv-r (h₁ embase) ◃∙
             ! (transp-idp (λ a → cp₁₁ a embase) (emloop g)) ◃∎ ∎ₛ
             {-
