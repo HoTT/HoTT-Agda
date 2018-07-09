@@ -101,10 +101,13 @@ module _ {i} {A : Type i} where
   point-from-start (S n) {a = a} [] = a
   point-from-start (S n) (p ◃∙ s) = point-from-start n s
 
-  _-! : (n : ℕ) {a a' : A} (s : a =-= a') → point-from-start n s =-= a'
-  (O -!) s = s
-  (S n -!) [] = []
-  (S n -!) (p ◃∙ s) = (n -!) s
+  drop : (n : ℕ) {a a' : A} (s : a =-= a') → point-from-start n s =-= a'
+  drop 0 s = s
+  drop (S n) [] = []
+  drop (S n) (p ◃∙ s) = drop n s
+
+  tail : {a a' : A} (s : a =-= a') → point-from-start 1 s =-= a'
+  tail = drop 1
 
   private
     last1 : {a a' : A} (s : a =-= a') → A
@@ -125,26 +128,27 @@ module _ {i} {A : Type i} where
   !- O s = s
   !- (S n) s = !- n (strip s)
 
-  _-# : (n : ℕ) {a a' : A} (s : a =-= a') → a =-= point-from-start n s
-  (O -#) s = []
-  (S n -#) [] = []
-  (S n -#) (p ◃∙ s) = p ◃∙ (n -#) s
+  take : (n : ℕ) {a a' : A} (s : a =-= a') → a =-= point-from-start n s
+  take O s = []
+  take (S n) [] = []
+  take (S n) (p ◃∙ s) = p ◃∙ take n s
+
+  private
+    take-drop-split' : {a a' : A} (n : ℕ) (s : a =-= a')
+      → s == take n s ∙∙ drop n s
+    take-drop-split' O s = idp
+    take-drop-split' (S n) [] = idp
+    take-drop-split' (S n) (p ◃∙ s) = ap (λ v → p ◃∙ v) (take-drop-split' n s)
 
   abstract
-    ∙∙-#-! : {a a' : A} (s : a =-= a') (n : ℕ)
-      → s == (n -#) s ∙∙ (n -!) s
-    ∙∙-#-! s O = idp
-    ∙∙-#-! [] (S n) = idp
-    ∙∙-#-! (p ◃∙ s) (S n) = ap (λ v → p ◃∙ v) (∙∙-#-! s n)
-
-    ↯-#-! : {a a' : A} (s : a =-= a') (n : ℕ)
-      → ↯ s == ↯ ((n -#) s) ∙ ↯ ((n -!) s)
-    ↯-#-! s n =
+    take-drop-split : {a a' : A} (n : ℕ) (s : a =-= a')
+      → ↯ s ◃∎ =ₛ ↯ (take n s) ◃∙ ↯ (drop n s) ◃∎
+    take-drop-split n s = =ₛ-in $
       ↯ s
-        =⟨ ap ↯ (∙∙-#-! s n) ⟩
-      ↯ ((n -#) s ∙∙ (n -!) s)
-        =⟨ ↯-∙∙ ((n -#) s) ((n -!) s) ⟩
-      ↯ ((n -#) s) ∙ ↯ ((n -!) s) =∎
+        =⟨ ap ↯ (take-drop-split' n s) ⟩
+      ↯ (take n s ∙∙ drop n s)
+        =⟨ ↯-∙∙ (take n s) (drop n s) ⟩
+      ↯ (take n s) ∙ ↯ (drop n s) =∎
 
   private
     split : {a a' : A} (s : a =-= a')
@@ -173,12 +177,12 @@ module _ {i} {A : Type i} where
   _!4 = !- 4
   _!5 = !- 5
 
-  0! = 0 -!
-  1! = 1 -!
-  2! = 2 -!
-  3! = 3 -!
-  4! = 4 -!
-  5! = 5 -!
+  0! = drop 0
+  1! = drop 1
+  2! = drop 2
+  3! = drop 3
+  4! = drop 4
+  5! = drop 5
 
   infix 120 _#0 _#1 _#2 _#3 _#4 _#5
   _#0 = #- 0
@@ -188,12 +192,12 @@ module _ {i} {A : Type i} where
   _#4 = #- 4
   _#5 = #- 5
 
-  0# = 0 -#
-  1# = 1 -#
-  2# = 2 -#
-  3# = 3 -#
-  4# = 4 -#
-  5# = 5 -#
+  0# = take 0
+  1# = take 1
+  2# = take 2
+  3# = take 3
+  4# = take 4
+  5# = take 5
 
 module _ {i} {A : Type i} where
   record _=ₛ-free-end_ {a aₛ' aₜ' : A} (s : a =-= aₛ') (t : a =-= aₜ') : Type i where
@@ -250,36 +254,36 @@ module _ {i} {A : Type i} {a a' : A} where
     infixr 10 _=ₛ⟨_&_&_&_⟩_
     _=ₛ⟨_&_&_&_⟩_ : (s : a =-= a') {t u : a =-= a'}
       → (m n o : ℕ)
-      → {{init-matches : ((m -#) s) =ₛ-free-end ((m -#) t)}}
-      → {{tail-matches : ((n -!) ((m -!) s)) =ₛ-free-start ((o -!) ((m -!) t))}}
-      → (path : ↯ ((n -#) ((m -!) s)) ∙' _=ₛ-free-start_.start-matches tail-matches ==
-                _=ₛ-free-end_.end-matches init-matches ∙ ↯ ((o -#) ((m -!) t)))
+      → {{init-matches : take m s =ₛ-free-end (take m t)}}
+      → {{tail-matches : drop n (drop m s) =ₛ-free-start (drop o (drop m t))}}
+      → (path : ↯ (take n (drop m s)) ∙' _=ₛ-free-start_.start-matches tail-matches ==
+                _=ₛ-free-end_.end-matches init-matches ∙ ↯ (take o (drop m t)))
       → t =ₛ u
       → s =ₛ u
     _=ₛ⟨_&_&_&_⟩_ s {t} {u} m n o {{init-matches}} {{tail-matches}} path q =
       =ₛ-in $
         ↯ s
-          =⟨ ↯-#-! s m ⟩
-        ↯ ((m -#) s) ∙ ↯ ((m -!) s)
-          =⟨ ap (↯ ((m -#) s) ∙_) (↯-#-! ((m -!) s) n) ⟩
-        ↯ ((m -#) s) ∙ ↯ ((n -#) ((m -!) s)) ∙ ↯ ((n -!) ((m -!) s))
-          =⟨ ap (λ w → ↯ ((m -#) s) ∙ ↯ ((n -#) ((m -!) s)) ∙ w) tail-matches.path ⟩
-        ↯ ((m -#) s) ∙ ↯ ((n -#) ((m -!) s)) ∙ tail-matches.start-matches ∙ ↯ ((o -!) ((m -!) t))
-          =⟨ ap (λ w → ↯ ((m -#) s) ∙ w) (! (∙-assoc (↯ ((n -#) ((m -!) s))) tail-matches.start-matches (↯ ((o -!) ((m -!) t))))) ⟩
-        ↯ ((m -#) s) ∙ (↯ ((n -#) ((m -!) s)) ∙ tail-matches.start-matches) ∙ ↯ ((o -!) ((m -!) t))
-          =⟨ ap (λ w → ↯ ((m -#) s) ∙ w ∙ ↯ ((o -!) ((m -!) t)))
-                (∙=∙' (↯ ((n -#) ((m -!) s))) tail-matches.start-matches ∙ path) ⟩
-        ↯ ((m -#) s) ∙ (init-matches.end-matches ∙ ↯ ((o -#) ((m -!) t))) ∙ ↯ ((o -!) ((m -!) t))
-          =⟨ ap (λ w → ↯ ((m -#) s) ∙ w) (∙-assoc init-matches.end-matches (↯ ((o -#) ((m -!) t))) (↯ ((o -!) ((m -!) t)))) ⟩
-        ↯ ((m -#) s) ∙ init-matches.end-matches ∙ ↯ ((o -#) ((m -!) t)) ∙ ↯ ((o -!) ((m -!) t))
-          =⟨ ! (∙-assoc (↯ ((m -#) s)) init-matches.end-matches (↯ ((o -#) ((m -!) t)) ∙ ↯ ((o -!) ((m -!) t)))) ⟩
-        (↯ ((m -#) s) ∙ init-matches.end-matches) ∙ ↯ ((o -#) ((m -!) t)) ∙ ↯ ((o -!) ((m -!) t))
-          =⟨ ap (λ w → w ∙ ↯ ((o -#) ((m -!) t)) ∙ ↯ ((o -!) ((m -!) t)))
-                (∙=∙' (↯ ((m -#) s)) init-matches.end-matches ∙ init-matches.path) ⟩
-        ↯ ((m -#) t) ∙ ↯ ((o -#) ((m -!) t)) ∙ ↯ ((o -!) ((m -!) t))
-          =⟨ ! (ap (↯ ((m -#) t) ∙_) (↯-#-! ((m -!) t) o)) ⟩
-        ↯ ((m -#) t) ∙ ↯ ((m -!) t)
-          =⟨ ! (↯-#-! t m) ⟩
+          =⟨ =ₛ-out (take-drop-split m s) ⟩
+        ↯ (take m s) ∙ ↯ (drop m s)
+          =⟨ ap (↯ (take m s) ∙_) (=ₛ-out (take-drop-split n (drop m s))) ⟩
+        ↯ (take m s) ∙ ↯ (take n (drop m s)) ∙ ↯ (drop n (drop m s))
+          =⟨ ap (λ w → ↯ (take m s) ∙ ↯ (take n (drop m s)) ∙ w) tail-matches.path ⟩
+        ↯ (take m s) ∙ ↯ (take n (drop m s)) ∙ tail-matches.start-matches ∙ ↯ (drop o (drop m t))
+          =⟨ ap (λ w → ↯ (take m s) ∙ w) (! (∙-assoc (↯ (take n (drop m s))) tail-matches.start-matches (↯ (drop o (drop m t))))) ⟩
+        ↯ (take m s) ∙ (↯ (take n (drop m s)) ∙ tail-matches.start-matches) ∙ ↯ (drop o (drop m t))
+          =⟨ ap (λ w → ↯ (take m s) ∙ w ∙ ↯ (drop o (drop m t)))
+                (∙=∙' (↯ (take n (drop m s))) tail-matches.start-matches ∙ path) ⟩
+        ↯ (take m s) ∙ (init-matches.end-matches ∙ ↯ (take o (drop m t))) ∙ ↯ (drop o (drop m t))
+          =⟨ ap (λ w → ↯ (take m s) ∙ w) (∙-assoc init-matches.end-matches (↯ (take o (drop m t))) (↯ (drop o (drop m t)))) ⟩
+        ↯ (take m s) ∙ init-matches.end-matches ∙ ↯ (take o (drop m t)) ∙ ↯ (drop o (drop m t))
+          =⟨ ! (∙-assoc (↯ (take m s)) init-matches.end-matches (↯ (take o (drop m t)) ∙ ↯ (drop o (drop m t)))) ⟩
+        (↯ (take m s) ∙ init-matches.end-matches) ∙ ↯ (take o (drop m t)) ∙ ↯ (drop o (drop m t))
+          =⟨ ap (λ w → w ∙ ↯ (take o (drop m t)) ∙ ↯ (drop o (drop m t)))
+                (∙=∙' (↯ (take m s)) init-matches.end-matches ∙ init-matches.path) ⟩
+        ↯ (take m t) ∙ ↯ (take o (drop m t)) ∙ ↯ (drop o (drop m t))
+          =⟨ ! (ap (↯ (take m t) ∙_) (=ₛ-out (take-drop-split o (drop m t)))) ⟩
+        ↯ (take m t) ∙ ↯ (drop m t)
+          =⟨ ! (=ₛ-out (take-drop-split m t)) ⟩
         ↯ t
           =⟨ =ₛ-out q ⟩
         ↯ u =∎
@@ -306,22 +310,22 @@ module _ {i} {A : Type i} where
       _=↯=⟨_&_&_&_⟩_ : {a a' : A} {q : a == a'}
         → (s : a =-= a')
         → (n : ℕ) (m : ℕ)
-        → (t : point-from-start n s =-= point-from-start m ((n -!) s))
-        → (m -#) ((n -!) s) =↯= t
-        → ↯ (((n -#) s) ∙∙ t ∙∙ ((m -!) ((n -!) s))) == q
-        → (↯ s) == q
+        → (t : point-from-start n s =-= point-from-start m (drop n s))
+        → take m (drop n s) =↯= t
+        → ↯ (take n s ∙∙ t ∙∙ drop m (drop n s)) == q
+        → ↯ s == q
       _=↯=⟨_&_&_&_⟩_ {a} {a'} {q} s n m t p p' =
         ↯ s
-          =⟨ ↯-#-! s n ⟩
-        ↯ ((n -#) s) ∙ ↯ ((n -!) s)
-          =⟨ ap (↯ ((n -#) s) ∙_) (↯-#-! ((n -!) s) m) ⟩
-        ↯ ((n -#) s) ∙ ↯ ((m -#) ((n -!) s)) ∙ ↯ ((m -!) ((n -!) s))
-          =⟨ ap (λ v → ↯ ((n -#) s) ∙ v ∙ ↯ ((m -!) ((n -!) s))) p ⟩
-        ↯ ((n -#) s) ∙ (↯ t) ∙ ↯ ((m -!) ((n -!) s))
-          =⟨ ap (λ v → ↯ ((n -#) s) ∙ v) (! (↯-∙∙ t ((m -!) ((n -!) s)))) ⟩
-        ↯ ((n -#) s) ∙ ↯ (t ∙∙ (m -!) ((n -!) s))
-          =⟨ ! (↯-∙∙ ((n -#) s) (t ∙∙ (m -!) ((n -!) s))) ⟩
-        ↯ ((n -#) s ∙∙ t ∙∙ (m -!) ((n -!) s))
+          =⟨ =ₛ-out (take-drop-split n s) ⟩
+        ↯ (take n s) ∙ ↯ (drop n s)
+          =⟨ ap (↯ (take n s) ∙_) (=ₛ-out (take-drop-split m (drop n s))) ⟩
+        ↯ (take n s) ∙ ↯ (take m (drop n s)) ∙ ↯ (drop m (drop n s))
+          =⟨ ap (λ v → ↯ (take n s) ∙ v ∙ ↯ (drop m (drop n s))) p ⟩
+        ↯ (take n s) ∙ ↯ t ∙ ↯ (drop m (drop n s))
+          =⟨ ap (λ v → ↯ (take n s) ∙ v) (! (↯-∙∙ t (drop m (drop n s)))) ⟩
+        ↯ (take n s) ∙ ↯ (t ∙∙ drop m (drop n s))
+          =⟨ ! (↯-∙∙ (take n s) (t ∙∙ drop m (drop n s))) ⟩
+        ↯ (take n s ∙∙ t ∙∙ drop m (drop n s))
           =⟨ p' ⟩
         q =∎
 
@@ -334,18 +338,18 @@ module _ {i} {A : Type i} where
     infixr 10 _=ₛ⟨_&_&_⟩_
     _=ₛ⟨_&_&_⟩_ : {a a' : A} (s : a =-= a') {u : a =-= a'}
       → (m n : ℕ)
-      → {r : point-from-start m s =-= point-from-start n ((m -!) s)}
-      → (n -#) ((m -!) s) =ₛ r
-      → (m -#) s ∙∙ r ∙∙ (n -!) ((m -!) s) =ₛ u
+      → {r : point-from-start m s =-= point-from-start n (drop m s)}
+      → take n (drop m s) =ₛ r
+      → take m s ∙∙ r ∙∙ drop n (drop m s) =ₛ u
       → s =ₛ u
     _=ₛ⟨_&_&_⟩_ s m n {r} p p' = =ₛ-in (s =↯=⟨ m & n & r & =ₛ-out p ⟩ =ₛ-out p')
 
     infixr 10 _=ₛ₁⟨_&_&_⟩_
     _=ₛ₁⟨_&_&_⟩_ : {a a' : A} (s : a =-= a') {u : a =-= a'}
       → (m n : ℕ)
-      → {r : point-from-start m s == point-from-start n ((m -!) s)}
-      → ↯ ((n -#) ((m -!) s)) == r
-      → (m -#) s ∙∙ r ◃∙ (n -!) ((m -!) s) =ₛ u
+      → {r : point-from-start m s == point-from-start n (drop m s)}
+      → ↯ (take n (drop m s)) == r
+      → take m s ∙∙ r ◃∙ drop n (drop m s) =ₛ u
       → s =ₛ u
     _=ₛ₁⟨_&_&_⟩_ s m n {r} p p' = s =ₛ⟨ m & n & =ₛ-in {t = r ◃∎} p ⟩ p'
 
