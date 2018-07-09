@@ -21,6 +21,9 @@ record CRingStructure {i} (El : Type i)
   add : El → El → El
   add = comp
 
+  neg : El → El
+  neg = inv
+
   field
     add-comm    : ∀ a b → add a b == add b a
     one         : El

@@ -193,82 +193,40 @@ module EMExplicit {i} (G : AbGroup i) where
   open AboveDiagonal public using (πS-above)
   open Spectrum public using (spectrum)
 
-module EilenbergMacLane-functorial {i} (G : Group i) (H : Group i) where
-  EM₁-fmap' : (G →ᴳ H) → G →ᴳ Ω^S-group 0 (⊙EM₁ H)
-  EM₁-fmap' φ = group-hom f f-preserves-comp
-    where
-      f : Group.El G → embase' H == embase
-      f g = emloop (GroupHom.f φ g)
-      f-preserves-comp : ∀ g₁ g₂ → f (Group.comp G g₁ g₂) == f g₁ ∙ f g₂
-      f-preserves-comp g₁ g₂ =
-        emloop (GroupHom.f φ (Group.comp G g₁ g₂))
-          =⟨ GroupHom.pres-comp φ g₁ g₂ |in-ctx emloop ⟩
-        emloop (Group.comp H (GroupHom.f φ g₁) (GroupHom.f φ g₂))
-          =⟨ emloop-comp' H (GroupHom.f φ g₁) (GroupHom.f φ g₂) ⟩
-        emloop (GroupHom.f φ g₁) ∙ emloop (GroupHom.f φ g₂) =∎
-
-  EM₁-fmap : (G →ᴳ H) → EM₁ G → EM₁ H
-  EM₁-fmap φ = EM₁-level₁-rec {G = G} {C = EM₁ H} {{EM₁-level₁ H {⟨-2⟩}}} embase (EM₁-fmap' φ)
-
-  ⊙EM₁-fmap : (G →ᴳ H) → (⊙EM₁ G ⊙→ ⊙EM₁ H)
-  ⊙EM₁-fmap φ = EM₁-fmap φ , idp
-
-  EM₁-fmap-cst : ∀ x → EM₁-fmap cst-hom x == embase
-  EM₁-fmap-cst =
-    EM₁-set-elim {P = λ x' → EM₁-fmap cst-hom x' == embase}
-                 {{λ x → has-level-apply (EM₁-level₁ H) _ _}}
-                 idp
-                 h
-    where
-      h : (g : Group.El G) → idp == idp [ (λ x' → EM₁-fmap cst-hom x' == embase) ↓ emloop g ]
-      h g = ↓-app=cst-in $
-              idp {a = embase' H}
-                =⟨ ! emloop-ident ⟩
-              emloop (Group.ident H)
-                =⟨ ! (EM₁Level₁Rec.emloop-β {C = EM₁ H} {{EM₁-level₁ H {⟨-2⟩}}} embase (EM₁-fmap' cst-hom) g) ⟩
-              ap (λ z → EM₁-fmap cst-hom z) (emloop' G g)
-                =⟨ ! (∙-unit-r _) ⟩
-              ap (λ z → EM₁-fmap cst-hom z) (emloop' G g) ∙ idp =∎
-
 module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
 
-  EM₁-fmap-hom : G →ᴳ Ω^S-group 0 (⊙EM₁ H)
-  EM₁-fmap-hom = group-hom f f-preserves-comp
-    where
-      f : Group.El G → embase' H == embase
-      f g = emloop (GroupHom.f φ g)
-      f-preserves-comp : ∀ g₁ g₂ → f (Group.comp G g₁ g₂) == f g₁ ∙ f g₂
-      f-preserves-comp g₁ g₂ =
-        emloop (GroupHom.f φ (Group.comp G g₁ g₂))
-          =⟨ GroupHom.pres-comp φ g₁ g₂ |in-ctx emloop ⟩
-        emloop (Group.comp H (GroupHom.f φ g₁) (GroupHom.f φ g₂))
-          =⟨ emloop-comp' H (GroupHom.f φ g₁) (GroupHom.f φ g₂) ⟩
-        emloop (GroupHom.f φ g₁) ∙ emloop (GroupHom.f φ g₂) =∎
+  private
+    module φ = GroupHom φ
 
-  EM₁-fmap : EM₁ G → EM₁ H
-  EM₁-fmap = EM₁-level₁-rec {G = G} {C = EM₁ H} {{EM₁-level₁ H {⟨-2⟩}}}
-                            embase
-                            EM₁-fmap-hom
+    EM₁-fmap-hom : G →ᴳ Ω^S-group 0 (⊙EM₁ H)
+    EM₁-fmap-hom = group-hom f f-preserves-comp
+      where
+        f : Group.El G → embase' H == embase
+        f g = emloop (φ.f g)
+        f-preserves-comp : ∀ g₁ g₂ → f (Group.comp G g₁ g₂) == f g₁ ∙ f g₂
+        f-preserves-comp g₁ g₂ =
+          emloop (φ.f (Group.comp G g₁ g₂))
+            =⟨ ap emloop (φ.pres-comp g₁ g₂) ⟩
+          emloop (Group.comp H (φ.f g₁) (φ.f g₂))
+            =⟨ emloop-comp' H (φ.f g₁) (φ.f g₂) ⟩
+          emloop (φ.f g₁) ∙ emloop (φ.f g₂) =∎
 
-  ⊙EM₁-fmap : ⊙EM₁ G ⊙→ ⊙EM₁ H
-  ⊙EM₁-fmap = EM₁-fmap , idp
+    module EM₁FmapRec =
+      EM₁Level₁Rec {G = G} {C = EM₁ H}
+                  {{EM₁-level₁ H {⟨-2⟩}}}
+                  embase
+                  EM₁-fmap-hom
 
-EM₁-fmap-cst : ∀ {i j} (G : Group i) (H : Group j)
-  → ∀ x → EM₁-fmap {G = G} {H = H} cst-hom x == embase
-EM₁-fmap-cst G H =
-  EM₁-set-elim {P = λ x' → EM₁-fmap cst-hom x' == embase}
-                {{λ x → has-level-apply (EM₁-level₁ H) _ _}}
-                idp
-                h
-  where
-    h : (g : Group.El G) → idp == idp [ (λ x' → EM₁-fmap cst-hom x' == embase) ↓ emloop g ]
-    h g = ↓-app=cst-in $
-            idp {a = embase' H}
-              =⟨ ! emloop-ident ⟩
-            emloop (Group.ident H)
-              =⟨ ! (EM₁Level₁Rec.emloop-β {C = EM₁ H} {{EM₁-level₁ H {⟨-2⟩}}} embase (EM₁-fmap-hom cst-hom) g) ⟩
-            ap (λ z → EM₁-fmap cst-hom z) (emloop' G g)
-              =⟨ ! (∙-unit-r _) ⟩
-            ap (λ z → EM₁-fmap cst-hom z) (emloop' G g) ∙ idp =∎
+  abstract
+    EM₁-fmap : EM₁ G → EM₁ H
+    EM₁-fmap = EM₁FmapRec.f
 
--- TODO: ⊙EM-fmap functor axioms
+    EM₁-fmap-embase-β : EM₁-fmap embase ↦ embase
+    EM₁-fmap-embase-β = EM₁FmapRec.embase-β
+    {-# REWRITE EM₁-fmap-embase-β #-}
+
+    EM₁-fmap-emloop-β : ∀ g → ap EM₁-fmap (emloop g) == emloop (φ.f g)
+    EM₁-fmap-emloop-β = EM₁FmapRec.emloop-β
+
+    ⊙EM₁-fmap : ⊙EM₁ G ⊙→ ⊙EM₁ H
+    ⊙EM₁-fmap = EM₁-fmap , idp

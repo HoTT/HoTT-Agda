@@ -17,8 +17,28 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
   ⊙EM₁-antipodal-map : ⊙EM₁ R₊ ⊙→ ⊙EM₁ R₊
   ⊙EM₁-antipodal-map = EM₁-antipodal-map , idp
 
+  EM₁-antipodal-map-! : ∀ g → ap EM₁-antipodal-map (emloop g) == ! (emloop g)
+  EM₁-antipodal-map-! g =
+    ap EM₁-antipodal-map (emloop g)
+      =⟨ EM₁-fmap-emloop-β (inv-hom R.add-ab-group) g ⟩
+    emloop (R.neg g)
+      =⟨ emloop-inv g ⟩
+    ! (emloop g) =∎
+
   antipodal-map : EM 2 → EM 2
   antipodal-map = Trunc-fmap (Susp-fmap EM₁-antipodal-map)
+
+  module CP₀₁-comm where
+
+    cp₀₁-comm : ∀ g h → ap (cp₀₁ g) (emloop h) == ap (cp₀₁ h) (emloop g)
+    cp₀₁-comm g h =
+      ap (cp₀₁ g) (emloop h)
+        =⟨ cp₀₁-emloop-β g h ⟩
+      emloop (R.mult g h)
+        =⟨ ap emloop (R.mult-comm g h) ⟩
+      emloop (R.mult h g)
+        =⟨ ! (cp₀₁-emloop-β h g) ⟩
+      ap (cp₀₁ h) (emloop g) =∎
 
   module CP₁₁-comm where
 
@@ -381,7 +401,7 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
                   !-inv-r (h₁ embase) ◃∎
                   =ₛ
                   ! (!-inv-r (h₁' embase)) ◃∙
-                  ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g) ◃∙
+                  ! (ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g)) ◃∙
                   !-inv-r (h₁' embase) ◃∎
           heart =
             ! (!-inv-r (h₁ embase)) ◃∙
@@ -401,23 +421,42 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
                    ap (λ v → ! (ap [_]₂ (η (cp₀₁ g v))) ∙ ! (! (ap [_]₂ (η embase)))) (emloop h)
                      =⟨ ap-∘ (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase)))) (cp₀₁ g) (emloop h) ⟩
                    ap (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase)))) (ap (cp₀₁ g) (emloop h))
-                     =⟨ ap (ap (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase))))) {!!} ⟩
-                   ap (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase)))) (ap (EM₁-antipodal-map ∘ cp₀₁ h) (emloop g))
-                     =⟨ ∘-ap (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase)))) (EM₁-antipodal-map ∘ cp₀₁ h) (emloop g) ⟩
-                   ap (λ v → ! (ap [_]₂ (η (EM₁-antipodal-map (cp₀₁ h v)))) ∙ ! (! (ap [_]₂ (η embase)))) (emloop g) =∎
+                     =⟨ ap (ap (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase))))) $
+                        ap (cp₀₁ g) (emloop h)
+                          =⟨ CP₀₁-comm.cp₀₁-comm g h ⟩
+                        ap (cp₀₁ h) (emloop g)
+                          =⟨ cp₀₁-emloop-β h g ⟩
+                        emloop (R.mult h g)
+                          =⟨ ! (!-! (emloop (R.mult h g))) ⟩
+                        ! (! (emloop (R.mult h g)))
+                          =⟨ ap ! (! (EM₁-antipodal-map-! (R.mult h g))) ⟩
+                        ! (ap EM₁-antipodal-map (emloop (R.mult h g)))
+                          =⟨ ap (! ∘ ap EM₁-antipodal-map) (! (cp₀₁-emloop-β h g)) ⟩
+                        ! (ap EM₁-antipodal-map (ap (cp₀₁ h) (emloop g)))
+                          =⟨ ap ! (∘-ap EM₁-antipodal-map (cp₀₁ h) (emloop g)) ⟩
+                        ! (ap (EM₁-antipodal-map ∘ cp₀₁ h) (emloop g)) =∎
+                        -- Yo dawg, I herd you like continued equalities,
+                        -- so we put continued equalities into your continued equalities,
+                        -- so you can reason equationally while u reason equationally.
+                      ⟩
+                   ap (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase)))) (! (ap (EM₁-antipodal-map ∘ cp₀₁ h) (emloop g)))
+                     =⟨ ap-! (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase)))) (ap (EM₁-antipodal-map ∘ cp₀₁ h) (emloop g)) ⟩
+                   ! (ap (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase)))) (ap (EM₁-antipodal-map ∘ cp₀₁ h) (emloop g)))
+                     =⟨ ap ! (∘-ap (λ w → ! (ap [_]₂ (η w)) ∙ ! (! (ap [_]₂ (η embase)))) (EM₁-antipodal-map ∘ cp₀₁ h) (emloop g)) ⟩
+                   ! (ap (λ v → ! (ap [_]₂ (η (EM₁-antipodal-map (cp₀₁ h v)))) ∙ ! (! (ap [_]₂ (η embase)))) (emloop g)) =∎
                  ⟩
             ! (!-inv-r (! (ap [_]₂ (η embase)))) ◃∙
-            ap (λ v → ! (ap [_]₂ (η (EM₁-antipodal-map (cp₀₁ h v)))) ∙ ! (! (ap [_]₂ (η embase)))) (emloop g) ◃∙
+            ! (ap (λ v → ! (ap [_]₂ (η (EM₁-antipodal-map (cp₀₁ h v)))) ∙ ! (! (ap [_]₂ (η embase)))) (emloop g)) ◃∙
             !-inv-r (! (ap [_]₂ (η embase))) ◃∎
               =ₛ⟨ =ₛ-in {t = ! (!-inv-r (h₁' embase)) ◃∙
-                             ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g) ◃∙
+                             ! (ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g)) ◃∙
                              !-inv-r (h₁' embase) ◃∎} $
                   ap (λ f → ! (!-inv-r (f embase)) ∙
-                            ap (λ v → f v ∙ ! (f embase)) (emloop g) ∙
+                            ! (ap (λ v → f v ∙ ! (f embase)) (emloop g)) ∙
                             !-inv-r (f embase))
                      (! (λ= h₁'-path)) ⟩
             ! (!-inv-r (h₁' embase)) ◃∙
-            ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g) ◃∙
+            ! (ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g)) ◃∙
             !-inv-r (h₁' embase) ◃∎ ∎ₛ
           foo : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C)
             {a₀ a₁ : A} (p : a₀ == a₁) (b : B)
