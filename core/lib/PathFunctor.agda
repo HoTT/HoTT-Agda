@@ -331,10 +331,22 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) wher
       ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p
   ap-comm p q = ! (=ₛ-out (ap2-out f p q)) ∙ =ₛ-out (ap2-out' f p q)
 
+  ap-comm-=ₛ : {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
+    → ap (λ a → f a b₀) p ◃∙ ap (λ z → f a₁ z) q ◃∎ =ₛ
+      ap (λ z → f a₀ z) q ◃∙ ap (λ a → f a b₁) p ◃∎
+  ap-comm-=ₛ p q = =ₛ-in (ap-comm p q)
+
   ap-comm' : {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
     → ap (λ a → f a b₀) p ∙' ap (λ z → f a₁ z) q ==
       ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p
   ap-comm' p idp = idp
+
+
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k} where
+
+  ap-comm-comm : (f : A → B → C) {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
+    → ap-comm f p q == ! (ap-comm (λ x y → f y x) q p)
+  ap-comm-comm f p@idp q@idp = idp
 
 module _ {i} {A : Type i} where
 

@@ -83,6 +83,21 @@ module _ {i} {A : Type i} where
   seq-! [] = []
   seq-! (p ◃∙ s) = seq-! s ∙▹ ! p
 
+  seq-!-∙▹ : {a a' a'' : A} (s : a =-= a') (q : a' == a'')
+    → seq-! (s ∙▹ q) == ! q ◃∙ seq-! s
+  seq-!-∙▹ [] q = idp
+  seq-!-∙▹ (p ◃∙ s) q = ap (_∙▹ ! p) (seq-!-∙▹ s q)
+
+  seq-!-seq-! : {a a' : A} (s : a =-= a')
+    → seq-! (seq-! s) == s
+  seq-!-seq-! [] = idp
+  seq-!-seq-! (p ◃∙ s) =
+    seq-! (seq-! s ∙▹ ! p)
+      =⟨ seq-!-∙▹ (seq-! s) (! p) ⟩
+    ! (! p) ◃∙ seq-! (seq-! s)
+      =⟨ ap2 _◃∙_ (!-! p) (seq-!-seq-! s) ⟩
+    p ◃∙ s =∎
+
   ↯-∙∙ : {a a' a'' : A} (s : a =-= a') (t : a' =-= a'')
     → ↯ (s ∙∙ t) == ↯ s ∙ ↯ t
   ↯-∙∙ [] t = idp
@@ -379,11 +394,29 @@ module _ {i} {A : Type i} where
       =ₛ⟨ =ₛ-in (! (↯-∙∙ (idp ◃∎) r)) ⟩
     idp ◃∙ r ∎ₛ
 
+  pre-rotate-out : {a a' a'' : A} {p : a == a'} {q : a' =-= a''} {r : a =-= a''}
+    → q =ₛ ! p ◃∙ r
+    → p ◃∙ q =ₛ r
+  pre-rotate-out {p = idp} {q = q} {r = r} e =
+    idp ◃∙ q
+      =ₛ⟨ =ₛ-in (↯-∙∙ (idp ◃∎) q) ⟩
+    q
+      =ₛ⟨ e ⟩
+    idp ◃∙ r
+      =ₛ⟨ =ₛ-in (↯-∙∙ (idp ◃∎) r) ⟩
+    r ∎ₛ
+
   pre-rotate'-in : {a a' a'' : A} {p : a == a'} {r : a =-= a''} {q : a' =-= a''}
     → r =ₛ p ◃∙ q
     → ! p ◃∙ r =ₛ q
   pre-rotate'-in e =
     !ₛ (pre-rotate-in (!ₛ e))
+
+  pre-rotate'-out : {a a' a'' : A} {r : a =-= a''} {p : a == a'} {q : a' =-= a''}
+    → ! p ◃∙ r =ₛ q
+    → r =ₛ p ◃∙ q
+  pre-rotate'-out e =
+    !ₛ (pre-rotate-out (!ₛ e))
 
   pre-rotate-seq-in : {a a' a'' : A} {q : a' =-= a''} {p : a =-= a'} {r : a =-= a''}
     → p ∙∙ q =ₛ r
@@ -436,7 +469,7 @@ module _ {i} {A : Type i} where
   post-rotate'-seq-in : {a a' a'' : A}
     → {r : a =-= a''} {q : a' =-= a''} {p : a =-= a'}
     → r =ₛ p ∙∙ q
-    → r ∙∙ (seq-! q) =ₛ p
+    → r ∙∙ seq-! q =ₛ p
   post-rotate'-seq-in {r = r} {q = []} {p = p} e =
     r ∙∙ []
       =ₛ⟨ =ₛ-in (ap ↯ (∙∙-unit-r r)) ⟩
@@ -465,6 +498,24 @@ module _ {i} {A : Type i} where
     → p =ₛ r ∙∙ (seq-! q)
   post-rotate-seq-in {p = p} {r = r} {q = q} e =
     !ₛ (post-rotate'-seq-in {r = r} {q = q} {p = p} (!ₛ e))
+
+  post-rotate'-seq-out : {a a' a'' : A}
+    → {r : a =-= a''} {p : a =-= a'} {q : a' =-= a''}
+    → r ∙∙ seq-! q =ₛ p
+    → r =ₛ p ∙∙ q
+  post-rotate'-seq-out {r = r} {p = p} {q = q} e =
+    r
+      =ₛ⟨ post-rotate-seq-in {p = r} {r = p} {q = seq-! q} e ⟩
+    p ∙∙ seq-! (seq-! q)
+      =ₛ⟨ =ₛ-in (ap (λ v → ↯ (p ∙∙ v)) (seq-!-seq-! q)) ⟩
+    p ∙∙ q ∎ₛ
+
+  post-rotate-seq-out : {a a' a'' : A}
+    → {p : a =-= a'} {q : a' =-= a''} {r : a =-= a''}
+    → p =ₛ r ∙∙ seq-! q
+    → p ∙∙ q =ₛ r
+  post-rotate-seq-out e =
+    !ₛ (post-rotate'-seq-out (!ₛ e))
 
 module _ {i} {A : Type i} where
 
