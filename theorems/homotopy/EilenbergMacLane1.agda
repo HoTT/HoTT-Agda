@@ -72,19 +72,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
     encode-emloop : ∀ g → encode (emloop g) == g
     encode-emloop g = to-transp $
       transport (λ x → G.ident == x [ fst ∘ Codes ↓ emloop g ])
-                 (G.unit-l g) (↓-Codes-loop g G.ident)
-
-
-    -- TODO: move this elsewhere
-    foo : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
-      {x x' : A} {p₁ p₂ : x == x'} (q : p₁ == p₂)
-      (u : B x → C x) (u' : B x' → C x')
-      (s : transport C p₁ ∘ u == u' ∘ transport B p₁)
-      (t : transport C p₂ ∘ u == u' ∘ transport B p₂)
-      → (s ∙' ap (λ p → u' ∘ transport B p) q) == (ap (λ p → transport C p ∘ u) q ∙ t)
-      -- → s == t [ (λ p → transport C p ∘ u == u' ∘ transport B p) ↓ q ]
-      → ↓-→-from-transp s == ↓-→-from-transp t [ (λ p → u == u' [ (λ y → B y → C y) ↓ p ]) ↓ q ]
-    foo q u u' s t h = ap↓ ↓-→-from-transp (↓-='-in h)
+                (G.unit-l g) (↓-Codes-loop g G.ident)
 
     module Decode where
 
@@ -96,7 +84,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
 
       {- transport in path fibration of EM₁ -}
       transp-PF : embase' G == embase → embase' G == embase → embase' G == embase
-      transp-PF = transport (λ x → embase' G == x)
+      transp-PF = transport (embase' G ==_)
 
       {- transport in Codes -}
       transp-C : embase' G == embase → G.El → G.El
@@ -109,23 +97,18 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
       emloop-transp p = emloop ∘ transp-C p
 
       module _ (g : G.El) where
+        module _ (h : G.El) where
+          swap-transp-emloop'-seq : transp-emloop (emloop g) h =-= emloop-transp (emloop g) h
+          swap-transp-emloop'-seq =
+            transp-cst=idf (emloop g) (emloop h) ◃∙
+            ! (emloop-comp h g) ◃∙
+            ap emloop (! (↓-Codes-loop-transp g h)) ◃∎
 
-        module _ (y : G.El) where
-
-          transp-emloop=∙-emloop : transp-emloop (emloop g) y == emloop y ∙ emloop g
-          transp-emloop=∙-emloop = transp-cst=idf (emloop g) (emloop y)
-
-          ∙-emloop=emloop-comp : emloop' G y ∙ emloop g == emloop (G.comp y g)
-          ∙-emloop=emloop-comp = ! (emloop-comp y g)
-
-          emloop-comp=emloop-transp : emloop' G (G.comp y g) == emloop-transp (emloop' G g) y
-          emloop-comp=emloop-transp = ap emloop (! (↓-Codes-loop-transp g y))
-
-          transp-emloop=emloop-transp : transp-emloop (emloop g) y == emloop-transp (emloop g) y
-          transp-emloop=emloop-transp = transp-emloop=∙-emloop ∙ ∙-emloop=emloop-comp ∙ emloop-comp=emloop-transp
+          swap-transp-emloop' : transp-emloop (emloop g) h == emloop-transp (emloop g) h
+          swap-transp-emloop' = ↯ swap-transp-emloop'-seq
 
         swap-transp-emloop : transp-emloop (emloop g) == emloop-transp (emloop g)
-        swap-transp-emloop = λ= transp-emloop=emloop-transp
+        swap-transp-emloop = λ= swap-transp-emloop'
 
         loop' : Q (emloop g)
         loop' = ↓-→-from-transp swap-transp-emloop
@@ -135,370 +118,237 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
         g₁g₂ : G.El
         g₁g₂ = G.comp g₁ g₂
 
-        swap-transp-emloop-2 : transp-emloop (emloop g₁ ∙ emloop g₂) ∼ emloop-transp (emloop g₁ ∙ emloop g₂)
-        swap-transp-emloop-2 = comp-transp {i} {i} {i} {EM₁ G} {fst ∘ Codes} {λ x → embase == x} {embase} {embase} {embase} {emloop} {emloop} {emloop} (emloop g₁) (emloop g₂) (swap-transp-emloop g₁) (swap-transp-emloop g₂)
-
-        f₁ : G.El → embase' G == embase
-        f₁ = transp-emloop (emloop g₁g₂)
-
-        f₂ : G.El → embase' G == embase
-        f₂ = emloop-transp (emloop g₁ ∙ emloop g₂)
-
-        f₅ : G.El → embase' G == embase
-        f₅ = emloop-transp (emloop g₁g₂)
-
-        f₆ : G.El → embase' G == embase
-        f₆ = transp-emloop (emloop g₁ ∙ emloop g₂)
-
-        q₁₅ : f₁ == f₅
-        q₁₅ = swap-transp-emloop g₁g₂
-
-        q₅₂ : f₅ == f₂
-        q₅₂ = ap emloop-transp (emloop-comp g₁ g₂)
-
-        q₁₂ : f₁ == f₂
-        q₁₂ = q₁₅ ∙' q₅₂
-
-        q₁₆ : f₁ == f₆
-        q₁₆ = ap transp-emloop (emloop-comp g₁ g₂)
-
-        q₆₂ : f₆ == f₂
-        q₆₂ = λ= swap-transp-emloop-2
-
-        q₁₂' : f₁ == f₂
-        q₁₂' = q₁₆ ∙ q₆₂
-
-        module _ (y : G.El) where
-
-          s₁ : embase' G == embase
-          s₁ = f₁ y
-
-          s₂ : embase' G == embase
-          s₂ = f₂ y
-
-          s₃ : embase' G == embase
-          s₃ = emloop y ∙ emloop g₁g₂
-
-          s₄ : embase' G == embase
-          s₄ = emloop (G.comp y g₁g₂)
-
-          s₅ : embase' G == embase
-          s₅ = f₅ y
-
-          s₆ : embase' G == embase
-          s₆ = f₆ y
-
-          s₇ : embase' G == embase
-          s₇ = emloop y ∙ (emloop g₁ ∙ emloop g₂)
-
-          s₈ : embase' G == embase
-          s₈ = (emloop y ∙ emloop g₁) ∙ emloop g₂
-
-          s₉ : embase' G == embase
-          s₉ = emloop (G.comp y g₁) ∙ emloop g₂
-
-          s₁₀ : embase' G == embase
-          s₁₀ = emloop (G.comp (G.comp y g₁) g₂)
-
-          s₁₁ : embase' G == embase
-          s₁₁ = transp-PF (emloop g₂) (emloop y ∙ emloop g₁)
-
-          s₁₂ : embase' G == embase
-          s₁₂ = transp-emloop (emloop g₂) (G.comp y g₁)
-
-          s₁₃ : embase' G == embase
-          s₁₃ = transp-PF (emloop g₂) (transp-emloop (emloop g₁) y)
-
-          s₁₄ : embase' G == embase
-          s₁₄ = emloop-transp (emloop g₂) (transp-C (emloop g₁) y)
-
-          s₁₅ : embase' G == embase
-          s₁₅ = transp-emloop (emloop g₂) (transp-C (emloop g₁) y)
-          --  = transp-PF (emloop g₂) (emloop-transp (emloop g₁) y)
-
-          s₁₆ : embase' G == embase
-          s₁₆ = emloop-transp (emloop g₁) y ∙ emloop g₂
-
-          s₁₇ : embase' G == embase
-          s₁₇ = emloop (G.comp (transp-C (emloop g₁) y) g₂)
-
-          e₁₂ : s₁ == s₂
-          e₁₂ = app= q₁₂ y
-
-          e₁₂' : s₁ == s₂
-          e₁₂' = app= q₁₂' y
-
-          e₁₃ : s₁ == s₃
-          e₁₃ = transp-emloop=∙-emloop g₁g₂ y
-
-          e₃₄ : s₃ == s₄
-          e₃₄ = ∙-emloop=emloop-comp g₁g₂ y
-
-          e₄₅ : s₄ == s₅
-          e₄₅ = emloop-comp=emloop-transp g₁g₂ y
-
-          e₅₂ : s₅ == s₂
-          e₅₂ = ap (λ p → emloop-transp p y) (emloop-comp g₁ g₂)
-
-          e₁₆ : s₁ == s₆
-          e₁₆ = ap (λ z → transp-emloop z y) (emloop-comp g₁ g₂)
-
-          e₆₇ : s₆ == s₇
-          e₆₇ = transp-cst=idf (emloop g₁ ∙ emloop g₂) (emloop y)
-
-          e₇₃ : s₇ == s₃
-          e₇₃ = ! (ap (λ z → emloop y ∙ z) (emloop-comp g₁ g₂))
-
-          e₇₈ : s₇ == s₈
-          e₇₈ = ! (∙-assoc (emloop y) (emloop g₁) (emloop g₂))
-
-          e₈₉ : s₈ == s₉
-          e₈₉ = ap (λ p → p ∙ emloop g₂) (! (emloop-comp y g₁))
-
-          e₉₋₁₀ : s₉ == s₁₀
-          e₉₋₁₀ = ∙-emloop=emloop-comp g₂ (G.comp y g₁)
-
-          e₁₀₋₄ : s₁₀ == s₄
-          e₁₀₋₄ = ap emloop (G.assoc y g₁ g₂)
-
-          e₁₁₋₈ : s₁₁ == s₈
-          e₁₁₋₈ = transp-cst=idf (emloop g₂) (emloop y ∙ emloop g₁)
-
-          e₁₁₋₁₂ : s₁₁ == s₁₂
-          e₁₁₋₁₂ = ap (transp-PF (emloop g₂)) (∙-emloop=emloop-comp g₁ y)
-
-          e₁₂₋₉ : s₁₂ == s₉
-          e₁₂₋₉ = transp-emloop=∙-emloop g₂ (G.comp y g₁)
-
-          e₁₃₋₁₁ : s₁₃ == s₁₁
-          e₁₃₋₁₁ = ap (transp-PF (emloop g₂)) (transp-emloop=∙-emloop g₁ y)
-
-          e₆₋₁₃ : s₆ == s₁₃
-          e₆₋₁₃ = transp-∙ (emloop g₁) (emloop g₂) (emloop y)
-
-          e₁₄₋₂ : s₁₄ == s₂
-          e₁₄₋₂ = ! (ap emloop (transp-∙ (emloop g₁) (emloop g₂) y))
-
-          e₁₃₋₁₅ : s₁₃ == s₁₅
-          e₁₃₋₁₅ = ap (transp-PF (emloop g₂)) (transp-emloop=emloop-transp g₁ y)
-
-          e₁₃₋₁₅' : s₁₃ == s₁₅
-          e₁₃₋₁₅' = ap (transp-PF (emloop g₂)) (app= (swap-transp-emloop g₁) y)
-
-          e₁₂₋₁₅ : s₁₂ == s₁₅
-          e₁₂₋₁₅ = ap (transp-emloop (emloop g₂)) (! (↓-Codes-loop-transp g₁ y))
-
-          e₁₃₋₁₅'=e₁₃₋₁₅ : e₁₃₋₁₅' == e₁₃₋₁₅
-          e₁₃₋₁₅'=e₁₃₋₁₅ =
-            ap (ap (transp-PF (emloop g₂)))
-               (app=-β {f = transp-emloop (emloop g₁)} {g = emloop-transp (emloop g₁)}
-                       (transp-emloop=emloop-transp g₁) y)
-
-          e₁₅₋₁₄ : s₁₅ == s₁₄
-          e₁₅₋₁₄ = transp-emloop=emloop-transp g₂ (transp-C (emloop g₁) y)
-
-          e₁₅₋₁₄' : s₁₅ == s₁₄
-          e₁₅₋₁₄' = app= (λ= (transp-emloop=emloop-transp g₂)) (transp-C (emloop g₁) y)
-
-          e₁₅₋₁₄'=e₁₅₋₁₄ : e₁₅₋₁₄' == e₁₅₋₁₄
-          e₁₅₋₁₄'=e₁₅₋₁₄ =
-            app=-β {f = transp-emloop (emloop g₂)} {g = emloop-transp (emloop g₂)}
-                   (transp-emloop=emloop-transp g₂) (transp-C (emloop g₁) y)
-
-          e₁₅₋₁₆ : s₁₅ == s₁₆
-          e₁₅₋₁₆ = transp-emloop=∙-emloop g₂ (transp-C (emloop g₁) y)
-
-          e₁₆₋₁₇ : s₁₆ == s₁₇
-          e₁₆₋₁₇ = ∙-emloop=emloop-comp g₂ (transp-C (emloop g₁) y)
-
-          e₁₇₋₁₆ : s₁₇ == s₁₆
-          e₁₇₋₁₆ = emloop-comp (transp-C (emloop g₁) y) g₂
-
-          e₁₇₋₁₄ : s₁₇ == s₁₄
-          e₁₇₋₁₄ = emloop-comp=emloop-transp g₂ (transp-C (emloop g₁) y)
-
-          e₁₇₋₁₀ : s₁₇ == s₁₀
-          e₁₇₋₁₀ = ! (ap (λ z → emloop (G.comp z g₂)) (! (↓-Codes-loop-transp g₁ y)))
-
-          e₉₋₁₆ : s₉ == s₁₆
-          e₉₋₁₆ = ap (λ z → emloop z ∙ emloop g₂) (! (↓-Codes-loop-transp g₁ y))
-
-          cd₁ : e₁₃ ◃∎ =ₛ e₁₆ ◃∙ e₆₇ ◃∙ e₇₃ ◃∎
-          cd₁ = post-rotate-in (!ₛ cd₁')
-            where
-            e₃₇ : s₃ == s₇
-            e₃₇ = ap (λ z → emloop y ∙ z) (emloop-comp g₁ g₂)
-            cd₁' : e₁₆ ◃∙ e₆₇ ◃∎ =ₛ e₁₃ ◃∙ e₃₇ ◃∎
-            cd₁' = homotopy-naturality (λ z → transp-emloop z y)
-                                       (λ z → emloop y ∙ z)
-                                       (λ p → transp-cst=idf p (emloop y))
-                                       (emloop-comp g₁ g₂)
-
-          cd₂ : e₇₃ ◃∙ e₃₄ ◃∎ =ₛ e₇₈ ◃∙ e₈₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∎
-          cd₂ = transport (λ z → e₇₃ ◃∙ e₃₄ ◃∎ =ₛ e₇₈ ◃∙ z ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∎) (! e₈₉=!e₉₈) $
-                pre-rotate-seq-in {p = e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∎} $
-                post-rotate'-seq-in {p = e₁₀₋₄ ◃∎} cd₂'
-            where
-            e₃₇ : s₃ == s₇
-            e₃₇ = ap (λ z → emloop y ∙ z) (emloop-comp g₁ g₂)
-            e₄₃ : s₄ == s₃
-            e₄₃ = emloop-comp' G y g₁g₂
-            e₉₈ : s₉ == s₈
-            e₉₈ = ap (λ p → p ∙ emloop g₂) (emloop-comp y g₁)
-            e₈₇ : s₈ == s₇
-            e₈₇ = ∙-assoc (emloop y) (emloop g₁) (emloop g₂)
-            e₈₉=!e₉₈ : e₈₉ == ! e₉₈
-            e₈₉=!e₉₈ = ap-! (λ p → p ∙ emloop g₂) (emloop-comp y g₁)
-            e₁₀₋₉ : s₁₀ == s₉
-            e₁₀₋₉ = emloop-comp (G.comp y g₁) g₂
-            cd₂' : e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∎ =ₛ e₁₀₋₄ ◃∙ e₄₃ ◃∙ e₃₇ ◃∎
-            cd₂' = emloop-coh' G y g₁ g₂
-
-          cd₃ : e₆₇ ◃∙ e₇₈ ◃∎ =ₛ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∎
-          cd₃ = post-rotate'-in (transp-cst=idf-pentagon (emloop g₁) (emloop g₂) (emloop y))
-
-          cd₄ : e₁₁₋₈ ◃∙ e₈₉ ◃∎ =ₛ e₁₁₋₁₂ ◃∙ e₁₂₋₉ ◃∎
-          cd₄ = !ₛ $
+        swap-transp-emloop-2 : transp-emloop (emloop g₁ ∙ emloop g₂) ∼
+                               emloop-transp (emloop g₁ ∙ emloop g₂)
+        swap-transp-emloop-2 =
+          comp-transp {B = fst ∘ Codes} {C = embase ==_}
+                      {u = emloop} {u' = emloop} {u'' = emloop}
+                      (emloop g₁) (emloop g₂)
+                      (swap-transp-emloop g₁) (swap-transp-emloop g₂)
+
+        DD : ∀ h →
+          app= (swap-transp-emloop g₁g₂) h ◃∙
+          app= (ap emloop-transp (emloop-comp g₁ g₂)) h ◃∎
+          =ₛ
+          app= (ap transp-emloop (emloop-comp g₁ g₂)) h ◃∙
+          app= (λ= swap-transp-emloop-2) h ◃∎
+        DD h =
+          app= (swap-transp-emloop g₁g₂) h ◃∙
+          app= (ap emloop-transp (emloop-comp g₁ g₂)) h ◃∎
+            =ₛ₁⟨ 0 & 1 & app=-β (swap-transp-emloop' g₁g₂) h ⟩
+          swap-transp-emloop' g₁g₂ h ◃∙
+          app= (ap emloop-transp (emloop-comp g₁ g₂)) h ◃∎
+            =ₛ₁⟨ 1 & 1 & ∘-ap (λ k → k h) emloop-transp (emloop-comp g₁ g₂) ⟩
+          swap-transp-emloop' g₁g₂ h ◃∙
+          ap (λ p → emloop-transp p h) (emloop-comp g₁ g₂) ◃∎
+            =ₛ₁⟨ 1 & 1 & ap-∘ emloop (λ p → transp-C p h) (emloop-comp g₁ g₂) ⟩
+          swap-transp-emloop' g₁g₂ h ◃∙
+          ap emloop (ap (λ p → transp-C p h) (emloop-comp g₁ g₂)) ◃∎
+            =ₛ⟨ 0 & 1 & expand (swap-transp-emloop'-seq g₁g₂ h) ⟩
+          transp-cst=idf (emloop g₁g₂) (emloop h) ◃∙
+          ! (emloop-comp h g₁g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₁g₂ h)) ◃∙
+          ap emloop (ap (λ p → transp-C p h) (emloop-comp g₁ g₂)) ◃∎
+            =ₛ⟨ 0 & 1 &
+                post-rotate-in {p = _ ◃∎} $ !ₛ $
+                homotopy-naturality (λ p → transp-PF p (emloop h))
+                                    (emloop h ∙_)
+                                    (λ p → transp-cst=idf p (emloop h))
+                                    (emloop-comp g₁ g₂) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-cst=idf (emloop g₁ ∙ emloop g₂) (emloop h) ◃∙
+          ! (ap (emloop h ∙_) (emloop-comp g₁ g₂)) ◃∙
+          ! (emloop-comp h g₁g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₁g₂ h)) ◃∙
+          ap emloop (ap (λ p → transp-C p h) (emloop-comp g₁ g₂)) ◃∎
+            =ₛ⟨ 1 & 1 & transp-cst=idf-pentagon (emloop g₁) (emloop g₂) (emloop h) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (transp-cst=idf (emloop g₁) (emloop h)) ◃∙
+          transp-cst=idf (emloop g₂) (emloop h ∙ emloop g₁) ◃∙
+          ∙-assoc (emloop h) (emloop g₁) (emloop g₂) ◃∙
+          ! (ap (emloop h ∙_) (emloop-comp g₁ g₂)) ◃∙
+          ! (emloop-comp h g₁g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₁g₂ h)) ◃∙
+          ap emloop (ap (λ p → transp-C p h) (emloop-comp g₁ g₂)) ◃∎
+            =ₛ⟨ 4 & 3 &
+                post-rotate'-seq-in {p = _ ◃∙ _ ◃∙ _ ◃∎} $
+                pre-rotate-seq-in {p = _ ◃∙ _ ◃∎} $
+                emloop-coh' G h g₁ g₂ ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (transp-cst=idf (emloop g₁) (emloop h)) ◃∙
+          transp-cst=idf (emloop g₂) (emloop h ∙ emloop g₁) ◃∙
+          ! (ap (λ l → l ∙ emloop' G g₂) (emloop-comp' G h g₁)) ◃∙
+          ! (emloop-comp' G (G.comp h g₁) g₂) ◃∙
+          ap emloop (G.assoc h g₁ g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₁g₂ h)) ◃∙
+          ap emloop (ap (λ p → transp-C p h) (emloop-comp g₁ g₂)) ◃∎
+            =ₛ⟨ 6 & 3 &
+                ap-seq-=ₛ emloop $
+                =ₛ-in {s = G.assoc h g₁ g₂ ◃∙
+                           ! (↓-Codes-loop-transp g₁g₂ h) ◃∙
+                           ap (λ p → transp-C p h) (emloop-comp g₁ g₂) ◃∎}
+                      {t = ap (λ k → G.comp k g₂) (! (↓-Codes-loop-transp g₁ h)) ◃∙
+                           ! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) h)) ◃∙
+                           ! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h) ◃∎} $
+                prop-path (has-level-apply G.El-level _ _) _ _
+              ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (transp-cst=idf (emloop g₁) (emloop h)) ◃∙
+          transp-cst=idf (emloop g₂) (emloop h ∙ emloop g₁) ◃∙
+          ! (ap (_∙ emloop g₂) (emloop-comp' G h g₁)) ◃∙
+          ! (emloop-comp (G.comp h g₁) g₂) ◃∙
+          ap emloop (ap (λ k → G.comp k g₂) (! (↓-Codes-loop-transp g₁ h))) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) h))) ◃∙
+          ap emloop (! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ₁⟨ 6 & 1 & ∘-ap emloop (λ k → G.comp k g₂) (! (↓-Codes-loop-transp g₁ h)) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (transp-cst=idf (emloop g₁) (emloop h)) ◃∙
+          transp-cst=idf (emloop g₂) (emloop h ∙ emloop g₁) ◃∙
+          ! (ap (_∙ emloop g₂) (emloop-comp h g₁)) ◃∙
+          ! (emloop-comp (G.comp h g₁) g₂) ◃∙
+          ap (λ k → emloop (G.comp k g₂)) (! (↓-Codes-loop-transp g₁ h)) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) h))) ◃∙
+          ap emloop (! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ⟨ 5 & 2 & !ₛ $
+                homotopy-naturality (λ k → emloop k ∙ emloop g₂)
+                                    (λ k → emloop (G.comp k g₂))
+                                    (λ k → ! (emloop-comp k g₂))
+                                    (! (↓-Codes-loop-transp g₁ h)) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (transp-cst=idf (emloop g₁) (emloop h)) ◃∙
+          transp-cst=idf (emloop g₂) (emloop h ∙ emloop g₁) ◃∙
+          ! (ap (_∙ emloop g₂) (emloop-comp h g₁)) ◃∙
+          ap (λ k → emloop k ∙ emloop g₂) (! (↓-Codes-loop-transp g₁ h)) ◃∙
+          ! (emloop-comp (transp-C (emloop g₁) h) g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) h))) ◃∙
+          ap emloop (! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ₁⟨ 4 & 1 & !-ap (_∙ emloop g₂) (emloop-comp h g₁) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (transp-cst=idf (emloop g₁) (emloop h)) ◃∙
+          transp-cst=idf (emloop g₂) (emloop h ∙ emloop g₁) ◃∙
+          ap (_∙ emloop g₂) (! (emloop-comp h g₁)) ◃∙
+          ap (λ k → emloop k ∙ emloop g₂) (! (↓-Codes-loop-transp g₁ h)) ◃∙
+          ! (emloop-comp (transp-C (emloop g₁) h) g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) h))) ◃∙
+          ap emloop (! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ⟨ 3 & 2 & !ₛ $
                 homotopy-naturality (transp-PF (emloop g₂))
-                                    (λ p → p ∙ emloop g₂)
+                                    (_∙ emloop g₂)
                                     (transp-cst=idf (emloop g₂))
-                                    (! (emloop-comp' G y g₁))
+                                    (! (emloop-comp h g₁)) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (transp-cst=idf (emloop g₁) (emloop h)) ◃∙
+          ap (transp-PF (emloop g₂)) (! (emloop-comp h g₁)) ◃∙
+          transp-cst=idf (emloop g₂) (emloop (G.comp h g₁)) ◃∙
+          ap (λ k → emloop k ∙ emloop g₂) (! (↓-Codes-loop-transp g₁ h)) ◃∙
+          ! (emloop-comp (transp-C (emloop g₁) h) g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) h))) ◃∙
+          ap emloop (! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ₁⟨ 5 & 1 & ap-∘ (_∙ emloop g₂) emloop (! (↓-Codes-loop-transp g₁ h)) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (transp-cst=idf (emloop g₁) (emloop h)) ◃∙
+          ap (transp-PF (emloop g₂)) (! (emloop-comp h g₁)) ◃∙
+          transp-cst=idf (emloop g₂) (emloop (G.comp h g₁)) ◃∙
+          ap (_∙ emloop g₂) (ap emloop (! (↓-Codes-loop-transp g₁ h))) ◃∙
+          ! (emloop-comp (transp-C (emloop g₁) h) g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) h))) ◃∙
+          ap emloop (! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ⟨ 4 & 2 & !ₛ $
+                homotopy-naturality (transp-PF (emloop g₂))
+                                    (_∙ emloop g₂)
+                                    (transp-cst=idf (emloop g₂))
+                                    (ap emloop (! (↓-Codes-loop-transp g₁ h))) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (transp-cst=idf (emloop g₁) (emloop h)) ◃∙
+          ap (transp-PF (emloop g₂)) (! (emloop-comp h g₁)) ◃∙
+          ap (transp-PF (emloop g₂)) (ap emloop (! (↓-Codes-loop-transp g₁ h))) ◃∙
+          transp-cst=idf (emloop g₂) (emloop (transp-C (emloop g₁) h)) ◃∙
+          ! (emloop-comp (transp-C (emloop g₁) h) g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) h))) ◃∙
+          ap emloop (! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ⟨ 2 & 3 & ∙-ap-seq (transp-PF (emloop g₂)) (swap-transp-emloop'-seq g₁ h) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (swap-transp-emloop' g₁ h) ◃∙
+          transp-cst=idf (emloop g₂) (emloop (transp-C (emloop g₁) h)) ◃∙
+          ! (emloop-comp (transp-C (emloop g₁) h) g₂) ◃∙
+          ap emloop (! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) h))) ◃∙
+          ap emloop (! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ⟨ 3 & 3 & contract ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (swap-transp-emloop' g₁ h) ◃∙
+          swap-transp-emloop' g₂ (transp-C (emloop g₁) h) ◃∙
+          ap emloop (! (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ₁⟨ 4 & 1 & ap-! emloop (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (swap-transp-emloop' g₁ h) ◃∙
+          swap-transp-emloop' g₂ (transp-C (emloop g₁) h) ◃∙
+          ! (ap emloop (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ₁⟨ 2 & 1 & ap (ap (transp-PF (emloop g₂)))
+                            (! (app=-β (swap-transp-emloop' g₁) h)) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (app= (swap-transp-emloop g₁) h) ◃∙
+          swap-transp-emloop' g₂ (transp-C (emloop g₁) h) ◃∙
+          ! (ap emloop (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ₁⟨ 3 & 1 & ! (app=-β (swap-transp-emloop' g₂) (transp-C (emloop g₁) h)) ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          transp-∙ (emloop g₁) (emloop g₂) (emloop h) ◃∙
+          ap (transp-PF (emloop g₂)) (app= (swap-transp-emloop g₁) h) ◃∙
+          app= (swap-transp-emloop g₂) (transp-C (emloop g₁) h) ◃∙
+          ! (ap emloop (transp-∙ {B = fst ∘ Codes} (emloop g₁) (emloop g₂) h)) ◃∎
+            =ₛ⟨ 1 & 4 & contract ⟩
+          ap (λ p → transp-PF p (emloop h)) (emloop-comp g₁ g₂) ◃∙
+          swap-transp-emloop-2 h ◃∎
+            =ₛ₁⟨ 1 & 1 & ! (app=-β swap-transp-emloop-2 h) ⟩
+          ap (λ p → transp-emloop p h) (emloop-comp g₁ g₂) ◃∙
+          app= (λ= swap-transp-emloop-2) h ◃∎
+            =ₛ₁⟨ 0 & 1 & ap-∘ (λ k → k h) transp-emloop (emloop-comp g₁ g₂) ⟩
+          app= (ap transp-emloop (emloop-comp g₁ g₂)) h ◃∙
+          app= (λ= swap-transp-emloop-2) h ◃∎ ∎ₛ
 
-          cd₅ : e₉₋₁₀ ◃∎ =ₛ e₉₋₁₆ ◃∙ e₁₆₋₁₇ ◃∙ e₁₇₋₁₀ ◃∎
-          cd₅ = post-rotate-in (!ₛ cd₅')
-            where
-            e₁₀₋₁₇ : s₁₀ == s₁₇
-            e₁₀₋₁₇ = ap (λ z → emloop (G.comp z g₂)) (! (↓-Codes-loop-transp g₁ y))
-            cd₅' : e₉₋₁₆ ◃∙ e₁₆₋₁₇ ◃∎ =ₛ e₉₋₁₀ ◃∙ e₁₀₋₁₇ ◃∎
-            cd₅' = homotopy-naturality (λ g → emloop g ∙ emloop g₂)
-                                       (λ g → emloop (G.comp g g₂))
-                                       (λ g → ! (emloop-comp' G g g₂))
-                                       (! (↓-Codes-loop-transp g₁ y))
+        EE : swap-transp-emloop g₁g₂ ∙ ap emloop-transp (emloop-comp g₁ g₂) ==
+             ap transp-emloop (emloop-comp g₁ g₂) ∙ λ= swap-transp-emloop-2
+        EE =
+          –>-is-inj (app=-equiv {A = G.El} {P = λ _ → embase' G == embase}
+                                {f = transp-emloop (emloop g₁g₂)}
+                                {g = emloop-transp (emloop g₁ ∙ emloop g₂)})
+                    _ _ $
+          λ= {A = G.El} {P = λ x → transp-emloop (emloop g₁g₂) x == emloop-transp (emloop g₁ ∙ emloop g₂) x}
+             {f = app= (swap-transp-emloop g₁g₂ ∙ ap emloop-transp (emloop-comp g₁ g₂))}
+             {g = app= (ap transp-emloop (emloop-comp g₁ g₂) ∙ λ= swap-transp-emloop-2)} $ λ h →
+          app= (swap-transp-emloop g₁g₂ ∙ ap emloop-transp (emloop-comp g₁ g₂)) h
+            =⟨ ap-∙ (λ k → k h) (swap-transp-emloop g₁g₂) (ap emloop-transp (emloop-comp g₁ g₂)) ⟩
+          app= (swap-transp-emloop g₁g₂) h ∙ app= (ap emloop-transp (emloop-comp g₁ g₂)) h
+            =⟨ =ₛ-out (DD h) ⟩
+          app= (ap transp-emloop (emloop-comp g₁ g₂)) h ∙ app= (λ= swap-transp-emloop-2) h
+            =⟨ ∙-ap (λ k → k h) (ap transp-emloop (emloop-comp g₁ g₂)) (λ= swap-transp-emloop-2) ⟩
+          app= (ap transp-emloop (emloop-comp g₁ g₂) ∙ λ= swap-transp-emloop-2) h =∎
 
-          cd₆ : e₁₇₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎ =ₛ e₁₇₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-          cd₆ =
-            e₁₇₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =ₛ₁⟨ 0 & 1 & ap (λ p → ! p) (ap-∘ emloop (λ z → G.comp z g₂) (! (↓-Codes-loop-transp g₁ y))) ∙
-                           !-ap emloop i₁₀₋₁₇ ⟩
-            ap emloop i₁₇₋₁₀ ◃∙ ap emloop i₁₀₋₄ ◃∙ ap emloop i₄₅ ◃∙ e₅₂ ◃∎
-              =ₛ₁⟨ 3 & 1 & e₅₂=ap-emloop-i₅₂ ⟩
-            ap emloop i₁₇₋₁₀ ◃∙ ap emloop i₁₀₋₄ ◃∙ ap emloop i₄₅ ◃∙ ap emloop i₅₂ ◃∎
-              =ₛ⟨ ∙-ap-seq emloop (i₁₇₋₁₀ ◃∙ i₁₀₋₄ ◃∙ i₄₅ ◃∙ i₅₂ ◃∎) ⟩
-            ap emloop (i₁₇₋₁₀ ∙ i₁₀₋₄ ∙ i₄₅ ∙ i₅₂) ◃∎
-              =ₛ₁⟨ ap (ap emloop) cd₆' ⟩
-            ap emloop (i₁₇₋₁₄ ∙ ! i₂₋₁₄) ◃∎
-              =ₛ⟨ ap-seq-∙ emloop (i₁₇₋₁₄ ◃∙ ! i₂₋₁₄ ◃∎) ⟩
-            ap emloop i₁₇₋₁₄ ◃∙ ap emloop (! i₂₋₁₄) ◃∎
-              =ₛ₁⟨ 1 & 1 & ap-! emloop i₂₋₁₄ ⟩
-            e₁₇₋₁₄ ◃∙ ! (ap emloop i₂₋₁₄) ◃∎ ∎ₛ
-            where
-              h₁₇ : G.El
-              h₁₇ = G.comp (transp-C (emloop g₁) y) g₂
-              h₁₀ : G.El
-              h₁₀ = G.comp (G.comp y g₁) g₂
-              h₄ : G.El
-              h₄ = G.comp y (G.comp g₁ g₂)
-              h₅ : G.El
-              h₅ = transp-C (emloop (G.comp g₁ g₂)) y
-              h₂ : G.El
-              h₂ = transp-C (emloop g₁ ∙ emloop g₂) y
-              h₁₄ : G.El
-              h₁₄ = transp-C (emloop g₂) (transp-C (emloop g₁) y)
-              i₁₀₋₁₇ : h₁₀ == h₁₇
-              i₁₀₋₁₇ = ap (λ z → G.comp z g₂) (! (↓-Codes-loop-transp g₁ y))
-              i₁₇₋₁₀ : h₁₇ == h₁₀
-              i₁₇₋₁₀ = ! i₁₀₋₁₇
-              i₁₀₋₄ : h₁₀ == h₄
-              i₁₀₋₄ = G.assoc y g₁ g₂
-              i₄₅ : h₄ == h₅
-              i₄₅ = ! (↓-Codes-loop-transp g₁g₂ y)
-              i₅₂ : h₅ == h₂
-              i₅₂ = ap (λ p → transp-C p y) (emloop-comp g₁ g₂)
-              i₁₇₋₁₄ : h₁₇ == h₁₄
-              i₁₇₋₁₄ = ! (↓-Codes-loop-transp g₂ (transp-C (emloop g₁) y))
-              i₂₋₁₄ : h₂ == h₁₄
-              i₂₋₁₄ = transp-∙ (emloop g₁) (emloop g₂) y
-              e₅₂=ap-emloop-i₅₂ : e₅₂ == ap emloop i₅₂
-              e₅₂=ap-emloop-i₅₂ = ap-∘ (emloop' G) (λ p → transp-C p y) (emloop-comp g₁ g₂)
-              cd₆' : i₁₇₋₁₀ ∙ i₁₀₋₄ ∙ i₄₅ ∙ i₅₂ == i₁₇₋₁₄ ∙ ! i₂₋₁₄
-              cd₆' = prop-path (has-level-apply G.El-level h₁₇ h₂) _ _
-
-          cd₇ : e₁₂₋₉ ◃∙ e₉₋₁₆ ◃∎ =ₛ e₁₂₋₁₅ ◃∙ e₁₅₋₁₆ ◃∎
-          cd₇ = !ₛ $
-                homotopy-naturality (transp-emloop (emloop g₂))
-                                    (λ (z : G.El) → emloop z ∙ emloop g₂)
-                                    (transp-emloop=∙-emloop g₂)
-                                    (! (↓-Codes-loop-transp g₁ y))
-
-          cd₈ : e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅ ◃∎ =ₛ e₁₃₋₁₅ ◃∎
-          cd₈ =
-            e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅ ◃∎
-              =ₛ₁⟨ 2 & 1 & e₁₂₋₁₅=e₁₂₋₁₅' ⟩
-            e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅' ◃∎
-              =ₛ⟨ ∙-ap-seq (transp-PF (emloop g₂))
-                              (transp-emloop=∙-emloop g₁ y ◃∙
-                               ∙-emloop=emloop-comp g₁ y ◃∙
-                               emloop-comp=emloop-transp g₁ y ◃∎) ⟩
-            e₁₃₋₁₅ ◃∎ ∎ₛ
-            where
-            e₁₂₋₁₅' : s₁₂ == s₁₅
-            e₁₂₋₁₅' = ap (transp-PF (emloop g₂)) (emloop-comp=emloop-transp g₁ y)
-            e₁₂₋₁₅=e₁₂₋₁₅' : e₁₂₋₁₅ == e₁₂₋₁₅'
-            e₁₂₋₁₅=e₁₂₋₁₅' = ap-∘ (transp-PF (emloop g₂)) emloop (! (↓-Codes-loop-transp g₁ y))
-
-          DD : e₁₂ == e₁₂'
-          DD = =ₛ-out $
-            e₁₂ ◃∎
-              =ₛ₁⟨ ∙'=∙ q₁₅ q₅₂ |in-ctx (λ z → app= z y) ⟩
-            app= (q₁₅ ∙ q₅₂) y ◃∎
-              =ₛ⟨ ap-seq-∙ (λ g → g y) (q₁₅ ◃∙ q₅₂ ◃∎) ⟩
-            app= q₁₅ y ◃∙ app= q₅₂ y ◃∎
-              =ₛ₁⟨ 1 & 1 & ∘-ap (λ g → g y) emloop-transp (emloop-comp g₁ g₂) ⟩
-            app= q₁₅ y ◃∙ e₅₂ ◃∎
-              =ₛ⟨ 0 & 1 &
-                  =ₛ-in {t = e₁₃ ◃∙ e₃₄ ◃∙ e₄₅ ◃∎}
-                        (app=-β {f = f₁} {g = f₅} (transp-emloop=emloop-transp g₁g₂) y) ⟩
-            e₁₃ ◃∙ e₃₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =ₛ⟨ 0 & 1 & cd₁ ⟩
-            e₁₆ ◃∙ e₆₇ ◃∙ e₇₃ ◃∙ e₃₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =ₛ⟨ 2 & 2 & cd₂ ⟩
-            e₁₆ ◃∙ e₆₇ ◃∙ e₇₈ ◃∙ e₈₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =ₛ⟨ 1 & 2 & cd₃ ⟩
-            e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₈ ◃∙ e₈₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =ₛ⟨ 3 & 2 & cd₄ ⟩
-            e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₉ ◃∙ e₉₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =ₛ⟨ 5 & 1 & cd₅ ⟩
-            e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₉ ◃∙ e₉₋₁₆ ◃∙ e₁₆₋₁₇ ◃∙ e₁₇₋₁₀ ◃∙ e₁₀₋₄ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎
-              =ₛ⟨ 7 & 4 & cd₆ ⟩
-            e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₉ ◃∙ e₉₋₁₆ ◃∙ e₁₆₋₁₇ ◃∙ e₁₇₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =ₛ⟨ 4 & 2 & cd₇ ⟩
-            e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₁ ◃∙ e₁₁₋₁₂ ◃∙ e₁₂₋₁₅ ◃∙ e₁₅₋₁₆ ◃∙ e₁₆₋₁₇ ◃∙ e₁₇₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =ₛ⟨ 2 & 3 & cd₈ ⟩
-            e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₅ ◃∙ e₁₅₋₁₆ ◃∙ e₁₆₋₁₇ ◃∙ e₁₇₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =ₛ₁⟨ 3 & 3 & idp ⟩
-            e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₅ ◃∙ e₁₅₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =ₛ₁⟨ 2 & 1 & ! e₁₃₋₁₅'=e₁₃₋₁₅ ⟩
-            e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₅' ◃∙ e₁₅₋₁₄ ◃∙ e₁₄₋₂ ◃∎
-              =ₛ₁⟨ 3 & 1 & ! e₁₅₋₁₄'=e₁₅₋₁₄ ⟩
-            e₁₆ ◃∙ e₆₋₁₃ ◃∙ e₁₃₋₁₅' ◃∙ e₁₅₋₁₄' ◃∙ e₁₄₋₂ ◃∎
-              =ₛ₁⟨ 1 & 4 &
-                   ! (app=-β {f = f₆} {g = f₂} swap-transp-emloop-2 y) ⟩
-            e₁₆ ◃∙ app= q₆₂ y ◃∎
-              =ₛ₁⟨ 0 & 1 & ap-∘ (λ g → g y) transp-emloop (emloop-comp g₁ g₂) ⟩
-            app= q₁₆ y ◃∙ app= q₆₂ y ◃∎
-              =ₛ⟨ ∙-ap-seq (λ g → g y) (q₁₆ ◃∙ q₆₂ ◃∎) ⟩
-            e₁₂' ◃∎ ∎ₛ
-
-        EE : q₁₂ == q₁₂'
-        EE = –>-is-inj (app=-equiv {A = G.El} {P = λ _ → embase' G == embase} {f = f₁} {g = f₂})
-                       q₁₂ q₁₂'
-                       (λ= {A = G.El} {P = λ x → f₁ x == f₂ x} {f = e₁₂} {g = e₁₂'} DD)
-
-        FF : loop' g₁g₂ == ↓-→-from-transp q₆₂ [ Q ↓ emloop-comp g₁ g₂ ]
-        FF = foo (emloop-comp g₁ g₂) emloop emloop (swap-transp-emloop g₁g₂) q₆₂ EE
+        FF : loop' g₁g₂ == ↓-→-from-transp (λ= swap-transp-emloop-2) [ Q ↓ emloop-comp g₁ g₂ ]
+        FF = ap↓ ↓-→-from-transp $ ↓-='-in $
+             swap-transp-emloop g₁g₂ ∙' ap emloop-transp (emloop-comp g₁ g₂)
+               =⟨ ∙'=∙ (swap-transp-emloop g₁g₂) (ap emloop-transp (emloop-comp g₁ g₂)) ⟩
+             swap-transp-emloop g₁g₂ ∙ ap emloop-transp (emloop-comp g₁ g₂)
+               =⟨ EE ⟩
+             ap transp-emloop (emloop-comp g₁ g₂) ∙ λ= swap-transp-emloop-2 =∎
 
         GG : ↓-→-from-transp (λ= swap-transp-emloop-2) == loop' g₁ ∙ᵈ loop' g₂
-        GG = ↓-→-from-transp-∙ᵈ {i} {i} {i} {EM₁ G} {fst ∘ Codes} {λ x → embase == x} {embase} {embase} {embase} {emloop g₁} {emloop g₂} {emloop} {emloop} {emloop} (swap-transp-emloop g₁) (swap-transp-emloop g₂)
+        GG = ↓-→-from-transp-∙ᵈ {B = fst ∘ Codes} {C = λ x → embase == x}
+                                {p = emloop g₁} {q = emloop g₂}
+                                {u = emloop} {u' = emloop} {u'' = emloop}
+                                (swap-transp-emloop g₁) (swap-transp-emloop g₂)
 
         loop'-comp : loop' g₁g₂ == (loop' g₁ ∙ᵈ loop' g₂) [ Q ↓ emloop-comp g₁ g₂ ]
         loop'-comp = FF ▹ GG
@@ -510,7 +360,6 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
         Decode.loop'
         Decode.loop'-comp
         x
-      where
 
     decode-encode : ∀ {x} (α : embase' G == x) → decode (encode α) == α
     decode-encode idp = emloop-ident {G = G}

@@ -243,6 +243,18 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
     → u == u' [ (λ x → B x → C x) ↓ p ]
   ↓-→-from-transp {p = idp} q = q
 
+  comp-transp-seq : {x x' x'' : A}
+    {u : B x → C x} {u' : B x' → C x'} {u'' : B x'' → C x''}
+    (p : x == x') (q : x' == x'')
+    (r : transport C p ∘ u == u' ∘ transport B p)
+    (s : transport C q ∘ u' == u'' ∘ transport B q)
+    → ∀ b → transport C (p ∙ q) (u b) =-= u'' (transport B (p ∙ q) b)
+  comp-transp-seq {x} {x'} {x''} {u} {u'} {u''} p q r s b =
+    transp-∙ p q (u b) ◃∙
+    ap (transport C q) (app= r b) ◃∙
+    app= s (transport B p b) ◃∙
+    ! (ap u'' (transp-∙ p q b)) ◃∎
+
   comp-transp : {x x' x'' : A}
     {u : B x → C x} {u' : B x' → C x'} {u'' : B x'' → C x''}
     (p : x == x') (q : x' == x'')
@@ -250,10 +262,7 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
     (s : transport C q ∘ u' == u'' ∘ transport B q)
     → transport C (p ∙ q) ∘ u ∼ u'' ∘ transport B (p ∙ q)
   comp-transp {x} {x'} {x''} {u} {u'} {u''} p q r s b =
-    transp-∙ p q (u b)
-      ∙ ap (transport C q) (app= r b)
-      ∙ app= s (transport B p b)
-      ∙ ! (ap u'' (transp-∙ p q b))
+    ↯ (comp-transp-seq {x} {x'} {x''} {u} {u'} {u''} p q r s b)
 
   ↓-→-from-transp-∙ᵈ : {x x' x'' : A} {p : x == x'} {q : x' == x''}
     {u : B x → C x} {u' : B x' → C x'} {u'' : B x'' → C x''}
