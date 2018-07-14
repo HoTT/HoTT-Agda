@@ -2,7 +2,6 @@
 
 open import HoTT
 open import homotopy.EilenbergMacLane
-open import cohomology.CupProduct.OnEM.EM1DoubleElim
 
 module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
 
@@ -903,7 +902,7 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
 
     private
       module CP₁₁Comm =
-        EM₁Level₁DoublePathElim R₊ R₊ {C = EM 2} {{Trunc-level}}
+        EM₁Level₂DoublePathElim R₊ R₊ {C = EM 2} {{Trunc-level}}
           (λ x y → cp₁₁ x y)
           (λ x y → antipodal-map (cp₁₁ y x))
           idp
