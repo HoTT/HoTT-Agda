@@ -49,11 +49,11 @@ dual-cat C =
         ! (ap (C.comp i) (C.assoc h g f)) ◃∙
         ! (C.assoc i (C.comp h g) f) ◃∙
         ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎
-          =ₛ⟨ 0 & 1 & 1 & !-ap (C.comp i) (C.assoc h g f) ⟩
+          =ₛ₁⟨ 0 & 1 & !-ap (C.comp i) (C.assoc h g f) ⟩
         ap (C.comp i) (! (C.assoc h g f)) ◃∙
         ! (C.assoc i (C.comp h g) f) ◃∙
         ! (ap (λ s → C.comp s f) (C.assoc i h g)) ◃∎
-          =ₛ⟨ 2 & 1 & 1 & !-ap (λ s → C.comp s f) (C.assoc i h g) ⟩
+          =ₛ₁⟨ 2 & 1 & !-ap (λ s → C.comp s f) (C.assoc i h g) ⟩
         ap (C.comp i) (! (C.assoc h g f)) ◃∙
         ! (C.assoc i (C.comp h g) f) ◃∙
         ap (λ s → C.comp s f) (! (C.assoc i h g)) ◃∎ ∎ₛ
