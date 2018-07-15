@@ -72,13 +72,18 @@ module _ {G : Group i} where
   module EM₁Elim {j} {P : EM₁ G → Type j}
     {{_ : (x : EM₁ G) → has-level 2 (P x)}}
     (embase* : P embase)
-    (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ])
-    (emloop-comp* : (g₁ g₂ : G.El) →
+    (emloop* : ∀ g → embase* == embase* [ P ↓ emloop g ])
+    (emloop-comp* : ∀ g₁ g₂ →
        emloop* (G.comp g₁ g₂) == emloop* g₁ ∙ᵈ emloop* g₂
        [ (λ p → embase* == embase* [ P ↓ p ]) ↓ emloop-comp g₁ g₂ ])
-    (emloop-coh* : (g₁ g₂ g₃ : G.El) →
-      emloop-comp* (G.comp g₁ g₂) g₃ ∙ᵈ (emloop-comp* g₁ g₂ ∙ᵈᵣ emloop* g₃) ∙ᵈ ∙ᵈ-assoc (emloop* g₁) (emloop* g₂) (emloop* g₃)
-      == ↓-ap-in (λ p → embase* == embase* [ P ↓ p ]) emloop (apd emloop* (G.assoc g₁ g₂ g₃)) ∙ᵈ emloop-comp* g₁ (G.comp g₂ g₃) ∙ᵈ (emloop* g₁ ∙ᵈₗ emloop-comp* g₂ g₃)
+    (emloop-coh* : ∀ g₁ g₂ g₃ →
+      emloop-comp* (G.comp g₁ g₂) g₃ ∙ᵈ
+      (emloop-comp* g₁ g₂ ∙ᵈᵣ emloop* g₃) ∙ᵈ
+      ∙ᵈ-assoc (emloop* g₁) (emloop* g₂) (emloop* g₃)
+      ==
+      ↓-ap-in (λ p → embase* == embase* [ P ↓ p ]) emloop (apd emloop* (G.assoc g₁ g₂ g₃)) ∙ᵈ
+      emloop-comp* g₁ (G.comp g₂ g₃) ∙ᵈ
+      (emloop* g₁ ∙ᵈₗ emloop-comp* g₂ g₃)
       [ (λ e → emloop* (G.comp (G.comp g₁ g₂) g₃) == emloop* g₁ ∙ᵈ (emloop* g₂ ∙ᵈ emloop* g₃)
                [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e ])
         ↓ =ₛ-out (emloop-coh g₁ g₂ g₃) ])

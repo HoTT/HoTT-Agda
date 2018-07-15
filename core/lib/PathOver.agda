@@ -74,7 +74,8 @@ module _ {i j} {A : Type i} {B : Type j} where
   ↓-cst-in2 : {a a' : A} {b b' : B}
     {p₀ p₁ : a == a'} {q₀ q₁ : b == b'} {q : p₀ == p₁}
     → q₀ == q₁
-    → (↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁ [ (λ p → b == b' [ (λ _ → B) ↓ p ]) ↓ q ] )
+    → ↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁
+        [ (λ p → b == b' [ (λ _ → B) ↓ p ]) ↓ q ]
   ↓-cst-in2 {p₀ = idp} {p₁ = .idp} {q = idp} k = k
 
   ↓-cst-out2 : {a a' : A} {b b' : B}
@@ -101,11 +102,12 @@ module _ {i j} {A : Type i} {B : Type j} where
     {p₀ : a == a'} {p₁ : a' == a''} {p₂ : a'' == a'''}
     {b b' b'' b''' : B}
     (q₀ : b == b') (q₁ : b' == b'') (q₂ : b'' == b''')
-    →  ↓-cst-in2 {q = ∙-assoc p₀ p₁ p₂} (∙-assoc q₀ q₁ q₂)
-     ▹ (↓-cst-in-∙ p₀ (p₁ ∙ p₂) q₀ (q₁ ∙ q₂) ∙ (↓-cst-in {p = p₀} q₀ ∙ᵈₗ ↓-cst-in-∙ p₁ p₂ q₁ q₂))
-    == ↓-cst-in-∙ (p₀ ∙ p₁) p₂ (q₀ ∙ q₁) q₂
-     ◃ (↓-cst-in-∙ p₀ p₁ q₀ q₁ ∙ᵈᵣ ↓-cst-in {p = p₂} q₂)
-     ◃ ∙ᵈ-assoc (↓-cst-in {p = p₀} q₀) (↓-cst-in {p = p₁} q₁) (↓-cst-in {p = p₂} q₂)
+    → ↓-cst-in2 {q = ∙-assoc p₀ p₁ p₂} (∙-assoc q₀ q₁ q₂) ▹
+      (↓-cst-in-∙ p₀ (p₁ ∙ p₂) q₀ (q₁ ∙ q₂) ∙ (↓-cst-in {p = p₀} q₀ ∙ᵈₗ ↓-cst-in-∙ p₁ p₂ q₁ q₂))
+      ==
+      ↓-cst-in-∙ (p₀ ∙ p₁) p₂ (q₀ ∙ q₁) q₂ ◃
+      (↓-cst-in-∙ p₀ p₁ q₀ q₁ ∙ᵈᵣ ↓-cst-in {p = p₂} q₂) ◃
+      ∙ᵈ-assoc (↓-cst-in {p = p₀} q₀) (↓-cst-in {p = p₁} q₁) (↓-cst-in {p = p₂} q₂)
   ↓-cst-in-assoc {p₀ = idp} {p₁ = idp} {p₂ = idp} q₀ q₁ q₂ = idp
 
   ↓-cst-in2-whisker-right : {a a' a'' : A} {b b' b'' : B}
@@ -113,9 +115,11 @@ module _ {i j} {A : Type i} {B : Type j} where
     {q₀ q₁ : b == b'} {q' : b' == b''}
     {p₀₁ : p₀ == p₁}
     → (q₀₁ : q₀ == q₁)
-    →    ↓-cst-in2 {q = ap (λ r → r ∙ p') p₀₁} (ap (λ r → r ∙ q') q₀₁)
-       ▹ ↓-cst-in-∙ p₁ p' q₁ q'
-      == ↓-cst-in-∙ p₀ p' q₀ q' ◃ (↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q')
+    → ↓-cst-in2 {q = ap (λ r → r ∙ p') p₀₁} (ap (λ r → r ∙ q') q₀₁) ▹
+      ↓-cst-in-∙ p₁ p' q₁ q'
+      ==
+      ↓-cst-in-∙ p₀ p' q₀ q' ◃
+      (↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q')
   ↓-cst-in2-whisker-right {p₀ = idp} {p₁ = .idp} {p' = idp} {p₀₁ = idp} idp = idp
 
   ↓-cst-in2-whisker-left : {a a' a'' : A} {b b' b'' : B}
