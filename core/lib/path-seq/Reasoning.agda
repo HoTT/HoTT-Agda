@@ -38,18 +38,6 @@ module _ {i} {A : Type i} {a a' : A} where
   contract = =ₛ-in idp
 
   abstract
-    infixr 10 _=ₛ⟨_⟩_
-    _=ₛ⟨_⟩_ : (s : a =-= a') {t u : a =-= a'}
-      → s =ₛ t
-      → t =ₛ u
-      → s =ₛ u
-    _=ₛ⟨_⟩_ _ p q = p ∙ₛ q
-
-  infix 15 _∎ₛ
-  _∎ₛ : (s : a =-= a') → s =ₛ s
-  _∎ₛ _ = =ₛ-in idp
-
-  abstract
     private
       infixr 10 _=↯=⟨_&_&_&_⟩_
       _=↯=⟨_&_&_&_⟩_ : {q : a == a'}
@@ -74,12 +62,41 @@ module _ {i} {A : Type i} {a a' : A} where
           =⟨ p' ⟩
         q =∎
 
+    {- For making proofs more readable by making
+       definitional equalities visible. Example:
+
+      p ◃∙ ap f idp ◃∙ q ◃∎
+        =ₛ⟨id⟩
+      p ◃∙ idp ◃∙ q ◃∎ ∎ₛ
+
+    -}
     infixr 10 _=ₛ⟨id⟩_
     _=ₛ⟨id⟩_ : (s : a =-= a') {u : a =-= a'}
       → s =ₛ u
       → s =ₛ u
     _=ₛ⟨id⟩_ s e = e
 
+    {- For rewriting everything using a [_=ₛ_] path. Example:
+
+      ap f p ◃∙ h y ◃∎
+        =ₛ⟨ homotopy-naturality f g h p ⟩
+      h x ◃∙ ap g p ◃∎ ∎ₛ
+
+    -}
+    infixr 10 _=ₛ⟨_⟩_
+    _=ₛ⟨_⟩_ : (s : a =-= a') {t u : a =-= a'}
+      → s =ₛ t
+      → t =ₛ u
+      → s =ₛ u
+    _=ₛ⟨_⟩_ _ p q = p ∙ₛ q
+
+    {- For rewriting a segment using a [_=ₛ_] path. Example:
+
+      p ◃∙ ! (q ∙ r) ◃∙ s ◃∎
+        =ₛ⟨ 1 & 1 & !-∙-seq (q ◃∙ r ◃∎) ⟩
+      p ◃∙ ! r ◃∙ ! q ◃∙ s ◃∎ ∎ₛ
+
+    -}
     infixr 10 _=ₛ⟨_&_&_⟩_
     _=ₛ⟨_&_&_⟩_ : (s : a =-= a') {u : a =-= a'}
       → (m n : ℕ)
@@ -89,6 +106,28 @@ module _ {i} {A : Type i} {a a' : A} where
       → s =ₛ u
     _=ₛ⟨_&_&_⟩_ s m n {r} p p' = =ₛ-in (s =↯=⟨ m & n & r & =ₛ-out p ⟩ =ₛ-out p')
 
+    {- For rewriting everything using a [_==_] path. Example:
+
+      p ◃∙ idp ◃∎
+        =ₛ₁⟨ ∙-unit-r p ⟩
+      p ◃∎ ∎ₛ
+
+    -}
+    infixr 10 _=ₛ₁⟨_⟩_
+    _=ₛ₁⟨_⟩_ : (s : a =-= a') {u : a =-= a'}
+      → {r : a == a'}
+      → ↯ s == r
+      → r ◃∎ =ₛ u
+      → s =ₛ u
+    _=ₛ₁⟨_⟩_ s {r} p p' = =ₛ-in p ∙ₛ p'
+
+    {- For rewriting a segment using a [_==_] path. Example:
+
+      p ◃∙ ! (ap f q) ◃∙ r ◃∎
+        =ₛ₁⟨ 1 & 1 & !-ap f q ⟩
+      p ◃∙ ap f (! q) ◃∙ r ◃∎ ∎ₛ
+
+    -}
     infixr 10 _=ₛ₁⟨_&_&_⟩_
     _=ₛ₁⟨_&_&_⟩_ : (s : a =-= a') {u : a =-= a'}
       → (m n : ℕ)
@@ -98,10 +137,6 @@ module _ {i} {A : Type i} {a a' : A} where
       → s =ₛ u
     _=ₛ₁⟨_&_&_⟩_ s m n {r} p p' = s =ₛ⟨ m & n & =ₛ-in {t = r ◃∎} p ⟩ p'
 
-    infixr 10 _=ₛ₁⟨_⟩_
-    _=ₛ₁⟨_⟩_ : (s : a =-= a') {u : a =-= a'}
-      → {r : a == a'}
-      → ↯ s == r
-      → r ◃∎ =ₛ u
-      → s =ₛ u
-    _=ₛ₁⟨_⟩_ s {r} p p' = =ₛ-in p ∙ₛ p'
+  infix 15 _∎ₛ
+  _∎ₛ : (s : a =-= a') → s =ₛ s
+  _∎ₛ _ = =ₛ-in idp
