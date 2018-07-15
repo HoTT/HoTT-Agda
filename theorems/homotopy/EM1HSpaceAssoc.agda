@@ -72,12 +72,12 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
   H-EM₁-assoc-coh-unit-r : coh-unit-r H-⊙EM₁ H-⊙EM₁-assoc
   H-EM₁-assoc-coh-unit-r =
     EM₁-prop-elim {P = λ x → ∀ y → P x y} {{λ x → Π-level (P-level x)}}
-      (EM₁-prop-elim {P = P embase} {{P-level embase}} idp)
+      (EM₁-prop-elim {P = P embase} {{P-level embase}} (=ₛ-in idp))
     where
     P : EM₁ G.grp → EM₁ G.grp → Type i
     P = coh-unit-r-eq H-⊙EM₁ H-⊙EM₁-assoc
     P-level : ∀ x y → is-prop (P x y)
-    P-level x y = has-level-apply (has-level-apply (EM₁-level₁ G.grp) _ _) _ _
+    P-level x y = =ₛ-level (EM₁-level₁ G.grp)
 
   H-EM₁-assoc-coh-unit-l-r-pentagon : coh-unit-l-r-pentagon H-⊙EM₁ H-⊙EM₁-assoc
   H-EM₁-assoc-coh-unit-l-r-pentagon =

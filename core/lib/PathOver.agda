@@ -127,9 +127,11 @@ module _ {i j} {A : Type i} {B : Type j} where
     {q : b == b'} {q₀' q₁' : b' == b''}
     {p₀₁' : p₀' == p₁'}
     → (q₀₁' : q₀' == q₁')
-    →  ↓-cst-in2 {q = ap (λ r → p ∙ r) p₀₁'} (ap (λ r → q ∙ r) q₀₁')
-    ▹  ↓-cst-in-∙ p p₁' q q₁'
-    == ↓-cst-in-∙ p p₀' q q₀' ◃ (↓-cst-in {p = p} q ∙ᵈₗ ↓-cst-in2 {q = p₀₁'} q₀₁')
+    → ↓-cst-in2 {q = ap (λ r → p ∙ r) p₀₁'} (ap (λ r → q ∙ r) q₀₁') ▹
+      ↓-cst-in-∙ p p₁' q q₁'
+      ==
+      ↓-cst-in-∙ p p₀' q q₀' ◃
+      (↓-cst-in {p = p} q ∙ᵈₗ ↓-cst-in2 {q = p₀₁'} q₀₁')
   ↓-cst-in2-whisker-left {p = idp} {p₀' = idp} {p₁' = .idp} {p₀₁' = idp} idp = idp
 
 -- Dependent paths in a fibration constant in the second argument
@@ -202,7 +204,11 @@ module _ {i j k} {A : Type i} {B : Type j} (C : B → Type k) (f : A → B) wher
 ↓-cst-in2-ap : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   {a a' : A} {b b' : B} {c c' : C}
   (f : C → a == a') (g : C → b == b') (r : c == c')
-  → ↓-cst-in2 {q = ap f r} (ap g r) == ↓-ap-in (λ p → b == b' [ (λ _ → B) ↓ p ]) f (apd (λ c → ↓-cst-in {p = f c} (g c)) r)
+  → ↓-cst-in2 {q = ap f r} (ap g r)
+    ==
+    ↓-ap-in (λ p → b == b' [ (λ _ → B) ↓ p ])
+            f
+            (apd (λ c → ↓-cst-in {p = f c} (g c)) r)
 ↓-cst-in2-ap {c = c} {c' = .c} f g idp = ↓-cst-in2-idp (f c) (g c)
 
 -- Dependent paths over [ap2 f p q]

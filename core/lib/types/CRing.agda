@@ -31,7 +31,7 @@ record CRingStructure {i} (El : Type i)
     mult-unit-l : ∀ a → mult one a == a
     mult-assoc  : ∀ a b c → mult (mult a b) c == mult a (mult b c)
     mult-comm   : ∀ a b → mult a b == mult b a
-    distr-l : ∀ a b c → mult (add a b) c == add (mult a c) (mult b c)
+    distr-l     : ∀ a b c → mult (add a b) c == add (mult a c) (mult b c)
 
   private
     infix 80 _⊕_

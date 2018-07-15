@@ -87,27 +87,40 @@ module _ {i} {X : Ptd i} (hX : HSpaceStructure X) where
   associator = ∀ a b c → hX.μ (hX.μ a b) c == hX.μ a (hX.μ b c)
 
   coh-unit-r-eq : associator → de⊙ X → de⊙ X → Type i
-  coh-unit-r-eq assoc a b = hX.unit-r (hX.μ a b) == assoc a b (pt X) ∙ ap (hX.μ a) (hX.unit-r b)
+  coh-unit-r-eq assoc a b =
+    hX.unit-r (hX.μ a b) ◃∎
+    =ₛ
+    assoc a b (pt X) ◃∙
+    ap (hX.μ a) (hX.unit-r b) ◃∎
 
   coh-unit-r : associator → Type i
   coh-unit-r assoc = ∀ a b → coh-unit-r-eq assoc a b
 
   coh-unit-l-r-pentagon : associator → Type i
   coh-unit-l-r-pentagon assoc = ∀ a' →
-    hX.unit-r (hX.μ (pt X) a') ∙ hX.unit-l a' ==
-    assoc (pt X) a' (pt X) ∙ hX.unit-l (hX.μ a' (pt X)) ∙ hX.unit-r a'
+    hX.unit-r (hX.μ (pt X) a') ◃∙
+    hX.unit-l a' ◃∎
+    =ₛ
+    assoc (pt X) a' (pt X) ◃∙
+    hX.unit-l (hX.μ a' (pt X)) ◃∙
+    hX.unit-r a' ◃∎
 
   coh-unit-r-to-unit-l-r-pentagon : (assoc : associator)
     → coh-unit-r assoc → coh-unit-l-r-pentagon assoc
   coh-unit-r-to-unit-l-r-pentagon assoc c a' =
-    hX.unit-r (hX.μ (pt X) a') ∙ hX.unit-l a'
-      =⟨ ap (λ v → v ∙ hX.unit-l a') (c (pt X) a') ⟩
-    (assoc (pt X) a' (pt X) ∙ ap (hX.μ (pt X)) (hX.unit-r a')) ∙ hX.unit-l a'
-      =⟨ ∙-assoc (assoc (pt X) a' (pt X)) (ap (hX.μ (pt X)) (hX.unit-r a')) (hX.unit-l a') ⟩
-    assoc (pt X) a' (pt X) ∙ ap (hX.μ (pt X)) (hX.unit-r a') ∙ hX.unit-l a'
-      =⟨ ap (λ v → assoc (pt X) a' (pt X) ∙ v)
-            (=ₛ-out (homotopy-naturality-to-idf (hX.μ (pt X)) hX.unit-l (hX.unit-r a'))) ⟩
-    assoc (pt X) a' (pt X) ∙ hX.unit-l (hX.μ a' (pt X)) ∙ hX.unit-r a' ∎
+    hX.unit-r (hX.μ (pt X) a') ◃∙
+    hX.unit-l a' ◃∎
+      =ₛ⟨ 0 & 1 & c (pt X) a' ⟩
+    assoc (pt X) a' (pt X) ◃∙
+    ap (hX.μ (pt X)) (hX.unit-r a') ◃∙
+    hX.unit-l a' ◃∎
+      =ₛ⟨ 1 & 3 &
+          homotopy-naturality-to-idf (hX.μ (pt X))
+                                     hX.unit-l
+                                     (hX.unit-r a') ⟩
+    assoc (pt X) a' (pt X) ◃∙
+    hX.unit-l (hX.μ a' (pt X)) ◃∙
+    hX.unit-r a' ◃∎ ∎ₛ
 
   coh-assoc-pentagon-eq : (assoc : associator) → (a b c d : de⊙ X) → Type i
   coh-assoc-pentagon-eq assoc a b c d =

@@ -19,4 +19,4 @@ import cw.cohomology.AxiomaticIsoCellular
 
 {- cup product -}
 import cohomology.CupProduct.OnEM.Definition
--- import cohomology.CupProduct.OnEM.Definition -- not finished yet
+import cohomology.CupProduct.OnEM.Commutativity
