@@ -208,7 +208,7 @@ module _ where
           =⟨ !-! (app=-λ= (app= p)) ⟩
         app=-λ= (app= p) =∎
     app=-is-equiv : is-equiv app=
-    app=-is-equiv = -- is-eq _ λ= app=-λ= λ=-app=
+    app=-is-equiv =
       record
       { g = λ=
       ; f-g = app=-λ=

@@ -216,7 +216,7 @@ module EM₁Rec' {j} {C : Type j}
              ↓-cst-in-assoc {p₀ = emloop g₁} {p₁ = emloop g₂} {p₂ = emloop g₃}
                             (emloop* g₁) (emloop* g₂) (emloop* g₃) ⟩
         e₀₁*' ∙ᵈ e₁₂*' ∙ᵈ f₂ ◃ f₃ ◃ e₂₃**
-          =⟨ ! (ap (e₀₁*' ∙ᵈ_) (◃▹-assoc e₁₂*' f₂ (f₃ ◃ e₂₃**))) ⟩
+          =⟨ ! (ap (e₀₁*' ∙ᵈ_) (▹∙ᵈ-∙ᵈ◃-assoc e₁₂*' f₂ (f₃ ◃ e₂₃**))) ⟩
         e₀₁*' ∙ᵈ (e₁₂*' ▹ f₂) ∙ᵈ f₃ ◃ e₂₃**
           =⟨ ap (λ y → e₀₁*' ∙ᵈ y ∙ᵈ f₃ ◃ e₂₃**) $
              ↓-cst-in2-whisker-right {p' = emloop g₃} {q' = emloop* g₃}
@@ -225,9 +225,9 @@ module EM₁Rec' {j} {C : Type j}
         e₀₁*' ∙ᵈ (f₀ ◃ f₁) ∙ᵈ f₃ ◃ e₂₃**
           =⟨ ap (e₀₁*' ∙ᵈ_) (∙ᵈ-assoc f₀ f₁ (f₃ ◃ e₂₃**)) ⟩
         e₀₁*' ∙ᵈ f₀ ◃ f₁ ∙ᵈ f₃ ◃ e₂₃**
-          =⟨ ! (◃▹-assoc e₀₁*' f₀ (f₁ ∙ᵈ f₃ ◃ e₂₃**)) ⟩
+          =⟨ ! (▹∙ᵈ-∙ᵈ◃-assoc e₀₁*' f₀ (f₁ ∙ᵈ f₃ ◃ e₂₃**)) ⟩
         e₀₁** ∙ᵈ f₁ ∙ᵈ f₃ ◃ e₂₃**
-          =⟨ ! (ap (e₀₁** ∙ᵈ_) (◃▹-assoc f₁ f₃ e₂₃**)) ⟩
+          =⟨ ! (ap (e₀₁** ∙ᵈ_) (▹∙ᵈ-∙ᵈ◃-assoc f₁ f₃ e₂₃**)) ⟩
         e₀₁** ∙ᵈ (f₁ ▹ f₃) ∙ᵈ e₂₃**
           =⟨ ! (ap (λ y → e₀₁** ∙ᵈ y ∙ᵈ e₂₃**) (∙ᵈᵣ-∙'ᵈ f₁' f₃' (emloop** g₃))) ⟩
         φ** =∎
@@ -291,7 +291,7 @@ module EM₁Rec' {j} {C : Type j}
           =⟨ ! $ ap (λ y → e₀₄*' ∙ᵈ e₄₅*' ∙ᵈ f₀ ◃ y) $
              ∙ᵈₗ-∙'ᵈ f₁' s₃-path₂' (emloop** g₁) ⟩
         e₀₄*' ∙ᵈ e₄₅*' ∙ᵈ f₀ ◃ e₅₃**
-          =⟨ ! (ap (e₀₄*' ∙ᵈ_) (◃▹-assoc e₄₅*' f₀ e₅₃**)) ⟩
+          =⟨ ! (ap (e₀₄*' ∙ᵈ_) (▹∙ᵈ-∙ᵈ◃-assoc e₄₅*' f₀ e₅₃**)) ⟩
         e₀₄*' ∙ᵈ e₄₅** ∙ᵈ e₅₃**
           =⟨ ap (_∙ᵈ e₄₅** ∙ᵈ e₅₃**) $
              ↓-cst-in2-ap emloop emloop* (G.assoc g₁ g₂ g₃) ⟩

@@ -19,8 +19,8 @@ module _ {i} (A : Type i) where
     ; Arr-level = λ _ _ → ⟨⟩
     ; two-semi-cat-struct = record
       { comp = _∙_
-      ; assoc = λ a b c → ∙-assoc a b c
-      ; pentagon-identity = λ p q r s → =ₛ-in (∙-assoc-pentagon p q r s)
+      ; assoc = ∙-assoc
+      ; pentagon-identity = ∙-assoc-pentagon
       }
     }
 
@@ -31,9 +31,9 @@ module _ {i} (A : Type i) where
     ; Arr = _=ₜ_
     ; Arr-level = =ₜ-level
     ; two-semi-cat-struct = record
-      { comp = λ {ta} p q → _∙ₜ_ {ta = ta} p q
-      ; assoc = λ {ta} p q r → ∙ₜ-assoc {ta = ta} p q r
-      ; pentagon-identity = λ {ta} p q r s → =ₛ-in (∙ₜ-assoc-pentagon {ta = ta} p q r s)
+      { comp = λ {ta} → _∙ₜ_ {ta = ta}
+      ; assoc = λ {ta} → ∙ₜ-assoc {ta = ta}
+      ; pentagon-identity = λ {ta} → ∙ₜ-assoc-pentagon {ta = ta}
       }
     }
 
@@ -45,11 +45,11 @@ module _ {i} (A : Type i) where
   2-type-to-=ₜ-fundamental-cat =
     record
     { F₀ = idf (Trunc 2 A)
-    ; F₁ = λ {ta} {tb} f → –> (=ₜ-equiv ta tb) f
+    ; F₁ = λ {ta} {tb} → –> (=ₜ-equiv ta tb)
     ; pres-comp = –>-=ₜ-equiv-pres-∙
       -- TODO: The following line takes a really long time to check.
       -- Can we optimize this somehow?
-    ; pres-comp-coh = λ {ta} p q r → –>-=ₜ-equiv-pres-∙-coh {ta = ta} p q r
+    ; pres-comp-coh = λ {ta} → –>-=ₜ-equiv-pres-∙-coh {ta = ta}
     }
 
   private
@@ -65,7 +65,7 @@ module _ {i} (A : Type i) where
   =ₜ-to-2-type-fundamental-cat =
     record
     { F₀ = idf (Trunc 2 A)
-    ; F₁ = λ {ta} {tb} f → <– (=ₜ-equiv ta tb) f
+    ; F₁ = λ {ta} {tb} → <– (=ₜ-equiv ta tb)
     ; pres-comp = InvFunctor.pres-comp
     ; pres-comp-coh = InvFunctor.pres-comp-coh
     }

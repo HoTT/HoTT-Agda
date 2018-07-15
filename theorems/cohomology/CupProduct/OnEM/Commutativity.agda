@@ -544,25 +544,25 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
                             (! (homotopy-naturality-cst-to-cst {A = EM₁ R₊} {B = EM 2} [ north ]₂ (emloop' R₊ h))) ⟩
           ap-comm (λ x y → cp₁₁ x y) (emloop g) (emloop h) ◃∙
           ap (_∙ ap (λ x → cp₁₁ x embase) (emloop g))
-              (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ (λ y → idp) (emloop' R₊ h)) ◃∙
+             (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ (λ y → idp) (emloop' R₊ h)) ◃∙
           ap (idp ∙_) (ap-cp₁₁-embase g) ◃∎
             =ₛ⟨ 0 & 2 & post-rotate-out {r = _ ◃∙ _ ◃∙ _ ◃∎} $
                         ap-comm-cst-coh cp₁₁ (emloop g) (emloop h) [ north ]₂ (λ y → idp) ⟩
           ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_)
               (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
           ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_)
-              (app= (transp-naturality {B = λ x → ∀ y → cp₁₁ x y == [ north ]₂} {C = λ x → cp₁₁ x embase == cp₁₁ x embase}
+             (app= (transp-naturality {B = λ x → ∀ y → cp₁₁ x y == [ north ]₂} {C = λ x → cp₁₁ x embase == cp₁₁ x embase}
                                       (λ h → h embase ∙ ! (h embase)) (emloop g))
-                    (λ y → idp)) ◃∙
+                   (λ y → idp)) ◃∙
           ! (ap-transp (λ x → cp₁₁ x embase) (λ x → cp₁₁ x embase) (emloop g) idp) ◃∙
           ap (idp ∙_) (ap-cp₁₁-embase g) ◃∎
             =ₛ⟨ 1 & 1 & ap-seq-=ₛ (ap (λ x → cp₁₁ x embase) (emloop g) ∙_)
                                   (transp-nat-idp cp₁₁ (emloop g) embase [ north ]₂ (λ y → idp)) ⟩
           ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_)
-              (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
+             (homotopy-naturality-to-cst (λ y → [ north ]₂) [ north ]₂ h₁ (emloop h)) ◃∙
           ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
           ap (ap (λ x → cp₁₁ x embase) (emloop g) ∙_)
-              (! (transp-idp (λ a → cp₁₁ a embase) (emloop g))) ◃∙
+             (! (transp-idp (λ a → cp₁₁ a embase) (emloop g))) ◃∙
           idp ◃∙
           ! (ap-transp (λ x → cp₁₁ x embase) (λ x → cp₁₁ x embase) (emloop g) idp) ◃∙
           ap (idp ∙_) (ap-cp₁₁-embase g) ◃∎

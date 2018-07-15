@@ -296,23 +296,29 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
   abstract
     ∙ₜ-assoc-pentagon : {ta tb tc td te : Trunc (S n) A}
       (tp : ta =ₜ tb) (tq : tb =ₜ tc) (tr : tc =ₜ td) (ts : td =ₜ te)
-      → ∙ₜ-assoc {ta} (_∙ₜ_ {ta} tp tq) tr ts ∙ ∙ₜ-assoc {ta} tp tq (_∙ₜ_ {tc} tr ts)
-        == ap (λ u → _∙ₜ_ {ta} u ts) (∙ₜ-assoc {ta} tp tq tr) ∙
-            ∙ₜ-assoc {ta} tp (_∙ₜ_ {tb} tq tr) ts ∙ ap (_∙ₜ_ {ta} tp) (∙ₜ-assoc {tb} tq tr ts)
+      → ∙ₜ-assoc {ta} (_∙ₜ_ {ta} tp tq) tr ts ◃∙
+        ∙ₜ-assoc {ta} tp tq (_∙ₜ_ {tc} tr ts) ◃∎
+        =ₛ
+        ap (λ u → _∙ₜ_ {ta} u ts) (∙ₜ-assoc {ta} tp tq tr) ◃∙
+        ∙ₜ-assoc {ta} tp (_∙ₜ_ {tb} tq tr) ts ◃∙
+        ap (_∙ₜ_ {ta} tp) (∙ₜ-assoc {tb} tq tr ts) ◃∎
     ∙ₜ-assoc-pentagon {ta} {tb} {tc} {td} {te} = core ta tb tc td te
       where
       P : (ta tb tc td te : Trunc (S n) A)
         (tp : ta =ₜ tb) (tq : tb =ₜ tc) (tr : tc =ₜ td) (ts : td =ₜ te)
         → Type i
       P ta tb tc td te tp tq tr ts =
-        ∙ₜ-assoc {ta} (_∙ₜ_ {ta} tp tq) tr ts ∙ ∙ₜ-assoc {ta} tp tq (_∙ₜ_ {tc} tr ts)
-        == ap (λ u → _∙ₜ_ {ta} u ts) (∙ₜ-assoc {ta} tp tq tr) ∙
-            ∙ₜ-assoc {ta} tp (_∙ₜ_ {tb} tq tr) ts ∙ ap (_∙ₜ_ {ta} tp) (∙ₜ-assoc {tb} tq tr ts)
+        ∙ₜ-assoc {ta} (_∙ₜ_ {ta} tp tq) tr ts ◃∙
+        ∙ₜ-assoc {ta} tp tq (_∙ₜ_ {tc} tr ts) ◃∎
+        =ₛ
+        ap (λ u → _∙ₜ_ {ta} u ts) (∙ₜ-assoc {ta} tp tq tr) ◃∙
+        ∙ₜ-assoc {ta} tp (_∙ₜ_ {tb} tq tr) ts ◃∙
+        ap (_∙ₜ_ {ta} tp) (∙ₜ-assoc {tb} tq tr ts) ◃∎
       P-level : ∀ ta tb tc td te →
         (tp : ta =ₜ tb) (tq : tb =ₜ tc) (tr : tc =ₜ td) (ts : td =ₜ te)
         → has-level n (P ta tb tc td te tp tq tr ts)
       P-level ta tb tc td te tp tq tr ts =
-        =-preserves-level $ =-preserves-level $ =ₜ-level ta te
+        =ₛ-level $ raise-level _ $ raise-level _ $ =ₜ-level ta te
       Q : (ta tb tc td te : Trunc (S n) A) → Type i
       Q ta tb tc td te = ∀ tp tq tr ts → P ta tb tc td te tp tq tr ts
       Q-level : ∀ ta tb tc td te → has-level (S n) (Q ta tb tc td te)
@@ -324,7 +330,7 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
         Π-level $ λ ts →
         P-level ta tb tc td te tp tq tr ts
       core' : ∀ {a} {b} {c} {d} {e} p q r s → P [ a ] [ b ] [ c ] [ d ] [ e ] [ p ] [ q ] [ r ] [ s ]
-      core' idp idp r s = idp
+      core' idp idp r s = =ₛ-in idp
       core : ∀ ta tb tc td te → Q ta tb tc td te
       core ta tb tc td te =
         Trunc-elim {P = λ ta → Q ta tb tc td te} {{λ ta → Q-level ta tb tc td te}} (λ a →
