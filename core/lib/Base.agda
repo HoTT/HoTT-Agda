@@ -296,7 +296,7 @@ _=⟨_⟩ is not definitionally the same thing as concatenation of paths _∙_ b
 we haven’t defined concatenation of paths yet, and also you probably shouldn’t
 reason on paths constructed with equational reasoning.
 If you do want to reason on paths constructed with equational reasoning, check
-out lib.PathSeq instead.
+out PathSeq (below) instead.
 -}
 
 infixr 10 _=⟨_⟩_
@@ -313,7 +313,63 @@ syntax ap f p = p |in-ctx f
 
 {- Path sequences
 
-These are useful when constructing paths between paths.
+Path sequences reify concatenations of paths and thereby enable
+manipulations of such sequences. They provide an alternative to
+equational reasoning with _=⟨_⟩_:
+
+When you write the following (with the usual equational reasoning combinators):
+
+  t : a == e
+  t = a =⟨ p ⟩
+      b =⟨ q ⟩
+      c =⟨ r ⟩
+      d =⟨ s ⟩
+      e ∎
+
+it just creates the concatenation of [p], [q], [r] and [s] and there is no way
+to say “remove the last step to get the path from [a] to [d]”.
+With path sequences you would write:
+
+  t : PathSeq a e
+  t = a =⟪ p ⟫
+      b =⟪ q ⟫
+      c =⟪ r ⟫
+      d =⟪ s ⟫
+      e ∎∎
+
+Then the actual path from [a] to [e] is [↯ t], and you can strip any number
+of steps from the beginning or the end:
+
+  ↯ t !2
+
+(The function [_!2] is defined in `lib.PathSeq`.)
+
+There is also support for reasoning about path sequences.
+For example, you may want to construct a path between the path [p ∙ q ∙ r ∙ s]
+constructed above and [p ∙ r' ∙ q' ∙ s] by using a path [u : q ∙ r == r' ∙ q'].
+Without path sequences, you would do this like this:
+
+  ex : p ∙ q ∙ r ∙ s == p ∙ r' ∙ q' ∙ s
+  ex =
+    p ∙ q ∙ r ∙ s
+      =⟨ ap (p ∙_) (! (∙-assoc q r s))
+    p ∙ (q ∙ r) ∙ s
+      =⟨ ap (λ v → p ∙ v ∙ s) u ⟩
+    p ∙ (r' ∙ q') ∙ s
+      =⟨ ap (p ∙_) (∙-assoc r' q' s) ⟩
+    p ∙ r' ∙ q' ∙ s =∎
+
+With path sequences this can be simplified as follows
+(given [u : q ◃∙ r ◃∎ =ₛ r' ◃∙ q' ◃∎]):
+
+  ex' : p ◃∙ q ◃∙ r ◃∙ s ◃∎ =ₛ p ◃∙ r' ◃∙ q' ◃∙ s ◃∎
+  ex' =
+    p ◃∙ q ◃∙ r ◃∙ s ◃∎
+      =ₛ⟨ 1 & 2 & u ⟩
+    p ◃∙ r' ◃∙ q' ◃∙ s ◃∎ ∎ₛ
+
+In this example, 1 is the position where to start rewriting (that is, between [p] and [q])
+and 2 is the number of subpaths to replace (namely, [q] and [r]).
 -}
 
 module _ {i} {A : Type i} where
@@ -328,6 +384,19 @@ module _ {i} {A : Type i} where
   infix 90 _◃∎
   _◃∎ : {a a' : A} → a == a' → a =-= a'
   _◃∎ {a} {a'} p = p ◃∙ []
+
+  infix 15 _∎∎
+  infixr 10 _=⟪_⟫_
+  infixr 10 _=⟪idp⟫_
+
+  _∎∎ : (a : A) → a =-= a
+  _∎∎ _ = []
+
+  _=⟪_⟫_ : (a : A) {a' a'' : A} (p : a == a') (s : a' =-= a'') → a =-= a''
+  _=⟪_⟫_ _ p s = p ◃∙ s
+
+  _=⟪idp⟫_ : (a : A) {a' : A} (s : a =-= a') → a =-= a'
+  a =⟪idp⟫ s = s
 
   ↯ : {a a' : A} (s : a =-= a') → a == a'
   ↯ [] = idp

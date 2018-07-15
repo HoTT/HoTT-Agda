@@ -884,7 +884,7 @@ module cohomology.CupProduct.OnEM.Commutativity {i} (R : CRing i) where
              vert-degen-square-⊡h (comm-embase-emloop' h) (comm-emloop-embase' g) ⟩
         ap-comm (λ x y → cp₁₁ x y) (emloop g) (emloop h) ∙v⊡
         vert-degen-square (ap2 _∙_ (comm-embase-emloop' h) (comm-emloop-embase' g))
-          =⟨ vert-degen-square-∙v⊡ (ap-comm (λ x y → cp₁₁ x y) (emloop g) (emloop h)) _  ⟩
+          =⟨ vert-degen-square-∙v⊡ (ap-comm (λ x y → cp₁₁ x y) (emloop g) (emloop h)) _ ⟩
         vert-degen-square
           (ap-comm (λ x y → cp₁₁ x y) (emloop g) (emloop h) ∙
            ap2 _∙_ (comm-embase-emloop' h) (comm-emloop-embase' g))

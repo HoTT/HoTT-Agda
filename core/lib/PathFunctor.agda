@@ -240,6 +240,33 @@ module _ {i j} {A : Type i} {B : Type j} where
     → ap2 f p p == ap (λ x → f x x) p
   ap2-diag f idp = idp
 
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B) where
+
+  module _ {a a' a'' : A} (p : a == a') (p' : a' == a'') where
+    ap-∘-∙-coh-seq₁ :
+      ap (g ∘ f) (p ∙ p') =-= ap g (ap f p) ∙ ap g (ap f p')
+    ap-∘-∙-coh-seq₁ =
+      ap (g ∘ f) (p ∙ p')
+        =⟪ ap-∙ (g ∘ f) p p' ⟫
+      ap (g ∘ f) p ∙ ap (g ∘ f) p'
+        =⟪ ap2 _∙_ (ap-∘ g f p) (ap-∘ g f p') ⟫
+      ap g (ap f p) ∙ ap g (ap f p') ∎∎
+
+    ap-∘-∙-coh-seq₂ :
+      ap (g ∘ f) (p ∙ p') =-= ap g (ap f p) ∙ ap g (ap f p')
+    ap-∘-∙-coh-seq₂ =
+      ap (g ∘ f) (p ∙ p')
+        =⟪ ap-∘ g f (p ∙ p') ⟫
+      ap g (ap f (p ∙ p'))
+        =⟪ ap (ap g) (ap-∙ f p p') ⟫
+      ap g (ap f p ∙ ap f p')
+        =⟪ ap-∙ g (ap f p) (ap f p') ⟫
+      ap g (ap f p) ∙ ap g (ap f p') ∎∎
+
+  ap-∘-∙-coh :  {a a' a'' : A} (p : a == a') (p' : a' == a'')
+    → ap-∘-∙-coh-seq₁ p p' =ₛ ap-∘-∙-coh-seq₂ p p'
+  ap-∘-∙-coh idp idp = =ₛ-in idp
+
 module _ {i j} {A : Type i} {B : Type j} (b : B) where
 
   ap-cst : {x y : A} (p : x == y)
@@ -341,6 +368,54 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) wher
       ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p
   ap-comm' p idp = idp
 
+  ap-comm-cst-seq : {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
+    (c : C) (h₀ : ∀ b → f a₀ b == c)
+    → ap (λ a → f a b₀) p ∙ ap (λ b → f a₁ b) q =-=
+      ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p
+  ap-comm-cst-seq {a₀} {a₁} p {b₀} {b₁} q c h₀ =
+    ap (λ a → f a b₀) p ∙ ap (λ b → f a₁ b) q
+      =⟪ ap (ap (λ a → f a b₀) p ∙_) $
+        homotopy-naturality-to-cst (λ b → f a₁ b) c h₁ q ⟫
+    ap (λ a → f a b₀) p ∙ h₁ b₀ ∙ ! (h₁ b₁)
+      =⟪ ap (ap (λ a → f a b₀) p ∙_) $ ap (λ k → k h₀) $
+        transp-naturality {B = λ a → ∀ b → f a b == c} (λ h → h b₀ ∙ ! (h b₁)) p ⟫
+    ap (λ a → f a b₀) p ∙ transport (λ a → f a b₀ == f a b₁) p (h₀ b₀ ∙ ! (h₀ b₁))
+      =⟪ ! (ap-transp (λ a → f a b₀) (λ a → f a b₁) p (h₀ b₀ ∙ ! (h₀ b₁))) ⟫
+    (h₀ b₀ ∙ ! (h₀ b₁)) ∙ ap (λ a → f a b₁) p
+      =⟪ ! (ap (_∙ ap (λ a → f a b₁) p) $
+              (homotopy-naturality-to-cst (λ b → f a₀ b) c h₀ q)) ⟫
+    ap (λ z → f a₀ z) q ∙ ap (λ a → f a b₁) p ∎∎
+    where
+      h₁ : ∀ b → f a₁ b == c
+      h₁ = transport (λ a → ∀ b → f a b == c) p h₀
+
+  ap-comm-cst-coh : {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
+    (c : C) (h₀ : ∀ b → f a₀ b == c)
+    → ap-comm p q ◃∎ =ₛ
+      ap-comm-cst-seq p q c h₀
+  ap-comm-cst-coh p@idp {b₀} q@idp c h₀ = =ₛ-in $ ! $
+    ap (idp ∙_) (! (!-inv-r (h₀ b₀))) ∙
+    ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ∙
+    ! (ap (_∙ idp) (! (!-inv-r (h₀ b₀))))
+      =⟨ ap (_∙ ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ∙ ! (ap (_∙ idp) (! (!-inv-r (h₀ b₀)))))
+            (ap-idf (! (!-inv-r (h₀ b₀)))) ⟩
+    ! (!-inv-r (h₀ b₀)) ∙
+    ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ∙
+    ! (ap (_∙ idp) (! (!-inv-r (h₀ b₀))))
+      =⟨ ap (λ v → ! (!-inv-r (h₀ b₀)) ∙ ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ∙ v)
+            (!-ap (_∙ idp) (! (!-inv-r (h₀ b₀)))) ⟩
+    ! (!-inv-r (h₀ b₀)) ∙
+    ! (∙-unit-r (h₀ b₀ ∙ ! (h₀ b₀))) ∙
+    ap (_∙ idp) (! (! (!-inv-r (h₀ b₀))))
+      =⟨ ap (! (!-inv-r (h₀ b₀)) ∙_) $ ! $ =ₛ-out $
+         homotopy-naturality-from-idf (_∙ idp)
+                                      (λ p → ! (∙-unit-r p))
+                                      (! (! (!-inv-r (h₀ b₀)))) ⟩
+    ! (!-inv-r (h₀ b₀)) ∙ ! (! (!-inv-r (h₀ b₀))) ∙ idp
+      =⟨ ap (! (!-inv-r (h₀ b₀)) ∙_) (∙-unit-r (! (! (!-inv-r (h₀ b₀))))) ⟩
+    ! (!-inv-r (h₀ b₀)) ∙ ! (! (!-inv-r (h₀ b₀)))
+      =⟨ !-inv-r (! (!-inv-r (h₀ b₀))) ⟩
+    idp =∎
 
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} where
 
