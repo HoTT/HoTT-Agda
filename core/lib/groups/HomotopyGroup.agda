@@ -73,15 +73,15 @@ module _ {i} where
     Ω^S-Trunc-preiso : (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
       → Ω^STruncPreIso n m (⟨ S n ⟩₋₂ +2+ m) X
     Ω^S-Trunc-preiso O m X =
-      record { F = (–> (Trunc=-equiv [ pt X ] [ pt X ]) , idp);
-               pres-comp = Trunc=-∙-comm;
-               e = snd (Trunc=-equiv [ pt X ] [ pt X ]) }
+      record { F = (–> (=ₜ-equiv [ pt X ] [ pt X ]) , idp);
+               pres-comp = –>-=ₜ-equiv-pres-∙;
+               e = snd (=ₜ-equiv [ pt X ] [ pt X ]) }
     Ω^S-Trunc-preiso (S n) m X =
       let
         r : Ω^STruncPreIso n (S m) (⟨ S n ⟩₋₂ +2+ S m) X
         r = Ω^S-Trunc-preiso n (S m) X
 
-        H = (–> (Trunc=-equiv [ idp^ (S n) ] [ idp^ (S n) ]) , idp)
+        H = (–> (=ₜ-equiv [ idp^ (S n) ] [ idp^ (S n) ]) , idp)
         G = ⊙Ω-fmap (Ω^STruncPreIso.F r)
       in
       transport (λ k → Ω^STruncPreIso (S n) m k X)
@@ -90,8 +90,8 @@ module _ {i} where
            F = H ⊙∘ G;
            pres-comp = λ p q →
              ap (fst H) (Ω^S-fmap-∙ 0 (Ω^STruncPreIso.F r) p q)
-             ∙ (Trunc=-∙-comm (fst G p) (fst G q));
-           e = snd (Trunc=-equiv [ idp^ (S n) ] [ idp^ (S n) ]
+             ∙ (–>-=ₜ-equiv-pres-∙ (fst G p) (fst G q));
+           e = snd (=ₜ-equiv [ idp^ (S n) ] [ idp^ (S n) ]
                     ∘e Ω^-emap 1 (Ω^STruncPreIso.F r , Ω^STruncPreIso.e r))})
 
   Ω^S-group-Trunc-fuse-diag-iso : (n : ℕ) (X : Ptd i)
@@ -107,10 +107,10 @@ module _ {i} where
   Ω^'S-group-Trunc-fuse-diag-iso : (n : ℕ) (X : Ptd i)
     → Ω^'S-group n (⊙Trunc ⟨ S n ⟩ X) ≃ᴳ π'S n X
   Ω^'S-group-Trunc-fuse-diag-iso O X =
-    ≃-to-≃ᴳ (Trunc=-equiv [ pt X ] [ pt X ]) Trunc=-∙-comm
+    ≃-to-≃ᴳ (=ₜ-equiv [ pt X ] [ pt X ]) –>-=ₜ-equiv-pres-∙
   Ω^'S-group-Trunc-fuse-diag-iso (S n) X =
         Ω^'S-group-Trunc-fuse-diag-iso n (⊙Ω X)
-    ∘eᴳ Ω^'S-group-emap n {X = ⊙Ω (⊙Trunc ⟨ S (S n) ⟩ X)} (≃-to-⊙≃ (Trunc=-equiv [ pt X ] [ pt X ]) idp)
+    ∘eᴳ Ω^'S-group-emap n {X = ⊙Ω (⊙Trunc ⟨ S (S n) ⟩ X)} (≃-to-⊙≃ (=ₜ-equiv [ pt X ] [ pt X ]) idp)
 
 abstract
   πS-Trunc-fuse-≤-iso : ∀ {i} (n : ℕ) (m : ℕ₋₂) (X : Ptd i)

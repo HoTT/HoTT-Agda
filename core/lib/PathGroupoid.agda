@@ -13,11 +13,7 @@ module _ {i} {A : Type i} where
   sometimes useful to have both (in particular in lib.types.Paths).
   -}
 
-  infixr 80 _∙_ _∙'_
-
-  _∙_ : {x y z : A}
-    → (x == y → y == z → x == z)
-  idp ∙ q = q
+  infixr 80 _∙'_
 
   _∙'_ : {x y z : A}
     → (x == y → y == z → x == z)
@@ -38,6 +34,18 @@ module _ {i} {A : Type i} where
   ∙'-assoc : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
     → (p ∙' q) ∙' r == p ∙' (q ∙' r)
   ∙'-assoc _ _ idp = idp
+
+  ∙∙'-assoc : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
+    → (p ∙ q) ∙' r == p ∙ (q ∙' r)
+  ∙∙'-assoc idp _ _ = idp
+
+  ∙∙'-assoc' : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
+    → (p ∙ q) ∙' r == p ∙ (q ∙' r)
+  ∙∙'-assoc' _ _ idp = idp
+
+  ∙'∙-∙∙-assoc : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
+    → (p ∙' q) ∙ r == p ∙ (q ∙ r)
+  ∙'∙-∙∙-assoc p idp r = idp
 
   -- [∙-unit-l] and [∙'-unit-r] are definitional
 
@@ -105,6 +113,25 @@ module _ {i} {A : Type i} where
     → (idp {a = p}) ∙'2 (idp {a = q}) == idp
   idp∙'2idp idp idp = idp
 
+{- Coherence -}
+
+module _ {i} {A : Type i} where
+
+  ∙-assoc-pentagon : {v w x y z : A} (p : v == w) (q : w == x) (r : x == y) (s : y == z)
+    → ∙-assoc (p ∙ q) r s ◃∙
+      ∙-assoc p q (r ∙ s) ◃∎
+      =ₛ
+      ap (λ u → u ∙ s) (∙-assoc p q r) ◃∙
+      ∙-assoc p (q ∙ r) s ◃∙
+      ap (λ u → p ∙ u) (∙-assoc q r s) ◃∎
+  ∙-assoc-pentagon idp idp r s = =ₛ-in idp
+
+module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
+
+  ap-∙' : {x y z : A} (p : x == y) (q : y == z)
+    → ap f (p ∙' q) == ap f p ∙' ap f q
+  ap-∙' p idp = idp
+
 {-
 Sometimes we need to restart a new section in order to have everything in the
 previous one generalized.
@@ -148,7 +175,6 @@ module _ {i} {A : Type i} where
   anti-whisker-left : {x y z : A} (p : x == y) {q r : y == z}
     → (p ∙ q == p ∙ r → q == r)
   anti-whisker-left idp h = h
-
 
 {- Dependent stuff -}
 module _ {i j} {A : Type i} {B : A → Type j} where
@@ -195,15 +221,84 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → idp ◃ r == r
   idp◃ {p = idp} r = idp
 
+  ∙ᵈ-assoc : {a₀ a₁ a₂ a₃ : A} {e₀₁ : a₀ == a₁} {e₁₂ : a₁ == a₂} {e₂₃ : a₂ == a₃}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂} {b₃ : B a₃}
+    (f₀₁ : b₀ == b₁ [ B ↓ e₀₁ ]) (f₁₂ : b₁ == b₂ [ B ↓ e₁₂ ]) (f₂₃ : b₂ == b₃ [ B ↓ e₂₃ ])
+    → (f₀₁ ∙ᵈ f₁₂) ∙ᵈ f₂₃ == f₀₁ ∙ᵈ (f₁₂ ∙ᵈ f₂₃) [ (λ e → b₀ == b₃ [ B ↓ e ]) ↓ ∙-assoc e₀₁ e₁₂ e₂₃ ]
+  ∙ᵈ-assoc {e₀₁ = idp} {e₁₂ = idp} {e₂₃ = idp} f₀₁ f₁₂ f₂₃ = ∙-assoc f₀₁ f₁₂ f₂₃
+
+  infixr 80 _∙ᵈᵣ_
+  infixl 80 _∙ᵈₗ_
+
+  {- Dependent whiskering -}
+  _∙ᵈᵣ_ : {a₀ a₁ a₂ : A}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂}
+    {e e' : a₀ == a₁} {f : a₁ == a₂}
+    {α : e == e'}
+    {p : b₀ == b₁ [ B ↓ e ]} {p' : b₀ == b₁ [ B ↓ e' ]}
+    (β : p == p' [ (λ r → b₀ == b₁ [ B ↓ r ]) ↓ α ])
+    (q : b₁ == b₂ [ B ↓ f ])
+    → p ∙ᵈ q == p' ∙ᵈ q [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ ap (_∙ f) α ]
+  _∙ᵈᵣ_ {α = idp} idp q = idp
+
+  _∙ᵈₗ_ : {a₀ a₁ a₂ : A}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂}
+    {e : a₀ == a₁} {f : a₁ == a₂} {f' : a₁ == a₂}
+    {α : f == f'}
+    {q : b₁ == b₂ [ B ↓ f ]} {q' : b₁ == b₂ [ B ↓ f' ]}
+    (p : b₀ == b₁ [ B ↓ e ])
+    (β : q == q' [ (λ r → b₁ == b₂ [ B ↓ r ]) ↓ α ])
+    → p ∙ᵈ q == p ∙ᵈ q' [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ ap (e ∙_) α ]
+  _∙ᵈₗ_ {α = idp} q idp = idp
 
   _∙'ᵈ_ : {x y z : A} {p : x == y} {p' : y == z}
     {u : B x} {v : B y} {w : B z}
-    → (u == v [ B ↓ p ]
+    → u == v [ B ↓ p ]
     → v == w [ B ↓ p' ]
-    → u == w [ B ↓ (p ∙' p') ])
+    → u == w [ B ↓ p ∙' p' ]
   _∙'ᵈ_ {p = idp} {p' = idp} q r = q ∙' r
 
   _▹_ = _∙'ᵈ_
+
+  ∙'ᵈ-assoc : {a₀ a₁ a₂ a₃ : A}
+    {e₀₁ : a₀ == a₁} {e₁₂ : a₁ == a₂} {e₂₃ : a₂ == a₃}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂} {b₃ : B a₃}
+    (f₀₁ : b₀ == b₁ [ B ↓ e₀₁ ])
+    (f₁₂ : b₁ == b₂ [ B ↓ e₁₂ ])
+    (f₂₃ : b₂ == b₃ [ B ↓ e₂₃ ])
+    → (f₀₁ ∙'ᵈ f₁₂) ∙'ᵈ f₂₃ == f₀₁ ∙'ᵈ (f₁₂ ∙'ᵈ f₂₃)
+        [ (λ e → b₀ == b₃ [ B ↓ e ]) ↓ ∙'-assoc e₀₁ e₁₂ e₂₃ ]
+  ∙'ᵈ-assoc {e₀₁ = idp} {e₁₂ = idp} {e₂₃ = idp} = ∙'-assoc
+
+  ∙ᵈ-∙'ᵈ-assoc : {a₀ a₁ a₂ a₃ : A}
+    {e₀₁ : a₀ == a₁} {e₁₂ : a₁ == a₂} {e₂₃ : a₂ == a₃}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂} {b₃ : B a₃}
+    (f₀₁ : b₀ == b₁ [ B ↓ e₀₁ ])
+    (f₁₂ : b₁ == b₂ [ B ↓ e₁₂ ])
+    (f₂₃ : b₂ == b₃ [ B ↓ e₂₃ ])
+    → (f₀₁ ∙ᵈ f₁₂) ∙'ᵈ f₂₃ == f₀₁ ∙ᵈ (f₁₂ ∙'ᵈ f₂₃)
+        [ (λ e → b₀ == b₃ [ B ↓ e ]) ↓ ∙∙'-assoc e₀₁ e₁₂ e₂₃ ]
+  ∙ᵈ-∙'ᵈ-assoc {e₀₁ = idp} {e₁₂ = idp} {e₂₃ = idp} = ∙∙'-assoc
+
+  ∙ᵈ-∙'ᵈ-assoc' : {a₀ a₁ a₂ a₃ : A}
+    {e₀₁ : a₀ == a₁} {e₁₂ : a₁ == a₂} {e₂₃ : a₂ == a₃}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂} {b₃ : B a₃}
+    (f₀₁ : b₀ == b₁ [ B ↓ e₀₁ ])
+    (f₁₂ : b₁ == b₂ [ B ↓ e₁₂ ])
+    (f₂₃ : b₂ == b₃ [ B ↓ e₂₃ ])
+    → (f₀₁ ∙ᵈ f₁₂) ∙'ᵈ f₂₃ == f₀₁ ∙ᵈ (f₁₂ ∙'ᵈ f₂₃)
+        [ (λ e → b₀ == b₃ [ B ↓ e ]) ↓ ∙∙'-assoc' e₀₁ e₁₂ e₂₃ ]
+  ∙ᵈ-∙'ᵈ-assoc' {e₀₁ = idp} {e₁₂ = idp} {e₂₃ = idp} = ∙∙'-assoc'
+
+  _∙'ᵈᵣ_ : {a₀ a₁ a₂ : A}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂}
+    {e : a₀ == a₁} {e' : a₀ == a₁} {f : a₁ == a₂}
+    {α : e == e'}
+    {p : b₀ == b₁ [ B ↓ e ]} {p' : b₀ == b₁ [ B ↓ e' ]}
+    (β : p == p' [ (λ r → b₀ == b₁ [ B ↓ r ]) ↓ α ])
+    (q : b₁ == b₂ [ B ↓ f ])
+    → p ∙'ᵈ q == p' ∙'ᵈ q [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ ap (_∙' f) α ]
+  _∙'ᵈᵣ_ {α = idp} idp q = idp
 
   {- That’s not perfect, because [q] could be a dependent path. But in that case
      this is not well typed… -}
@@ -215,6 +310,12 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     {u : B x} {v : B y} (q : u == v [ B ↓ p ])
     → q ▹ idp == q
   ▹idp {p = idp} idp = idp
+
+  ▹∙ᵈ-∙ᵈ◃-assoc : {a₀ a₁ a₂ : A} {e₀₁ : a₀ == a₁} {e₁₂ : a₁ == a₂}
+    {b₀ : B a₀} {b₁ b₁' : B a₁} {b₂ : B a₂}
+    (f₀₁ : b₀ == b₁ [ B ↓ e₀₁ ]) (f' : b₁ == b₁') (f₁₂ : b₁' == b₂ [ B ↓ e₁₂ ])
+    → (f₀₁ ▹ f') ∙ᵈ f₁₂ == f₀₁ ∙ᵈ (f' ◃ f₁₂)
+  ▹∙ᵈ-∙ᵈ◃-assoc {e₀₁ = idp} {e₁₂ = idp} = ∙'∙-∙∙-assoc
 
   _▹!_ : {x y z : A} {p : x == y} {p' : z == y}
     {u : B x} {v : B y} {w : B z}
@@ -280,17 +381,46 @@ module _ {i j} {A : Type i} {B : A → Type j} where
 
 module _ {i j} {A : Type i} {B : A → Type j} where
 
+  {- right whiskering and vertical composition -}
+  ∙ᵈᵣ-∙'ᵈ : {a₀ a₁ a₂ : A}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂}
+    {e e' e'' : a₀ == a₁} {f : a₁ == a₂}
+    {α : e == e'}
+    {α' : e' == e''}
+    {p : b₀ == b₁ [ B ↓ e ]} {p' : b₀ == b₁ [ B ↓ e' ]} {p'' : b₀ == b₁ [ B ↓ e'' ]}
+    → (β : p == p' [ (λ r → b₀ == b₁ [ B ↓ r ]) ↓ α ])
+    → (β' : p' == p'' [ (λ r → b₀ == b₁ [ B ↓ r ]) ↓ α' ])
+    → (q : b₁ == b₂ [ B ↓ f ])
+    → (β ∙'ᵈ β') ∙ᵈᵣ q == (β ∙ᵈᵣ q) ∙'ᵈ (β' ∙ᵈᵣ q)
+        [ (λ y → (p ∙ᵈ q) == (p'' ∙ᵈ q) [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ y ]) ↓ ap-∙' (_∙ f) α α' ]
+  ∙ᵈᵣ-∙'ᵈ {α = idp} {α' = idp} β idp q = idp
+
+  {- left whiskering and vertical composition -}
+  ∙ᵈₗ-∙'ᵈ : {a₀ a₁ a₂ : A}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂}
+    {f : a₀ == a₁} {e e' e'' : a₁ == a₂}
+    {α : e == e'}
+    {α' : e' == e''}
+    {p : b₁ == b₂ [ B ↓ e ]} {p' : b₁ == b₂ [ B ↓ e' ]} {p'' : b₁ == b₂ [ B ↓ e'' ]}
+    → (β : p == p' [ (λ r → b₁ == b₂ [ B ↓ r ]) ↓ α ])
+    → (β' : p' == p'' [ (λ r → b₁ == b₂ [ B ↓ r ]) ↓ α' ])
+    → (q : b₀ == b₁ [ B ↓ f ])
+    → q ∙ᵈₗ (β ∙'ᵈ β') == (q ∙ᵈₗ β) ∙'ᵈ (q ∙ᵈₗ β')
+        [ (λ y → (q ∙ᵈ p) == (q ∙ᵈ p'') [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ y ]) ↓ ap-∙' (f ∙_) α α' ]
+  ∙ᵈₗ-∙'ᵈ {α = idp} {α' = idp} β idp q = idp
+
   {- Exchange -}
 
-  ▹-∙'2ᵈ : {x y z : Π A B}
-    {a a' a'' : A} {p : a == a'} {p' : a' == a''}
-    {q0 : x a == y a} {q0' : x a' == y a'}
-    {r0 : y a == z a} {r0' : y a' == z a'}
-    {q0'' : x a'' == y a''} {r0'' : y a'' == z a''}
-    (q : q0 == q0' [ (λ a → x a == y a) ↓ p ])
-    (r : r0 == r0' [ (λ a → y a == z a) ↓ p ])
-    (s : q0' == q0'' [ (λ a → x a == y a) ↓ p' ])
-    (t : r0' == r0'' [ (λ a → y a == z a) ↓ p' ])
-    → (q ∙'2ᵈ r) ▹ (s ∙'2ᵈ t) == (q ▹ s) ∙'2ᵈ (r ▹ t)
-  ▹-∙'2ᵈ {p = idp} {p' = idp} {q0} {.q0} {r0} {.r0} idp idp idp idp =
-    ap (λ u → (idp {a = q0} ∙'2 idp {a = r0}) ∙' u) (idp∙'2idp q0 r0)
+  abstract
+    ▹-∙'2ᵈ : {x y z : Π A B}
+      {a a' a'' : A} {p : a == a'} {p' : a' == a''}
+      {q0 : x a == y a} {q0' : x a' == y a'}
+      {r0 : y a == z a} {r0' : y a' == z a'}
+      {q0'' : x a'' == y a''} {r0'' : y a'' == z a''}
+      (q : q0 == q0' [ (λ a → x a == y a) ↓ p ])
+      (r : r0 == r0' [ (λ a → y a == z a) ↓ p ])
+      (s : q0' == q0'' [ (λ a → x a == y a) ↓ p' ])
+      (t : r0' == r0'' [ (λ a → y a == z a) ↓ p' ])
+      → (q ∙'2ᵈ r) ▹ (s ∙'2ᵈ t) == (q ▹ s) ∙'2ᵈ (r ▹ t)
+    ▹-∙'2ᵈ {p = idp} {p' = idp} {q0} {.q0} {r0} {.r0} idp idp idp idp =
+      ap (λ u → (idp {a = q0} ∙'2 idp {a = r0}) ∙' u) (idp∙'2idp q0 r0)

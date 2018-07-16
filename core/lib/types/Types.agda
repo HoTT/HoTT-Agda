@@ -12,6 +12,7 @@ open import lib.types.CommutingSquare public
 open import lib.types.Coproduct public
 open import lib.types.Cospan public
 open import lib.types.Cover public
+open import lib.types.CRing public
 open import lib.types.EilenbergMacLane1 public
 open import lib.types.Empty public
 open import lib.types.Fin public
@@ -28,7 +29,6 @@ open import lib.types.List public
 open import lib.types.LoopSpace public
 open import lib.types.Modality public
 open import lib.types.Nat public
-open import lib.types.PathSeq public
 open import lib.types.PathSet public
 open import lib.types.Paths public
 open import lib.types.Pi public
@@ -47,6 +47,7 @@ open import lib.types.Suspension public
 open import lib.types.TLevel public
 open import lib.types.Torus public
 open import lib.types.Truncation public
+open import lib.types.TwoSemiCategory public
 open import lib.types.Unit public
 open import lib.types.Wedge public
 open import lib.types.Word public

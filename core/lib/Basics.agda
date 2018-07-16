@@ -11,5 +11,6 @@ open import lib.NType public
 open import lib.PathFunctor public
 open import lib.PathGroupoid public
 open import lib.PathOver public
+open import lib.PathSeq public
 open import lib.Relation public
 open import lib.Univalence public

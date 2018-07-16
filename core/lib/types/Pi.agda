@@ -243,6 +243,35 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
     → u == u' [ (λ x → B x → C x) ↓ p ]
   ↓-→-from-transp {p = idp} q = q
 
+  comp-transp-seq : {x x' x'' : A}
+    {u : B x → C x} {u' : B x' → C x'} {u'' : B x'' → C x''}
+    (p : x == x') (q : x' == x'')
+    (r : transport C p ∘ u == u' ∘ transport B p)
+    (s : transport C q ∘ u' == u'' ∘ transport B q)
+    → ∀ b → transport C (p ∙ q) (u b) =-= u'' (transport B (p ∙ q) b)
+  comp-transp-seq {x} {x'} {x''} {u} {u'} {u''} p q r s b =
+    transp-∙ p q (u b) ◃∙
+    ap (transport C q) (app= r b) ◃∙
+    app= s (transport B p b) ◃∙
+    ! (ap u'' (transp-∙ p q b)) ◃∎
+
+  comp-transp : {x x' x'' : A}
+    {u : B x → C x} {u' : B x' → C x'} {u'' : B x'' → C x''}
+    (p : x == x') (q : x' == x'')
+    (r : transport C p ∘ u == u' ∘ transport B p)
+    (s : transport C q ∘ u' == u'' ∘ transport B q)
+    → transport C (p ∙ q) ∘ u ∼ u'' ∘ transport B (p ∙ q)
+  comp-transp {x} {x'} {x''} {u} {u'} {u''} p q r s b =
+    ↯ (comp-transp-seq {x} {x'} {x''} {u} {u'} {u''} p q r s b)
+
+  ↓-→-from-transp-∙ᵈ : {x x' x'' : A} {p : x == x'} {q : x' == x''}
+    {u : B x → C x} {u' : B x' → C x'} {u'' : B x'' → C x''}
+    (r : transport C p ∘ u == u' ∘ transport B p)
+    (s : transport C q ∘ u' == u'' ∘ transport B q)
+    → ↓-→-from-transp {x} {x''} {p ∙ q} {u} {u''} (λ= (comp-transp {x} {x'} {x''} {u} {u'} {u''} p q r s)) ==
+      ↓-→-from-transp {x} {x'} {p = p} r ∙ᵈ ↓-→-from-transp {x'} {x''} {q} s
+  ↓-→-from-transp-∙ᵈ {p = idp} {q = idp} idp idp = ! (λ=-η idp)
+
   ↓-→-to-transp : {x x' : A} {p : x == x'}
     {u : B x → C x} {u' : B x' → C x'}
     → u == u' [ (λ x → B x → C x) ↓ p ]
@@ -300,6 +329,12 @@ apd-∘'' : ∀ {i j k} {A : Type i} {B : Type j} {C : (b : B) → Type k}
   → apd (g ∘ f) p == ↓-ap-out= C f p r (apd g q) --(apd↓ g q)
 apd-∘'' g f idp idp = idp
 
+Π-transp : ∀ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k}
+  {a₀ a₁ : A} (p : a₀ == a₁)
+  (g : (b : B) → C a₀ b)
+  → transport (λ a → ∀ b → C a b) p g ==
+    λ b → transport (λ a → C a b) p (g b)
+Π-transp p@idp g = idp
 
 {- 2-dimensional coherence conditions -}
 
@@ -378,17 +413,3 @@ easy as it seems.
 --     (α : r == s ∙ ap g q [ (λ x → f x == g (g' c')) ↓ p ])
 --     → {!(↓-swap! f g r s α ▹ ?) ∙'2ᵈ ?!} == ↓-swap! f (g ∘ g') {p = p} {q = q'} r s (α ▹ ap (λ u → s ∙ u) (ap (ap g) t ∙ ∘-ap g g' q'))
 --   abc = {!!}
-
-{- Functoriality of application and function extensionality -}
-
-∙-app= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B}
-  (α : f == g) (β : g == h)
-  → α ∙ β == λ= (λ x → app= α x ∙ app= β x)
-∙-app= idp β = λ=-η β
-
-∙-λ= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B}
-  (α : f ∼ g) (β : g ∼ h)
-  → λ= α ∙ λ= β == λ= (λ x → α x ∙ β x)
-∙-λ= α β = ∙-app= (λ= α) (λ= β)
-  ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)
-                   ∙ ap (λ w → α x ∙ w) (app=-β β x)))

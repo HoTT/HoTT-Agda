@@ -39,7 +39,7 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
     abstract
       [base-path] : ∀ {a₂ : A} → Trunc -1 (a₁ == a₂)
       [base-path] {a₂} =
-        –> (Trunc=-equiv [ a₁ ] [ a₂ ]) (contr-has-all-paths [ a₁ ] [ a₂ ])
+        –> (=ₜ-equiv [ a₁ ] [ a₂ ]) (contr-has-all-paths [ a₁ ] [ a₂ ])
 
   -- Part 1: Show that the synthesized cover (ribbon) is fiberwisely
   --         equivalent to the original fiber.

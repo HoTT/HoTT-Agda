@@ -23,7 +23,8 @@ module homotopy.VanKampen {i j k l}
         h h-is-surj
         (λ d → from-transp (λ p → code p p) (glue (h d)) $
           transport (λ p → code p p) (glue (h d)) q[ ⟧a idp₀ ]
-            =⟨ ap (λ pPP → coe pPP q[ pc-a idp₀ ]) ((! (ap2-diag code (glue (h d)))) ∙ ap2-out code (glue (h d)) (glue (h d))) ⟩
+            =⟨ ap (λ pPP → coe pPP q[ pc-a idp₀ ])
+                  (! (ap2-diag code (glue (h d))) ∙ =ₛ-out (ap2-out code (glue (h d)) (glue (h d)))) ⟩
           coe (ap (λ p₀ → code p₀ (left (f (h d)))) (glue (h d)) ∙ ap (codeBP (g (h d))) (glue (h d))) q[ ⟧a idp₀ ]
             =⟨ coe-∙ (ap (λ p₀ → code p₀ (left (f (h d)))) (glue (h d))) (ap (codeBP (g (h d))) (glue (h d))) q[ pc-a idp₀ ] ⟩
           transport (codeBP (g (h d))) (glue (h d)) (transport (λ p₀ → code p₀ (left (f (h d)))) (glue (h d)) q[ ⟧a idp₀ ])

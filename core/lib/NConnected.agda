@@ -98,10 +98,10 @@ conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t = has-level-in
     Q : (g h : Π B (fst ∘ P)) → B → (k' +2+ n) -Type _
     Q g h b = ((g b == h b) , has-level-apply (snd (P b)) _ _)
 
-    app=-ap : ∀ {i j k} {A : Type i} {B : Type j} {C : B → Type k}
+    app=-pre∘ : ∀ {i j k} {A : Type i} {B : Type j} {C : B → Type k}
       (f : A → B) {g h : Π B C} (p : g == h)
-      → app= (ap (λ k → k ∘ f) p) == (app= p ∘ f)
-    app=-ap f idp = idp
+      → app= (ap (λ k → k ∘ f) p) == app= p ∘ f
+    app=-pre∘ f idp = idp
 
     move-right-on-right-econv : ∀ {i} {A : Type i} {x y z : A}
       (p : x == y) (q : x == z) (r : y == z)
@@ -116,7 +116,7 @@ conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t = has-level-in
       move-right-on-right-econv (ap (λ v → v ∘ f) (λ= H)) p q
       ∘e transport (λ w → (w == app= (p ∙ ! q))
                       ≃ (ap (λ v → v ∘ f) (λ= H) == p ∙ ! q))
-                   (app=-ap f (λ= H) ∙ ap (λ k → k ∘ f) (λ= $ app=-β H))
+                   (app=-pre∘ f (λ= H) ∙ ap (λ k → k ∘ f) (λ= $ app=-β H))
                    (ap-equiv app=-equiv _ _ ⁻¹)
 
     e : ∀ g h p q  →
@@ -163,18 +163,18 @@ abstract
 
       into : Trunc n (Σ ⊤ (λ _ → a₀ == a))
         → [_] {n = S n} a₀ == [ a ]
-      into = <– (Trunc=-equiv [ a₀ ] [ a ]) ∘ into-aux
+      into = <– (=ₜ-equiv [ a₀ ] [ a ]) ∘ into-aux
 
       out-aux : Trunc n (a₀ == a) → Trunc n (Σ ⊤ (λ _ → a₀ == a))
       out-aux = Trunc-fmap (λ p → (tt , p))
 
       out : [_] {n = S n} a₀ == [ a ] → Trunc n (Σ ⊤ (λ _ → a₀ == a))
-      out = out-aux ∘ –> (Trunc=-equiv [ a₀ ] [ a ])
+      out = out-aux ∘ –> (=ₜ-equiv [ a₀ ] [ a ])
 
       cancel : (x : Trunc n (Σ ⊤ (λ _ → a₀ == a))) → out (into x) == x
       cancel x =
         out (into x)
-          =⟨ ap out-aux (<–-inv-r (Trunc=-equiv [ a₀ ] [ a ]) (into-aux x)) ⟩
+          =⟨ ap out-aux (<–-inv-r (=ₜ-equiv [ a₀ ] [ a ]) (into-aux x)) ⟩
         out-aux (into-aux x)
           =⟨ Trunc-fmap-∘ _ _ x ⟩
         Trunc-fmap (λ q → (tt , (snd q))) x
@@ -204,9 +204,9 @@ instance
           (Trunc-elim
             {{λ _ → =-preserves-level
                       (Trunc-preserves-level (S n) Trunc-level)}}
-            (λ x → <– (Trunc=-equiv [ [ a ] ] [ [ x ] ])
+            (λ x → <– (=ₜ-equiv [ [ a ] ] [ [ x ] ])
                (Trunc-fmap (ap [_])
-                 (–> (Trunc=-equiv [ a ] [ x ]) (p [ x ])))))))
+                 (–> (=ₜ-equiv [ a ] [ x ]) (p [ x ])))))))
 
 {- Connectedness of a Σ-type -}
 abstract
@@ -229,9 +229,9 @@ abstract
                   Trunc-rec
                     (λ pa → Trunc-rec
                       (λ pb → ap [_] (pair= pa (from-transp! B pa pb)))
-                      (–> (Trunc=-equiv [ b₀ ] [ transport! B pa s ])
+                      (–> (=ₜ-equiv [ b₀ ] [ transport! B pa s ])
                           (pB [ transport! B pa s ])))
-                    (–> (Trunc=-equiv [ a₀ ] [ r ]) (pA [ r ]))})))
+                    (–> (=ₜ-equiv [ a₀ ] [ r ]) (pA [ r ]))})))
           (contr-center (cB a₀)) (contr-path (cB a₀)))
       (contr-center cA) (contr-path cA)
 
@@ -246,7 +246,7 @@ abstract
   path-conn : ∀ {i} {A : Type i} {x y : A} {n : ℕ₋₂}
     → is-connected (S n) A → is-connected n (x == y)
   path-conn {x = x} {y = y} cA =
-    equiv-preserves-level (Trunc=-equiv [ x ] [ y ])
+    equiv-preserves-level (=ₜ-equiv [ x ] [ y ])
       {{has-level-apply (contr-is-prop cA) [ x ] [ y ]}}
 
 {- an n-Type which is n-connected is contractible -}

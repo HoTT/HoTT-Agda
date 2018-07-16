@@ -455,7 +455,7 @@ module _ {i j} where
 module _ {i} {X : Ptd i} where
 
   Ω-fmap2-∙ : (α β : Ω^ 2 X) → ap2 _∙_ α β == Ω^S-∙ 1 α β
-  Ω-fmap2-∙ α β = ap2-out _∙_ α β ∙ ap2 _∙_ (lemma α) (ap-idf β)
+  Ω-fmap2-∙ α β = =ₛ-out (ap2-out _∙_ α β) ∙ ap2 _∙_ (lemma α) (ap-idf β)
     where
     lemma : ∀ {i} {A : Type i} {x y : A} {p q : x == y} (α : p == q)
       → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α ∙' ! (∙-unit-r q)
@@ -484,7 +484,7 @@ module _ {i} where
   Trunc-Ω^-conv m O X = idp
   Trunc-Ω^-conv m (S n) X =
     ⊙Trunc m (⊙Ω^ (S n) X)
-      =⟨ ! (pair= (Trunc=-path [ _ ] [ _ ]) (↓-idf-ua-in _ idp)) ⟩
+      =⟨ ! (pair= (=ₜ-path [ _ ] [ _ ]) (↓-idf-ua-in _ idp)) ⟩
     ⊙Ω (⊙Trunc (S m) (⊙Ω^ n X))
       =⟨ ap ⊙Ω (Trunc-Ω^-conv (S m) n X) ⟩
     ⊙Ω^ (S n) (⊙Trunc (⟨ n ⟩₋₂ +2+ S m) X)
@@ -493,7 +493,7 @@ module _ {i} where
 
   Ω-Trunc-econv : (m : ℕ₋₂) (X : Ptd i)
     → Ω (⊙Trunc (S m) X) ≃ Trunc m (Ω X)
-  Ω-Trunc-econv m X = Trunc=-equiv [ pt X ] [ pt X ]
+  Ω-Trunc-econv m X = =ₜ-equiv [ pt X ] [ pt X ]
 -}
 
 {- Our definition of [Ω^] builds up loops from the outside,

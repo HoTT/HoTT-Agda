@@ -12,7 +12,7 @@ module homotopy.EilenbergMacLane where
 
 -- EM(G,n) when G is π₁(A,a₀)
 module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
-  {{_ : has-level 1 (de⊙ X)}} (H-X : HSS X) where
+  {{X-level : has-level 1 (de⊙ X)}} (H-X : HSS X) where
 
   private
     A = de⊙ X
@@ -26,8 +26,8 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
     EM = de⊙ (⊙EM n)
 
   EM-level : (n : ℕ) → has-level ⟨ n ⟩ (EM n)
-  EM-level O = ⟨⟩
-  EM-level (S n) = ⟨⟩
+  EM-level O = has-level-apply X-level _ _
+  EM-level (S n) = Trunc-level
 
   instance
     EM-conn : (n : ℕ) → is-connected ⟨ n ⟩ (EM (S n))
@@ -138,7 +138,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
     spectrum0 : ⊙Ω (⊙EM 1) ⊙≃ ⊙EM 0
     spectrum0 =
       ⊙Ω (⊙EM 1)
-        ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (=ₜ-equiv _ _) idp ⟩
       ⊙Trunc 0 (⊙Ω X)
         ⊙≃⟨ ≃-to-⊙≃ (unTrunc-equiv _) idp ⟩
       ⊙Ω X ⊙≃∎
@@ -146,7 +146,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
     spectrum1 : ⊙Ω (⊙EM 2) ⊙≃ ⊙EM 1
     spectrum1 =
       ⊙Ω (⊙EM 2)
-        ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (=ₜ-equiv _ _) idp ⟩
       ⊙Trunc 1 (⊙Ω (⊙Susp X))
         ⊙≃⟨ Π₂.⊙eq ⟩
       ⊙EM 1 ⊙≃∎
@@ -170,7 +170,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
       → ⊙Ω (⊙EM (S (S (S n)))) ⊙≃ ⊙EM (S (S n))
     spectrumSS n =
       ⊙Ω (⊙EM (S (S (S n))))
-        ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (=ₜ-equiv _ _) idp ⟩
       ⊙Trunc ⟨ S (S n) ⟩ (⊙Ω (⊙Susp^ (S (S n)) X))
         ⊙≃⟨ FS.⊙eq n ⊙⁻¹ ⟩
       ⊙EM (S (S n)) ⊙≃∎
@@ -192,3 +192,41 @@ module EMExplicit {i} (G : AbGroup i) where
 
   open AboveDiagonal public using (πS-above)
   open Spectrum public using (spectrum)
+
+module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
+
+  private
+    module φ = GroupHom φ
+
+    EM₁-fmap-hom : G →ᴳ Ω^S-group 0 (⊙EM₁ H)
+    EM₁-fmap-hom = group-hom f f-preserves-comp
+      where
+        f : Group.El G → embase' H == embase
+        f g = emloop (φ.f g)
+        f-preserves-comp : ∀ g₁ g₂ → f (Group.comp G g₁ g₂) == f g₁ ∙ f g₂
+        f-preserves-comp g₁ g₂ =
+          emloop (φ.f (Group.comp G g₁ g₂))
+            =⟨ ap emloop (φ.pres-comp g₁ g₂) ⟩
+          emloop (Group.comp H (φ.f g₁) (φ.f g₂))
+            =⟨ emloop-comp' H (φ.f g₁) (φ.f g₂) ⟩
+          emloop (φ.f g₁) ∙ emloop (φ.f g₂) =∎
+
+    module EM₁FmapRec =
+      EM₁Level₁Rec {G = G} {C = EM₁ H}
+                  {{EM₁-level₁ H {⟨-2⟩}}}
+                  embase
+                  EM₁-fmap-hom
+
+  abstract
+    EM₁-fmap : EM₁ G → EM₁ H
+    EM₁-fmap = EM₁FmapRec.f
+
+    EM₁-fmap-embase-β : EM₁-fmap embase ↦ embase
+    EM₁-fmap-embase-β = EM₁FmapRec.embase-β
+    {-# REWRITE EM₁-fmap-embase-β #-}
+
+    EM₁-fmap-emloop-β : ∀ g → ap EM₁-fmap (emloop g) == emloop (φ.f g)
+    EM₁-fmap-emloop-β = EM₁FmapRec.emloop-β
+
+    ⊙EM₁-fmap : ⊙EM₁ G ⊙→ ⊙EM₁ H
+    ⊙EM₁-fmap = EM₁-fmap , idp

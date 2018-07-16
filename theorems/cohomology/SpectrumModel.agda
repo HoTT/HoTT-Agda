@@ -158,7 +158,7 @@ module SpectrumModel where
       C-ker-sub-im f =
         Trunc-elim
           {{λ _ → Π-level (λ _ → raise-level _ Trunc-level)}}
-          (λ h tp → Trunc-rec (lemma h) (–> (Trunc=-equiv _ _) tp))
+          (λ h tp → Trunc-rec (lemma h) (–> (=ₜ-equiv _ _) tp))
         where
         lemma : (h : uCEl n Y) → h ⊙∘ f == ⊙cst
           → Trunc -1 (Σ (CEl n (⊙Cofiber f))

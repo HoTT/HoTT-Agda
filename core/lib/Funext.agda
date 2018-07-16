@@ -5,7 +5,9 @@ open import lib.Function
 open import lib.Equivalence
 open import lib.Univalence
 open import lib.NType
+open import lib.PathFunctor
 open import lib.PathGroupoid
+open import lib.PathSeq
 
 {-
 A proof of function extensionality from the univalence axiom.
@@ -135,29 +137,222 @@ module StrongFunextDep {j} {P : A → Type j} where
 
 -- We only export the following
 
-module _ {j} {P : A → Type j} {f g : Π A P} where
+module _ where
 
-  app= : f == g → f ∼ g
+  app= : ∀ {j} {P : A → Type j} {f g : Π A P}
+    → f == g → f ∼ g
   app= p x = ap (λ u → u x) p
 
+  private
+    module λ=-is-equiv {j} {P : A → Type j} {f g : Π A P}
+      = is-equiv (StrongFunextDep.λ=-is-equiv {f = f} {g = g})
+
   abstract
-    λ= : f ∼ g → f == g
+    λ= : ∀ {j} {P : A → Type j} {f g : Π A P}
+      → f ∼ g → f == g
     λ= = FunextDep.λ=
 
-    app=-β : (p : f ∼ g) (x : A) → app= (λ= p) x == p x
-    app=-β = StrongFunextDep.app=-β
+    app=-β : ∀ {j} {P : A → Type j} {f g : Π A P}
+      → (p : f ∼ g) (x : A) → app= (λ= p) x == p x
+    app=-β p x = app= (λ=-is-equiv.g-f p) x
 
-    λ=-η : (p : f == g) → p == λ= (app= p)
-    λ=-η = StrongFunextDep.λ=-η
+    λ=-η : ∀ {j} {P : A → Type j} {f g : Π A P}
+      → (p : f == g) → p == λ= (app= p)
+    λ=-η p = ! (λ=-is-equiv.f-g p)
 
-  λ=-equiv : (f ∼ g) ≃ (f == g)
+    λ=-app=-adj : ∀ {j} {P : A → Type j} {f g : Π A P}
+      → (p : f ∼ g) → ap λ= (λ= (app=-β p)) == ! (λ=-η (λ= p))
+    λ=-app=-adj p =
+      ap λ= (λ= (app=-β p))
+        =⟨ ap (ap λ=) (! (λ=-η (λ=-is-equiv.g-f p))) ⟩
+      ap λ= (λ=-is-equiv.g-f p)
+        =⟨ λ=-is-equiv.adj p ⟩
+      λ=-is-equiv.f-g (λ= p)
+        =⟨ ! (!-! (λ=-is-equiv.f-g (λ= p))) ⟩
+      ! (λ=-η (λ= p)) =∎
+
+    λ=-app=-adj' : ∀ {j} {P : A → Type j} {f g : Π A P}
+      → (p : f == g) → ap app= (λ=-η p) == ! (λ= (app=-β (app= p)))
+    λ=-app=-adj' p =
+      ap app= (λ=-η p)
+        =⟨ ap-! app= (λ=-is-equiv.f-g p) ⟩
+      ! (ap app= (λ=-is-equiv.f-g p))
+        =⟨ ap ! (λ=-is-equiv.adj' p) ⟩
+      ! (λ=-is-equiv.g-f (app= p))
+        =⟨ ap ! (λ=-η (λ=-is-equiv.g-f (app= p))) ⟩
+      ! (λ= (app=-β (app= p))) =∎
+
+  λ=-equiv : ∀ {j} {P : A → Type j} {f g : Π A P}
+    → (f ∼ g) ≃ (f == g)
   λ=-equiv = (λ= , λ=-is-equiv) where
     abstract
       λ=-is-equiv : is-equiv λ=
       λ=-is-equiv = StrongFunextDep.λ=-is-equiv
 
-  app=-equiv : (f == g) ≃ (f ∼ g)
-  app=-equiv = (app= , app=-is-equiv) where
+  app=-equiv : ∀ {j} {P : A → Type j} {f g : Π A P}
+    → (f == g) ≃ (f ∼ g)
+  app=-equiv {f = f} {g = g} = (app= , app=-is-equiv)
+    where
+    app=-λ= : ∀ (h : f ∼ g) → app= (λ= h) == h
+    app=-λ= h = λ= (app=-β h)
+    λ=-app= : ∀ (h : f == g) → λ= (app= h) == h
+    λ=-app= = ! ∘ λ=-η
     abstract
-      app=-is-equiv : is-equiv app=
-      app=-is-equiv = StrongFunextDep.app=-is-equiv
+      adj : ∀ p → ap app= (λ=-app= p) == app=-λ= (app= p)
+      adj p =
+        ap app= (λ=-app= p)
+          =⟨ ap-! app= (λ=-η p) ⟩
+        ! (ap app= (λ=-η p))
+          =⟨ ap ! (λ=-app=-adj' p) ⟩
+        ! (! (app=-λ= (app= p)))
+          =⟨ !-! (app=-λ= (app= p)) ⟩
+        app=-λ= (app= p) =∎
+    app=-is-equiv : is-equiv app=
+    app=-is-equiv =
+      record
+      { g = λ=
+      ; f-g = app=-λ=
+      ; g-f = λ=-app=
+      ; adj = adj
+      }
+
+{- Functoriality of application and function extensionality -}
+
+module _ {j} {B : A → Type j} {f g h : Π A B}
+         (α : f ∼ g) (β : g ∼ h) where
+
+  ∙-λ=-seq : λ= α ∙ λ= β =-= λ= (λ x → α x ∙ β x)
+  ∙-λ=-seq =
+    λ= α ∙ λ= β
+      =⟪ λ=-η (λ= α ∙ λ= β) ⟫
+    λ= (app= (λ= α ∙ λ= β))
+      =⟪ ap λ= (λ= (λ a' → ap-∙ (λ γ → γ a') (λ= α) (λ= β) ∙
+                           ap2 _∙_ (app=-β α a') (app=-β β a'))) ⟫
+    λ= (λ a → α a ∙ β a) ∎∎
+
+  ∙-λ= : λ= α ◃∙ λ= β ◃∎ =ₛ λ= (λ x → α x ∙ β x) ◃∎
+  ∙-λ= = =ₛ-in (↯ ∙-λ=-seq)
+
+  λ=-∙ : λ= (λ x → α x ∙ β x) ◃∎ =ₛ λ= α ◃∙ λ= β ◃∎
+  λ=-∙ = !ₛ ∙-λ=
+
+module _ {j} {B : A → Type j} {f g h : Π A B}
+         (α : f ∼ g) (β : g ∼ h) (a : A) where
+  app=-β-coh₁ : app= (λ= α ∙ λ= β) a =-= α a ∙ β a
+  app=-β-coh₁ =
+    app= (λ= α ∙ λ= β) a
+      =⟪ ap-∙ (λ γ → γ a) (λ= α) (λ= β) ⟫
+    app= (λ= α) a ∙ app= (λ= β) a
+      =⟪ ap2 _∙_ (app=-β α a) (app=-β β a) ⟫
+    α a ∙ β a ∎∎
+
+  app=-β-coh₂ : app= (λ= α ∙ λ= β) a =-= α a ∙ β a
+  app=-β-coh₂ =
+    app= (λ= α ∙ λ= β) a
+      =⟪ ap (λ p → app= p a) (=ₛ-out (∙-λ= α β)) ⟫
+    app= (λ= (λ a' → α a' ∙ β a')) a
+      =⟪ app=-β (λ a' → α a' ∙ β a') a ⟫
+    α a ∙ β a ∎∎
+
+  app=-β-coh : app=-β-coh₁ =ₛ app=-β-coh₂
+  app=-β-coh =
+    ap-∙ (λ γ → γ a) (λ= α) (λ= β) ◃∙
+    ap2 _∙_ (app=-β α a) (app=-β β a) ◃∎
+      =ₛ₁⟨ idp ⟩
+    (ap-∙ (λ γ → γ a) (λ= α) (λ= β) ∙
+     ap2 _∙_ (app=-β α a) (app=-β β a)) ◃∎
+      =ₛ₁⟨ ! $ app=-β (λ a' → ap-∙ (λ γ → γ a') (λ= α) (λ= β) ∙
+                              ap2 _∙_ (app=-β α a') (app=-β β a'))
+                       a ⟩
+    app= (λ= (λ a → ap-∙ (λ f → f a) (λ= α) (λ= β) ∙
+                    ap2 _∙_ (app=-β α a) (app=-β β a))) a ◃∎
+      =ₛ⟨ pre-rotate-in $ !ₛ $
+          homotopy-naturality (λ γ → app= (λ= γ) a)
+                              (λ γ → γ a)
+                              (λ γ → app=-β γ a)
+                              (λ= (λ a' → ap-∙ (λ γ → γ a') (λ= α) (λ= β) ∙
+                                          ap2 _∙_ (app=-β α a') (app=-β β a')))
+        ⟩
+    ! (app=-β (λ a' → app= (λ= α ∙ λ= β) a') a) ◃∙
+    ap (λ γ → app= (λ= γ) a)
+       (λ= (λ a' → ap-∙ (λ γ → γ a') (λ= α) (λ= β) ∙
+                   ap2 _∙_ (app=-β α a') (app=-β β a'))) ◃∙
+    app=-β (λ a' → α a' ∙ β a') a ◃∎
+      =ₛ₁⟨ 0 & 1 & step₄ ⟩
+    ap (λ p → app= p a) (λ=-η (λ= α ∙ λ= β)) ◃∙
+    ap (λ γ → app= (λ= γ) a)
+       (λ= (λ a' → ap-∙ (λ γ → γ a') (λ= α) (λ= β) ∙
+                   ap2 _∙_ (app=-β α a') (app=-β β a'))) ◃∙
+    app=-β (λ a' → α a' ∙ β a') a ◃∎
+      =ₛ₁⟨ 1 & 1 &
+           ap-∘ (λ p → app= p a) λ=
+                (λ= (λ a' → ap-∙ (λ γ → γ a') (λ= α) (λ= β) ∙
+                            ap2 _∙_ (app=-β α a') (app=-β β a'))) ⟩
+    ap (λ p → app= p a) (λ=-η (λ= α ∙ λ= β)) ◃∙
+    ap (λ p → app= p a)
+       (ap λ=
+           (λ= (λ a' → ap-∙ (λ γ → γ a') (λ= α) (λ= β) ∙
+                       ap2 _∙_ (app=-β α a') (app=-β β a')))) ◃∙
+    app=-β (λ a' → α a' ∙ β a') a ◃∎
+      =ₛ⟨ 0 & 2 & ∙-ap-seq (λ p → app= p a) (∙-λ=-seq α β) ⟩
+    ap (λ p → app= p a) (=ₛ-out (∙-λ= α β)) ◃∙
+    app=-β (λ a' → α a' ∙ β a') a ◃∎ ∎ₛ
+    where
+    step₄ : ! (app=-β (λ a' → app= (λ= α ∙ λ= β) a') a) ==
+            ap (λ p → app= p a) (λ=-η (λ= α ∙ λ= β))
+    step₄ =
+      ! (app=-β (λ a' → app= (λ= α ∙ λ= β) a') a)
+        =⟨ ap ! (! (app=-β (app=-β (λ a' → app= (λ= α ∙ λ= β) a')) a)) ⟩
+      ! (app= (λ= (app=-β (λ a' → app= (λ= α ∙ λ= β) a'))) a)
+        =⟨ !-ap (λ γ → γ a) (λ= (app=-β (λ a' → app= (λ= α ∙ λ= β) a'))) ⟩
+      app= (! (λ= (app=-β (λ a' → app= (λ= α ∙ λ= β) a')))) a
+        =⟨ ap (λ p → app= p a) (! (λ=-app=-adj' (λ= α ∙ λ= β))) ⟩
+      app= (ap app= (λ=-η (λ= α ∙ λ= β))) a
+        =⟨ ∘-ap (λ f → f a) app= (λ=-η (λ= α ∙ λ= β)) ⟩
+      ap (λ p → app= p a) (λ=-η (λ= α ∙ λ= β)) =∎
+
+module _ {j} {B : A → Type j} {f g h k : Π A B}
+         (α : f ∼ g) (β : g ∼ h) (γ : h ∼ k) where
+
+  ∙∙-λ= : λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎ =ₛ λ= (λ x → α x ∙ β x ∙ γ x) ◃∎
+  ∙∙-λ= =
+    λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎
+      =ₛ⟨ 1 & 2 & ∙-λ= β γ ⟩
+    λ= α ◃∙ λ= (λ x → β x ∙ γ x) ◃∎
+      =ₛ⟨ ∙-λ= α (λ x → β x ∙ γ x) ⟩
+    λ= (λ x → α x ∙ β x ∙ γ x) ◃∎ ∎ₛ
+
+  λ=-∙∙ : λ= (λ x → α x ∙ β x ∙ γ x) ◃∎ =ₛ λ= α ◃∙ λ= β ◃∙ λ= γ ◃∎
+  λ=-∙∙ = !ₛ ∙∙-λ=
+
+module _ {j} {B : A → Type j} {f g : Π A B} where
+
+  !-app= : (α : f == g) → λ= (! ∘ app= α) == ! α
+  !-app= idp = ! (λ=-η idp)
+
+  !-λ= : (α : f ∼ g) → λ= (! ∘ α) == ! (λ= α)
+  !-λ= α =
+    λ= (! ∘ α)
+      =⟨ ap λ= (λ= (λ a → ap ! (! (app=-β α a)))) ⟩
+    λ= (! ∘ app= (λ= α))
+      =⟨ !-app= (λ= α) ⟩
+    ! (λ= α) =∎
+
+  λ=-! : (α : f ∼ g) → ! (λ= α) == λ= (! ∘ α)
+  λ=-! α = ! (!-λ= α)
+
+module _ {j k} {B : A → Type j} {C : A → Type k}
+  {f g : Π A B} (h : (a : A) → B a → C a) where
+
+  app=-ap : (α : f == g)
+    → ap (λ f' a → h a (f' a)) α == λ= (λ a → ap (h a) (app= α a))
+  app=-ap idp = λ=-η idp
+
+  λ=-ap : (α : f ∼ g)
+    → ap (λ f' a → h a (f' a)) (λ= α) == λ= (λ a → ap (h a) (α a))
+  λ=-ap α =
+    ap (λ f' a → h a (f' a)) (λ= α)
+      =⟨ app=-ap (λ= α) ⟩
+    λ= (λ a → ap (h a) (app= (λ= α) a))
+      =⟨ ap λ= (λ= (λ a → ap (ap (h a)) (app=-β α a))) ⟩
+    λ= (λ a → ap (h a) (α a)) =∎
