@@ -80,10 +80,10 @@ module _ {i} (A : Type i) where
     =ₜ-to-2-type-fundamental-cat.pres-comp {[ a ]} {[ b ]} {[ c ]} [ p ]₁ [ q ]₁ ◃∎
       =ₛ⟨ FunctorInv.pres-comp-β {[ a ]} {[ b ]} {[ c ]} [ p ]₁ [ q ]₁ ⟩
     idp ◃∙
-    FunctorInv.G₁'-pres-comp {[ a ]} {[ b ]} {[ c ]} [ p ]₁ [ q ]₁ ◃∎
+    idp ◃∙
+    ap-∙ [_] p q ◃∙
+    idp ◃∎
       =ₛ⟨ 0 & 1 & expand [] ⟩
-    FunctorInv.G₁'-pres-comp {[ a ]} {[ b ]} {[ c ]} [ p ]₁ [ q ]₁ ◃∎
-      =ₛ⟨ FunctorInv.G₁'-pres-comp-β {[ a ]} {[ b ]} {[ c ]} [ p ]₁ [ q ]₁ ⟩
     idp ◃∙
     ap-∙ [_] p q ◃∙
     idp ◃∎

@@ -296,8 +296,9 @@ module CP₁₁ where
   F₀₄ : TwoSemiFunctor D₀ D₄
   F₀₄ = F₀₁ –F→ F₁₄
 
+  module F₄₅-Funext = FunextFunctors (EM₁ R₊) (EM 2) {{⟨⟩}}
   F₄₅ : TwoSemiFunctor D₄ D₅
-  F₄₅ = λ=-functor (EM₁ R₊) (EM 2)
+  F₄₅ = F₄₅-Funext.λ=-functor
 
   module F₀₄ = TwoSemiFunctor F₀₄
   module F₄₅ = TwoSemiFunctor F₄₅
@@ -573,7 +574,7 @@ module CP₁₁ where
         ap λ= (F₀₄.pres-comp g₁ g₂) ◃∙
         F₄₅.pres-comp (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ◃∙
         =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
-          =ₛ₁⟨ 1 & 1 & λ=-functor-pres-comp=λ=-∙ (EM₁ R₊) (EM 2) (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ⟩
+          =ₛ₁⟨ 1 & 1 & F₄₅-Funext.λ=-functor-pres-comp=λ=-∙ (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ⟩
         ap λ= (F₀₄.pres-comp g₁ g₂) ◃∙
         =ₛ-out (λ=-∙ (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∙
         =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
