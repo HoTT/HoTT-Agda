@@ -37,6 +37,19 @@ module _ {A : Type i} where
   Word-flip-flip nil = idp
   Word-flip-flip (x :: l) = ap2 _::_ (flip-flip x) (Word-flip-flip l)
 
+  Word-inverse : Word A → Word A
+  Word-inverse = reverse ∘ Word-flip
+
+  Word-inverse-inverse : ∀ w → Word-inverse (Word-inverse w) == w
+  Word-inverse-inverse w =
+    Word-inverse (Word-inverse w)
+      =⟨ reverse-map flip (Word-inverse w) ⟩
+    Word-flip (reverse (reverse (Word-flip w)))
+      =⟨ ap Word-flip (reverse-reverse (Word-flip w)) ⟩
+    Word-flip (Word-flip w)
+      =⟨ Word-flip-flip w ⟩
+    w =∎
+
   Word-exp : A → ℤ → Word A
   Word-exp a (pos 0) = nil
   Word-exp a (pos (S n)) = inl a :: Word-exp a (pos n)
@@ -47,12 +60,17 @@ module _ {A : Type i} {j} (G : Group j) where
   private
     module G = Group G
 
-  PlusMinus-extendᴳ : (A → G.El) → (PlusMinus A → G.El)
-  PlusMinus-extendᴳ f (inl a) = f a
-  PlusMinus-extendᴳ f (inr a) = G.inv (f a)
+  module _ (f : A → G.El) where
+    PlusMinus-extendᴳ : PlusMinus A → G.El
+    PlusMinus-extendᴳ (inl a) = f a
+    PlusMinus-extendᴳ (inr a) = G.inv (f a)
 
-  Word-extendᴳ : (A → G.El) → (Word A → G.El)
-  Word-extendᴳ f = foldr G.comp G.ident ∘ map (PlusMinus-extendᴳ f)
+    PlusMinus-extendᴳ-flip : ∀ x → PlusMinus-extendᴳ (flip x) == G.inv (PlusMinus-extendᴳ x)
+    PlusMinus-extendᴳ-flip (inl a) = idp
+    PlusMinus-extendᴳ-flip (inr a) = ! (G.inv-inv (f a))
+
+    Word-extendᴳ : Word A → G.El
+    Word-extendᴳ = foldr G.comp G.ident ∘ map PlusMinus-extendᴳ
 
   abstract
     Word-extendᴳ-++ : ∀ f l₁ l₂
