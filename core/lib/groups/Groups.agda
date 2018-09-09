@@ -6,6 +6,7 @@ module lib.groups.Groups where
 open import lib.groups.CommutingSquare public
 open import lib.groups.FreeAbelianGroup public
 open import lib.groups.FreeGroup public
+open import lib.groups.GeneratedAbelianGroup public
 open import lib.groups.GeneratedGroup public
 open import lib.groups.GroupProduct public
 open import lib.groups.Homomorphism public

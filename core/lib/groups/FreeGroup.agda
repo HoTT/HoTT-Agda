@@ -1,16 +1,9 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
-open import lib.NType2
-open import lib.Relation
 open import lib.types.Empty
-open import lib.types.Sigma
-open import lib.types.Pi
 open import lib.types.Group
-open import lib.types.Nat
-open import lib.types.List
 open import lib.types.Word
-open import lib.types.SetQuotient
 open import lib.groups.GeneratedGroup
 open import lib.groups.Homomorphism
 
