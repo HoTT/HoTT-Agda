@@ -90,6 +90,20 @@ module _ {i} {A : Type i} where
     foldr-++ b nil l₂ = idp
     foldr-++ b (a :: l₁) l₂ = ap (f a) (foldr-++ b l₁ l₂)
 
+  module _ (f : A → A → A) where
+    foldr' : A → List A → A
+    foldr' d nil = d
+    foldr' _ (a :: nil) = a
+    foldr' d (a :: l@(_ :: _)) = f a (foldr' d l)
+
+    foldr'=foldr : ∀ d → (∀ a → f a d == a)
+      → (l : List A)
+      → foldr' d l == foldr f d l
+    foldr'=foldr d is-unit-r nil = idp
+    foldr'=foldr d is-unit-r (a :: nil) = ! (is-unit-r a)
+    foldr'=foldr d is-unit-r (a :: l@(_ :: _)) =
+      ap (f a) (foldr'=foldr d is-unit-r l)
+
   -- [length] in Haskell
   length : List A → ℕ
   length = foldr (λ _ n → S n) 0

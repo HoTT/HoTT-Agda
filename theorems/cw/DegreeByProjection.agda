@@ -112,21 +112,26 @@ module cw.DegreeByProjection {i} where
       (take-has-degrees-with-finite-support Sm≤n skel dec fin-sup)
 
   -- the following are named [boundary'] because it is not extended to the free groups
+  open FreeAbelianGroup
 
   boundary'-last : ∀ {n} (skel : Skeleton {i} (S n)) dec
     → has-degrees-with-finite-support skel dec
-    → cells-last skel → FreeAbGroup.El (cells-last (cw-init skel))
+    → cells-last skel → FreeAbelianGroup.El (cells-last (cw-init skel))
   boundary'-last skel dec fin-sup upper = fst ((snd fin-sup) upper)
 
   boundary-last : ∀ {n} (skel : Skeleton {i} (S n)) dec
     → has-degrees-with-finite-support skel dec
-    → FreeAbGroup.grp (cells-last skel) →ᴳ FreeAbGroup.grp (cells-last (cw-init skel))
+    → FreeAbGroup.grp (cells-last skel) →ᴳ
+      FreeAbGroup.grp (cells-last (cw-init skel))
   boundary-last skel dec fin-sup =
-    FreeAbGroup-extend (FreeAbGroup (cells-last (cw-init skel))) (boundary'-last skel dec fin-sup)
+    Freeness.extend
+      (cells-last skel)
+      (FreeAbelianGroup.FreeAbGroup (cells-last (cw-init skel)))
+      (boundary'-last skel dec fin-sup)
 
   boundary'-nth : ∀ {m n} (Sm≤n : S m ≤ n) (skel : Skeleton {i} n) dec
     → has-degrees-with-finite-support skel dec
-    → cells-nth Sm≤n skel → FreeAbGroup.El (cells-last (cw-init (cw-take Sm≤n skel)))
+    → cells-nth Sm≤n skel → FreeAbelianGroup.El (cells-last (cw-init (cw-take Sm≤n skel)))
   boundary'-nth Sm≤n skel dec fin-sup =
     boundary'-last (cw-take Sm≤n skel)
       (take-has-cells-with-dec-eq Sm≤n skel dec)
@@ -137,6 +142,6 @@ module cw.DegreeByProjection {i} where
     →  FreeAbGroup.grp (cells-nth Sm≤n skel)
     →ᴳ FreeAbGroup.grp (cells-last (cw-init (cw-take Sm≤n skel)))
   boundary-nth Sm≤n skel dec fin-sup =
-    FreeAbGroup-extend
+    Freeness.extend (cells-nth Sm≤n skel)
       (FreeAbGroup (cells-last (cw-init (cw-take Sm≤n skel))))
       (boundary'-nth Sm≤n skel dec fin-sup)

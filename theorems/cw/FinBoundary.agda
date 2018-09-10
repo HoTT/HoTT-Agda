@@ -12,6 +12,8 @@ open import cw.DegreeByProjection {lzero}
 
 module cw.FinBoundary where
 
+  open FreeAbelianGroup
+
   fdegree-last : ∀ {n} (fin-skel : FinSkeleton (S n))
     → cells-last (FinSkeleton-realize fin-skel)
     → cells-last (cw-init (FinSkeleton-realize fin-skel)) → ℤ
@@ -33,7 +35,7 @@ module cw.FinBoundary where
 
   fboundary'-last : ∀ {n} (fin-skel : FinSkeleton (S n))
     → cells-last (FinSkeleton-realize fin-skel)
-    → FreeAbGroup.El (cells-last (cw-init (FinSkeleton-realize fin-skel)))
+    → FreeAbelianGroup.El (cells-last (cw-init (FinSkeleton-realize fin-skel)))
   fboundary'-last fin-skel upper = boundary'-last
     (FinSkeleton-realize fin-skel)
     (FinSkeleton-has-cells-with-dec-eq fin-skel)
@@ -43,6 +45,6 @@ module cw.FinBoundary where
   fboundary-last : ∀ {n} (fin-skel : FinSkeleton (S n))
     →  FreeAbGroup.grp (cells-last (FinSkeleton-realize fin-skel))
     →ᴳ FreeAbGroup.grp (cells-last (cw-init (FinSkeleton-realize fin-skel)))
-  fboundary-last fin-skel = FreeAbGroup-extend
+  fboundary-last fin-skel = Freeness.extend _
     (FreeAbGroup (cells-last (cw-init (FinSkeleton-realize fin-skel))))
     (fboundary'-last fin-skel)

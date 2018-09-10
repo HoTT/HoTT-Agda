@@ -174,7 +174,7 @@ module cw.cohomology.ReconstructedCochainsEquivCellularCochains
       frcc-comm-fccc-augment : ∀ {n} (⊙fin-skel : ⊙FinSkeleton n)
         → CommSquareᴳ
             (CochainComplex.augment (RCC.cochain-complex ⊙⦉ ⊙fin-skel ⦊))
-            (pre∘ᴳ-hom (C2-abgroup 0) (FreeAbGroup-extend (Lift-abgroup {j = lzero} ℤ-abgroup) λ _ → lift 1))
+            (pre∘ᴳ-hom (C2-abgroup 0) (FreeAbelianGroup.Freeness.extend _ (Lift-abgroup {j = lzero} ℤ-abgroup) λ _ → lift 1))
             (GroupIso.f-hom rhead-iso-chead)
             (GroupIso.f-hom (rcc-iso-ccc-template ⊙⦉ ⊙fin-skel ⦊ (inl (O≤ n))
               (⊙FinSkeleton-has-cells-with-choice 0 ⊙fin-skel lzero)))

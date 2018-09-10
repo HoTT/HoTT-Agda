@@ -24,20 +24,22 @@ private
   fin-skel₋₁ = ⊙FinSkeleton.skel ⊙fin-skel₋₁
   ac₋₁ = ⊙FinSkeleton-has-cells-with-choice 0 ⊙fin-skel₋₁ lzero
 
+open FreeAbelianGroup
+
 abstract
   rephrase-dualized-higher-boundary-comm-sqr :
     CommSquareEquiv
       (λ g <I → Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (fdegree-last fin-skel <I <I₋₁)))
       (_∘ᴳ fboundary-last fin-skel)
-      (FreeAbGroup-extend (C2-abgroup 0))
-      (FreeAbGroup-extend (C2-abgroup 0))
+      (Freeness.extend _ (C2-abgroup 0))
+      (Freeness.extend _ (C2-abgroup 0))
   rephrase-dualized-higher-boundary-comm-sqr =
     comm-sqr (λ g →
       equiv-adj'
-        (GroupIso.f-equiv (FreeAbGroup-extend-iso (C2-abgroup 0)))
+        (GroupIso.f-equiv (Freeness.extend-iso _ (C2-abgroup 0)))
         (λ= λ <I → ! (rephrase-dualized-higher-boundary-in-degree g <I))) ,
-    FreeAbGroup-extend-is-equiv (C2-abgroup 0) ,
-    FreeAbGroup-extend-is-equiv (C2-abgroup 0)
+    Freeness.extend-is-equiv _ (C2-abgroup 0) ,
+    Freeness.extend-is-equiv _ (C2-abgroup 0)
 
   rephrase-cw-co∂-last-comm-sqr :
     CommSquareEquiv
@@ -57,10 +59,10 @@ abstract
     CommSquareEquiv
       (GroupHom.f cw-co∂-last)
       (_∘ᴳ fboundary-last fin-skel)
-      (FreeAbGroup-extend (C2-abgroup 0) ∘ GroupIso.f (CXₙ/Xₙ₋₁-diag-β ⊙⦉ ⊙fin-skel₋₁ ⦊ ac₋₁))
-      (FreeAbGroup-extend (C2-abgroup 0) ∘ GroupIso.f (CXₙ/Xₙ₋₁-diag-β ⊙⦉ ⊙fin-skel ⦊ ac))
+      (Freeness.extend _ (C2-abgroup 0) ∘ GroupIso.f (CXₙ/Xₙ₋₁-diag-β ⊙⦉ ⊙fin-skel₋₁ ⦊ ac₋₁))
+      (Freeness.extend _ (C2-abgroup 0) ∘ GroupIso.f (CXₙ/Xₙ₋₁-diag-β ⊙⦉ ⊙fin-skel ⦊ ac))
   higher-coboundary-comm-sqr =
-    CommSquareEquiv-∘v  
+    CommSquareEquiv-∘v
       rephrase-dualized-higher-boundary-comm-sqr
       (CommSquareEquiv-inverse-v rephrase-cw-co∂-last-comm-sqr)
 
@@ -68,7 +70,7 @@ abstract
     CommSquareEquivᴳ
       cw-co∂-last
       (pre∘ᴳ-hom (C2-abgroup 0) (fboundary-last fin-skel))
-      (FreeAbGroup-extend-hom (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (CXₙ/Xₙ₋₁-diag-β ⊙⦉ ⊙fin-skel₋₁ ⦊ ac₋₁))
-      (FreeAbGroup-extend-hom (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (CXₙ/Xₙ₋₁-diag-β ⊙⦉ ⊙fin-skel ⦊ ac))
+      (Freeness.extend-hom _ (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (CXₙ/Xₙ₋₁-diag-β ⊙⦉ ⊙fin-skel₋₁ ⦊ ac₋₁))
+      (Freeness.extend-hom _ (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (CXₙ/Xₙ₋₁-diag-β ⊙⦉ ⊙fin-skel ⦊ ac))
   higher-coboundary-comm-sqrᴳ =
     comm-sqrᴳ (fst higher-coboundary-comm-sqr □$_) , snd higher-coboundary-comm-sqr

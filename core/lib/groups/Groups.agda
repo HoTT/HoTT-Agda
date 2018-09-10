@@ -19,5 +19,6 @@ open import lib.groups.QuotientGroup public
 open import lib.groups.PullbackGroup public
 open import lib.groups.Subgroup public
 open import lib.groups.SubgroupProp public
+open import lib.groups.TensorProduct public
 open import lib.groups.TruncationGroup public
 open import lib.groups.Unit public

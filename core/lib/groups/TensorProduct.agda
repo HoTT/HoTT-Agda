@@ -9,9 +9,7 @@ open import lib.groups.Homomorphism
 open import lib.groups.GeneratedGroup
 open import lib.groups.GeneratedAbelianGroup
 
-module lib.groups.TensorProduct {i} {j} where
-
-module _ {G : AbGroup i} {H : AbGroup j} where
+module lib.groups.TensorProduct {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
   record ⊗-pair : Type (lmax i j) where
     constructor _⊗_
@@ -19,26 +17,29 @@ module _ {G : AbGroup i} {H : AbGroup j} where
       ⊗-fst : AbGroup.El G
       ⊗-snd : AbGroup.El H
 
-module _ (G : AbGroup i) (H : AbGroup j) where
-
   private
     module G = AbGroup G
     module H = AbGroup H
 
-  data ⊗-rel : Word (⊗-pair {G} {H}) → Word (⊗-pair {G} {H}) → Type (lmax i j) where
+  data ⊗-rel : Word ⊗-pair → Word ⊗-pair → Type (lmax i j) where
     linear-l : (g₁ g₂ : G.El) (h : H.El) →
       ⊗-rel (inl (G.comp g₁ g₂ ⊗ h) :: nil) (inl (g₁ ⊗ h) :: inl (g₂ ⊗ h) :: nil)
     linear-r : (g : G.El) (h₁ h₂ : H.El) →
       ⊗-rel (inl (g ⊗ H.comp h₁ h₂) :: nil) (inl (g ⊗ h₁) :: inl (g ⊗ h₂) :: nil)
 
+  private
+    module Gen = GeneratedAbelianGroup ⊗-pair ⊗-rel
+  open Gen hiding (GenGroup; GenAbGroup) public
+
   TensorProduct : AbGroup (lmax i j)
-  TensorProduct = GeneratedAbGroup ⊗-pair ⊗-rel
+  TensorProduct = Gen.GenAbGroup
 
   module TensorProduct = AbGroup TensorProduct
 
-  module _ {k} {L : AbGroup k} where
+  module UniversalProperty {k} (L : AbGroup k) where
 
     private
+      module HE = Gen.HomomorphismEquiv L
       module L = AbGroup L
 
     is-linear-l : (G.El → H.El → L.El) → Type (lmax i (lmax j k))
@@ -81,66 +82,35 @@ module _ (G : AbGroup i) (H : AbGroup j) where
       mk-bilinear-map lin-l lin-r =
         record { bmap = b.bmap; linearity-l = lin-l; linearity-r = lin-r }
 
-    bilinear-to-legal : BilinearMap → LegalFunction {A = ⊗-pair {G} {H}} {⊗-rel} L.grp
-    bilinear-to-legal b = record { f = f; legality = legality }
-      where
-      module b = BilinearMap b
-      f : ⊗-pair {G} {H} → L.El
-      f (g ⊗ h) = b.bmap g h
-      legality : is-legal {A = ⊗-pair {G} {H}} {⊗-rel} L.grp f
-      legality (linear-l g₁ g₂ h) =
-        Word-extendᴳ L.grp f (inl (G.comp g₁ g₂ ⊗ h) :: nil)
-          =⟨ L.unit-r _ ⟩
-        b.bmap (G.comp g₁ g₂) h
-          =⟨ b.linearity-l g₁ g₂ h ⟩
-        L.comp (b.bmap g₁ h) (b.bmap g₂ h)
-          =⟨ ap (L.comp (b.bmap g₁ h)) (! (L.unit-r _)) ⟩
-        Word-extendᴳ L.grp f (inl (g₁ ⊗ h) :: inl (g₂ ⊗ h) :: nil) =∎
-      legality (linear-r g h₁ h₂) =
-        Word-extendᴳ L.grp f (inl (g ⊗ H.comp h₁ h₂) :: nil)
-          =⟨ L.unit-r _ ⟩
-        b.bmap g (H.comp h₁ h₂)
-          =⟨ b.linearity-r g h₁ h₂ ⟩
-        L.comp (b.bmap g h₁) (b.bmap g h₂)
-          =⟨ ap (L.comp (b.bmap g h₁)) (! (L.unit-r _)) ⟩
-        Word-extendᴳ L.grp f (inl (g ⊗ h₁) :: inl (g ⊗ h₂) :: nil) =∎
-
-    legal-to-bilinear : LegalFunction {A = ⊗-pair {G} {H}} {⊗-rel} L.grp → BilinearMap
-    legal-to-bilinear lf =
-      record { bmap = bmap; linearity-l = linearity-l; linearity-r = linearity-r }
-      where
-      module lf = LegalFunction lf
-      bmap : G.El → H.El → L.El
-      bmap g h = lf.f (g ⊗ h)
-      linearity-l : is-linear-l bmap
-      linearity-l g₁ g₂ h =
-        bmap (G.comp g₁ g₂) h
-          =⟨ ! (L.unit-r _) ⟩
-        Word-extendᴳ L.grp lf.f (inl (G.comp g₁ g₂ ⊗ h) :: nil)
-          =⟨ lf.legality (linear-l g₁ g₂ h) ⟩
-        Word-extendᴳ L.grp lf.f (inl (g₁ ⊗ h) :: inl (g₂ ⊗ h) :: nil)
-          =⟨ ap (L.comp (bmap g₁ h)) (L.unit-r _) ⟩
-        L.comp (bmap g₁ h) (bmap g₂ h) =∎
-      linearity-r : is-linear-r bmap
-      linearity-r g h₁ h₂ =
-        bmap g (H.comp h₁ h₂)
-          =⟨ ! (L.unit-r _) ⟩
-        Word-extendᴳ L.grp lf.f (inl (g ⊗ H.comp h₁ h₂) :: nil)
-          =⟨ lf.legality (linear-r g h₁ h₂) ⟩
-        Word-extendᴳ L.grp lf.f (inl (g ⊗ h₁) :: inl (g ⊗ h₂) :: nil)
-          =⟨ ap (L.comp (bmap g h₁)) (L.unit-r _) ⟩
-        L.comp (bmap g h₁) (bmap g h₂) =∎
-
-    bilinear-to-legal-equiv : BilinearMap ≃ LegalFunction {A = ⊗-pair {G} {H}} {⊗-rel} L.grp
+    bilinear-to-legal-equiv : BilinearMap ≃ HE.RelationRespectingFunction
     bilinear-to-legal-equiv =
-      equiv bilinear-to-legal
-            legal-to-bilinear
-            (λ lf → LegalFunction= L.grp idp)
+      equiv to from
+            (λ lf → HE.RelationRespectingFunction= idp)
             (λ b  → BilinearMap= idp)
+      where
+      to : BilinearMap → HE.RelationRespectingFunction
+      to b = HE.rel-res-fun f f-respects
+        where
+        module b = BilinearMap b
+        f : ⊗-pair → L.El
+        f (g ⊗ h) = b.bmap g h
+        f-respects : HE.respects-rel f
+        f-respects (linear-l g₁ g₂ h) = b.linearity-l g₁ g₂ h
+        f-respects (linear-r g h₁ h₂) = b.linearity-r g h₁ h₂
+      from : HE.RelationRespectingFunction → BilinearMap
+      from (HE.rel-res-fun f f-respects) =
+        record { bmap = bmap; linearity-l = linearity-l; linearity-r = linearity-r }
+        where
+        bmap : G.El → H.El → L.El
+        bmap g h = f (g ⊗ h)
+        linearity-l : is-linear-l bmap
+        linearity-l g₁ g₂ h = f-respects (linear-l g₁ g₂ h)
+        linearity-r : is-linear-r bmap
+        linearity-r g h₁ h₂ = f-respects (linear-r g h₁ h₂)
 
     TensorProduct-extend-equiv : BilinearMap ≃ (TensorProduct.grp →ᴳ L.grp)
     TensorProduct-extend-equiv =
-      GeneratedAbGroup-extend-equiv (⊗-pair {G} {H}) ⊗-rel L ∘e bilinear-to-legal-equiv
+      HE.extend-equiv ∘e bilinear-to-legal-equiv
 
     TensorProduct-extend : BilinearMap → (TensorProduct.grp →ᴳ L.grp)
     TensorProduct-extend = –> TensorProduct-extend-equiv

@@ -7,43 +7,29 @@ open import lib.types.Word
 open import lib.groups.GeneratedGroup
 open import lib.groups.Homomorphism
 
-module lib.groups.FreeGroup {i} (A : Type i) where
+module lib.groups.FreeGroup where
 
-EmptyRel : Word A → Word A → Type lzero
-EmptyRel _ _ = Empty
-
--- open module FreeGroupM = lib.groups.GeneratedGroup A EmptyRel
-
-FreeQuotWordRel : Rel (Word A) i
-FreeQuotWordRel = QuotWordRel {A = A} {R = EmptyRel}
-
-FreeGroup : Group i
-FreeGroup = GeneratedGroup A EmptyRel
-
-FreeQuotWord : Type i
-FreeQuotWord = QuotWord A EmptyRel
-
--- freeness
-
-module _ {j} (G : Group j) where
+module FreeGroup {i} (A : Type i) where
 
   private
-    module G = Group G
+    module Gen = GeneratedGroup A empty-rel
+  open Gen hiding (GenGroup) public
 
-  every-function-is-legal : ∀ (f : A → G.El) → LegalFunction {A = A} {R = EmptyRel} G
-  every-function-is-legal f =
-    record { f = f; legality = λ {_} {_} () }
+  FreeGroup : Group i
+  FreeGroup = Gen.GenGroup
 
-  every-function-is-legal-equiv : (A → G.El) ≃ LegalFunction {A = A} {R = EmptyRel} G
-  every-function-is-legal-equiv =
-    equiv every-function-is-legal
-          LegalFunction.f
-          (λ lf → LegalFunction= G idp)
-          (λ f → idp)
+  module Freeness {j} (G : Group j) where
 
-  FreeGroup-extend-equiv : (A → G.El) ≃ (FreeGroup →ᴳ G)
-  FreeGroup-extend-equiv =
-    GeneratedGroup-extend-equiv G ∘e every-function-is-legal-equiv
+    private
+      module G = Group G
+      module HE = HomomorphismEquiv G
 
-  FreeGroup-extend : (A → G.El) → (FreeGroup →ᴳ G)
-  FreeGroup-extend = –> FreeGroup-extend-equiv
+    extend-equiv : (A → G.El) ≃ (FreeGroup →ᴳ G)
+    extend-equiv =
+      HE.extend-equiv ∘e every-function-respects-empty-rel-equiv A G
+
+    extend : (A → G.El) → (FreeGroup →ᴳ G)
+    extend = –> extend-equiv
+
+    extend-is-equiv : is-equiv extend
+    extend-is-equiv = snd extend-equiv

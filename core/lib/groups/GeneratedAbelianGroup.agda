@@ -12,19 +12,30 @@ open import lib.groups.Homomorphism
 
 module lib.groups.GeneratedAbelianGroup {i} {m} where
 
-module _ {A : Type i} {R : Rel (Word A) m} where
+module GeneratedAbelianGroup (A : Type i) (R : Rel (Word A) m) where
 
   data AbGroupRel : Word A → Word A → Type (lmax i m) where
     agr-commutes : ∀ l₁ l₂ → AbGroupRel (l₁ ++ l₂) (l₂ ++ l₁)
     agr-rel : ∀ {l₁ l₂} → R l₁ l₂ → AbGroupRel l₁ l₂
 
-module _ (A : Type i) (R : Rel (Word A) m) where
+  private
+    module Gen = GeneratedGroup A AbGroupRel
+  open Gen hiding (module HomomorphismEquiv) public
 
-  GeneratedAbGroup : AbGroup (lmax i m)
-  GeneratedAbGroup = grp , grp-is-abelian
+  agr-reverse : (w : Word A) → QuotWordRel (reverse w) w
+  agr-reverse nil = qwr-refl idp
+  agr-reverse (x :: w) =
+    reverse w ++ (x :: nil)
+      qwr⟨ qwr-rel (agr-commutes (reverse w) (x :: nil)) ⟩
+    x :: reverse w
+      qwr⟨ qwr-cong-r (x :: nil) (agr-reverse w) ⟩
+    x :: w qwr∎
+
+  GenAbGroup : AbGroup (lmax i m)
+  GenAbGroup = grp , grp-is-abelian
     where
     grp : Group (lmax i m)
-    grp = GeneratedGroup A (AbGroupRel {A} {R})
+    grp = GenGroup
     module grp = Group grp
     grp-is-abelian : is-abelian grp
     grp-is-abelian =
@@ -35,51 +46,50 @@ module _ (A : Type i) (R : Rel (Word A) m) where
             (λ _ → prop-has-all-paths-↓))
         (λ _ → prop-has-all-paths-↓ {{Π-level ⟨⟩}})
 
-  module GeneratedAbGroup = AbGroup GeneratedAbGroup
+  module GenAbGroup = AbGroup GenAbGroup
 
-  {- Freeness (universal properties) -}
-
-  module _ {j} (G : AbGroup j) where
+  {- Universal Properties -}
+  module HomomorphismEquiv {j} (G : AbGroup j) where
 
     private
       module G = AbGroup G
+      module R-RFs = RelationRespectingFunctions A R G.grp
+      module AbGroupRel-RFs = RelationRespectingFunctions A AbGroupRel G.grp
 
-    R-legal-to-AbGroupRel-legal : LegalFunction {A = A} {R} G.grp
-                                → LegalFunction {A = A} {AbGroupRel {A} {R}} G.grp
-    R-legal-to-AbGroupRel-legal lf =
-      record { f = lf.f; legality = legality }
-      where
-      module lf = LegalFunction {A = A} {R} lf
-      legality : is-legal {A = A} {AbGroupRel} G.grp lf.f
-      legality (agr-commutes l₁ l₂) =
-        Word-extendᴳ G.grp lf.f (l₁ ++ l₂)
-          =⟨ Word-extendᴳ-++ G.grp lf.f l₁ l₂ ⟩
-        G.comp (Word-extendᴳ G.grp lf.f l₁) (Word-extendᴳ G.grp lf.f l₂)
-          =⟨ G.comm (Word-extendᴳ G.grp lf.f l₁) (Word-extendᴳ G.grp lf.f l₂) ⟩
-        G.comp (Word-extendᴳ G.grp lf.f l₂) (Word-extendᴳ G.grp lf.f l₁)
-          =⟨ ! (Word-extendᴳ-++ G.grp lf.f l₂ l₁) ⟩
-        Word-extendᴳ G.grp lf.f (l₂ ++ l₁) =∎
-      legality (agr-rel r) = lf.legality r
+    open R-RFs public
 
-    AbGroupRel-legal-to-R-legal : LegalFunction {A = A} {AbGroupRel {A} {R}} G.grp
-                                → LegalFunction {A = A} {R} G.grp
-    AbGroupRel-legal-to-R-legal lf =
-      record { f = lf.f; legality = legality }
-      where
-      module lf = LegalFunction lf
-      legality : is-legal {A = A} {R} G.grp lf.f
-      legality r = lf.legality (agr-rel r)
+    private
+      legal-functions-equiv : R-RFs.RelationRespectingFunction
+                            ≃ AbGroupRel-RFs.RelationRespectingFunction
+      legal-functions-equiv =
+        equiv to from
+              (λ lf → AbGroupRel-RFs.RelationRespectingFunction= idp)
+              (λ lf → R-RFs.RelationRespectingFunction= idp)
+        where
+        to : R-RFs.RelationRespectingFunction → AbGroupRel-RFs.RelationRespectingFunction
+        to (R-RFs.rel-res-fun f respects-R) =
+          AbGroupRel-RFs.rel-res-fun f respects-AbGroupRel
+          where
+          respects-AbGroupRel : AbGroupRel-RFs.respects-rel f
+          respects-AbGroupRel (agr-commutes l₁ l₂) =
+            Word-extendᴳ G.grp f (l₁ ++ l₂)
+              =⟨ Word-extendᴳ-++ G.grp f l₁ l₂ ⟩
+            G.comp (Word-extendᴳ G.grp f l₁) (Word-extendᴳ G.grp f l₂)
+              =⟨ G.comm (Word-extendᴳ G.grp f l₁) (Word-extendᴳ G.grp f l₂) ⟩
+            G.comp (Word-extendᴳ G.grp f l₂) (Word-extendᴳ G.grp f l₁)
+              =⟨ ! (Word-extendᴳ-++ G.grp f l₂ l₁) ⟩
+            Word-extendᴳ G.grp f (l₂ ++ l₁) =∎
+          respects-AbGroupRel (agr-rel r) = respects-R r
+        from : AbGroupRel-RFs.RelationRespectingFunction → R-RFs.RelationRespectingFunction
+        from (AbGroupRel-RFs.rel-res-fun f respects-AbGroupRel) =
+          R-RFs.rel-res-fun f respects-R
+          where
+          respects-R : R-RFs.respects-rel f
+          respects-R r = respects-AbGroupRel (agr-rel r)
 
-    legal-functions-equiv : LegalFunction {A = A} {R} G.grp ≃ LegalFunction {A = A} {AbGroupRel} G.grp
-    legal-functions-equiv =
-      equiv R-legal-to-AbGroupRel-legal
-            AbGroupRel-legal-to-R-legal
-            (λ lf → LegalFunction= _ idp)
-            (λ lf → LegalFunction= _ idp)
+    extend-equiv : R-RFs.RelationRespectingFunction ≃ (GenAbGroup.grp →ᴳ G.grp)
+    extend-equiv =
+      Gen.HomomorphismEquiv.extend-equiv G.grp ∘e legal-functions-equiv
 
-    GeneratedAbGroup-extend-equiv : LegalFunction {A = A} {R} G.grp ≃ (GeneratedAbGroup.grp →ᴳ G.grp)
-    GeneratedAbGroup-extend-equiv =
-      GeneratedGroup-extend-equiv G.grp ∘e legal-functions-equiv
-
-    GeneratedAbGroup-extend : LegalFunction {A = A} {R} G.grp → (GeneratedAbGroup.grp →ᴳ G.grp)
-    GeneratedAbGroup-extend = –> GeneratedAbGroup-extend-equiv
+    extend : R-RFs.RelationRespectingFunction → (GenAbGroup.grp →ᴳ G.grp)
+    extend = –> extend-equiv

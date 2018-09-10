@@ -18,26 +18,28 @@ private
   ac = ⊙FinSkeleton-has-cells-with-choice 0 ⊙fin-skel lzero
   pt = ⊙FinSkeleton.skel ⊙fin-skel
 
+open FreeAbelianGroup (Σ ℕ (_< ⊙FinSkeleton.skel ⊙fin-skel)) using (module Freeness)
+
 abstract
   augment-comm-sqr :
     CommSquareEquiv
       (GroupHom.f cw-coε)
-      (_∘ᴳ FreeAbGroup-extend (Lift-abgroup {j = lzero} ℤ-abgroup) λ _ → lift 1)
+      (_∘ᴳ Freeness.extend (Lift-abgroup {j = lzero} ℤ-abgroup) λ _ → lift 1)
       ((_∘ᴳ lower-hom {j = lzero}) ∘ <– (ℤ→ᴳ-equiv-idf (C2 0)))
-      (FreeAbGroup-extend (C2-abgroup 0) ∘ GroupIso.f (C2×CX₀-diag-β ac))
+      (Freeness.extend (C2-abgroup 0) ∘ GroupIso.f (C2×CX₀-diag-β ac))
   augment-comm-sqr = comm-sqr (λ g → equiv-adj'
-    (GroupIso.f-equiv (FreeAbGroup-extend-iso (C2-abgroup 0) ∘eᴳ C2×CX₀-diag-β ac))
+    (GroupIso.f-equiv (Freeness.extend-iso (C2-abgroup 0) ∘eᴳ C2×CX₀-diag-β ac))
     (! $ pair×= idp
       ( ap (GroupIso.g (CX₀-diag-β ac)) (λ= λ _ → Group.inv-r (C2 0) g)
       ∙ GroupHom.pres-ident (GroupIso.g-hom (CX₀-diag-β ac))))) ,
     (GroupIso.f-is-equiv (pre∘ᴳ-iso (C2-abgroup 0) (lower-iso {j = lzero}) ∘eᴳ ℤ→ᴳ-iso-idf (C2-abgroup 0) ⁻¹ᴳ)) ,
-    (GroupIso.f-is-equiv (FreeAbGroup-extend-iso (C2-abgroup 0) ∘eᴳ C2×CX₀-diag-β ac))
+    (GroupIso.f-is-equiv (Freeness.extend-iso (C2-abgroup 0) ∘eᴳ C2×CX₀-diag-β ac))
 
   augment-comm-sqrᴳ :
     CommSquareEquivᴳ
       cw-coε
-      (pre∘ᴳ-hom (C2-abgroup 0) (FreeAbGroup-extend (Lift-abgroup {j = lzero} ℤ-abgroup) λ _ → lift 1))
+      (pre∘ᴳ-hom (C2-abgroup 0) (Freeness.extend (Lift-abgroup {j = lzero} ℤ-abgroup) λ _ → lift 1))
       (pre∘ᴳ-hom (C2-abgroup 0) (lower-hom {j = lzero}) ∘ᴳ GroupIso.g-hom (ℤ→ᴳ-iso-idf (C2-abgroup 0)))
-      (FreeAbGroup-extend-hom (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (C2×CX₀-diag-β ac))
+      (Freeness.extend-hom (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (C2×CX₀-diag-β ac))
   augment-comm-sqrᴳ =
     comm-sqrᴳ (fst augment-comm-sqr □$_) , snd augment-comm-sqr

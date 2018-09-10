@@ -4,6 +4,7 @@ open import lib.Basics
 open import lib.NType2
 open import lib.types.Pi
 open import lib.types.Group
+open import lib.types.Int
 open import lib.types.List
 open import lib.types.Word
 open import lib.types.SetQuotient
@@ -11,7 +12,7 @@ open import lib.groups.Homomorphism
 
 module lib.groups.GeneratedGroup {i m} where
 
-module _ {A : Type i} {R : Rel (Word A) m} where
+module GeneratedGroup (A : Type i) (R : Rel (Word A) m) where
 
   -- [qwr-sym] is not needed, but it seems more principled to
   -- make [QuotWordRel] an equivalence relation.
@@ -51,31 +52,35 @@ module _ {A : Type i} {R : Rel (Word A) m} where
       qwr⟨ qwr-flip-r (flip x₁) ⟩
     nil qwr∎
 
-module _ (A : Type i) (R : Rel (Word A) m) where
   -- The quotient
   QuotWord : Type (lmax i m)
-  QuotWord = SetQuot (QuotWordRel {A} {R})
+  QuotWord = SetQuot QuotWordRel
 
-module _ {A : Type i} {R : Rel (Word A) m} where
-
-  qw[_] : Word A → QuotWord A R
+  qw[_] : Word A → QuotWord
   qw[_] = q[_]
 
-  module QuotWordElim {k} {P : QuotWord A R → Type k}
-    {{_ : {x : QuotWord A R} → is-set (P x)}} (incl* : (a : Word A) → P qw[ a ])
+  {-
+    In the case where this module is used to realize some free construction F
+    (e.g. free group, free abelian group), this function becomes the unit of
+    the adjunction F -| U (where U is the forgetful functor).
+  -}
+  insert : A → QuotWord
+  insert a = qw[ inl a :: nil ]
+
+  module QuotWordElim {k} {P : QuotWord → Type k}
+    {{_ : {x : QuotWord} → is-set (P x)}} (incl* : (a : Word A) → P qw[ a ])
     (rel* : ∀ {a₁ a₂} (r : QuotWordRel a₁ a₂) → incl* a₁ == incl* a₂ [ P ↓ quot-rel r ])
     = SetQuotElim incl* rel*
   open QuotWordElim public renaming (f to QuotWord-elim) hiding (quot-rel-β)
 
   module QuotWordRec {k} {B : Type k} {{_ : is-set B}} (incl* : Word A → B)
-    (rel* : ∀ {a₁ a₂} (r : QuotWordRel {A} {R} a₁ a₂) → incl* a₁ == incl* a₂)
+    (rel* : ∀ {a₁ a₂} (r : QuotWordRel a₁ a₂) → incl* a₁ == incl* a₂)
     = SetQuotRec incl* rel*
   open QuotWordRec public renaming (f to QuotWord-rec)
 
-module _ (A : Type i) (R : Rel (Word A) m) where
   private
     infixl 80 _⊞_
-    _⊞_ : QuotWord A R → QuotWord A R → QuotWord A R
+    _⊞_ : QuotWord → QuotWord → QuotWord
     _⊞_ = QuotWord-rec
       (λ l₁ → QuotWord-rec (λ l₂ → qw[ l₁ ++ l₂ ])
         (λ r → quot-rel $ qwr-cong-r l₁ r))
@@ -85,7 +90,7 @@ module _ (A : Type i) (R : Rel (Word A) m) where
 
     abstract
       qwr-cancel-l : ∀ l
-        → QuotWordRel {A} {R} (Word-inverse l ++ l) nil
+        → QuotWordRel (Word-inverse l ++ l) nil
       qwr-cancel-l nil = qwr-refl idp
       qwr-cancel-l (x :: l) =
         Word-inverse (x :: l) ++ (x :: l)
@@ -124,11 +129,11 @@ module _ (A : Type i) (R : Rel (Word A) m) where
           qwr⟨ qwr-cong-l (qwr-cancel-l l₁) (Word-inverse l₂) ⟩
         Word-inverse l₂ qwr∎
 
-    ⊟ : QuotWord A R → QuotWord A R
+    ⊟ : QuotWord → QuotWord
     ⊟ = QuotWord-rec (qw[_] ∘ Word-inverse)
       (λ r → quot-rel $ qwr-cong-inverse r)
 
-    ⊞-unit : QuotWord A R
+    ⊞-unit : QuotWord
     ⊞-unit = qw[ nil ]
 
     abstract
@@ -151,7 +156,7 @@ module _ (A : Type i) (R : Rel (Word A) m) where
         (λ l → quot-rel (qwr-cancel-l l))
         (λ _ → prop-has-all-paths-↓)
 
-  QuotWord-group-structure : GroupStructure (QuotWord A R)
+  QuotWord-group-structure : GroupStructure QuotWord
   QuotWord-group-structure = record
     { ident = ⊞-unit
     ; inv = ⊟
@@ -161,140 +166,124 @@ module _ (A : Type i) (R : Rel (Word A) m) where
     ; inv-l = ⊟-inv-l
     }
 
-  GeneratedGroup : Group (lmax i m)
-  GeneratedGroup = group _ QuotWord-group-structure
+  GenGroup : Group (lmax i m)
+  GenGroup = group _ QuotWord-group-structure
 
-  module GeneratedGroup = Group GeneratedGroup
-
--- freeness
-module _ {A : Type i} {R : Rel (Word A) m} {j} (G : Group j) where
-
-  private
-    module G = Group G
-
-  is-legal : (A → G.El) → Type (lmax (lmax i j) m)
-  is-legal f = ∀ {l₁ l₂} → R l₁ l₂ → Word-extendᴳ G f l₁ == Word-extendᴳ G f l₂
+  module GenGroup = Group GenGroup
+  open GenGroup using (El) public
 
   abstract
-    is-legal-is-prop : ∀ f → is-prop (is-legal f)
-    is-legal-is-prop f =
-      Πi-level $ λ l₁ →
-      Πi-level $ λ l₂ →
-      Π-level  $ λ r →
-      has-level-apply G.El-level _ _
+    pres-exp : ∀ (a : A) z →
+      qw[ Word-exp a z ] == GenGroup.exp qw[ inl a :: nil ] z
+    pres-exp a (pos O) = idp
+    pres-exp a (pos (S O)) = idp
+    pres-exp a (pos (S (S n))) =
+      ap (GenGroup.comp qw[ inl a :: nil ]) (pres-exp a (pos (S n)))
+    pres-exp a (negsucc O) = idp
+    pres-exp a (negsucc (S n)) =
+      ap (GenGroup.comp qw[ inr a :: nil ]) (pres-exp a (negsucc n))
 
-  record LegalFunction : Type (lmax (lmax i j) m) where
-    field
-      f : A → G.El
-      legality : is-legal f
-
-  LegalFunction= : {lf lg : LegalFunction}
-    → LegalFunction.f lf == LegalFunction.f lg
-    → lf == lg
-  LegalFunction= {lf} {lg} idp =
-    ap mk-legal-function $
-    prop-path (is-legal-is-prop lf.f) lf.legality lg.legality
-    where
-      module lf = LegalFunction lf
-      module lg = LegalFunction lg
-      mk-legal-function : is-legal lf.f → LegalFunction
-      mk-legal-function l = record { f = lf.f; legality = l }
-
-  module _ (fun : LegalFunction) where
+  -- freeness
+  module HomomorphismEquiv {j} (G : Group j) where
 
     private
-      module fun = LegalFunction fun
-      f* = fun.f
+      module G = Group G
+    open RelationRespectingFunctions A R G public
 
-      abstract
-        Word-extendᴳ-emap : ∀ {l₁ l₂}
-          → QuotWordRel {A} {R} l₁ l₂
-          → Word-extendᴳ G f* l₁ == Word-extendᴳ G f* l₂
-        Word-extendᴳ-emap (qwr-refl idp) = idp
-        Word-extendᴳ-emap (qwr-trans qwr qwr₁) = (Word-extendᴳ-emap qwr) ∙ (Word-extendᴳ-emap qwr₁)
-        Word-extendᴳ-emap (qwr-sym qwr) = ! (Word-extendᴳ-emap qwr)
-        Word-extendᴳ-emap (qwr-flip-r x) =
-          G.comp (PlusMinus-extendᴳ G f* x) (G.comp (PlusMinus-extendᴳ G f* (flip x)) G.ident)
-            =⟨ ap (G.comp (PlusMinus-extendᴳ G f* x)) (G.unit-r (PlusMinus-extendᴳ G f* (flip x))) ⟩
-          G.comp (PlusMinus-extendᴳ G f* x) (PlusMinus-extendᴳ G f* (flip x))
-            =⟨ ap (G.comp (PlusMinus-extendᴳ G f* x)) (PlusMinus-extendᴳ-flip G f* x) ⟩
-          G.comp (PlusMinus-extendᴳ G f* x) (G.inv (PlusMinus-extendᴳ G f* x))
-            =⟨ G.inv-r (PlusMinus-extendᴳ G f* x) ⟩
-          G.ident =∎
-        Word-extendᴳ-emap (qwr-cong {l₁} {l₂} {l₃} {l₄} qwr qwr') =
-          Word-extendᴳ G f* (l₁ ++ l₃)
-            =⟨ Word-extendᴳ-++ G f* l₁ l₃ ⟩
-          G.comp (Word-extendᴳ G f* l₁) (Word-extendᴳ G f* l₃)
-            =⟨ ap2 G.comp (Word-extendᴳ-emap qwr) (Word-extendᴳ-emap qwr') ⟩
-          G.comp (Word-extendᴳ G f* l₂) (Word-extendᴳ G f* l₄)
-            =⟨ ! (Word-extendᴳ-++ G f* l₂ l₄) ⟩
-          Word-extendᴳ G f* (l₂ ++ l₄) =∎
-        Word-extendᴳ-emap (qwr-rel r) = fun.legality r
+    module _ (fun : RelationRespectingFunction) where
 
-    GeneratedGroup-extend : (GeneratedGroup A R →ᴳ G)
-    GeneratedGroup-extend = record {M} where
-      module M where
-        f : QuotWord A R → G.El
-        f = QuotWord-rec {A} {R} (Word-extendᴳ G f*)
-            (λ r → Word-extendᴳ-emap r)
-        abstract
-          pres-comp : preserves-comp (GeneratedGroup.comp A R) G.comp f
-          pres-comp =
-            QuotWord-elim
-              (λ l₁ → QuotWord-elim
-                (λ l₂ → Word-extendᴳ-++ G f* l₁ l₂)
-                (λ _ → prop-has-all-paths-↓))
-              (λ _ → prop-has-all-paths-↓)
-
-  private
-    module Lemma (hom : GeneratedGroup A R →ᴳ G) where
       private
-        open GroupHom hom
-        f* : A → G.El
-        f* a = f qw[ inl a :: nil ]
+        module fun = RelationRespectingFunction fun
+        f* = fun.f
+
+        abstract
+          Word-extendᴳ-emap : ∀ {l₁ l₂}
+            → QuotWordRel l₁ l₂
+            → Word-extendᴳ G f* l₁ == Word-extendᴳ G f* l₂
+          Word-extendᴳ-emap (qwr-refl idp) = idp
+          Word-extendᴳ-emap (qwr-trans qwr qwr₁) = (Word-extendᴳ-emap qwr) ∙ (Word-extendᴳ-emap qwr₁)
+          Word-extendᴳ-emap (qwr-sym qwr) = ! (Word-extendᴳ-emap qwr)
+          Word-extendᴳ-emap (qwr-flip-r x) =
+            G.comp (PlusMinus-extendᴳ G f* x) (PlusMinus-extendᴳ G f* (flip x))
+              =⟨ ap (G.comp (PlusMinus-extendᴳ G f* x)) (PlusMinus-extendᴳ-flip G f* x) ⟩
+            G.comp (PlusMinus-extendᴳ G f* x) (G.inv (PlusMinus-extendᴳ G f* x))
+              =⟨ G.inv-r (PlusMinus-extendᴳ G f* x) ⟩
+            G.ident =∎
+          Word-extendᴳ-emap (qwr-cong {l₁} {l₂} {l₃} {l₄} qwr qwr') =
+            Word-extendᴳ G f* (l₁ ++ l₃)
+              =⟨ Word-extendᴳ-++ G f* l₁ l₃ ⟩
+            G.comp (Word-extendᴳ G f* l₁) (Word-extendᴳ G f* l₃)
+              =⟨ ap2 G.comp (Word-extendᴳ-emap qwr) (Word-extendᴳ-emap qwr') ⟩
+            G.comp (Word-extendᴳ G f* l₂) (Word-extendᴳ G f* l₄)
+              =⟨ ! (Word-extendᴳ-++ G f* l₂ l₄) ⟩
+            Word-extendᴳ G f* (l₂ ++ l₄) =∎
+          Word-extendᴳ-emap (qwr-rel r) = fun.respects r
+
+      extend : (GenGroup →ᴳ G)
+      extend = record {M} where
+        module M where
+          f : QuotWord → G.El
+          f = QuotWord-rec (Word-extendᴳ G f*)
+              (λ r → Word-extendᴳ-emap r)
+          abstract
+            pres-comp : preserves-comp GenGroup.comp G.comp f
+            pres-comp =
+              QuotWord-elim
+                (λ l₁ → QuotWord-elim
+                  (λ l₂ → Word-extendᴳ-++ G f* l₁ l₂)
+                  (λ _ → prop-has-all-paths-↓))
+                (λ _ → prop-has-all-paths-↓)
+
+    private
+      module Lemma (hom : GenGroup →ᴳ G) where
+        private
+          open GroupHom hom
+          restr : A → G.El
+          restr a = f qw[ inl a :: nil ]
+
+        abstract
+          PlusMinus-extendᴳ-hom : ∀ x → PlusMinus-extendᴳ G restr x == f qw[ x :: nil ]
+          PlusMinus-extendᴳ-hom (inl x) = idp
+          PlusMinus-extendᴳ-hom (inr x) = ! $ pres-inv qw[ inl x :: nil ]
+
+          Word-extendᴳ-hom : ∀ l → Word-extendᴳ G restr l == f qw[ l ]
+          Word-extendᴳ-hom nil = ! pres-ident
+          Word-extendᴳ-hom (x :: nil) = PlusMinus-extendᴳ-hom x
+          Word-extendᴳ-hom (x :: l@(_ :: _)) =
+            G.comp (PlusMinus-extendᴳ G restr x) (Word-extendᴳ G restr l)
+              =⟨ ap2 G.comp (PlusMinus-extendᴳ-hom x) (Word-extendᴳ-hom l) ⟩
+            G.comp (f qw[ x :: nil ]) (f qw[ l ])
+              =⟨ ! (pres-comp _ _) ⟩
+            f qw[ x :: l ] =∎
+
+          restr-respects-rel : ∀ {l₁ l₂} → R l₁ l₂ → Word-extendᴳ G restr l₁ == Word-extendᴳ G restr l₂
+          restr-respects-rel {l₁} {l₂} r =
+            Word-extendᴳ G restr l₁
+              =⟨ Word-extendᴳ-hom l₁ ⟩
+            f qw[ l₁ ]
+              =⟨ ap f (quot-rel (qwr-rel r)) ⟩
+            f qw[ l₂ ]
+              =⟨ ! (Word-extendᴳ-hom l₂) ⟩
+            Word-extendᴳ G restr l₂ =∎
+
+        restrict : RelationRespectingFunction
+        restrict = rel-res-fun restr restr-respects-rel
+
+      open Lemma
+
+    extend-is-equiv : is-equiv extend
+    extend-is-equiv = is-eq _ from to-from from-to where
+      to = extend
+      from = restrict
 
       abstract
-        PlusMinus-extendᴳ-hom : ∀ x → PlusMinus-extendᴳ G f* x == f qw[ x :: nil ]
-        PlusMinus-extendᴳ-hom (inl x) = idp
-        PlusMinus-extendᴳ-hom (inr x) = ! $ pres-inv qw[ inl x :: nil ]
+        to-from : ∀ h → to (from h) == h
+        to-from h = group-hom= $ λ= $ QuotWord-elim
+          (λ l → Word-extendᴳ-hom h l)
+          (λ _ → prop-has-all-paths-↓)
 
-        Word-extendᴳ-hom : ∀ l → Word-extendᴳ G f* l == f qw[ l ]
-        Word-extendᴳ-hom nil = ! pres-ident
-        Word-extendᴳ-hom (x :: l) =
-          G.comp (PlusMinus-extendᴳ G f* x) (Word-extendᴳ G f* l)
-            =⟨ ap2 G.comp (PlusMinus-extendᴳ-hom x) (Word-extendᴳ-hom l) ⟩
-          G.comp (f qw[ x :: nil ]) (f qw[ l ])
-            =⟨ ! (pres-comp _ _) ⟩
-          f qw[ x :: l ] =∎
+        from-to : ∀ fun → from (to fun) == fun
+        from-to fun = RelationRespectingFunction= (λ= λ a → idp)
 
-        f*-legal : ∀ {l₁ l₂} → R l₁ l₂ → Word-extendᴳ G f* l₁ == Word-extendᴳ G f* l₂
-        f*-legal {l₁} {l₂} r =
-          Word-extendᴳ G f* l₁
-            =⟨ Word-extendᴳ-hom l₁ ⟩
-          f qw[ l₁ ]
-            =⟨ ap f (quot-rel (qwr-rel r)) ⟩
-          f qw[ l₂ ]
-            =⟨ ! (Word-extendᴳ-hom l₂) ⟩
-          Word-extendᴳ G f* l₂ =∎
-
-      legal-function : LegalFunction
-      legal-function = record { f = f*; legality = f*-legal }
-
-    open Lemma
-
-  GeneratedGroup-extend-is-equiv : is-equiv GeneratedGroup-extend
-  GeneratedGroup-extend-is-equiv = is-eq _ from to-from from-to where
-    to = GeneratedGroup-extend
-    from = legal-function
-
-    abstract
-      to-from : ∀ h → to (from h) == h
-      to-from h = group-hom= $ λ= $ QuotWord-elim
-        (λ l → Word-extendᴳ-hom h l)
-        (λ _ → prop-has-all-paths-↓)
-
-      from-to : ∀ fun → from (to fun) == fun
-      from-to fun = LegalFunction= (λ= λ a → G.unit-r (LegalFunction.f fun a))
-
-  GeneratedGroup-extend-equiv : LegalFunction ≃ (GeneratedGroup A R →ᴳ G)
-  GeneratedGroup-extend-equiv = GeneratedGroup-extend , GeneratedGroup-extend-is-equiv
+    extend-equiv : RelationRespectingFunction ≃ (GenGroup →ᴳ G)
+    extend-equiv = extend , extend-is-equiv

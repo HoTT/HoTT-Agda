@@ -4,6 +4,8 @@ open import HoTT
 
 module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
 
+  open FreeGroup A
+
   is-reduced : Word A → Type i
   is-reduced nil                   = Lift ⊤
   is-reduced (_     :: nil)        = Lift ⊤
@@ -265,7 +267,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
   private
     abstract
       QuotWordRel-cons : ∀ x w₂ (red₂ : is-reduced w₂)
-        → FreeQuotWordRel A (x :: w₂) (fst (rw-cons x (w₂ , red₂)))
+        → QuotWordRel (x :: w₂) (fst (rw-cons x (w₂ , red₂)))
       QuotWordRel-cons x nil _ = qwr-refl idp
       QuotWordRel-cons (inl x) (inl y :: w) _ = qwr-refl idp
       QuotWordRel-cons (inl x) (inr y :: w) _ with dec x y
@@ -279,7 +281,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       QuotWordRel-cons (inr x) (inr y :: w) _ = qwr-refl idp
 
       QuotWordRel-++ : ∀ w₁ rw₂
-        → FreeQuotWordRel A (w₁ ++ fst rw₂) (fst (rw-++' w₁ rw₂))
+        → QuotWordRel (w₁ ++ fst rw₂) (fst (rw-++' w₁ rw₂))
       QuotWordRel-++ nil _ = qwr-refl idp
       QuotWordRel-++ (x :: w₁) rw₂ =
         x :: w₁ ++ fst rw₂
@@ -289,13 +291,13 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
         fst (rw-++' (x :: w₁) rw₂) qwr∎
 
   -- freeness
-  ReducedWord-to-FreeGroup : ReducedWord-group →ᴳ FreeGroup A
+  ReducedWord-to-FreeGroup : ReducedWord-group →ᴳ FreeGroup
   ReducedWord-to-FreeGroup = group-hom (λ rw → qw[ fst rw ])
     (λ rw₁ rw₂ → ! $ quot-rel $ QuotWordRel-++ (fst rw₁) rw₂)
 
   private
     abstract
-      reduce-emap : ∀ {w₁ w₂ rw₃} → FreeQuotWordRel A w₁ w₂ → rw-++' w₁ rw₃ == rw-++' w₂ rw₃
+      reduce-emap : ∀ {w₁ w₂ rw₃} → QuotWordRel w₁ w₂ → rw-++' w₁ rw₃ == rw-++' w₂ rw₃
       reduce-emap {rw₃ = rw₃} (qwr-refl p) = ap (λ w → rw-++' w rw₃) p
       reduce-emap (qwr-trans qwr₁ qwr₂) = reduce-emap qwr₁ ∙ reduce-emap qwr₂
       reduce-emap (qwr-sym qwr) = ! (reduce-emap qwr)
@@ -314,12 +316,12 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
 
     to = GroupHom.f ReducedWord-to-FreeGroup
 
-    from : FreeQuotWord A → ReducedWord
+    from : QuotWord → ReducedWord
     from = QuotWord-rec reduce reduce-emap
 
     abstract
       QuotWordRel-reduce : ∀ w
-        → FreeQuotWordRel A w (fst (reduce w))
+        → QuotWordRel w (fst (reduce w))
       QuotWordRel-reduce nil = qwr-refl idp
       QuotWordRel-reduce (x :: w) =
         x :: w
@@ -336,5 +338,5 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       from-to : ∀ rw → from (to rw) == rw
       from-to = Group.unit-r ReducedWord-group
 
-  ReducedWord-iso-FreeGroup : ReducedWord-group ≃ᴳ FreeGroup A
+  ReducedWord-iso-FreeGroup : ReducedWord-group ≃ᴳ FreeGroup
   ReducedWord-iso-FreeGroup = ReducedWord-to-FreeGroup , is-eq to from to-from from-to
