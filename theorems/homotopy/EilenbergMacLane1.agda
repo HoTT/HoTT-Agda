@@ -280,8 +280,8 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
     decode-encode : ∀ {x} (α : embase' G == x) → decode (encode α) == α
     decode-encode idp = emloop-ident {G = G}
 
-    emloop-equiv : G.El ≃ (embase' G == embase)
-    emloop-equiv = equiv emloop encode decode-encode encode-emloop
+  emloop-equiv : G.El ≃ (embase' G == embase)
+  emloop-equiv = equiv emloop encode decode-encode encode-emloop
 
   instance
     EM₁-level₁ : {n : ℕ₋₂} → has-level (S (S (S n))) (EM₁ G)

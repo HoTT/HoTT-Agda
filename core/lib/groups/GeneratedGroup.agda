@@ -183,6 +183,9 @@ module GeneratedGroup (A : Type i) (R : Rel (Word A) m) where
     pres-exp a (negsucc (S n)) =
       ap (GenGroup.comp qw[ inr a :: nil ]) (pres-exp a (negsucc n))
 
+    rel-holds : ∀ {w₁} {w₂} (r : R w₁ w₂) → qw[ w₁ ] == qw[ w₂ ]
+    rel-holds r = quot-rel (qwr-rel r)
+
   -- freeness
   module HomomorphismEquiv {j} (G : Group j) where
 

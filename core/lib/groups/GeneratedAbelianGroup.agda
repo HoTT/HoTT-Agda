@@ -20,7 +20,7 @@ module GeneratedAbelianGroup (A : Type i) (R : Rel (Word A) m) where
 
   private
     module Gen = GeneratedGroup A AbGroupRel
-  open Gen hiding (module HomomorphismEquiv) public
+  open Gen hiding (module HomomorphismEquiv; rel-holds) public
 
   agr-reverse : (w : Word A) → QuotWordRel (reverse w) w
   agr-reverse nil = qwr-refl idp
@@ -45,6 +45,9 @@ module GeneratedAbelianGroup (A : Type i) (R : Rel (Word A) m) where
             (λ lb → quot-rel (qwr-rel (agr-commutes la lb)))
             (λ _ → prop-has-all-paths-↓))
         (λ _ → prop-has-all-paths-↓ {{Π-level ⟨⟩}})
+
+  rel-holds : ∀ {w₁} {w₂} (r : R w₁ w₂) → qw[ w₁ ] == qw[ w₂ ]
+  rel-holds r = Gen.rel-holds (agr-rel r)
 
   module GenAbGroup = AbGroup GenAbGroup
 
