@@ -13,42 +13,41 @@ module cw.cohomology.cochainequiv.DualizedFirstBoundary (OT : OrdinaryTheory lze
   (⊙fin-skel : ⊙FinSkeleton 1) where
 
 open OrdinaryTheory OT
+open FreeAbelianGroup
 
 private
   fin-skel = ⊙FinSkeleton.skel ⊙fin-skel
   I = AttachedFinSkeleton.numCells fin-skel
-  
+
   I₋₁ = AttachedFinSkeleton.skel fin-skel
+
+  module FAG   = FreeAbelianGroup (Fin I)
+  module FAG₋₁ = FreeAbelianGroup (Fin I₋₁)
+
+  open FAG   renaming (FreeAbGroup to G)   using ()
+  open FAG₋₁ renaming (FreeAbGroup to G₋₁) using ()
 
 abstract
   rephrase-dualized-first-boundary-in-degree : ∀ g <I
-    →  FormalSum-extend (C2-abgroup 0) g (GroupHom.f (fboundary-last fin-skel) fs[ inl <I :: nil ])
+    →  GroupHom.f (Freeness.extend _ (C2-abgroup 0) g) (GroupHom.f (fboundary-last fin-skel) (FAG.insert <I))
     == Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (fdegree-last fin-skel <I <I₋₁))
   rephrase-dualized-first-boundary-in-degree g <I =
-    FormalSum-extend (C2-abgroup 0) g (GroupHom.f (fboundary-last fin-skel) fs[ inl <I :: nil ])
-      =⟨ ap (FormalSum-extend (C2-abgroup 0) g) $
-          app= (is-equiv.g-f (FreeAbGroup-extend-is-equiv (FreeAbGroup (Fin I₋₁))) (fboundary'-last fin-skel)) <I ⟩
-    FormalSum-extend (C2-abgroup 0) g
-      (Group.sum (FreeAbGroup.grp (Fin I₋₁))
-        (λ <I₋₁ → Group.exp (FreeAbGroup.grp (Fin I₋₁)) fs[ inl <I₋₁ :: nil ] (fdegree-last fin-skel <I <I₋₁)))
-      =⟨ GroupHom.pres-sum (FreeAbGroup-extend (C2-abgroup 0) g)
-          (λ <I₋₁ → Group.exp (FreeAbGroup.grp (Fin I₋₁)) fs[ inl <I₋₁ :: nil ] (fdegree-last fin-skel <I <I₋₁)) ⟩
-    Group.sum (C2 0)
-      (λ <I₋₁ → 
-        (FormalSum-extend (C2-abgroup 0) g
-          (Group.exp (FreeAbGroup.grp (Fin I₋₁)) fs[ inl <I₋₁ :: nil ] (fdegree-last fin-skel <I <I₋₁))))
-      =⟨ ap (Group.sum (C2 0))
-          (λ= λ <I₋₁ →
-            GroupHom.pres-exp (FreeAbGroup-extend (C2-abgroup 0) g)
-              fs[ inl <I₋₁ :: nil ]
-              (fdegree-last fin-skel <I <I₋₁)) ⟩
-    Group.sum (C2 0)
-      (λ <I₋₁ → 
-        (Group.exp (C2 0)
-          (FormalSum-extend (C2-abgroup 0) g fs[ inl <I₋₁ :: nil ])
-          (fdegree-last fin-skel <I <I₋₁)))
-      =⟨ ap (Group.sum (C2 0))
-          (λ= λ <I₋₁ → ap (λ g → Group.exp (C2 0) g (fdegree-last fin-skel <I <I₋₁)) $
-            app= (is-equiv.g-f (FreeAbGroup-extend-is-equiv (C2-abgroup 0)) g) <I₋₁) ⟩
-    Group.sum (C2 0) (λ <I₋₁ → (Group.exp (C2 0) (g <I₋₁) (fdegree-last fin-skel <I <I₋₁)))
+    γ.f (GroupHom.f (fboundary-last fin-skel) (FAG.insert <I))
+      =⟨ ap γ.f $ app= (is-equiv.g-f (FAG.Freeness.extend-is-equiv G₋₁) (fboundary'-last fin-skel)) <I ⟩
+    γ.f (G₋₁.sum (λ <I₋₁ → G₋₁.exp (FAG₋₁.insert <I₋₁) (fdegree-last fin-skel <I <I₋₁)))
+      =⟨ γ.pres-sum (λ <I₋₁ → G₋₁.exp (FAG₋₁.insert <I₋₁) (fdegree-last fin-skel <I <I₋₁)) ⟩
+    C⁰2.sum (λ <I₋₁ → (γ.f (G₋₁.exp (FAG₋₁.insert <I₋₁) (fdegree-last fin-skel <I <I₋₁))))
+      =⟨ ap C⁰2.sum (λ= λ <I₋₁ → γ.pres-exp (FAG₋₁.insert <I₋₁) (fdegree-last fin-skel <I <I₋₁)) ⟩
+    C⁰2.sum (λ <I₋₁ → (C⁰2.exp (γ.f (FAG₋₁.insert <I₋₁)) (fdegree-last fin-skel <I <I₋₁)))
+      =⟨ ap C⁰2.sum
+          (λ= λ <I₋₁ → ap (λ g → C⁰2.exp g (fdegree-last fin-skel <I <I₋₁)) $
+            app= (is-equiv.g-f (FAG₋₁.Freeness.extend-is-equiv C⁰2) g) <I₋₁) ⟩
+    C⁰2.sum (λ <I₋₁ → (C⁰2.exp (g <I₋₁) (fdegree-last fin-skel <I <I₋₁)))
       =∎
+    where
+      C⁰2 : AbGroup lzero
+      C⁰2 = C2-abgroup 0
+      module C⁰2 = AbGroup C⁰2
+      γ : G₋₁.grp →ᴳ C⁰2.grp
+      γ = FAG₋₁.Freeness.extend C⁰2 g
+      module γ = GroupHom γ

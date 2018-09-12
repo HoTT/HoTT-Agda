@@ -7,6 +7,8 @@ open import cohomology.ChainComplex
 
 module cw.cohomology.cellular.ChainComplex {i : ULevel} where
 
+  open FreeAbelianGroup
+
   chain-template : ∀ {n} (skel : Skeleton {i} n) {m}
     → Dec (m ≤ n) → AbGroup i
   chain-template skel (inl m≤n) = FreeAbGroup (cells-nth m≤n skel)
@@ -47,7 +49,7 @@ module cw.cohomology.cellular.ChainComplex {i : ULevel} where
       chain m = chain-template skel (≤-dec m n)
 
       augment : AbGroup.grp (chain 0) →ᴳ AbGroup.grp head
-      augment = FreeAbGroup-extend head λ _ → lift 1
+      augment = Freeness.extend _ head λ _ → lift 1
 
       boundary : ∀ m → (AbGroup.grp (chain (S m)) →ᴳ AbGroup.grp (chain m))
       boundary m = boundary-template skel dec fin-sup (≤-dec m n) (≤-dec (S m) n)
@@ -118,7 +120,7 @@ module cw.cohomology.cellular.ChainComplex {i : ULevel} where
 
     boundary-template-β : ∀ {n} (skel : Skeleton {i} (S n)) dec fin-sup
       →  boundary-template {n = S n} skel dec fin-sup (inl lteS) (inl lteE)
-      == FreeAbGroup-extend
+      == Freeness.extend _
             (FreeAbGroup (cells-last (cw-init skel)))
             (boundary'-last skel dec fin-sup)
     boundary-template-β skel dec fin-sup = group-hom= $

@@ -79,10 +79,30 @@ module _ {i} {A : Type i} where
   ∈-++ : ∀ a l₁ l₂ → a ∈ (l₁ ++ l₂) → (a ∈ l₁) ⊔ (a ∈ l₂)
   ∈-++ a = Any-++ (_== a)
 
-  -- [foldr] in Haskell
-  foldr : ∀ {j} {B : Type j} → (A → B → B) → B → List A → B
-  foldr f b nil = b
-  foldr f b (a :: l) = f a (foldr f b l)
+  module _ {j} {B : Type j} (f : A → B → B) where
+    -- [foldr] in Haskell
+    foldr : B → List A → B
+    foldr b nil = b
+    foldr b (a :: l) = f a (foldr b l)
+
+    foldr-++ : ∀ b l₁ l₂
+      → foldr b (l₁ ++ l₂) == foldr (foldr b l₂) l₁
+    foldr-++ b nil l₂ = idp
+    foldr-++ b (a :: l₁) l₂ = ap (f a) (foldr-++ b l₁ l₂)
+
+  module _ (f : A → A → A) where
+    foldr' : A → List A → A
+    foldr' d nil = d
+    foldr' _ (a :: nil) = a
+    foldr' d (a :: l@(_ :: _)) = f a (foldr' d l)
+
+    foldr'=foldr : ∀ d → (∀ a → f a d == a)
+      → (l : List A)
+      → foldr' d l == foldr f d l
+    foldr'=foldr d is-unit-r nil = idp
+    foldr'=foldr d is-unit-r (a :: nil) = ! (is-unit-r a)
+    foldr'=foldr d is-unit-r (a :: l@(_ :: _)) =
+      ap (f a) (foldr'=foldr d is-unit-r l)
 
   -- [length] in Haskell
   length : List A → ℕ
@@ -137,11 +157,20 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
   map-++ : ∀ l₁ l₂ → map (l₁ ++ l₂) == map l₁ ++ map l₂
   map-++ nil l₂ = idp
   map-++ (x :: l₁) l₂ = ap (f x ::_) (map-++ l₁ l₂)
-{-
+
   reverse-map : ∀ l → reverse (map l) == map (reverse l)
   reverse-map nil = idp
-  reverse-map (x :: l) = {! ! (map-++ (reverse l) (x :: nil)) !}
--}
+  reverse-map (x :: l) =
+    snoc (reverse (map l)) (f x)
+      =⟨ ap (λ l' → snoc l' (f x)) (reverse-map l) ⟩
+    snoc (map (reverse l)) (f x)
+      =⟨ idp ⟩
+    map (reverse l) ++ map (x :: nil)
+      =⟨ ! (map-++ (reverse l) (x :: nil)) ⟩
+    map (reverse l ++ (x :: nil))
+      =⟨ idp ⟩
+    map (reverse (x :: l)) =∎
+
 -- These functions use different [A], [B] or [f].
 module _ {i} {A : Type i} where
   -- [concat] in Haskell

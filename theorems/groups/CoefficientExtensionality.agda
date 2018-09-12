@@ -6,6 +6,8 @@ module groups.CoefficientExtensionality where
 
 module _ {i} {A : Type i} (dec : has-dec-eq A) where
 
+  open FreeAbelianGroup A
+
   Word-coef : Word A → (A → ℤ)
   Word-coef nil a = 0
   Word-coef (inl a' :: w) a with dec a' a
@@ -45,44 +47,52 @@ module _ {i} {A : Type i} (dec : has-dec-eq A) where
     abstract
       FormalSum-coef-rel : {w₁ w₂ : Word A} → FormalSumRel w₁ w₂
         → ∀ a → Word-coef w₁ a == Word-coef w₂ a
-      FormalSum-coef-rel (fsr-refl p) a = ap (λ w → Word-coef w a) p
-      FormalSum-coef-rel (fsr-trans fwr₁ fwr₂) a = (FormalSum-coef-rel fwr₁ a) ∙ (FormalSum-coef-rel fwr₂ a)
-      FormalSum-coef-rel (fsr-sym fsr) a = ! $ FormalSum-coef-rel fsr a
-      FormalSum-coef-rel (fsr-cons x fwr) a =
-          Word-coef-++ (x :: nil) _ a
-        ∙ ap (Word-coef (x :: nil) a ℤ+_) (FormalSum-coef-rel fwr a)
-        ∙ ! (Word-coef-++ (x :: nil) _ a)
-      FormalSum-coef-rel (fsr-swap x y w) a =
-          Word-coef-++ (x :: y :: nil) _ a
-        ∙ ap (_ℤ+ Word-coef w a)
-            ( Word-coef-++ (x :: nil) (y :: nil) a
-            ∙ ℤ+-comm (Word-coef (x :: nil) a) (Word-coef (y :: nil) a)
-            ∙ ! (Word-coef-++ (y :: nil) (x :: nil) a))
-        ∙ ! (Word-coef-++ (y :: x :: nil) _ a)
-      FormalSum-coef-rel (fsr-flip x w) a =
-          Word-coef-++ (x :: flip x :: nil) w a
-        ∙ ap (_ℤ+ Word-coef w a)
-            ( Word-coef-++ (x :: nil) (flip x :: nil) a
-            ∙ ap (Word-coef (x :: nil) a ℤ+_) (Word-coef-flip (x :: nil) a)
-            ∙ ℤ~-inv-r (Word-coef (x :: nil) a) )
-        ∙ ℤ+-unit-l (Word-coef w a)
+      FormalSum-coef-rel (qwr-refl p) a = ap (λ w → Word-coef w a) p
+      FormalSum-coef-rel (qwr-trans r r') a =
+        FormalSum-coef-rel r a ∙ FormalSum-coef-rel r' a
+      FormalSum-coef-rel (qwr-sym r) a = ! (FormalSum-coef-rel r a)
+      FormalSum-coef-rel (qwr-cong {w₁} {w₂} {w₃} {w₄} r r') a =
+        Word-coef (w₁ ++ w₃) a
+          =⟨ Word-coef-++ w₁ w₃ a ⟩
+        Word-coef w₁ a ℤ+ Word-coef w₃ a
+          =⟨ ap2 _ℤ+_ (FormalSum-coef-rel r a) (FormalSum-coef-rel r' a) ⟩
+        Word-coef w₂ a ℤ+ Word-coef w₄ a
+          =⟨ ! (Word-coef-++ w₂ w₄ a) ⟩
+        Word-coef (w₂ ++ w₄) a =∎
+      FormalSum-coef-rel (qwr-flip-r x) a =
+        Word-coef (x :: flip x :: nil) a
+          =⟨ Word-coef-++ (x :: nil) (flip x :: nil) a ⟩
+        Word-coef (x :: nil) a ℤ+ Word-coef (flip x :: nil) a
+          =⟨ ap (Word-coef (x :: nil) a ℤ+_) (Word-coef-flip (x :: nil) a) ⟩
+        Word-coef (x :: nil) a ℤ+ ℤ~ (Word-coef (x :: nil) a)
+          =⟨ ℤ~-inv-r (Word-coef (x :: nil) a) ⟩
+        pos 0 =∎
+      FormalSum-coef-rel (qwr-rel (agr-rel ())) a
+      FormalSum-coef-rel (qwr-rel (agr-commutes w₁ w₂)) a =
+        Word-coef (w₁ ++ w₂) a
+          =⟨ Word-coef-++ w₁ w₂ a ⟩
+        Word-coef w₁ a ℤ+ Word-coef w₂ a
+          =⟨ ℤ+-comm (Word-coef w₁ a) (Word-coef w₂ a) ⟩
+        Word-coef w₂ a ℤ+ Word-coef w₁ a
+          =⟨ ! (Word-coef-++ w₂ w₁ a) ⟩
+        Word-coef (w₂ ++ w₁) a =∎
 
-  FormalSum-coef : FormalSum A → (A → ℤ)
-  FormalSum-coef = FormalSum-rec Word-coef (λ r → λ= $ FormalSum-coef-rel r)
+  FormalSum-coef : FormalSum → (A → ℤ)
+  FormalSum-coef = QuotWord-rec Word-coef (λ r → λ= $ FormalSum-coef-rel r)
 
   -- Theorem : if coef w a == 0 then FormalSumRel w nil
 
   private
     abstract
       Word-exp-succ : ∀ (a : A) z → FormalSumRel (inl a :: Word-exp a z) (Word-exp a (succ z))
-      Word-exp-succ a (pos _) = fsr-refl idp
-      Word-exp-succ a (negsucc 0) = fsr-flip (inl a) nil
-      Word-exp-succ a (negsucc (S n)) = fsr-flip (inl a) (Word-exp a (negsucc n))
+      Word-exp-succ a (pos _) = qwr-refl idp
+      Word-exp-succ a (negsucc 0) = qwr-flip-r (inl a)
+      Word-exp-succ a (negsucc (S n)) = qwr-cong-l (qwr-flip-r (inl a)) (Word-exp a (negsucc n))
 
       Word-exp-pred : ∀ (a : A) z → FormalSumRel (inr a :: Word-exp a z) (Word-exp a (pred z))
-      Word-exp-pred a (pos 0) = fsr-refl idp
-      Word-exp-pred a (pos (S n)) = fsr-flip (inr a) (Word-exp a (pos n))
-      Word-exp-pred a (negsucc _) = fsr-refl idp
+      Word-exp-pred a (pos 0) = qwr-refl idp
+      Word-exp-pred a (pos (S n)) = qwr-cong-l (qwr-flip-r (inr a)) (Word-exp a (pos n))
+      Word-exp-pred a (negsucc _) = qwr-refl idp
 
       Word-coef-inl-eq : ∀ {a b} (p : b == a) w
         → Word-coef (inl b :: w) a == succ (Word-coef w a)
@@ -126,24 +136,35 @@ module _ {i} {A : Type i} (dec : has-dec-eq A) where
         left-captures-all = idp;
         right-list = nil;
         right-shorter = inl idp;
-        fsr = fsr-refl idp}
+        fsr = qwr-refl idp}
       collect-split a (inl b :: w) idp with dec b a
       ... | inl b=a = record {
         left-exponent = succ left-exponent;
         left-captures-all = Word-coef-inl-eq b=a w ∙ ap succ left-captures-all;
         right-list = right-list;
         right-shorter = ≤-trans right-shorter (inr ltS);
-        fsr = fsr-trans (fsr-refl (ap (λ a → inl a :: w) b=a)) $
-              fsr-trans (fsr-cons (inl a) fsr) $
-                        (FormalSumRel-cong-++-l (Word-exp-succ a left-exponent) right-list)}
+        fsr =
+          inl b :: w
+            qwr⟨ qwr-refl (ap (λ a → inl a :: w) b=a) ⟩
+          inl a :: w
+            qwr⟨ qwr-cong-r (inl a :: nil) fsr ⟩
+          inl a :: Word-exp a left-exponent ++ right-list
+            qwr⟨ qwr-cong-l (Word-exp-succ a left-exponent) right-list ⟩
+          Word-exp a (succ left-exponent) ++ right-list qwr∎}
         where open CollectSplitIH (collect-split a w idp)
       ... | inr b≠a = record {
         left-exponent = left-exponent;
         left-captures-all = Word-coef-inl-neq b≠a w ∙ left-captures-all;
         right-list = inl b :: right-list;
         right-shorter = ≤-ap-S right-shorter;
-        fsr = fsr-trans (fsr-cons (inl b) fsr) $
-          fsr-sym (FormalSumRel-swap1 (inl b) (Word-exp a left-exponent) right-list)}
+        fsr =
+          inl b :: w
+            qwr⟨ qwr-cong-r (inl b :: nil) fsr ⟩
+          inl b :: Word-exp a left-exponent ++ right-list
+            qwr⟨ qwr-cong-l (qwr-rel (agr-commutes (inl b :: nil) (Word-exp a left-exponent))) right-list ⟩
+          (Word-exp a left-exponent ++ (inl b :: nil)) ++ right-list
+            qwr⟨ qwr-refl (++-assoc (Word-exp a left-exponent) _ _) ⟩
+          Word-exp a left-exponent ++ (inl b :: right-list) qwr∎}
         where open CollectSplitIH (collect-split a w idp)
       collect-split a (inr b :: w) idp with dec b a
       ... | inl b=a = record {
@@ -151,17 +172,28 @@ module _ {i} {A : Type i} (dec : has-dec-eq A) where
         left-captures-all = Word-coef-inr-eq b=a w ∙ ap pred left-captures-all;
         right-list = right-list;
         right-shorter = ≤-trans right-shorter (inr ltS);
-        fsr = fsr-trans (fsr-refl (ap (λ a → inr a :: w) b=a)) $
-              fsr-trans (fsr-cons (inr a) fsr) $
-                        (FormalSumRel-cong-++-l (Word-exp-pred a left-exponent) right-list)}
+        fsr =
+          inr b :: w
+            qwr⟨ qwr-refl (ap (λ a → inr a :: w) b=a) ⟩
+          inr a :: w
+            qwr⟨ qwr-cong-r (inr a :: nil) fsr ⟩
+          inr a :: Word-exp a left-exponent ++ right-list
+            qwr⟨ qwr-cong-l (Word-exp-pred a left-exponent) right-list ⟩
+          Word-exp a (pred left-exponent) ++ right-list qwr∎}
         where open CollectSplitIH (collect-split a w idp)
       ... | inr b≠a = record {
         left-exponent = left-exponent;
         left-captures-all = Word-coef-inr-neq b≠a w ∙ left-captures-all;
         right-list = inr b :: right-list;
         right-shorter = ≤-ap-S right-shorter;
-        fsr = fsr-trans (fsr-cons (inr b) fsr) $
-          fsr-sym (FormalSumRel-swap1 (inr b) (Word-exp a left-exponent) right-list)}
+        fsr =
+          inr b :: w
+            qwr⟨ qwr-cong-r (inr b :: nil) fsr ⟩
+          inr b :: Word-exp a left-exponent ++ right-list
+            qwr⟨ qwr-cong-l (qwr-rel (agr-commutes (inr b :: nil) (Word-exp a left-exponent))) right-list ⟩
+          (Word-exp a left-exponent ++ (inr b :: nil)) ++ right-list
+            qwr⟨ qwr-refl (++-assoc (Word-exp a left-exponent) _ _) ⟩
+          Word-exp a left-exponent ++ (inr b :: right-list) qwr∎}
         where open CollectSplitIH (collect-split a w idp)
 
       -- We simulate strong induction by recursing on both [m] and [n≤m].
@@ -172,11 +204,15 @@ module _ {i} {A : Type i} (dec : has-dec-eq A) where
         = zero-coef-is-ident' (inl idp) w len zero-coef
       zero-coef-is-ident' (inr (ltSR lt)) w len zero-coef
         = zero-coef-is-ident' (inr lt) w len zero-coef
-      zero-coef-is-ident' {m = O} (inl idp) nil _ _ = fsr-refl idp
+      zero-coef-is-ident' {m = O} (inl idp) nil _ _ = qwr-refl idp
       zero-coef-is-ident' {m = O} (inl idp) (_ :: _) len _ = ⊥-rec $ ℕ-S≠O _ len
       zero-coef-is-ident' {m = S m} (inl idp) nil len _ = ⊥-rec $ ℕ-S≠O _ (! len)
       zero-coef-is-ident' {m = S m} (inl idp) (inl a :: w) len zero-coef =
-        fsr-trans whole-is-right (zero-coef-is-ident' right-shorter right-list idp right-zero-coef)
+        inl a :: w
+          qwr⟨ whole-is-right ⟩
+        right-list
+          qwr⟨ (zero-coef-is-ident' right-shorter right-list idp right-zero-coef) ⟩
+        nil qwr∎
         where
           open CollectSplitIH (collect-split a w (ℕ-S-is-inj _ _ len))
           left-exponent-is-minus-one : left-exponent == -1
@@ -185,14 +221,22 @@ module _ {i} {A : Type i} (dec : has-dec-eq A) where
 
           whole-is-right : FormalSumRel (inl a :: w) right-list
           whole-is-right =
-            fsr-trans (fsr-cons (inl a) fsr) $
-            fsr-trans (fsr-refl (ap (λ e → inl a :: Word-exp a e ++ right-list) left-exponent-is-minus-one)) $
-                      fsr-flip (inl a) right-list
+            inl a :: w
+              qwr⟨ qwr-cong-r (inl a :: nil) fsr ⟩
+            inl a :: Word-exp a left-exponent ++ right-list
+              qwr⟨ qwr-refl (ap (λ e → inl a :: Word-exp a e ++ right-list) left-exponent-is-minus-one) ⟩
+            inl a :: inr a :: right-list
+              qwr⟨ qwr-cong-l (qwr-flip-r (inl a)) right-list ⟩
+            right-list qwr∎
 
           right-zero-coef : ∀ a' → Word-coef right-list a' == 0
           right-zero-coef a' = ! (FormalSum-coef-rel whole-is-right a') ∙ zero-coef a'
       zero-coef-is-ident' {m = S m} (inl idp) (inr a :: w) len zero-coef =
-        fsr-trans whole-is-right (zero-coef-is-ident' right-shorter right-list idp right-zero-coef)
+        inr a :: w
+          qwr⟨ whole-is-right ⟩
+        right-list
+          qwr⟨ zero-coef-is-ident' right-shorter right-list idp right-zero-coef ⟩
+        nil qwr∎
         where
           open CollectSplitIH (collect-split a w (ℕ-S-is-inj _ _ len))
           left-exponent-is-one : left-exponent == 1
@@ -201,9 +245,13 @@ module _ {i} {A : Type i} (dec : has-dec-eq A) where
 
           whole-is-right : FormalSumRel (inr a :: w) right-list
           whole-is-right =
-            fsr-trans (fsr-cons (inr a) fsr) $
-            fsr-trans (fsr-refl (ap (λ e → inr a :: Word-exp a e ++ right-list) left-exponent-is-one)) $
-                      fsr-flip (inr a) right-list
+            inr a :: w
+              qwr⟨ qwr-cong-r (inr a :: nil) fsr ⟩
+            inr a :: Word-exp a left-exponent ++ right-list
+              qwr⟨ qwr-refl (ap (λ e → inr a :: Word-exp a e ++ right-list) left-exponent-is-one) ⟩
+            inr a :: inl a :: right-list
+              qwr⟨ qwr-cong-l (qwr-flip-r (inr a)) right-list ⟩
+            right-list qwr∎
 
           right-zero-coef : ∀ a' → Word-coef right-list a' == 0
           right-zero-coef a' = ! (FormalSum-coef-rel whole-is-right a') ∙ zero-coef a'
@@ -216,26 +264,29 @@ module _ {i} {A : Type i} (dec : has-dec-eq A) where
   abstract
     FormalSum-coef-ext' : ∀ w₁ w₂
       → (∀ a → Word-coef w₁ a == Word-coef w₂ a)
-      → fs[ w₁ ] == fs[ w₂ ]
-    FormalSum-coef-ext' w₁ w₂ same-coef = G.inv-is-inj fs[ w₁ ] fs[ w₂ ] $
-      G.inv-unique-l (G.inv fs[ w₂ ]) fs[ w₁ ] $ quot-rel $
-      zero-coef-is-ident (Word-flip w₂ ++ w₁)
-        (λ a → Word-coef-++ (Word-flip w₂) w₁ a
-             ∙ ap2 _ℤ+_ (Word-coef-flip w₂ a) (same-coef a)
-             ∙ ℤ~-inv-l (Word-coef w₂ a))
-      where module G = FreeAbGroup A
+      → qw[ w₁ ] == qw[ w₂ ]
+    FormalSum-coef-ext' w₁ w₂ same-coef = FreeAbGroup.inv-is-inj qw[ w₁ ] qw[ w₂ ] $
+      FreeAbGroup.inv-unique-l (FreeAbGroup.inv qw[ w₂ ]) qw[ w₁ ] $ quot-rel $
+      reverse (Word-flip w₂) ++ w₁
+        qwr⟨ qwr-cong-l (agr-reverse (Word-flip w₂)) w₁ ⟩
+      Word-flip w₂ ++ w₁
+        qwr⟨ zero-coef-is-ident (Word-flip w₂ ++ w₁)
+             (λ a → Word-coef-++ (Word-flip w₂) w₁ a
+                  ∙ ap2 _ℤ+_ (Word-coef-flip w₂ a) (same-coef a)
+                  ∙ ℤ~-inv-l (Word-coef w₂ a)) ⟩
+      nil qwr∎
 
     FormalSum-coef-ext : ∀ fs₁ fs₂
       → (∀ a → FormalSum-coef fs₁ a == FormalSum-coef fs₂ a)
       → fs₁ == fs₂
-    FormalSum-coef-ext = FormalSum-elim
-      (λ w₁ → FormalSum-elim
+    FormalSum-coef-ext = QuotWord-elim
+      (λ w₁ → QuotWord-elim
         (λ w₂ → FormalSum-coef-ext' w₁ w₂)
         (λ _ → prop-has-all-paths-↓))
       (λ _ → prop-has-all-paths-↓)
 
   has-finite-support : (A → ℤ) → Type i
-  has-finite-support f = Σ (FormalSum A) λ fs → ∀ a → f a == FormalSum-coef fs a
+  has-finite-support f = Σ FormalSum λ fs → ∀ a → f a == FormalSum-coef fs a
 
 module _ {i} {A : Type i} {dec : has-dec-eq A} where
 
@@ -357,23 +408,24 @@ module _ where
         f (m , ltSR m<I)
           =∎
 
-  FormalSum-sum' : ∀ n (I : ℕ) (f : Fin I → ℤ) → FormalSum (Fin (ℕ-S^' n I))
+  FormalSum-sum' : ∀ n (I : ℕ) (f : Fin I → ℤ) → FreeAbelianGroup.FormalSum (Fin (ℕ-S^' n I))
   FormalSum-sum' n I f =
-    Group.sum (FreeAbGroup.grp (Fin (ℕ-S^' n I)))
-      (λ <I → Group.exp (FreeAbGroup.grp (Fin (ℕ-S^' n I))) fs[ inl (Fin-S^' n <I) :: nil ] (f <I))
+    FreeAbGroup.sum (λ <I → FreeAbGroup.exp qw[ inl (Fin-S^' n <I) :: nil ] (f <I))
+    where open FreeAbelianGroup (Fin (ℕ-S^' n I))
 
-  FormalSum-sum : ∀ {I : ℕ} (f : Fin I → ℤ) → FormalSum (Fin I)
+  FormalSum-sum : ∀ {I : ℕ} (f : Fin I → ℤ) → FreeAbelianGroup.FormalSum (Fin I)
   FormalSum-sum {I} = FormalSum-sum' 0 I
 
   private
     abstract
       FormalSum-sum'-β : ∀ n (I : ℕ) (f : Fin I → ℤ)
-        → FormalSum-sum' n I f == fs[ Word-sum' I (Fin-S^' n) f ]
+        → FormalSum-sum' n I f == FreeAbelianGroup.qw[_] (Fin (ℕ-S^' n I)) (Word-sum' I (Fin-S^' n) f)
       FormalSum-sum'-β n O f = idp
       FormalSum-sum'-β n (S I) f =
-        ap2 (Group.comp (FreeAbGroup.grp (Fin (ℕ-S^' (S n) I))))
+        ap2 FreeAbGroup.comp
           (FormalSum-sum'-β (S n) I (f ∘ Fin-S))
-          (! (FormalSumRel-pres-exp (Fin-S^' n (I , ltS)) (f (I , ltS))))
+          (! (pres-exp (Fin-S^' n (I , ltS)) (f (I , ltS))))
+        where open FreeAbelianGroup (Fin (ℕ-S^' (S n) I))
 
   Fin→-has-finite-support : ∀ {I} (f : Fin I → ℤ) → has-finite-support Fin-has-dec-eq f
   Fin→-has-finite-support {I} f = FormalSum-sum f , lemma

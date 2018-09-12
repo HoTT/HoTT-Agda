@@ -8,119 +8,140 @@ open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.FunCategory
 open import lib.two-semi-categories.FundamentalCategory
 
-module cohomology.CupProduct.OnEM.Definition {i} (R : CRing i) where
+module cohomology.CupProduct.OnEM.Definition {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
-module R = CRing R
-open R using () renaming (add-group to R₊) public
+private
+  module G = AbGroup G
+  module H = AbGroup H
+  module G⊗H = TensorProduct G H
+  open G⊗H using (_⊗_)
 
-open EM₁HSpaceAssoc R.add-ab-group hiding (comp-functor) renaming (mult to EM₁-mult) public
+open EM₁HSpaceAssoc G⊗H.abgroup hiding (comp-functor) renaming (mult to EM₁-mult) public
 
-module _ (g : R.El) where
+module _ (g : G.El) where
   private
-    loop' : R.El → embase' R₊ == embase
-    loop' g' = emloop (R.mult g g')
+    loop' : H.El → embase' G⊗H.grp == embase
+    loop' h = emloop (g ⊗ h)
 
-    comp' : (g₁' g₂' : R.El) → loop' (R.add g₁' g₂') == loop' g₁' ∙ loop' g₂'
-    comp' g₁' g₂' = ap emloop (R.distr-r g g₁' g₂') ∙ emloop-comp _ _
+    comp' : (h₁ h₂ : H.El) → loop' (H.comp h₁ h₂) == loop' h₁ ∙ loop' h₂
+    comp' h₁ h₂ =
+      emloop (g ⊗ H.comp h₁ h₂)
+        =⟨ ap emloop (G⊗H.lin-r g h₁ h₂) ⟩
+      emloop (G⊗H.comp (g ⊗ h₁) (g ⊗ h₂))
+        =⟨ emloop-comp (g ⊗ h₁) (g ⊗ h₂) ⟩
+      emloop (g ⊗ h₁) ∙ emloop (g ⊗ h₂) =∎
 
-    module Rec = EM₁Level₁Rec {G = R₊} {C = EM₁ R₊} {{EM₁-level₁ R₊}} embase (group-hom loop' comp')
+    module Rec = EM₁Level₁Rec {G = H.grp} {C = EM₁ G⊗H.grp} {{EM₁-level₁ G⊗H.grp}}
+                              embase
+                              (group-hom loop' comp')
 
   abstract
-    cp₀₁ : EM₁ R₊ → EM₁ R₊
+    cp₀₁ : EM₁ H.grp → EM₁ G⊗H.grp
     cp₀₁ = Rec.f
 
     cp₀₁-embase-β : cp₀₁ embase ↦ embase
     cp₀₁-embase-β = Rec.embase-β
     {-# REWRITE cp₀₁-embase-β #-}
 
-    cp₀₁-emloop-β : ∀ g' → ap cp₀₁ (emloop g') == emloop (R.mult g g')
+    cp₀₁-emloop-β : ∀ h → ap cp₀₁ (emloop h) == emloop (g ⊗ h)
     cp₀₁-emloop-β = Rec.emloop-β
 
-module distr-l (g₁ g₂ : R.El) where
+module distr-l (g₁ g₂ : G.El) where
 
-  f : EM₁ R₊ → EM₁ R₊
-  f x = cp₀₁ (R.add g₁ g₂) x
+  f : EM₁ H.grp → EM₁ G⊗H.grp
+  f x = cp₀₁ (G.comp g₁ g₂) x
 
-  g : EM₁ R₊ → EM₁ R₊
+  g : EM₁ H.grp → EM₁ G⊗H.grp
   g x = EM₁-mult (cp₀₁ g₁ x) (cp₀₁ g₂ x)
 
-  base' : f (embase' R₊) == g (embase' R₊)
+  base' : f (embase' H.grp) == g (embase' H.grp)
   base' = idp
 
   abstract
-    loop' : (h : R.El) → base' == base' [ (λ x → f x == g x) ↓ emloop h ]
+    loop' : (h : H.El) → base' == base' [ (λ x → f x == g x) ↓ emloop h ]
     loop' h = ↓-='-in {f = f} {g = g} {p = emloop h} {u = base'} {v = base'} $
       base' ∙' ap g (emloop h)
         =⟨ ∙'-unit-l (ap g (emloop h)) ⟩
       ap g (emloop h)
         =⟨ ! (ap2-diag (λ x y → EM₁-mult (cp₀₁ g₁ x) $ cp₀₁ g₂ y) (emloop h)) ⟩
       ap2 (λ x y → EM₁-mult (cp₀₁ g₁ x) $ cp₀₁ g₂ y) (emloop h) (emloop h)
-        =⟨ ! (ap2-ap-l (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (EM₁-mult ∘ cp₀₁ g₁) (emloop h) (emloop h)) ⟩
-      ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap (EM₁-mult ∘ cp₀₁ g₁) (emloop h)) (emloop h)
-        =⟨ ap-∘ EM₁-mult (cp₀₁ g₁) (emloop h) |in-ctx (λ z → ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
-      ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap EM₁-mult (ap (cp₀₁ g₁) (emloop h))) (emloop h)
-        =⟨ cp₀₁-emloop-β g₁ h |in-ctx (λ z → ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap EM₁-mult z) (emloop h)) ⟩
-      ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (ap EM₁-mult (emloop (R.mult g₁ h))) (emloop h)
-        =⟨ mult-emloop-β (R.mult g₁ h) |in-ctx (λ z → ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
-      ap2 (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (mult-loop (R.mult g₁ h)) (emloop h)
-        =⟨ =ₛ-out (ap2-out (λ (f : EM₁ R₊ → EM₁ R₊) y → f $ cp₀₁ g₂ y) (mult-loop (R.mult g₁ h)) (emloop h)) ⟩
-      ap (λ (f : EM₁ R₊ → EM₁ R₊) → f embase) (mult-loop (R.mult g₁ h)) ∙ ap (cp₀₁ g₂) (emloop h)
-        =⟨ app=-β (mult-loop' (R.mult g₁ h)) embase |in-ctx (λ z → z ∙ ap (cp₀₁ g₂) (emloop h)) ⟩
-      mult-loop' (R.mult g₁ h) embase ∙ ap (cp₀₁ g₂) (emloop h)
+        =⟨ ! (ap2-ap-l (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (EM₁-mult ∘ cp₀₁ g₁) (emloop h) (emloop h)) ⟩
+      ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (ap (EM₁-mult ∘ cp₀₁ g₁) (emloop h)) (emloop h)
+        =⟨ ap-∘ EM₁-mult (cp₀₁ g₁) (emloop h) |in-ctx (λ z → ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
+      ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (ap EM₁-mult (ap (cp₀₁ g₁) (emloop h))) (emloop h)
+        =⟨ cp₀₁-emloop-β g₁ h |in-ctx (λ z → ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (ap EM₁-mult z) (emloop h)) ⟩
+      ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (ap EM₁-mult (emloop (g₁ ⊗ h))) (emloop h)
+        =⟨ mult-emloop-β (g₁ ⊗ h) |in-ctx (λ z → ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
+      ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (mult-loop (g₁ ⊗ h)) (emloop h)
+        =⟨ =ₛ-out (ap2-out (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (mult-loop (g₁ ⊗ h)) (emloop h)) ⟩
+      ap (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) → f embase) (mult-loop (g₁ ⊗ h)) ∙ ap (cp₀₁ g₂) (emloop h)
+        =⟨ app=-β (mult-loop' (g₁ ⊗ h)) embase |in-ctx (λ z → z ∙ ap (cp₀₁ g₂) (emloop h)) ⟩
+      mult-loop' (g₁ ⊗ h) embase ∙ ap (cp₀₁ g₂) (emloop h)
         =⟨ idp ⟩
-      emloop (R.mult g₁ h) ∙ ap (cp₀₁ g₂) (emloop h)
-        =⟨ cp₀₁-emloop-β g₂ h |in-ctx (λ z → emloop (R.mult g₁ h) ∙ z) ⟩
-      emloop (R.mult g₁ h) ∙ emloop (R.mult g₂ h)
-        =⟨ ! (emloop-comp (R.mult g₁ h) (R.mult g₂ h)) ⟩
-      emloop (R.add (R.mult g₁ h) (R.mult g₂ h))
-        =⟨ ap emloop (! (R.distr-l g₁ g₂ h)) ⟩
-      emloop (R.mult (R.add g₁ g₂) h)
-        =⟨ ! (cp₀₁-emloop-β (R.add g₁ g₂) h) ⟩
+      emloop (g₁ ⊗ h) ∙ ap (cp₀₁ g₂) (emloop h)
+        =⟨ cp₀₁-emloop-β g₂ h |in-ctx (λ z → emloop (g₁ ⊗ h) ∙ z) ⟩
+      emloop (g₁ ⊗ h) ∙ emloop (g₂ ⊗ h)
+        =⟨ ! (emloop-comp (g₁ ⊗ h) (g₂ ⊗ h)) ⟩
+      emloop (G⊗H.comp (g₁ ⊗ h) (g₂ ⊗ h))
+        =⟨ ap emloop (! (G⊗H.lin-l g₁ g₂ h)) ⟩
+      emloop (G.comp g₁ g₂ ⊗ h)
+        =⟨ ! (cp₀₁-emloop-β (G.comp g₁ g₂) h) ⟩
       ap f (emloop h)
         =⟨ ! (∙-unit-r (ap f (emloop h))) ⟩
       ap f (emloop h) ∙ base' =∎
 
-  cp₀₁-distr-l : (g' : EM₁ R₊) → cp₀₁ (R.add g₁ g₂) g' == EM₁-mult (cp₀₁ g₁ g') (cp₀₁ g₂ g')
+  cp₀₁-distr-l : (y : EM₁ H.grp) → cp₀₁ (G.comp g₁ g₂) y == EM₁-mult (cp₀₁ g₁ y) (cp₀₁ g₂ y)
   cp₀₁-distr-l =
     EM₁-set-elim
       {P = λ x → f x == g x}
-      {{λ x → has-level-apply (EM₁-level₁ R₊) _ _}}
+      {{λ x → has-level-apply (EM₁-level₁ G⊗H.grp) _ _}}
       base' loop'
 
 open distr-l public using (cp₀₁-distr-l)
 
-module _ (g₁ g₂ g₃ : R.El) (g' : EM₁ R₊) where
+module _ (g₁ g₂ g₃ : G.El) (y : EM₁ H.grp) where
 
-  cp₀₁-distr-l₁ : cp₀₁ (R.add (R.add g₁ g₂) g₃) g' == EM₁-mult (cp₀₁ g₁ g') (EM₁-mult (cp₀₁ g₂ g') (cp₀₁ g₃ g'))
+  cp₀₁-distr-l₁ : cp₀₁ (G.comp (G.comp g₁ g₂) g₃) y =-=
+                  EM₁-mult (cp₀₁ g₁ y) (EM₁-mult (cp₀₁ g₂ y) (cp₀₁ g₃ y))
   cp₀₁-distr-l₁ =
-    cp₀₁-distr-l (R.add g₁ g₂) g₃ g' ∙
-    ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g') ∙
-    H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')
+    cp₀₁ (G.comp (G.comp g₁ g₂) g₃) y
+      =⟪ cp₀₁-distr-l (G.comp g₁ g₂) g₃ y ⟫
+    EM₁-mult (cp₀₁ (G.comp g₁ g₂) y) (cp₀₁ g₃ y)
+      =⟪ ap (λ s → EM₁-mult s (cp₀₁ g₃ y)) (cp₀₁-distr-l g₁ g₂ y) ⟫
+    EM₁-mult (EM₁-mult (cp₀₁ g₁ y) (cp₀₁ g₂ y)) (cp₀₁ g₃ y)
+      =⟪ H-⊙EM₁-assoc (cp₀₁ g₁ y) (cp₀₁ g₂ y) (cp₀₁ g₃ y) ⟫
+    EM₁-mult (cp₀₁ g₁ y) (EM₁-mult (cp₀₁ g₂ y) (cp₀₁ g₃ y)) ∎∎
 
-  cp₀₁-distr-l₂ : cp₀₁ (R.add (R.add g₁ g₂) g₃) g' == EM₁-mult (cp₀₁ g₁ g') (EM₁-mult (cp₀₁ g₂ g') (cp₀₁ g₃ g'))
+  cp₀₁-distr-l₂ : cp₀₁ (G.comp (G.comp g₁ g₂) g₃) y =-=
+                  EM₁-mult (cp₀₁ g₁ y) (EM₁-mult (cp₀₁ g₂ y) (cp₀₁ g₃ y))
   cp₀₁-distr-l₂ =
-    ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃) ∙
-    cp₀₁-distr-l g₁ (R.add g₂ g₃) g' ∙
-    ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')
+    cp₀₁ (G.comp (G.comp g₁ g₂) g₃) y
+      =⟪ ap (λ s → cp₀₁ s y) (G.assoc g₁ g₂ g₃) ⟫
+    cp₀₁ (G.comp g₁ (G.comp g₂ g₃)) y
+      =⟪ cp₀₁-distr-l g₁ (G.comp g₂ g₃) y ⟫
+    EM₁-mult (cp₀₁ g₁ y) (cp₀₁ (G.comp g₂ g₃) y)
+      =⟪ ap (EM₁-mult (cp₀₁ g₁ y)) (cp₀₁-distr-l g₂ g₃ y) ⟫
+    EM₁-mult (cp₀₁ g₁ y) (EM₁-mult (cp₀₁ g₂ y) (cp₀₁ g₃ y)) ∎∎
 
 abstract
-  cp₀₁-distr-l-coh : (g₁ g₂ g₃ : R.El) (g' : EM₁ R₊)
-    → cp₀₁-distr-l₁ g₁ g₂ g₃ g' == cp₀₁-distr-l₂ g₁ g₂ g₃ g'
+  cp₀₁-distr-l-coh : (g₁ g₂ g₃ : G.El) (y : EM₁ H.grp)
+    → cp₀₁-distr-l₁ g₁ g₂ g₃ y =ₛ cp₀₁-distr-l₂ g₁ g₂ g₃ y
   cp₀₁-distr-l-coh g₁ g₂ g₃ =
     EM₁-prop-elim
-      {P = λ g' → cp₀₁-distr-l₁ g₁ g₂ g₃ g' == cp₀₁-distr-l₂ g₁ g₂ g₃ g'}
-      {{λ g' → has-level-apply (has-level-apply (EM₁-level₁ R₊) _ _) _ _}}
-      (idp
-        =⟨ ! (ap-cst embase (R.add-assoc g₁ g₂ g₃)) ⟩
-      ap (cst embase) (R.add-assoc g₁ g₂ g₃)
-        =⟨ ! (∙-unit-r (ap (cst embase) (R.add-assoc g₁ g₂ g₃))) ⟩
-      ap (cst embase) (R.add-assoc g₁ g₂ g₃) ∙ idp =∎)
+      {P = λ y → cp₀₁-distr-l₁ g₁ g₂ g₃ y =ₛ cp₀₁-distr-l₂ g₁ g₂ g₃ y}
+      {{λ y → =ₛ-level (EM₁-level₁ G⊗H.grp)}} $
+    =ₛ-in $
+    idp
+      =⟨ ! (ap-cst embase (G.assoc g₁ g₂ g₃)) ⟩
+    ap (cst embase) (G.assoc g₁ g₂ g₃)
+      =⟨ ! (∙-unit-r (ap (cst embase) (G.assoc g₁ g₂ g₃))) ⟩
+    ap (cst embase) (G.assoc g₁ g₂ g₃) ∙ idp =∎
 
-group-to-EM₁-endos :
+group-to-EM₁H→EM₁G⊗H :
   TwoSemiFunctor
-    (group-to-cat R₊)
-    (fun-cat (EM₁ R₊) EM₁-2-semi-category)
-group-to-EM₁-endos =
+    (group-to-cat G.grp)
+    (fun-cat (EM₁ H.grp) EM₁-2-semi-category)
+group-to-EM₁H→EM₁G⊗H =
   record
   { F₀ = λ _ _ → unit
   ; F₁ = λ g x → cp₀₁ g x
@@ -132,50 +153,50 @@ group-to-EM₁-endos =
   where
   abstract
     pres-comp-coh : ∀ g₁ g₂ g₃ →
-      λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ◃∙
-      ap (λ s g' → EM₁-mult (s g') (cp₀₁ g₃ g')) (λ= (cp₀₁-distr-l g₁ g₂)) ◃∙
-      λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎
+      λ= (cp₀₁-distr-l (G.comp g₁ g₂) g₃) ◃∙
+      ap (λ s y → EM₁-mult (s y) (cp₀₁ g₃ y)) (λ= (cp₀₁-distr-l g₁ g₂)) ◃∙
+      λ= (λ y → H-⊙EM₁-assoc (cp₀₁ g₁ y) (cp₀₁ g₂ y) (cp₀₁ g₃ y)) ◃∎
       =ₛ
-      ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ◃∙
-      λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-      ap (λ s g' → EM₁-mult (cp₀₁ g₁ g') (s g')) (λ= (cp₀₁-distr-l g₂ g₃)) ◃∎
+      ap (λ s → cp₀₁ s) (G.assoc g₁ g₂ g₃) ◃∙
+      λ= (cp₀₁-distr-l g₁ (G.comp g₂ g₃)) ◃∙
+      ap (λ s y → EM₁-mult (cp₀₁ g₁ y) (s y)) (λ= (cp₀₁-distr-l g₂ g₃)) ◃∎
     pres-comp-coh g₁ g₂ g₃ =
-      λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ◃∙
-      ap (λ s g' → EM₁-mult (s g') (cp₀₁ g₃ g')) (λ= (cp₀₁-distr-l g₁ g₂)) ◃∙
-      λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎
-        =ₛ₁⟨ 1 & 1 & λ=-ap (λ g' s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂) ⟩
-      λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃) ◃∙
-      λ= (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g')) ◃∙
-      λ= (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ◃∎
-        =ₛ⟨ ∙∙-λ= (cp₀₁-distr-l (R.add g₁ g₂) g₃)
-                  (λ g' → ap (λ s → EM₁-mult s (cp₀₁ g₃ g')) (cp₀₁-distr-l g₁ g₂ g'))
-                  (λ g' → H-⊙EM₁-assoc (cp₀₁ g₁ g') (cp₀₁ g₂ g') (cp₀₁ g₃ g')) ⟩
-      λ= (cp₀₁-distr-l₁ g₁ g₂ g₃) ◃∎
-        =ₛ₁⟨ ap λ= (λ= (cp₀₁-distr-l-coh g₁ g₂ g₃)) ⟩
-      λ= (cp₀₁-distr-l₂ g₁ g₂ g₃) ◃∎
-        =ₛ⟨ λ=-∙∙ (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃))
-                  (cp₀₁-distr-l g₁ (R.add g₂ g₃))
-                  (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ⟩
-      λ= (λ g' → ap (λ s → cp₀₁ s g') (R.add-assoc g₁ g₂ g₃)) ◃∙
-      λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-      λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎
-        =ₛ₁⟨ 0 & 1 & ap λ= (λ= (λ g' → ap-∘ (λ f → f g') cp₀₁ (R.add-assoc g₁ g₂ g₃))) ⟩
-      λ= (app= (ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃))) ◃∙
-      λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-      λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎
-        =ₛ₁⟨ 0 & 1 & ! (λ=-η (ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃))) ⟩
-      ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ◃∙
-      λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-      λ= (λ g' → ap (EM₁-mult (cp₀₁ g₁ g')) (cp₀₁-distr-l g₂ g₃ g')) ◃∎
-        =ₛ₁⟨ 2 & 1 & ! (λ=-ap (λ g' s → EM₁-mult (cp₀₁ g₁ g') s) (cp₀₁-distr-l g₂ g₃)) ⟩
-      ap (λ s → cp₀₁ s) (R.add-assoc g₁ g₂ g₃) ◃∙
-      λ= (cp₀₁-distr-l g₁ (R.add g₂ g₃)) ◃∙
-      ap (λ s g' → EM₁-mult (cp₀₁ g₁ g') (s g')) (λ= (cp₀₁-distr-l g₂ g₃)) ◃∎ ∎ₛ
+      λ= (cp₀₁-distr-l (G.comp g₁ g₂) g₃) ◃∙
+      ap (λ s y → EM₁-mult (s y) (cp₀₁ g₃ y)) (λ= (cp₀₁-distr-l g₁ g₂)) ◃∙
+      λ= (λ y → H-⊙EM₁-assoc (cp₀₁ g₁ y) (cp₀₁ g₂ y) (cp₀₁ g₃ y)) ◃∎
+        =ₛ₁⟨ 1 & 1 & λ=-ap (λ y s → EM₁-mult s (cp₀₁ g₃ y)) (cp₀₁-distr-l g₁ g₂) ⟩
+      λ= (cp₀₁-distr-l (G.comp g₁ g₂) g₃) ◃∙
+      λ= (λ y → ap (λ s → EM₁-mult s (cp₀₁ g₃ y)) (cp₀₁-distr-l g₁ g₂ y)) ◃∙
+      λ= (λ y → H-⊙EM₁-assoc (cp₀₁ g₁ y) (cp₀₁ g₂ y) (cp₀₁ g₃ y)) ◃∎
+        =ₛ⟨ ∙∙-λ= (cp₀₁-distr-l (G.comp g₁ g₂) g₃)
+                  (λ y → ap (λ s → EM₁-mult s (cp₀₁ g₃ y)) (cp₀₁-distr-l g₁ g₂ y))
+                  (λ y → H-⊙EM₁-assoc (cp₀₁ g₁ y) (cp₀₁ g₂ y) (cp₀₁ g₃ y)) ⟩
+      λ= (λ y → ↯ (cp₀₁-distr-l₁ g₁ g₂ g₃ y)) ◃∎
+        =ₛ₁⟨ ap λ= (λ= (λ y → =ₛ-out (cp₀₁-distr-l-coh g₁ g₂ g₃ y))) ⟩
+      λ= (λ y → ↯ (cp₀₁-distr-l₂ g₁ g₂ g₃ y)) ◃∎
+        =ₛ⟨ λ=-∙∙ (λ y → ap (λ s → cp₀₁ s y) (G.assoc g₁ g₂ g₃))
+                  (cp₀₁-distr-l g₁ (G.comp g₂ g₃))
+                  (λ y → ap (EM₁-mult (cp₀₁ g₁ y)) (cp₀₁-distr-l g₂ g₃ y)) ⟩
+      λ= (λ y → ap (λ s → cp₀₁ s y) (G.assoc g₁ g₂ g₃)) ◃∙
+      λ= (cp₀₁-distr-l g₁ (G.comp g₂ g₃)) ◃∙
+      λ= (λ y → ap (EM₁-mult (cp₀₁ g₁ y)) (cp₀₁-distr-l g₂ g₃ y)) ◃∎
+        =ₛ₁⟨ 0 & 1 & ap λ= (λ= (λ y → ap-∘ (λ f → f y) cp₀₁ (G.assoc g₁ g₂ g₃))) ⟩
+      λ= (app= (ap (λ s → cp₀₁ s) (G.assoc g₁ g₂ g₃))) ◃∙
+      λ= (cp₀₁-distr-l g₁ (G.comp g₂ g₃)) ◃∙
+      λ= (λ y → ap (EM₁-mult (cp₀₁ g₁ y)) (cp₀₁-distr-l g₂ g₃ y)) ◃∎
+        =ₛ₁⟨ 0 & 1 & ! (λ=-η (ap (λ s → cp₀₁ s) (G.assoc g₁ g₂ g₃))) ⟩
+      ap (λ s → cp₀₁ s) (G.assoc g₁ g₂ g₃) ◃∙
+      λ= (cp₀₁-distr-l g₁ (G.comp g₂ g₃)) ◃∙
+      λ= (λ y → ap (EM₁-mult (cp₀₁ g₁ y)) (cp₀₁-distr-l g₂ g₃ y)) ◃∎
+        =ₛ₁⟨ 2 & 1 & ! (λ=-ap (λ y s → EM₁-mult (cp₀₁ g₁ y) s) (cp₀₁-distr-l g₂ g₃)) ⟩
+      ap (λ s → cp₀₁ s) (G.assoc g₁ g₂ g₃) ◃∙
+      λ= (cp₀₁-distr-l g₁ (G.comp g₂ g₃)) ◃∙
+      ap (λ s y → EM₁-mult (cp₀₁ g₁ y) (s y)) (λ= (cp₀₁-distr-l g₂ g₃)) ◃∎ ∎ₛ
 
 comp-functor :
   TwoSemiFunctor
     EM₁-2-semi-category
-    (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ R₊))))
+    (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp))))
 comp-functor =
   record
   { F₀ = λ _ → [ north ]
@@ -184,14 +205,14 @@ comp-functor =
   ; pres-comp-coh = comp-coh
   }
   -- this is *exactly* the same as
-  --   `EM₁HSpaceAssoc.comp-functor R.add-ab-group`
+  --   `EM₁HSpaceAssoc.comp-functor TP.abgroup`
   -- inlined but Agda chokes on this shorter definition
 
 module _ where
 
   private
-    T : TwoSemiCategory i i
-    T = dual-cat (fun-cat (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊))))
+    T : TwoSemiCategory (lmax i j) (lmax i j)
+    T = dual-cat (fun-cat (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp))))
 
     module T = TwoSemiCategory T
     cst-north : T.El
@@ -199,11 +220,11 @@ module _ where
     T-comp' = T.comp {x = cst-north} {y = cst-north} {z = cst-north}
     T-assoc' = T.assoc {x = cst-north} {y = cst-north} {z = cst-north} {w = cst-north}
 
-  group-to-EM₁→EM₂-op : TwoSemiFunctor (group-to-cat R₊) T
+  group-to-EM₁→EM₂-op : TwoSemiFunctor (group-to-cat G.grp) T
   group-to-EM₁→EM₂-op =
-    group-to-EM₁-endos –F→
-    fun-functor-map (EM₁ R₊) comp-functor –F→
-    swap-fun-dual-functor (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))
+    group-to-EM₁H→EM₁G⊗H –F→
+    fun-functor-map (EM₁ H.grp) comp-functor –F→
+    swap-fun-dual-functor (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp)))
 
   abstract
     app=-group-to-EM₁→EM₂-op-pres-comp-embase : ∀ g₁ g₂ →
@@ -232,60 +253,60 @@ module _ where
         =ₛ₁⟨ app=-β (λ y → comp (cp₀₁ g₁ y) (cp₀₁ g₂ y)) embase ⟩
       comp embase embase ◃∎ ∎ₛ
       where
-        G₀₁ = group-to-EM₁-endos
-        G₁₂ = fun-functor-map (EM₁ R₊) comp-functor
-        G₂₃ = swap-fun-dual-functor (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))
+        G₀₁ = group-to-EM₁H→EM₁G⊗H
+        G₁₂ = fun-functor-map (EM₁ H.grp) comp-functor
+        G₂₃ = swap-fun-dual-functor (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp)))
         G₁₃ = G₁₂ –F→ G₂₃
 
 module CP₁₁ where
 
-  open EMExplicit R.add-ab-group
+  open EMExplicit G⊗H.abgroup
 
   private
-    C : Type i
-    C = EM₁ R₊ → EM 2
+    C : Type (lmax i j)
+    C = EM₁ H.grp → EM 2
 
     C-level : has-level 2 C
     C-level = Π-level (λ _ → EM-level 2)
 
     D₀ : TwoSemiCategory lzero i
-    D₀ = group-to-cat R₊
+    D₀ = group-to-cat G.grp
 
     D₁ : TwoSemiCategory lzero i
-    D₁ = dual-cat (group-to-cat R₊)
+    D₁ = dual-cat (group-to-cat G.grp)
 
-    D₂ : TwoSemiCategory i i
-    D₂ = dual-cat (dual-cat (fun-cat (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊)))))
+    D₂ : TwoSemiCategory (lmax i j) (lmax i j)
+    D₂ = dual-cat (dual-cat (fun-cat (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp)))))
 
-    D₃' : TwoSemiCategory i i
-    D₃' = =ₜ-fundamental-cat (Susp (EM₁ R₊))
+    D₃' : TwoSemiCategory (lmax i j) (lmax i j)
+    D₃' = =ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp))
 
-    D₃ : TwoSemiCategory i i
-    D₃ = fun-cat (EM₁ R₊) D₃'
+    D₃ : TwoSemiCategory (lmax i j) (lmax i j)
+    D₃ = fun-cat (EM₁ H.grp) D₃'
 
-    D₄' : TwoSemiCategory i i
+    D₄' : TwoSemiCategory (lmax i j) (lmax i j)
     D₄' = 2-type-fundamental-cat (EM 2)
 
-    D₄ : TwoSemiCategory i i
-    D₄ = fun-cat (EM₁ R₊) D₄'
+    D₄ : TwoSemiCategory (lmax i j) (lmax i j)
+    D₄ = fun-cat (EM₁ H.grp) D₄'
 
-    D₅ : TwoSemiCategory i i
-    D₅ = 2-type-fundamental-cat (EM₁ R₊ → EM 2) {{C-level}}
+    D₅ : TwoSemiCategory (lmax i j) (lmax i j)
+    D₅ = 2-type-fundamental-cat (EM₁ H.grp → EM 2) {{C-level}}
 
     F₀₁ : TwoSemiFunctor D₀ D₁
-    F₀₁ = ab-group-cat-to-dual R.add-ab-group
+    F₀₁ = ab-group-cat-to-dual G
 
     F₁₂ : TwoSemiFunctor D₁ D₂
     F₁₂ = dual-functor-map group-to-EM₁→EM₂-op
 
     F₂₃ : TwoSemiFunctor D₂ D₃
-    F₂₃ = from-double-dual (fun-cat (EM₁ R₊) (=ₜ-fundamental-cat (Susp (EM₁ R₊))))
+    F₂₃ = from-double-dual (fun-cat (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp))))
 
     F₃₄' : TwoSemiFunctor D₃' D₄'
-    F₃₄' = =ₜ-to-2-type-fundamental-cat (Susp (EM₁ R₊))
+    F₃₄' = =ₜ-to-2-type-fundamental-cat (Susp (EM₁ G⊗H.grp))
 
     F₃₄ : TwoSemiFunctor D₃ D₄
-    F₃₄ = fun-functor-map (EM₁ R₊) F₃₄'
+    F₃₄ = fun-functor-map (EM₁ H.grp) F₃₄'
 
     F₂₄ : TwoSemiFunctor D₂ D₄
     F₂₄ = F₂₃ –F→ F₃₄
@@ -296,7 +317,7 @@ module CP₁₁ where
   F₀₄ : TwoSemiFunctor D₀ D₄
   F₀₄ = F₀₁ –F→ F₁₄
 
-  module F₄₅-Funext = FunextFunctors (EM₁ R₊) (EM 2) {{⟨⟩}}
+  module F₄₅-Funext = FunextFunctors (EM₁ H.grp) (EM 2) {{⟨⟩}}
   F₄₅ : TwoSemiFunctor D₄ D₅
   F₄₅ = F₄₅-Funext.λ=-functor
 
@@ -315,10 +336,10 @@ module CP₁₁ where
     module F₁₄  = TwoSemiFunctor F₁₄
     module F₀₅  = TwoSemiFunctor F₀₅
 
-    module CP₁₁-Rec = EM₁Rec {G = R₊} {C = C} {{C-level}} F₀₅
+    module CP₁₁-Rec = EM₁Rec {G = G.grp} {C = C} {{C-level}} F₀₅
 
   abstract
-    cp₁₁ : EM₁ R₊ → EM₁ R₊ → EM 2
+    cp₁₁ : EM₁ G.grp → EM₁ H.grp → EM 2
     cp₁₁ = CP₁₁-Rec.f
 
     cp₁₁-embase-β : cp₁₁ embase ↦ (λ _ → [ north ])
@@ -336,13 +357,13 @@ module CP₁₁ where
     app=-F₀₄-pres-comp-embase-β g₁ g₂ =
       app= (F₀₄.pres-comp g₁ g₂) embase ◃∎
         =ₛ⟨ ap-seq-=ₛ (λ f → f embase) (comp-functors-pres-comp-β F₀₁ F₁₄ g₁ g₂) ⟩
-      app= (ap (λ g y → ap [_] (η (cp₀₁ g y))) (R.add-comm g₁ g₂)) embase ◃∙
+      app= (ap (λ g y → ap [_] (η (cp₀₁ g y))) (G.comm g₁ g₂)) embase ◃∙
       app= (F₁₄.pres-comp g₁ g₂) embase ◃∎
         =ₛ⟨ 0 & 1 & =ₛ-in {t = []} $
-            app= (ap (λ g y → ap [_] (η (cp₀₁ g y))) (R.add-comm g₁ g₂)) embase
-              =⟨ ∘-ap (λ f → f embase) (λ g y → ap [_] (η (cp₀₁ g y))) (R.add-comm g₁ g₂) ⟩
-            ap (λ g → ap [_] (η (cp₀₁ g embase))) (R.add-comm g₁ g₂)
-              =⟨ ap-cst (ap [_] (η embase)) (R.add-comm g₁ g₂) ⟩
+            app= (ap (λ g y → ap [_] (η (cp₀₁ g y))) (G.comm g₁ g₂)) embase
+              =⟨ ∘-ap (λ f → f embase) (λ g y → ap [_] (η (cp₀₁ g y))) (G.comm g₁ g₂) ⟩
+            ap (λ g → ap [_] (η (cp₀₁ g embase))) (G.comm g₁ g₂)
+              =⟨ ap-cst (ap [_] (η embase)) (G.comm g₁ g₂) ⟩
             idp
           ⟩
       app= (F₁₄.pres-comp g₁ g₂) embase ◃∎
@@ -407,7 +428,7 @@ module CP₁₁ where
            =⟨ app=-β (λ y → F₃₄'.pres-comp {x = [ north ]} {y = [ north ]} {z = [ north ]}
                                            [ η (cp₀₁ g₁ y) ]₁ [ η (cp₀₁ g₂ y) ]₁) embase ⟩
         F₃₄'.pres-comp {x = [ north ]} {y = [ north ]} {z = [ north ]} [ η embase ]₁ [ η embase ]₁
-          =⟨ =ₜ-to-2-type-fundamental-cat-pres-comp-β (Susp (EM₁ R₊)) (η embase) (η embase) ⟩
+          =⟨ =ₜ-to-2-type-fundamental-cat-pres-comp-β (Susp (EM₁ G⊗H.grp)) (η embase) (η embase) ⟩
         ap-∙ [_] (η embase) (η embase) =∎
 
     app=-F₀₄-pres-comp-embase-coh : ∀ g₁ g₂ →
@@ -467,9 +488,9 @@ module CP₁₁ where
     app=-ap-cp₁₁ g y = ↯ (app=-ap-cp₁₁-seq g y)
 
   app=-ap-cp₁₁-coh-seq₁ : ∀ g₁ g₂ y →
-    app= (ap cp₁₁ (emloop (R.add g₁ g₂))) y =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))
+    app= (ap cp₁₁ (emloop (G.comp g₁ g₂))) y =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))
   app=-ap-cp₁₁-coh-seq₁ g₁ g₂ y =
-    app= (ap cp₁₁ (emloop (R.add g₁ g₂))) y
+    app= (ap cp₁₁ (emloop (G.comp g₁ g₂))) y
       =⟪ ap (λ u → app= (ap cp₁₁ u) y) (emloop-comp g₁ g₂) ⟫
     app= (ap cp₁₁ (emloop g₁ ∙ emloop g₂)) y
       =⟪ ap (λ u → app= u y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ⟫
@@ -480,11 +501,11 @@ module CP₁₁ where
     ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y)) ∎∎
 
   app=-ap-cp₁₁-coh-seq₂ : ∀ g₁ g₂ y →
-    app= (ap cp₁₁ (emloop (R.add g₁ g₂))) y =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))
+    app= (ap cp₁₁ (emloop (G.comp g₁ g₂))) y =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))
   app=-ap-cp₁₁-coh-seq₂ g₁ g₂ y =
-    app= (ap cp₁₁ (emloop (R.add g₁ g₂))) y
-      =⟪ app=-ap-cp₁₁ (R.add g₁ g₂) y ⟫
-    ap [_] (η (cp₀₁ (R.add g₁ g₂) y))
+    app= (ap cp₁₁ (emloop (G.comp g₁ g₂))) y
+      =⟪ app=-ap-cp₁₁ (G.comp g₁ g₂) y ⟫
+    ap [_] (η (cp₀₁ (G.comp g₁ g₂) y))
       =⟪ app= (F₀₄.pres-comp g₁ g₂) y ⟫
     ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y)) ∎∎
 
@@ -538,16 +559,16 @@ module CP₁₁ where
       ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∙
       app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
         =ₛ⟨ 0 & 3 & ap-seq-=ₛ (λ p → app= p y) (CP₁₁-Rec.emloop-comp-path g₁ g₂) ⟩
-      ap (λ p → app= p y) (cp₁₁-emloop-β (R.add g₁ g₂)) ◃∙
+      ap (λ p → app= p y) (cp₁₁-emloop-β (G.comp g₁ g₂)) ◃∙
       ap (λ p → app= p y) (F₀₅.pres-comp g₁ g₂) ◃∙
       ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∙
       app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
         =ₛ⟨ 1 & 2 & step₈ ⟩
-      ap (λ p → app= p y) (cp₁₁-emloop-β (R.add g₁ g₂)) ◃∙
+      ap (λ p → app= p y) (cp₁₁-emloop-β (G.comp g₁ g₂)) ◃∙
       ap (λ p → app= p y) (ap λ= (F₀₄.pres-comp g₁ g₂)) ◃∙
       app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
         =ₛ₁⟨ 1 & 1 & ∘-ap (λ p → app= p y) λ= (F₀₄.pres-comp g₁ g₂) ⟩
-      ap (λ p → app= p y) (cp₁₁-emloop-β (R.add g₁ g₂)) ◃∙
+      ap (λ p → app= p y) (cp₁₁-emloop-β (G.comp g₁ g₂)) ◃∙
       ap (λ γ → app= (λ= γ) y) (F₀₄.pres-comp g₁ g₂) ◃∙
       app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
         =ₛ⟨ 1 & 2 &
@@ -555,11 +576,11 @@ module CP₁₁ where
                                 (λ γ → γ y)
                                 (λ γ → app=-β γ y)
                                 (F₀₄.pres-comp g₁ g₂) ⟩
-      ap (λ p → app= p y) (cp₁₁-emloop-β (R.add g₁ g₂)) ◃∙
-      app=-β (λ x → ap [_] (η (cp₀₁ (R.add g₁ g₂) x))) y ◃∙
+      ap (λ p → app= p y) (cp₁₁-emloop-β (G.comp g₁ g₂)) ◃∙
+      app=-β (λ x → ap [_] (η (cp₀₁ (G.comp g₁ g₂) x))) y ◃∙
       app= (F₀₄.pres-comp g₁ g₂) y ◃∎
         =ₛ⟨ 0 & 2 & contract ⟩
-      app=-ap-cp₁₁ (R.add g₁ g₂) y ◃∙
+      app=-ap-cp₁₁ (G.comp g₁ g₂) y ◃∙
       app= (F₀₄.pres-comp g₁ g₂) y ◃∎ ∎ₛ
       where
       step₈ :
@@ -593,9 +614,9 @@ module CP₁₁ where
     ap-cp₁₁ g y = ↯ (ap-cp₁₁-seq g y)
 
   ap-cp₁₁-coh-seq₁ : ∀ g₁ g₂ y →
-    ap (λ x → cp₁₁ x y) (emloop (R.add g₁ g₂)) =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))
+    ap (λ x → cp₁₁ x y) (emloop (G.comp g₁ g₂)) =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))
   ap-cp₁₁-coh-seq₁ g₁ g₂ y =
-    ap (λ x → cp₁₁ x y) (emloop (R.add g₁ g₂))
+    ap (λ x → cp₁₁ x y) (emloop (G.comp g₁ g₂))
       =⟪ ap (ap (λ x → cp₁₁ x y)) (emloop-comp g₁ g₂) ⟫
     ap (λ x → cp₁₁ x y) (emloop g₁ ∙ emloop g₂)
       =⟪ ap-∙ (λ x → cp₁₁ x y) (emloop g₁) (emloop g₂) ⟫
@@ -604,11 +625,11 @@ module CP₁₁ where
     ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y)) ∎∎
 
   ap-cp₁₁-coh-seq₂ : ∀ g₁ g₂ y →
-    ap (λ x → cp₁₁ x y) (emloop (R.add g₁ g₂)) =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))
+    ap (λ x → cp₁₁ x y) (emloop (G.comp g₁ g₂)) =-= ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y))
   ap-cp₁₁-coh-seq₂ g₁ g₂ y =
-    ap (λ x → cp₁₁ x y) (emloop (R.add g₁ g₂))
-      =⟪ ap-cp₁₁ (R.add g₁ g₂) y ⟫
-    ap [_] (η (cp₀₁ (R.add g₁ g₂) y))
+    ap (λ x → cp₁₁ x y) (emloop (G.comp g₁ g₂))
+      =⟪ ap-cp₁₁ (G.comp g₁ g₂) y ⟫
+    ap [_] (η (cp₀₁ (G.comp g₁ g₂) y))
       =⟪ app= (F₀₄.pres-comp g₁ g₂) y ⟫
     ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y)) ∎∎
 
@@ -630,20 +651,20 @@ module CP₁₁ where
       ap (ap (λ f → f y)) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
       ap-∙ (λ f → f y) (ap cp₁₁ (emloop g₁)) (ap cp₁₁ (emloop g₂)) ◃∙
       ap2 _∙_ (app=-ap-cp₁₁ g₁ y) (app=-ap-cp₁₁ g₂ y) ◃∎
-        =ₛ⟨ 0 & 2 & homotopy-naturality {A = embase' R₊ == embase} {B = cp₁₁ embase y == cp₁₁ embase y}
+        =ₛ⟨ 0 & 2 & homotopy-naturality {A = embase' G.grp == embase} {B = cp₁₁ embase y == cp₁₁ embase y}
                                         (ap (λ x → cp₁₁ x y)) (λ p → app= (ap cp₁₁ p) y)
                                         (ap-∘ (λ f → f y) cp₁₁) (emloop-comp g₁ g₂) ⟩
-      ap-∘ (λ f → f y) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙
+      ap-∘ (λ f → f y) cp₁₁ (emloop (G.comp g₁ g₂)) ◃∙
       ap (λ p → app= (ap cp₁₁ p) y) (emloop-comp g₁ g₂) ◃∙
       ap (ap (λ f → f y)) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
       ap-∙ (λ f → f y) (ap cp₁₁ (emloop g₁)) (ap cp₁₁ (emloop g₂)) ◃∙
       ap2 _∙_ (app=-ap-cp₁₁ g₁ y) (app=-ap-cp₁₁ g₂ y) ◃∎
         =ₛ⟨ 1 & 4 & app=-ap-cp₁₁-coh g₁ g₂ y ⟩
-      ap-∘ (λ f → f y) cp₁₁ (emloop (R.add g₁ g₂)) ◃∙
-      app=-ap-cp₁₁ (R.add g₁ g₂) y ◃∙
+      ap-∘ (λ f → f y) cp₁₁ (emloop (G.comp g₁ g₂)) ◃∙
+      app=-ap-cp₁₁ (G.comp g₁ g₂) y ◃∙
       app= (F₀₄.pres-comp g₁ g₂) y ◃∎
         =ₛ₁⟨ 0 & 2 & idp ⟩
-      ap-cp₁₁ (R.add g₁ g₂) y ◃∙
+      ap-cp₁₁ (G.comp g₁ g₂) y ◃∙
       app= (F₀₄.pres-comp g₁ g₂) y ◃∎ ∎ₛ
 
   ap-cp₁₁-embase-seq : ∀ g →
@@ -664,9 +685,9 @@ module CP₁₁ where
   ap-cp₁₁-embase g = ↯ (ap-cp₁₁-embase-seq g)
 
   ap-cp₁₁-embase-coh-seq : ∀ g₁ g₂ →
-    ap (λ x → cp₁₁ x embase) (emloop (R.add g₁ g₂)) =-= idp
+    ap (λ x → cp₁₁ x embase) (emloop (G.comp g₁ g₂)) =-= idp
   ap-cp₁₁-embase-coh-seq g₁ g₂ =
-    ap (λ x → cp₁₁ x embase) (emloop (R.add g₁ g₂))
+    ap (λ x → cp₁₁ x embase) (emloop (G.comp g₁ g₂))
       =⟪ ap (ap (λ x → cp₁₁ x embase)) (emloop-comp g₁ g₂) ⟫
     ap (λ x → cp₁₁ x embase) (emloop g₁ ∙ emloop g₂)
       =⟪ ap-∙ (λ x → cp₁₁ x embase) (emloop g₁) (emloop g₂) ⟫
@@ -675,14 +696,14 @@ module CP₁₁ where
     idp ∎∎
 
   ap-cp₁₁-embase-coh : ∀ g₁ g₂ →
-    ap-cp₁₁-embase (R.add g₁ g₂) ◃∎ =ₛ ap-cp₁₁-embase-coh-seq g₁ g₂
+    ap-cp₁₁-embase (G.comp g₁ g₂) ◃∎ =ₛ ap-cp₁₁-embase-coh-seq g₁ g₂
   ap-cp₁₁-embase-coh g₁ g₂ =
-    ap-cp₁₁-embase (R.add g₁ g₂) ◃∎
-      =ₛ⟨ expand (ap-cp₁₁-embase-seq (R.add g₁ g₂)) ⟩
-    ap-cp₁₁ (R.add g₁ g₂) embase ◃∙
+    ap-cp₁₁-embase (G.comp g₁ g₂) ◃∎
+      =ₛ⟨ expand (ap-cp₁₁-embase-seq (G.comp g₁ g₂)) ⟩
+    ap-cp₁₁ (G.comp g₁ g₂) embase ◃∙
     ap (ap [_]) (!-inv-r (merid embase)) ◃∎
       =ₛ⟨ 1 & 1 & !ₛ (app=-F₀₄-pres-comp-embase-coh g₁ g₂) ⟩
-    ap-cp₁₁ (R.add g₁ g₂) embase ◃∙
+    ap-cp₁₁ (G.comp g₁ g₂) embase ◃∙
     app= (F₀₄.pres-comp g₁ g₂) embase ◃∙
     ap2 _∙_ (ap (ap [_]) (!-inv-r (merid embase))) (ap (ap [_]) (!-inv-r (merid embase))) ◃∎
       =ₛ⟨ 0 & 2 & !ₛ (ap-cp₁₁-coh g₁ g₂ embase) ⟩
@@ -694,3 +715,5 @@ module CP₁₁ where
     ap (ap (λ x → cp₁₁ x embase)) (emloop-comp g₁ g₂) ◃∙
     ap-∙ (λ x → cp₁₁ x embase) (emloop g₁) (emloop g₂) ◃∙
     ap2 _∙_ (ap-cp₁₁-embase g₁) (ap-cp₁₁-embase g₂) ◃∎ ∎ₛ
+
+open CP₁₁ public

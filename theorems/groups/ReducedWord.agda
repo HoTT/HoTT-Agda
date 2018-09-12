@@ -4,6 +4,8 @@ open import HoTT
 
 module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
 
+  open FreeGroup A
+
   is-reduced : Word A → Type i
   is-reduced nil                   = Lift ⊤
   is-reduced (_     :: nil)        = Lift ⊤
@@ -223,7 +225,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
           (Word-flip-is-reduced (y :: w) (tail-is-reduced x (y :: w) red))
 
     rw-inv : ReducedWord → ReducedWord
-    rw-inv (w , red) = reverse (Word-flip w) , reverse-is-reduced (Word-flip w) (Word-flip-is-reduced w red)
+    rw-inv (w , red) = Word-inverse w , reverse-is-reduced (Word-flip w) (Word-flip-is-reduced w red)
 
     abstract
       rw-inv-l-lemma : ∀ w₁ x w₂ (red₂ : is-reduced (x :: w₂)) (red₂' : is-reduced w₂)
@@ -269,10 +271,12 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       QuotWordRel-cons x nil _ = qwr-refl idp
       QuotWordRel-cons (inl x) (inl y :: w) _ = qwr-refl idp
       QuotWordRel-cons (inl x) (inr y :: w) _ with dec x y
-      QuotWordRel-cons (inl x) (inr y :: w) _ | inl x=y rewrite x=y = qwr-flip (inl y) w
+      QuotWordRel-cons (inl x) (inr y :: w) _ | inl x=y rewrite x=y =
+        qwr-cong-l (qwr-flip-r (inl y)) w
       QuotWordRel-cons (inl x) (inr y :: w) _ | inr x≠y = qwr-refl idp
       QuotWordRel-cons (inr x) (inl y :: w) _ with dec x y
-      QuotWordRel-cons (inr x) (inl y :: w) _ | inl x=y rewrite x=y = qwr-flip (inr y) w
+      QuotWordRel-cons (inr x) (inl y :: w) _ | inl x=y rewrite x=y =
+        qwr-cong-l (qwr-flip-r (inr y)) w
       QuotWordRel-cons (inr x) (inl y :: w) _ | inr x≠y = qwr-refl idp
       QuotWordRel-cons (inr x) (inr y :: w) _ = qwr-refl idp
 
@@ -280,26 +284,39 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
         → QuotWordRel (w₁ ++ fst rw₂) (fst (rw-++' w₁ rw₂))
       QuotWordRel-++ nil _ = qwr-refl idp
       QuotWordRel-++ (x :: w₁) rw₂ =
-        qwr-trans (qwr-cons x (QuotWordRel-++ w₁ rw₂)) $
-        uncurry (QuotWordRel-cons x) (rw-++' w₁ rw₂)
+        x :: w₁ ++ fst rw₂
+          qwr⟨ qwr-cong-r (x :: nil) (QuotWordRel-++ w₁ rw₂) ⟩
+        x :: fst (rw-++' w₁ rw₂)
+          qwr⟨ uncurry (QuotWordRel-cons x) (rw-++' w₁ rw₂) ⟩
+        fst (rw-++' (x :: w₁) rw₂) qwr∎
 
   -- freeness
-  ReducedWord-to-FreeGroup : ReducedWord-group →ᴳ FreeGroup A
+  ReducedWord-to-FreeGroup : ReducedWord-group →ᴳ FreeGroup
   ReducedWord-to-FreeGroup = group-hom (λ rw → qw[ fst rw ])
     (λ rw₁ rw₂ → ! $ quot-rel $ QuotWordRel-++ (fst rw₁) rw₂)
 
   private
     abstract
-      reduce-emap : ∀ {w₁ w₂} → QuotWordRel w₁ w₂ → reduce w₁ == reduce w₂
-      reduce-emap (qwr-refl p) = ap reduce p
+      reduce-emap : ∀ {w₁ w₂ rw₃} → QuotWordRel w₁ w₂ → rw-++' w₁ rw₃ == rw-++' w₂ rw₃
+      reduce-emap {rw₃ = rw₃} (qwr-refl p) = ap (λ w → rw-++' w rw₃) p
       reduce-emap (qwr-trans qwr₁ qwr₂) = reduce-emap qwr₁ ∙ reduce-emap qwr₂
       reduce-emap (qwr-sym qwr) = ! (reduce-emap qwr)
-      reduce-emap (qwr-cons x qwr) = ap (rw-cons x) (reduce-emap qwr)
-      reduce-emap (qwr-flip x w) = rw-cons-cons-flip x (reduce w)
+      reduce-emap {rw₃ = rw₃} (qwr-cong {l₁} {l₂} {l₃} {l₄} qwr qwr') =
+        rw-++' (l₁ ++ l₃) rw₃
+          =⟨ foldr-++ rw-cons rw₃ l₁ l₃ ⟩
+        rw-++' l₁ (rw-++' l₃ rw₃)
+          =⟨ ap (rw-++' l₁) (reduce-emap qwr') ⟩
+        rw-++' l₁ (rw-++' l₄ rw₃)
+          =⟨ reduce-emap qwr ⟩
+        rw-++' l₂ (rw-++' l₄ rw₃)
+          =⟨ ! (foldr-++ rw-cons rw₃ l₂ l₄) ⟩
+        rw-++' (l₂ ++ l₄) rw₃ =∎
+      reduce-emap {rw₃ = rw₃} (qwr-flip-r x) = rw-cons-cons-flip x rw₃
+      reduce-emap (qwr-rel ())
 
     to = GroupHom.f ReducedWord-to-FreeGroup
 
-    from : QuotWord A → ReducedWord
+    from : QuotWord → ReducedWord
     from = QuotWord-rec reduce reduce-emap
 
     abstract
@@ -307,8 +324,11 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
         → QuotWordRel w (fst (reduce w))
       QuotWordRel-reduce nil = qwr-refl idp
       QuotWordRel-reduce (x :: w) =
-        qwr-trans (qwr-cons x (QuotWordRel-reduce w)) $
-        uncurry (QuotWordRel-cons x) (reduce w)
+        x :: w
+          qwr⟨ qwr-cong-r (x :: nil) (QuotWordRel-reduce w) ⟩
+        x :: fst (reduce w)
+          qwr⟨ uncurry (QuotWordRel-cons x) (reduce w) ⟩
+        fst (reduce (x :: w)) qwr∎
 
       to-from : ∀ qw → to (from qw) == qw
       to-from = QuotWord-elim
@@ -318,5 +338,5 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       from-to : ∀ rw → from (to rw) == rw
       from-to = Group.unit-r ReducedWord-group
 
-  ReducedWord-iso-FreeGroup : ReducedWord-group ≃ᴳ FreeGroup A
+  ReducedWord-iso-FreeGroup : ReducedWord-group ≃ᴳ FreeGroup
   ReducedWord-iso-FreeGroup = ReducedWord-to-FreeGroup , is-eq to from to-from from-to

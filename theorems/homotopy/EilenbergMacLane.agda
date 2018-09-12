@@ -228,5 +228,14 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
     EM₁-fmap-emloop-β : ∀ g → ap EM₁-fmap (emloop g) == emloop (φ.f g)
     EM₁-fmap-emloop-β = EM₁FmapRec.emloop-β
 
-    ⊙EM₁-fmap : ⊙EM₁ G ⊙→ ⊙EM₁ H
-    ⊙EM₁-fmap = EM₁-fmap , idp
+  ⊙EM₁-fmap : ⊙EM₁ G ⊙→ ⊙EM₁ H
+  ⊙EM₁-fmap = EM₁-fmap , idp
+
+module _ {i j} {G : AbGroup i} {H : AbGroup j} (φ : AbGroup.grp G →ᴳ AbGroup.grp H) where
+
+  ⊙EM-fmap : ∀ n → EMExplicit.⊙EM G n ⊙→ EMExplicit.⊙EM H n
+  ⊙EM-fmap O = ⊙Ω-fmap (⊙EM₁-fmap φ)
+  ⊙EM-fmap (S n) = ⊙Trunc-fmap (⊙Susp^-fmap n (⊙EM₁-fmap φ))
+
+  EM-fmap : ∀ n → EMExplicit.EM G n → EMExplicit.EM H n
+  EM-fmap n = fst (⊙EM-fmap n)

@@ -15,6 +15,7 @@ open import cw.cohomology.reconstructed.TipAndAugment OT ⊙⦉ ⊙fcw-init ⊙f
 open import cw.cohomology.reconstructed.TipCoboundary OT ⊙⦉ ⊙fin-skel ⦊
 open import cw.cohomology.cochainequiv.DualizedFirstBoundary OT ⊙fin-skel
 open import cw.cohomology.cochainequiv.FirstCoboundary OT ⊙fin-skel
+open FreeAbelianGroup
 
 private
   fin-skel = ⊙FinSkeleton.skel ⊙fin-skel
@@ -30,15 +31,15 @@ abstract
     CommSquareEquiv
       (λ g <I → Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (fdegree-last fin-skel <I <I₋₁)))
       (_∘ᴳ fboundary-last fin-skel)
-      (FreeAbGroup-extend (C2-abgroup 0))
-      (FreeAbGroup-extend (C2-abgroup 0))
+      (Freeness.extend _ (C2-abgroup 0))
+      (Freeness.extend _ (C2-abgroup 0))
   rephrase-dualized-first-boundary-comm-sqr =
     comm-sqr (λ g →
       equiv-adj'
-        (GroupIso.f-equiv (FreeAbGroup-extend-iso (C2-abgroup 0)))
+        (GroupIso.f-equiv (Freeness.extend-iso _ (C2-abgroup 0)))
         (λ= λ <I → ! (rephrase-dualized-first-boundary-in-degree g <I))) ,
-    FreeAbGroup-extend-is-equiv (C2-abgroup 0) ,
-    FreeAbGroup-extend-is-equiv (C2-abgroup 0)
+    Freeness.extend-is-equiv _ (C2-abgroup 0) ,
+    Freeness.extend-is-equiv _ (C2-abgroup 0)
 
   rephrase-cw-co∂-head-comm-sqr :
     CommSquareEquiv
@@ -58,10 +59,10 @@ abstract
     CommSquareEquiv
       (GroupHom.f cw-co∂-head)
       (_∘ᴳ fboundary-last fin-skel)
-      (FreeAbGroup-extend (C2-abgroup 0) ∘ GroupIso.f (C2×CX₀-diag-β ac₋₁))
-      (FreeAbGroup-extend (C2-abgroup 0) ∘ GroupIso.f (CXₙ/Xₙ₋₁-diag-β ac))
+      (Freeness.extend _ (C2-abgroup 0) ∘ GroupIso.f (C2×CX₀-diag-β ac₋₁))
+      (Freeness.extend _ (C2-abgroup 0) ∘ GroupIso.f (CXₙ/Xₙ₋₁-diag-β ac))
   first-coboundary-comm-sqr =
-    CommSquareEquiv-∘v  
+    CommSquareEquiv-∘v
       rephrase-dualized-first-boundary-comm-sqr
       (CommSquareEquiv-inverse-v rephrase-cw-co∂-head-comm-sqr)
 
@@ -69,7 +70,7 @@ abstract
     CommSquareEquivᴳ
       cw-co∂-head
       (pre∘ᴳ-hom (C2-abgroup 0) (fboundary-last fin-skel))
-      (FreeAbGroup-extend-hom (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (C2×CX₀-diag-β ac₋₁))
-      (FreeAbGroup-extend-hom (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (CXₙ/Xₙ₋₁-diag-β ac))
+      (Freeness.extend-hom _ (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (C2×CX₀-diag-β ac₋₁))
+      (Freeness.extend-hom _ (C2-abgroup 0) ∘ᴳ GroupIso.f-hom (CXₙ/Xₙ₋₁-diag-β ac))
   first-coboundary-comm-sqrᴳ =
     comm-sqrᴳ (fst first-coboundary-comm-sqr □$_) , snd first-coboundary-comm-sqr

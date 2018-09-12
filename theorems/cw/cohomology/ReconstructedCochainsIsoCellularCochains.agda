@@ -10,6 +10,8 @@ open import cohomology.ChainComplex
 module cw.cohomology.ReconstructedCochainsIsoCellularCochains {i : ULevel}
   (OT : OrdinaryTheory i) where
 
+  open FreeAbelianGroup
+
   open OrdinaryTheory OT
   open import cw.cohomology.WedgeOfCells OT
   open import cw.cohomology.cellular.ChainComplex as CCC
@@ -22,10 +24,10 @@ module cw.cohomology.ReconstructedCochainsIsoCellularCochains {i : ULevel}
       →  AbGroup.grp (RCC.cochain-template ⊙skel (inl m≤n))
       ≃ᴳ hom-group (AbGroup.grp (CCC.chain-template (⊙Skeleton.skel ⊙skel) (inl m≤n))) (C2-abgroup 0)
     rcc-iso-ccc-nth ⊙skel {m = O} (inl idp) ac
-      =   FreeAbGroup-extend-iso (C2-abgroup 0)
+      =   Freeness.extend-iso _ (C2-abgroup 0)
       ∘eᴳ C2×CX₀-diag-β ⊙skel ac
     rcc-iso-ccc-nth ⊙skel {m = S m} (inl idp) ac
-      =   FreeAbGroup-extend-iso (C2-abgroup 0)
+      =   Freeness.extend-iso _ (C2-abgroup 0)
       ∘eᴳ CXₙ/Xₙ₋₁-diag-β ⊙skel ac
     rcc-iso-ccc-nth ⊙skel {m = O} (inr ltS) ac =
       rcc-iso-ccc-nth (⊙cw-init ⊙skel) (inl idp) (⊙init-has-cells-with-choice ⊙skel ac)

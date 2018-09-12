@@ -7,6 +7,9 @@ module lib.Relation {i} where
 Rel : ∀ (A : Type i) j → Type (lmax i (lsucc j))
 Rel A j = A → A → Type j
 
+empty-rel : ∀ {A : Type i} → Rel A lzero
+empty-rel _ _ = Empty
+
 module _ {A : Type i} {j} (rel : Rel A j) where
 
   Decidable : Type (lmax i j)
