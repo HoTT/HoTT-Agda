@@ -70,12 +70,7 @@ module EM₁HSpace {i} (G : AbGroup i) where
   H-⊙EM₁ = from-alt-h-space $ record { μ = mult; unit-l = unit-l; unit-r = unit-r; coh = coh }
     where
     unit-l : (x : EM₁ G.grp) → mult embase x == x
-    unit-l = EM₁-set-elim
-      {P = λ x → mult embase x == x}
-      {{λ x → has-level-apply (EM₁-level₁ G.grp) (mult embase x) x}}
-      idp
-      (λ g → ↓-app=idf-in $ ∙'-unit-l (emloop g) ∙ (! (ap-idf (emloop g)))
-                            ∙ ! (∙-unit-r (ap (mult embase) (emloop g))))
+    unit-l x = idp
 
     unit-r : (x : EM₁ G.grp) → mult x embase == x
     unit-r = EM₁-set-elim
