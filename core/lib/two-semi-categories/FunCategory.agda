@@ -49,14 +49,9 @@ module _ {i j k} (A : Type i) (G : TwoSemiCategory j k) where
       λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)) ∙
                 G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
                 ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
-        =ₛ⟨ λ=-∙ (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))
-                 (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
-                        ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ⟩
-      λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))◃∙
-      λ= (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a) ∙
-      ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
-        =ₛ⟨ 1 & 1 & λ=-∙ (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a))
-                         (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ⟩
+        =ₛ⟨ λ=-∙∙ (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a)))
+                  (λ a → G.assoc (α a) (G.comp (β a) (γ a)) (δ a))
+                  (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ⟩
       λ= (λ a → ap (λ s → G.comp s (δ a)) (G.assoc (α a) (β a) (γ a))) ◃∙
       fun-assoc α (fun-comp β γ) δ ◃∙
       λ= (λ a → ap (G.comp (α a)) (G.assoc (β a) (γ a) (δ a))) ◃∎
