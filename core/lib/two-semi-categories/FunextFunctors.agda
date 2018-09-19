@@ -32,17 +32,17 @@ module FunextFunctors {i j} (A : Type i) (B : Type j) {{B-level : has-level 2 B}
         λ= (λ a → idp) ◃∎
           =ₛ⟨ 2 & 1 & =ₛ-in {t = []} (! (λ=-η idp)) ⟩
         app=-pres-comp idp γ ◃∙
-        ap (λ s a → s a ∙ app= γ a) (app=-pres-comp idp idp) ◃∎
-          =ₛ₁⟨ 1 & 1 & λ=-ap (λ a t → t ∙ app= γ a) (λ a → ap-∙ (λ f → f a) (idp {a = f}) idp) ⟩
+        ap (λ s a → s a ∙ app= γ a) (λ= (λ a → idp {a = idp {a = f a}})) ◃∎
+          =ₛ₁⟨ 1 & 1 & ap (ap (λ s a → s a ∙ app= γ a)) (! (λ=-η idp)) ⟩
         app=-pres-comp idp γ ◃∙
-        app=-pres-comp idp γ ◃∎
-          =ₛ₁⟨ 1 & 1 & ! (ap-idf (app=-pres-comp idp γ)) ⟩
+        idp ◃∎
+          =ₛ₁⟨ 1 & 1 & ap (ap (λ s → s)) (λ=-η idp) ⟩
         app=-pres-comp idp γ ◃∙
-        ap (λ s a → s a) (app=-pres-comp idp γ) ◃∎
+        ap (λ s → s) (λ= (λ a → idp {a = app= γ a})) ◃∎
           =ₛ⟨ 0 & 0 & contract ⟩
         idp ◃∙
         app=-pres-comp idp γ ◃∙
-        ap (λ s a → s a) (app=-pres-comp idp γ) ◃∎ ∎ₛ
+        ap (λ s → s) (λ= (λ a → idp {a = app= γ a})) ◃∎ ∎ₛ
 
   app=-functor : TwoSemiFunctor (2-type-fundamental-cat (A → B))
                                 (fun-cat A (2-type-fundamental-cat B))
