@@ -94,14 +94,15 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
   =ₜ-level : (a b : Trunc (S n) A) → has-level n (a =ₜ b)
   =ₜ-level a b = snd (Trunc= a b)
 
+  =ₜ-refl : (a : Trunc (S n) A) → a =ₜ a
+  =ₜ-refl = Trunc-elim {{λ x → raise-level _ (=ₜ-level x x)}}
+                       (λ a → [ idp ])
+
   =ₜ-equiv : (a b : Trunc (S n) A) → (a == b) ≃ (a =ₜ b)
   =ₜ-equiv a b = to a b , to-is-equiv a b where
-    to-aux : (a : Trunc (S n) A) → a =ₜ a
-    to-aux = Trunc-elim {{λ x → raise-level _ (=ₜ-level x x)}}
-                        (λ a → [ idp ])
 
     to : (a b : Trunc (S n) A) → (a == b → a =ₜ b)
-    to a .a idp = to-aux a
+    to a .a idp = =ₜ-refl a
 
     from-aux : (a b : A) → a == b → [ a ] == [ b ] :> Trunc (S n) A
     from-aux _ _ = ap [_]
@@ -118,7 +119,7 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
               (λ b → Trunc-elim
               (to-from-aux a b)))
 
-    from-to-aux : (a : Trunc (S n) A) → from a a (to-aux a) == idp
+    from-to-aux : (a : Trunc (S n) A) → from a a (=ₜ-refl a) == idp
     from-to-aux = Trunc-elim (λ _ → idp)
 
     from-to : (a b : Trunc (S n) A) (p : a == b) → from a b (to a b p) == p
