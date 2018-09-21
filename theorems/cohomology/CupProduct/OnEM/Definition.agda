@@ -46,40 +46,29 @@ module _ (g : G.El) where
     cp₀₁-emloop-β : ∀ h → ap cp₀₁ (emloop h) == emloop (g ⊗ h)
     cp₀₁-emloop-β = Rec.emloop-β
 
-module distr-l (g₁ g₂ : G.El) where
-
+cp₀₁-distr-l : (g₁ g₂ : G.El) (y : EM₁ H.grp)
+  → cp₀₁ (G.comp g₁ g₂) y == EM₁-mult (cp₀₁ g₁ y) (cp₀₁ g₂ y)
+cp₀₁-distr-l g₁ g₂ =
+  EM₁-set-elim
+    {P = λ x → f x == g x}
+    {{λ x → has-level-apply (EM₁-level₁ G⊗H.grp) _ _}}
+    idp loop'
+  where
   f : EM₁ H.grp → EM₁ G⊗H.grp
   f x = cp₀₁ (G.comp g₁ g₂) x
-
   g : EM₁ H.grp → EM₁ G⊗H.grp
   g x = EM₁-mult (cp₀₁ g₁ x) (cp₀₁ g₂ x)
-
-  base' : f (embase' H.grp) == g (embase' H.grp)
-  base' = idp
-
   abstract
-    loop' : (h : H.El) → base' == base' [ (λ x → f x == g x) ↓ emloop h ]
-    loop' h = ↓-='-in {f = f} {g = g} {p = emloop h} {u = base'} {v = base'} $
-      base' ∙' ap g (emloop h)
+    loop' : (h : H.El) → idp == idp [ (λ x → f x == g x) ↓ emloop h ]
+    loop' h = ↓-='-in {f = f} {g = g} {p = emloop h} {u = idp} {v = idp} $
+      idp ∙' ap g (emloop h)
         =⟨ ∙'-unit-l (ap g (emloop h)) ⟩
       ap g (emloop h)
-        =⟨ ! (ap2-diag (λ x y → EM₁-mult (cp₀₁ g₁ x) $ cp₀₁ g₂ y) (emloop h)) ⟩
-      ap2 (λ x y → EM₁-mult (cp₀₁ g₁ x) $ cp₀₁ g₂ y) (emloop h) (emloop h)
-        =⟨ ! (ap2-ap-l (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (EM₁-mult ∘ cp₀₁ g₁) (emloop h) (emloop h)) ⟩
-      ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (ap (EM₁-mult ∘ cp₀₁ g₁) (emloop h)) (emloop h)
-        =⟨ ap-∘ EM₁-mult (cp₀₁ g₁) (emloop h) |in-ctx (λ z → ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
-      ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (ap EM₁-mult (ap (cp₀₁ g₁) (emloop h))) (emloop h)
-        =⟨ cp₀₁-emloop-β g₁ h |in-ctx (λ z → ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (ap EM₁-mult z) (emloop h)) ⟩
-      ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (ap EM₁-mult (emloop (g₁ ⊗ h))) (emloop h)
-        =⟨ mult-emloop-β (g₁ ⊗ h) |in-ctx (λ z → ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) z (emloop h)) ⟩
-      ap2 (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (mult-loop (g₁ ⊗ h)) (emloop h)
-        =⟨ =ₛ-out (ap2-out (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) y → f $ cp₀₁ g₂ y) (mult-loop (g₁ ⊗ h)) (emloop h)) ⟩
-      ap (λ (f : EM₁ G⊗H.grp → EM₁ G⊗H.grp) → f embase) (mult-loop (g₁ ⊗ h)) ∙ ap (cp₀₁ g₂) (emloop h)
-        =⟨ app=-β (mult-loop' (g₁ ⊗ h)) embase |in-ctx (λ z → z ∙ ap (cp₀₁ g₂) (emloop h)) ⟩
-      mult-loop' (g₁ ⊗ h) embase ∙ ap (cp₀₁ g₂) (emloop h)
-        =⟨ idp ⟩
-      emloop (g₁ ⊗ h) ∙ ap (cp₀₁ g₂) (emloop h)
-        =⟨ cp₀₁-emloop-β g₂ h |in-ctx (λ z → emloop (g₁ ⊗ h) ∙ z) ⟩
+        =⟨ ! (ap2-diag (λ x y → EM₁-mult (cp₀₁ g₁ x) (cp₀₁ g₂ y)) (emloop h)) ⟩
+      ap2 (λ x y → EM₁-mult (cp₀₁ g₁ x) (cp₀₁ g₂ y)) (emloop h) (emloop h)
+        =⟨ =ₛ-out $ ap2-out (λ x y → EM₁-mult (cp₀₁ g₁ x) (cp₀₁ g₂ y)) (emloop h) (emloop h) ⟩
+      ap (λ x → EM₁-mult (cp₀₁ g₁ x) embase) (emloop h) ∙ ap (cp₀₁ g₂) (emloop h)
+        =⟨ ap2 _∙_ part (cp₀₁-emloop-β g₂ h) ⟩
       emloop (g₁ ⊗ h) ∙ emloop (g₂ ⊗ h)
         =⟨ ! (emloop-comp (g₁ ⊗ h) (g₂ ⊗ h)) ⟩
       emloop (G⊗H.comp (g₁ ⊗ h) (g₂ ⊗ h))
@@ -88,16 +77,17 @@ module distr-l (g₁ g₂ : G.El) where
         =⟨ ! (cp₀₁-emloop-β (G.comp g₁ g₂) h) ⟩
       ap f (emloop h)
         =⟨ ! (∙-unit-r (ap f (emloop h))) ⟩
-      ap f (emloop h) ∙ base' =∎
-
-  cp₀₁-distr-l : (y : EM₁ H.grp) → cp₀₁ (G.comp g₁ g₂) y == EM₁-mult (cp₀₁ g₁ y) (cp₀₁ g₂ y)
-  cp₀₁-distr-l =
-    EM₁-set-elim
-      {P = λ x → f x == g x}
-      {{λ x → has-level-apply (EM₁-level₁ G⊗H.grp) _ _}}
-      base' loop'
-
-open distr-l public using (cp₀₁-distr-l)
+      ap f (emloop h) ∙ idp =∎
+      where
+      part : ap (λ x → EM₁-mult (cp₀₁ g₁ x) embase) (emloop h) == emloop (g₁ ⊗ h)
+      part =
+        ap (λ x → EM₁-mult (cp₀₁ g₁ x) embase) (emloop h)
+          =⟨ ap-∘ (λ u → EM₁-mult u embase) (cp₀₁ g₁) (emloop h) ⟩
+        ap (λ u → EM₁-mult u embase) (ap (cp₀₁ g₁) (emloop h))
+          =⟨ ap (ap (λ u → EM₁-mult u embase)) (cp₀₁-emloop-β g₁ h) ⟩
+        ap (λ u → EM₁-mult u embase) (emloop (g₁ ⊗ h))
+          =⟨ mult-emloop-β (g₁ ⊗ h) embase ⟩
+        emloop (g₁ ⊗ h) =∎
 
 module _ (g₁ g₂ g₃ : G.El) (y : EM₁ H.grp) where
 
