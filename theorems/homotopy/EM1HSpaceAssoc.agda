@@ -17,9 +17,9 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
   private
     module H-⊙EM₁ = HSpaceStructure H-⊙EM₁
 
-  mult-loop-mult : (g : G.El) (y z : EM₁ G.grp)
+  mult-loop-assoc : (g : G.El) (y z : EM₁ G.grp)
     → mult-loop g (mult y z) == ap (λ x' → mult x' z) (mult-loop g y)
-  mult-loop-mult g y z =
+  mult-loop-assoc g y z =
     EM₁-prop-elim {P = λ y → mult-loop g (mult y z) == ap (λ x' → mult x' z) (mult-loop g y)}
                   {{λ y → has-level-apply (has-level-apply (EM₁-level₁ G.grp) _ _) _ _}}
                   base' y
@@ -44,7 +44,7 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
           ap (λ x → mult x (mult y z)) (emloop g)
             =⟨ mult-emloop-β g (mult y z) ⟩
           mult-loop g (mult y z)
-            =⟨ mult-loop-mult g y z ⟩
+            =⟨ mult-loop-assoc g y z ⟩
           ap (λ v → mult v z) (mult-loop g y)
             =⟨ ap (ap (λ v → mult v z)) (! (mult-emloop-β g y)) ⟩
           ap (λ v → mult v z) (ap (λ x → mult x y) (emloop g))
@@ -52,6 +52,9 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
           ap (λ x → mult (mult x y) z) (emloop g)
             =⟨ ! (∙-unit-r _) ⟩
           ap (λ x → mult (mult x y) z) (emloop g) ∙ idp =∎
+
+  H-EM₁-assoc-coh-unit-l : coh-unit-l H-⊙EM₁ H-⊙EM₁-assoc
+  H-EM₁-assoc-coh-unit-l x y = =ₛ-in idp
 
   H-EM₁-assoc-coh-unit-r : coh-unit-r H-⊙EM₁ H-⊙EM₁-assoc
   H-EM₁-assoc-coh-unit-r =
@@ -65,7 +68,7 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
 
   H-EM₁-assoc-coh-unit-l-r-pentagon : coh-unit-l-r-pentagon H-⊙EM₁ H-⊙EM₁-assoc
   H-EM₁-assoc-coh-unit-l-r-pentagon =
-    coh-unit-r-to-unit-l-r-pentagon H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-coh-unit-r
+    coh-unit-l-to-unit-l-r-pentagon H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-coh-unit-l
 
   import homotopy.Pi2HSuspCompose H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-coh-unit-l-r-pentagon as Pi2EMSuspCompose
   open Pi2EMSuspCompose hiding (comp-functor) public
