@@ -10,36 +10,6 @@ module lib.types.EilenbergMacLane1.DoublePathElim where
 
 private
 
-  module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
-
-    custom-square-over :
-      {x y z : A} {p : x == y} {q : y == z} {r : x == z}
-      (comp : r == p ∙ q)
-      {u : f x == g x} {v : f y == g y} {w : f z == g z}
-      (p-sq : Square u (ap f p) (ap g p) v)
-      (q-sq : Square v (ap f q) (ap g q) w)
-      (r-sq : Square u (ap f r) (ap g r) w)
-      → r-sq ⊡v∙ ap (ap g) comp ==
-        ap (ap f) comp ∙v⊡ ↓-='-square-comp p-sq q-sq
-      → r-sq == ↓-='-square-comp p-sq q-sq
-          [ (λ s → Square u (ap f s) (ap g s) w) ↓ comp ]
-    custom-square-over {p = idp} {q = idp} {r = .idp} idp p-sq q-sq r-sq e = e
-
-    embase-emloop-comp-helper :
-      {x y z : A} {p : x == y} {q : y == z} {r : x == z}
-      (comp : r == p ∙ q)
-      {u : f x == g x} {v : f y == g y} {w : f z == g z}
-      (p-sq : Square u (ap f p) (ap g p) v)
-      (q-sq : Square v (ap f q) (ap g q) w)
-      (r-sq : Square u (ap f r) (ap g r) w)
-      → r-sq ⊡v∙ ap (ap g) comp ==
-        ap (ap f) comp ∙v⊡ ↓-='-square-comp p-sq q-sq
-      → ↓-='-from-square r-sq == ↓-='-from-square p-sq ∙ᵈ ↓-='-from-square q-sq
-          [ (λ p → u == w [ (λ x → f x == g x) ↓ p ]) ↓ comp ]
-    embase-emloop-comp-helper comp p-sq q-sq r-sq e =
-      ap↓ ↓-='-from-square (custom-square-over comp p-sq q-sq r-sq e) ▹
-      ↓-='-from-square-comp p-sq q-sq
-
   emloop-emloop-eq-helper : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
     (f g : A → B → C)
     {a₀ a₁ : A} (p : a₀ == a₁)
@@ -118,17 +88,17 @@ module _ {i j} (G : Group i) (H : Group j) where
           (λ h → ↓-='-from-square (embase-emloop* h))
           (λ g → ↓-='-from-square (emloop-embase* g))
           (λ h₁ h₂ →
-            embase-emloop-comp-helper (emloop-comp h₁ h₂)
-                                      (embase-emloop* h₁)
-                                      (embase-emloop* h₂)
-                                      (embase-emloop* (H.comp h₁ h₂))
-                                      (embase-emloop-comp* h₁ h₂))
+            ↓-='-from-square-comp-path (emloop-comp h₁ h₂)
+                                       (embase-emloop* h₁)
+                                       (embase-emloop* h₂)
+                                       (embase-emloop* (H.comp h₁ h₂))
+                                       (embase-emloop-comp* h₁ h₂))
           (λ g₁ g₂ →
-            embase-emloop-comp-helper (emloop-comp g₁ g₂)
-                                      (emloop-embase* g₁)
-                                      (emloop-embase* g₂)
-                                      (emloop-embase* (G.comp g₁ g₂))
-                                      (emloop-comp-embase* g₁ g₂))
+            ↓-='-from-square-comp-path (emloop-comp g₁ g₂)
+                                       (emloop-embase* g₁)
+                                       (emloop-embase* g₂)
+                                       (emloop-embase* (G.comp g₁ g₂))
+                                       (emloop-comp-embase* g₁ g₂))
           (λ g h →
             emloop-emloop-eq-helper f₁ f₂
                                     (emloop g) (emloop h)
