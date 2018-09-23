@@ -120,12 +120,9 @@ abstract
     EM₁-prop-elim
       {P = λ y → cp₀₁-distr-l₁ g₁ g₂ g₃ y =ₛ cp₀₁-distr-l₂ g₁ g₂ g₃ y}
       {{λ y → =ₛ-level (EM₁-level₁ G⊗H.grp)}} $
-    =ₛ-in $
-    idp
-      =⟨ ! (ap-cst embase (G.assoc g₁ g₂ g₃)) ⟩
-    ap (cst embase) (G.assoc g₁ g₂ g₃)
-      =⟨ ! (∙-unit-r (ap (cst embase) (G.assoc g₁ g₂ g₃))) ⟩
-    ap (cst embase) (G.assoc g₁ g₂ g₃) ∙ idp =∎
+    idp ◃∙ idp ◃∙ idp ◃∎
+      =ₛ₁⟨ 0 & 1 & ! (ap-cst embase (G.assoc g₁ g₂ g₃)) ⟩
+    ap (cst embase) (G.assoc g₁ g₂ g₃) ◃∙ idp ◃∙ idp ◃∎ ∎ₛ
 
 group-to-EM₁H→EM₁G⊗H :
   TwoSemiFunctor
