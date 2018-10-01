@@ -8,9 +8,9 @@ foundations in Agda.  The structure of the source code is described below.
 Setup
 -----
 
-The code is loosely broken into `core` and `theorems` Agda libraries.
+The code is loosely broken into `hott-core` and `hott-theorems` Agda libraries.
 You need Agda 2.5.3 or newer
-and include at least the path to `core.agda-lib` in your Agda library list.
+and include at least the path to `hott-core.agda-lib` in your Agda library list.
 See `CHANGELOG` of Agda 2.5 for more information.
 
 Agda Options
