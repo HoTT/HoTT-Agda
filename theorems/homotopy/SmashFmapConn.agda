@@ -4,16 +4,48 @@ open import HoTT
 
 module homotopy.SmashFmapConn where
 
-module _ {i} {j} (S* : Type i) (P* : S* → Type j) where
+module _ {i} {j} {A : Type i} (B : A → Type j) where
 
-  foo : {s₁ s₂ t : S*} (p* : P* s₂) (p₁ : s₁ == t) (p₂ : s₂ == t)
+  custom-assoc : {a₀ a₁ a₂ a₃ : A}
+    {b₀ : B a₀} {b₁ b₁' b₁'' : B a₁} {b₂ : B a₂} {b₃ : B a₃}
+    {p : a₀ == a₁} (p' : b₀ == b₁ [ B ↓ p ])
+    (q' : b₁ == b₁')
+    (r' : b₁' == b₁'')
+    {s : a₁ == a₂} (s' : b₁'' == b₂ [ B ↓ s ])
+    {t : a₂ == a₃} (t' : b₂ == b₃ [ B ↓ t ])
+    → p' ∙ᵈ (((q' ∙ r') ◃ s') ∙ᵈ t')
+      ==
+      ((p' ▹ q') ▹ r') ∙ᵈ s' ∙ᵈ t'
+  custom-assoc {p = idp} p'@idp q'@idp r'@idp {s = idp} s'@idp {t = idp} t' = idp
+
+  transp-over : {a₀ a₁ : A} (p : a₀ == a₁) (b₀ : B a₀)
+    → b₀ == transport B p b₀ [ B ↓ p ]
+  transp-over p b₀ = from-transp B p (idp {a = transport B p b₀})
+
+  transp-over-naturality : ∀ {a₀ a₁ : A} (p : a₀ == a₁)
+    {b₀ b₀' : B a₀} (q : b₀ == b₀')
+    → q ◃ transp-over p b₀'
+      ==
+      transp-over p b₀ ▹ ap (transport B p) q
+  transp-over-naturality p@idp q@idp = idp
+
+  to-transp-over : {a₀ a₁ : A} {p : a₀ == a₁}
+    {b₀ : B a₀} {b₁ : B a₁} (q : b₀ == b₁ [ B ↓ p ])
+    → q ▹ ! (to-transp q) == transp-over p b₀
+  to-transp-over {p = idp} q@idp = idp
+
+module _ {i} {j} {S* : Type i} (P* : S* → Type j) where
+
+  -- cpa = custom path algebra
+  cpa₁ : {s₁ s₂ t : S*} (p* : P* s₂) (p₁ : s₁ == t) (p₂ : s₂ == t)
     → transport P* (! (p₁ ∙ ! p₂)) p*  == transport P* p₂ p* [ P* ↓ p₁ ]
-  foo p* p₁@idp p₂@idp = idp
+  cpa₁ p* p₁@idp p₂@idp = idp
 
-  bar : ∀ {k} {C : Type k} (f : C → S*)
+  -- cpac = custom path algebra coherence
+  cpac₁ : ∀ {k} {C : Type k} (f : C → S*)
     {c₁ c₂ : C} (q : c₁ == c₂)
-    {t : S*} (d : Π C (P* ∘ f))
-    (p₁ : f c₁ == t) (p₂ : f c₂ == t)
+    (d : Π C (P* ∘ f))
+    {t : S*} (p₁ : f c₁ == t) (p₂ : f c₂ == t)
     (r : ap f q == p₁ ∙' ! p₂)
     {u  : P* (f c₂)} (v  : u  == transport P* (! (p₂ ∙ ! p₂)) (d c₂))
     {u' : P* (f c₁)} (v' : u' == transport P* (! (p₁ ∙ ! p₂)) (d c₂))
@@ -24,9 +56,44 @@ module _ {i} {j} (S* : Type i) (P* : S* → Type j) where
       apd d q
       ==
       ↓-ap-out= P* f q (r ∙ ∙'=∙ p₁ (! p₂))
-                ((v' ◃ foo (d c₂) p₁ p₂) ∙ᵈ !ᵈ (v ◃ foo (d c₂) p₂ p₂)) ▹
+                ((v' ◃ cpa₁ (d c₂) p₁ p₂) ∙ᵈ !ᵈ (v ◃ cpa₁ (d c₂) p₂ p₂)) ▹
       (v ∙ ap (λ pp → transport P* (! pp) (d c₂)) (!-inv-r p₂))
-  bar f q@idp d p₁@.idp p₂@idp r@idp v@idp v'@idp = idp
+  cpac₁ f q@idp d p₁@.idp p₂@idp r@idp v@idp v'@idp = idp
+
+  cpa₂ : ∀ {k} {C : Type k} (f : C → S*)
+    {c₁ c₂ : C} (q : c₁ == c₂)
+    (d : Π C (P* ∘ f))
+    {s t : S*} (p : f c₁ == s) (r : s == t) (u : f c₂ == t)
+    (h : ap f q == p ∙' (r ∙ ! u))
+    → transport P* p (d c₁)
+      ==
+      transport P* u (d c₂)
+        [ P* ↓ r ]
+  cpa₂ f q@idp d p@.idp r@idp u@idp h@idp = idp
+
+  cpac₂ : ∀ {k} {C : Type k} (f : C → S*)
+    {c₁ c₂ c₃ : C} (q : c₁ == c₂) (q' : c₃ == c₂)
+    (d : Π C (P* ∘ f))
+    {s t : S*} (p : f c₁ == s) (p' : f c₃ == f c₂) (r : s == t) (u : f c₂ == t)
+    (h : ap f q == p ∙' (r ∙ ! u))
+    (h' : ap f q' == p' ∙' u ∙ ! u)
+    {x : P* (f c₂)} (x' : x == transport P* p' (d c₃))
+    {y : P* (f c₁)} (y' : y == d c₁)
+    → ↓-ap-out=
+        P*
+        f
+        q
+        (h ∙ ∙'=∙ p (r ∙ ! u))
+        ((y' ◃ transp-over P* p (d c₁)) ∙ᵈ cpa₂ f q d p r u h ∙ᵈ !ᵈ (x' ◃ cpa₂ f q' d p' u u h')) ▹
+      (x' ∙
+       ap (λ pp → transport P* pp (d c₃))
+          (! (∙-unit-r p') ∙
+           ap (p' ∙_) (! (!-inv-r u)) ∙
+           ! (h' ∙ ∙'=∙ p' (u ∙ ! u))) ∙
+       to-transp (↓-ap-in P* f (apd d q')))
+      ==
+      y' ◃ apd d q
+  cpac₂ f q@idp q'@idp d p@.idp p'@.idp r@idp u@idp h@idp h'@idp x'@idp y'@idp = idp
 
 module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
          {m n : ℕ₋₂}
@@ -68,6 +135,22 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
       ∧-fmap-smgluel-β-∙' a ∙
       ∙'=∙ (smgluel (fst f a)) (! (smgluel a₀'))
 
+    ∧-fmap-smgluer-β-∙' : ∀ (b : de⊙ B) →
+      ap (∧-fmap f (⊙idf B)) (smgluer b)
+      ==
+      ap (λ a' → smin a' b) (snd f) ∙' ∧-norm-r b
+    ∧-fmap-smgluer-β-∙' b =
+      ∧-fmap-smgluer-β' f (⊙idf B) b ∙
+      ∙=∙' (ap (λ a' → smin a' b) (snd f)) (∧-norm-r b)
+
+    ∧-fmap-smgluer-β-∙ : ∀ (b : de⊙ B) →
+      ap (∧-fmap f (⊙idf B)) (smgluer b)
+      ==
+      ap (λ a' → smin a' b) (snd f) ∙ ∧-norm-r b
+    ∧-fmap-smgluer-β-∙ b =
+      ∧-fmap-smgluer-β-∙' b ∙
+      ∙'=∙ (ap (λ a' → smin a' b) (snd f)) (∧-norm-r b)
+
     s₀-f : ∀ (a : de⊙ A) → s₀ (fst f a) == d (smin a b₀)
     s₀-f a =
       ap (λ p → transport (λ a'b → fst (P a'b)) p (d smbasel)) q ∙
@@ -105,17 +188,6 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
     s-b₀ : ∀ (a' : de⊙ A') → s a' b₀ == s₀ a'
     s-b₀ a' = ap (λ u → fst u a') q-f
 
-    s-a₀'-b₀ : s a₀' b₀ =-= d smbasel
-    s-a₀'-b₀ =
-      s a₀' b₀
-        =⟪ s-b₀ a₀' ⟫
-      s₀ a₀'
-        =⟪idp⟫
-      transport (fst ∘ P) (! (∧-norm-l a₀')) (d smbasel)
-        =⟪ ap (λ p → transport (fst ∘ P) (! p) (d smbasel))
-              (!-inv-r (smgluel a₀')) ⟫
-      d smbasel ∎∎
-
     s-f : ∀ (a : de⊙ A) (b : de⊙ B)
       → s (fst f a) b == d (smin a b)
     s-f a b = app= (snd (q b)) a
@@ -131,23 +203,17 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
         =⟨ ∙'=∙ (s-b₀ (fst f a)) (s₀-f a) ⟩
       s-b₀ (fst f a) ∙ s₀-f a =∎
 
-    e₂ : ∀ (b : de⊙ B) →
+    s-a₀' : ∀ (b : de⊙ B) →
       s a₀' b
-      =-=
-      transport! (fst ∘ P) (smgluer b) (transport (fst ∘ P) (smgluer b₀) (d smbaser))
-    e₂ b =
+      ==
+      transport (fst ∘ P) (ap (λ a' → smin a' b) (snd f)) (d (smin a₀ b))
+    s-a₀' b = ↯ $
       s a₀' b
-        =⟪ to-transp! (apd (λ a' → s a' b) (! (snd f))) ⟫
-      transport! (λ a' → fst (P (smin a' b))) (! (snd f)) (s (fst f a₀) b)
-        =⟪ ap (transport! (λ a' → fst (P (smin a' b))) (! (snd f)))
+        =⟪ ! (to-transp (↓-ap-in (fst ∘ P) (λ a' → smin a' b) (apd (λ a' → s a' b) (snd f)))) ⟫
+      transport (fst ∘ P) (ap (λ a' → smin a' b) (snd f)) (s (fst f a₀) b)
+        =⟪ ap (transport (fst ∘ P) (ap (λ a' → smin a' b) (snd f)))
               (s-f a₀ b) ⟫
-      transport! (λ a' → fst (P (smin a' b))) (! (snd f)) (d (smin a₀ b))
-        =⟪ ap (transport! (λ a' → fst (P (smin a' b))) (! (snd f)))
-              (to-transp! (apd d (smgluer b))) ⟫
-      {!transport! (λ a' → fst (P (smin a' b))) (! (snd f))
-                  (transport! (λ z → fst (P (∧-fmap f (⊙idf B) z))) (smgluer b) (d smbaser))
-        =⟪ ? ⟫
-      ?!}
+      transport (fst ∘ P) (ap (λ a' → smin a' b) (snd f)) (d (smin a₀ b)) ∎∎
 
     section-smbasel : fst (P smbasel)
     section-smbasel = transport (fst ∘ P) (smgluel a₀') (d smbasel)
@@ -156,13 +222,29 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
     section-smbaser = transport (fst ∘ P) (smgluer b₀) (d smbaser)
 
     section-smgluel' : ∀ (a' : de⊙ A') → s₀ a' == section-smbasel [ fst ∘ P ↓ smgluel a' ]
-    section-smgluel' a' = foo (A' ∧ B) (fst ∘ P) (d smbasel) (smgluel a') (smgluel a₀')
+    section-smgluel' a' = cpa₁ (fst ∘ P) (d smbasel) (smgluel a') (smgluel a₀')
 
     section-smgluel : ∀ (a' : de⊙ A') → s a' b₀ == section-smbasel [ fst ∘ P ↓ smgluel a' ]
     section-smgluel a' = s-b₀ a' ◃ section-smgluel' a'
 
+    section-smgluer' : ∀ (b : de⊙ B) →
+      transport (fst ∘ P) (ap (λ a' → smin a' b) (snd f)) (d (smin a₀ b))
+      ==
+      section-smbaser
+      [ fst ∘ P ↓ smgluer b ]
+    section-smgluer' b =
+      cpa₂
+        (fst ∘ P)
+        (∧-fmap f (⊙idf B))
+        (smgluer b)
+        d
+        (ap (λ a' → smin a' b) (snd f))
+        (smgluer b)
+        (smgluer b₀)
+        (∧-fmap-smgluer-β-∙' b)
+
     section-smgluer : ∀ (b : de⊙ B) → s a₀' b == section-smbaser [ fst ∘ P ↓ smgluer b ]
-    section-smgluer b = from-transp! (fst ∘ P) (smgluer b) (↯ (e₂ b))
+    section-smgluer b = s-a₀' b ◃ section-smgluer' b
 
     module Section =
       SmashElim
@@ -176,41 +258,16 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
     section : Π (A' ∧ B) (fst ∘ P)
     section = Section.f
 
-    d-smbase-lr : d smbasel == d smbaser
-    d-smbase-lr =
-      transport
-        (λ p → d smbasel == d smbaser [ fst ∘ P ↓ p ]) (↯ r)
-        (↓-ap-in
-          (fst ∘ P)
-          (∧-fmap f (⊙idf B))
-          (apd d (! (smgluel a₀) ∙ smgluer b₀)))
-      where
-      r : ap (∧-fmap f (⊙idf B)) (! (smgluel a₀) ∙ smgluer b₀) =-= idp
-      r =
-        ap (∧-fmap f (⊙idf B)) (! (smgluel a₀) ∙ smgluer b₀)
-          =⟪ ap-∙ (∧-fmap f (⊙idf B)) (! (smgluel a₀)) (smgluer b₀) ⟫
-        ap (∧-fmap f (⊙idf B)) (! (smgluel a₀)) ∙ ap (∧-fmap f (⊙idf B)) (smgluer b₀)
-          =⟪ ap2 _∙_ (ap-! (∧-fmap f (⊙idf B)) (smgluel a₀) ∙
-                      ap ! (∧-fmap-smgluel-β' f (⊙idf B) a₀))
-                     (∧-fmap-smgluer-β' f (⊙idf B) b₀) ⟫
-        ! (∧-norm-l (fst f a₀)) ∙
-        ap (λ a' → smin a' b₀) (snd f) ∙
-        ∧-norm-r b₀
-          =⟪ ! (∙-assoc (! (∧-norm-l (fst f a₀)))
-                        (ap (λ a' → smin a' b₀) (snd f))
-                        (∧-norm-r b₀)) ⟫
-        (! (∧-norm-l (fst f a₀)) ∙ ap (λ a' → smin a' b₀) (snd f)) ∙
-        ∧-norm-r b₀
-          =⟪ ap2 _∙_ (ap (! (∧-norm-l (fst f a₀)) ∙_) (homotopy-to-cst-ap (λ a' → smin a' b₀) smbasel smgluel (snd f)) ∙
-                      !-inv-l (∧-norm-l (fst f a₀)))
-                     (!-inv-r (smgluer b₀)) ⟫
-        idp ∎∎
-
-    is-section-smbasel : section (∧-fmap f (⊙idf B) smbasel) == d smbasel
-    is-section-smbasel = ↯ s-a₀'-b₀
-
-    is-section-smbaser : section (∧-fmap f (⊙idf B) smbaser) == d smbaser
-    is-section-smbaser = ↯ (s-a₀'-b₀ ∙∙ d-smbase-lr ◃∎)
+    is-section-smbasel : s a₀' b₀ == d smbasel
+    is-section-smbasel = ↯ $
+      s a₀' b₀
+        =⟪ s-b₀ a₀' ⟫
+      s₀ a₀'
+        =⟪idp⟫
+      transport (fst ∘ P) (! (∧-norm-l a₀')) (d smbasel)
+        =⟪ ap (λ p → transport (fst ∘ P) (! p) (d smbasel))
+              (!-inv-r (smgluel a₀')) ⟫
+      d smbasel ∎∎
 
     is-section-smgluel : ∀ (a : de⊙ A) →
       s-f a b₀ ◃ apd d (smgluel a)
@@ -221,8 +278,7 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
       s-f a b₀ ◃ apd d (smgluel a)
         =⟨ ap (_◃ apd d (smgluel a)) (s-f-b₀ a) ⟩
       (s-b₀ (fst f a) ∙ s₀-f a) ◃ apd d (smgluel a)
-        =⟨ bar
-             (A' ∧ B)
+        =⟨ cpac₁
              (fst ∘ P)
              (∧-fmap f (⊙idf B))
              (smgluel a)
@@ -271,14 +327,122 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
                        ap !ᵈ (Section.smgluel-β a₀')) ⟩
         section-smgluel a' ∙ᵈ !ᵈ (section-smgluel a₀') =∎
 
+    is-section-smbaser : s a₀' b₀ == d smbaser
+    is-section-smbaser = ↯ $
+      s a₀' b₀
+        =⟪ s-a₀' b₀ ⟫
+      transport (fst ∘ P) (ap (λ a' → smin a' b₀) (snd f)) (d (smin a₀ b₀))
+        =⟪ ap (λ p → transport (fst ∘ P) p (d (smin a₀ b₀))) (↯ r) ⟫
+      transport (fst ∘ P) (ap (∧-fmap f (⊙idf B)) (smgluer b₀)) (d (smin a₀ b₀))
+        =⟪ to-transp (↓-ap-in (fst ∘ P) (∧-fmap f (⊙idf B)) (apd d (smgluer b₀))) ⟫
+      d smbaser ∎∎
+      where
+      r : ap (λ a' → smin a' b₀) (snd f) =-= ap (∧-fmap f (⊙idf B)) (smgluer b₀)
+      r =
+        ap (λ a' → smin a' b₀) (snd f)
+          =⟪ ! (∙-unit-r _) ⟫
+        ap (λ a' → smin a' b₀) (snd f) ∙ idp
+          =⟪ ap (ap (λ a' → smin a' b₀) (snd f) ∙_)
+                (! (!-inv-r (smgluer b₀))) ⟫
+        ap (λ a' → smin a' b₀) (snd f) ∙ ∧-norm-r b₀
+          =⟪ ! (∧-fmap-smgluer-β-∙ b₀) ⟫
+        ap (∧-fmap f (⊙idf B)) (smgluer b₀) ∎∎
+
     is-section-smgluer : ∀ (b : de⊙ B) →
       s-f a₀ b ◃
       apd d (smgluer b)
       ==
       apd (section ∘ ∧-fmap f (⊙idf B)) (smgluer b) ▹
       is-section-smbaser
-    is-section-smgluer b =
-      {!!}
+    is-section-smgluer b = ! $
+      apd (section ∘ ∧-fmap f (⊙idf B)) (smgluer b) ▹
+      is-section-smbaser
+        =⟨ ap (_▹ is-section-smbaser) $
+           apd-∘'' section
+                  (∧-fmap f (⊙idf B))
+                  (smgluer b)
+                  (∧-fmap-smgluer-β-∙ b) ⟩
+      ↓-ap-out= (fst ∘ P)
+                (∧-fmap f (⊙idf B))
+                (smgluer b)
+                (∧-fmap-smgluer-β-∙ b)
+                (apd section (ap (λ a' → smin a' b) (snd f) ∙ ∧-norm-r b)) ▹
+      is-section-smbaser
+        =⟨ ap (_▹ is-section-smbaser) $
+           ap (↓-ap-out= (fst ∘ P)
+                         (∧-fmap f (⊙idf B))
+                         (smgluer b)
+                         (∧-fmap-smgluer-β-∙ b)) $
+           apd-section-helper ⟩
+      ↓-ap-out= (fst ∘ P)
+                (∧-fmap f (⊙idf B))
+                (smgluer b)
+                (∧-fmap-smgluer-β-∙ b)
+                ((s-f a₀ b ◃ transp-over (fst ∘ P) (ap (λ a' → smin a' b) (snd f)) (d (smin a₀ b))) ∙ᵈ
+                 section-smgluer' b ∙ᵈ !ᵈ (section-smgluer b₀)) ▹
+      is-section-smbaser
+        =⟨ cpac₂
+             (fst ∘ P)
+             (∧-fmap f (⊙idf B))
+             (smgluer b)
+             (smgluer b₀)
+             d
+             (ap (λ a' → smin a' b) (snd f))
+             (ap (λ a' → smin a' b₀) (snd f))
+             (smgluer b)
+             (smgluer b₀)
+             (∧-fmap-smgluer-β-∙' b)
+             (∧-fmap-smgluer-β-∙' b₀)
+             (s-a₀' b₀)
+             (s-f a₀ b) ⟩
+      s-f a₀ b ◃
+      apd d (smgluer b) =∎
+      where
+      apd-section-helper :
+        apd section (ap (λ a' → smin a' b) (snd f) ∙ ∧-norm-r b)
+        ==
+        (s-f a₀ b ◃ transp-over (fst ∘ P) (ap (λ a' → smin a' b) (snd f)) (d (smin a₀ b))) ∙ᵈ
+        section-smgluer' b ∙ᵈ !ᵈ (section-smgluer b₀)
+      apd-section-helper =
+        apd section (ap (λ a' → smin a' b) (snd f) ∙ ∧-norm-r b)
+          =⟨ apd-∙ section (ap (λ a' → smin a' b) (snd f)) (∧-norm-r b) ⟩
+        apd section (ap (λ a' → smin a' b) (snd f)) ∙ᵈ
+        apd section (∧-norm-r b)
+          =⟨ ap2 _∙ᵈ_
+                 (apd-∘''' section (λ a' → smin a' b) (snd f))
+                 (apd-∙ section (smgluer b) (! (smgluer b₀))) ⟩
+        ↓-ap-in (fst ∘ P) (λ a' → smin a' b) (apd (λ a' → s a' b) (snd f)) ∙ᵈ
+        apd section (smgluer b) ∙ᵈ apd section (! (smgluer b₀))
+          =⟨ ap (↓-ap-in (fst ∘ P) (λ a' → smin a' b) (apd (λ a' → s a' b) (snd f)) ∙ᵈ_) $
+             ap2 _∙ᵈ_
+                  (Section.smgluer-β b)
+                  (apd-! section (smgluer b₀) ∙
+                  ap !ᵈ (Section.smgluer-β b₀)) ⟩
+        ↓-ap-in (fst ∘ P) (λ a' → smin a' b) (apd (λ a' → s a' b) (snd f)) ∙ᵈ
+        section-smgluer b ∙ᵈ !ᵈ (section-smgluer b₀)
+          =⟨ custom-assoc (fst ∘ P)
+               (↓-ap-in (fst ∘ P) (λ a' → smin a' b) (apd (λ a' → s a' b) (snd f)))
+               (! (to-transp (↓-ap-in (fst ∘ P) (λ a' → smin a' b) (apd (λ a' → s a' b) (snd f)))))
+               (ap (transport (fst ∘ P) (ap (λ a' → smin a' b) (snd f))) (s-f a₀ b))
+               (section-smgluer' b)
+               (!ᵈ (section-smgluer b₀)) ⟩
+        ((↓-ap-in (fst ∘ P) (λ a' → smin a' b) (apd (λ a' → s a' b) (snd f)) ▹
+        ! (to-transp (↓-ap-in (fst ∘ P) (λ a' → smin a' b) (apd (λ a' → s a' b) (snd f))))) ▹
+        ap (transport (fst ∘ P) (ap (λ a' → smin a' b) (snd f))) (s-f a₀ b)) ∙ᵈ
+        section-smgluer' b ∙ᵈ !ᵈ (section-smgluer b₀)
+          =⟨ ap (λ u → (u ▹ ap (transport (fst ∘ P) (ap (λ a' → smin a' b) (snd f))) (s-f a₀ b)) ∙ᵈ
+                       section-smgluer' b ∙ᵈ !ᵈ (section-smgluer b₀)) $
+             to-transp-over (fst ∘ P) $
+             ↓-ap-in (fst ∘ P) (λ a' → smin a' b) (apd (λ a' → s a' b) (snd f)) ⟩
+        (transp-over (fst ∘ P) (ap (λ a' → smin a' b) (snd f)) (s (fst f a₀) b) ▹
+        ap (transport (fst ∘ P) (ap (λ a' → smin a' b) (snd f))) (s-f a₀ b)) ∙ᵈ
+        section-smgluer' b ∙ᵈ !ᵈ (section-smgluer b₀)
+          =⟨ ! $ ap (_∙ᵈ section-smgluer' b ∙ᵈ !ᵈ (section-smgluer b₀)) $
+             transp-over-naturality (fst ∘ P)
+               (ap (λ a' → smin a' b) (snd f))
+               (s-f a₀ b) ⟩
+        (s-f a₀ b ◃ transp-over (fst ∘ P) (ap (λ a' → smin a' b) (snd f)) (d (smin a₀ b))) ∙ᵈ
+        section-smgluer' b ∙ᵈ !ᵈ (section-smgluer b₀) =∎
 
     is-section : section ∘ ∧-fmap f (⊙idf B) ∼ d
     is-section =

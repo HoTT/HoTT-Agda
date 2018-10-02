@@ -329,6 +329,11 @@ apd-∘'' : ∀ {i j k} {A : Type i} {B : Type j} {C : (b : B) → Type k}
   → apd (g ∘ f) p == ↓-ap-out= C f p r (apd g q) --(apd↓ g q)
 apd-∘'' g f idp idp = idp
 
+apd-∘''' : ∀ {i j k} {A : Type i} {B : Type j} {C : (b : B) → Type k}
+  (g : Π B C) (f : A → B) {x y : A} (p : x == y)
+  → apd g (ap f p) == ↓-ap-in C f (apd (g ∘ f) p)
+apd-∘''' g f idp = idp
+
 Π-transp : ∀ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k}
   {a₀ a₁ : A} (p : a₀ == a₁)
   (g : (b : B) → C a₀ b)
