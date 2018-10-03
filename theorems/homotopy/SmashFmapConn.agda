@@ -105,7 +105,7 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
     a₀' = pt A'
     b₀ = pt B
 
-  module ConnIn (P : A' ∧ B → (m +2+ n) -Type (lmax i (lmax j k)))
+  module ConnIn (P : A' ∧ B → (n +2+ m) -Type (lmax i (lmax j k)))
                 (d : ∀ (ab : A ∧ B) → fst (P (∧-fmap f (⊙idf B) ab))) where
 
     h : ∀ (b : de⊙ B)
@@ -114,7 +114,17 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
     h b s = s ∘ fst f
 
     Q : de⊙ B → n -Type (lmax i (lmax j k))
-    Q b = hfiber (h b) (λ a → d (smin a b)) , {!!}
+    Q b = Q' , Q'-level
+      where
+      Q' : Type (lmax i (lmax j k))
+      Q' = hfiber (h b) (λ a → d (smin a b))
+      Q'-level : has-level n Q'
+      Q'-level =
+        conn-extend-general
+          {n = m} {k = n}
+          f-is-m-conn
+          (λ a → P (smin a b))
+          (λ a → d (smin a b))
 
     s₀ : ∀ (a' : de⊙ A') → fst (P (smin a' b₀))
     s₀ a' = transport (fst ∘ P) (! (∧-norm-l a')) (d smbasel)
@@ -457,5 +467,5 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
         is-section-smgluer
 
   -- Proposition 4.3.2 in Guillaume Brunerie's thesis
-  ∧-fmap-conn-l : has-conn-fibers (m +2+ n) (∧-fmap f (⊙idf B))
+  ∧-fmap-conn-l : has-conn-fibers (n +2+ m) (∧-fmap f (⊙idf B))
   ∧-fmap-conn-l = conn-in (λ P → ConnIn.section P , ConnIn.is-section P)
