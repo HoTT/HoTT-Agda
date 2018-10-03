@@ -285,3 +285,11 @@ equiv-preserves-conn {n = n} e = equiv-preserves-level (Trunc-emap e)
           =⟨ conn-extend-β cf (P ∘ g) h x ⟩
         h x
           =∎
+
+lower-connectivity-≤T : ∀ {i} {A : Type i} {m n : ℕ₋₂}
+  → (m ≤T n)
+  → is-connected n A
+  → is-connected m A
+lower-connectivity-≤T {_} {A} {m} {n} m≤n A-conn =
+  transport is-contr (ua (Trunc-fuse-≤ A m≤n)) $
+  Trunc-preserves-level m A-conn

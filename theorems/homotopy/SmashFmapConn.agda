@@ -466,7 +466,7 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
         is-section-smgluel
         is-section-smgluer
 
-  -- Proposition 4.3.2 in Guillaume Brunerie's thesis
+  {- Proposition 4.3.2 in Guillaume Brunerie's thesis -}
   ∧-fmap-conn-l : has-conn-fibers (n +2+ m) (∧-fmap f (⊙idf B))
   ∧-fmap-conn-l = conn-in (λ P → ConnIn.section P , ConnIn.is-section P)
 
@@ -494,3 +494,40 @@ private
          (∧-swap B' A)
          (∧-fmap-conn-l g A g-is-l-conn A-is-Sk-conn)
          (∧-swap-conn B' A _)
+
+private
+  ∘-conn' : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+    {n m : ℕ₋₂} (g : B → C) (f : A → B)
+    → has-conn-fibers m g
+    → has-conn-fibers n f
+    → has-conn-fibers (minT n m) (g ∘ f)
+  ∘-conn' {n = n} {m = m} g f g-conn f-conn =
+    ∘-conn f g
+      (λ b → lower-connectivity-≤T (minT≤l n m) (f-conn b))
+      (λ c → lower-connectivity-≤T (minT≤r n m) (g-conn c))
+
+{- Proposition 4.3.5 in Guillaume Brunerie's thesis -}
+∧-fmap-conn : ∀ {i i' j j'}
+  {A : Ptd i} {A' : Ptd i'} (f : A ⊙→ A')
+  {B : Ptd j} {B' : Ptd j'} (g : B ⊙→ B')
+  {m n k l : ℕ₋₂}
+  → is-connected (S k) (de⊙ A')
+  → is-connected (S n) (de⊙ B)
+  → has-conn-fibers m (fst f)
+  → has-conn-fibers l (fst g)
+  → has-conn-fibers (minT (n +2+ m) (k +2+ l)) (∧-fmap f g)
+∧-fmap-conn {A = A} {A'} f {B} {B'} g {m} {n} {k} {l}
+            A'-is-Sk-conn B-is-Sn-conn f-is-m-conn g-is-l-conn =
+  transport (has-conn-fibers (minT (n +2+ m) (k +2+ l))) p $
+  ∘-conn' (∧-fmap (⊙idf A') g)
+          (∧-fmap f (⊙idf B))
+          (∧-fmap-conn-r A' g A'-is-Sk-conn g-is-l-conn)
+          (∧-fmap-conn-l f B f-is-m-conn B-is-Sn-conn)
+  where
+  p : ∧-fmap (⊙idf A') g ∘ ∧-fmap f (⊙idf B) == ∧-fmap f g
+  p =
+    ∧-fmap (⊙idf A') g ∘ ∧-fmap f (⊙idf B)
+      =⟨ ! (λ= (∧-fmap-comp f (⊙idf A') (⊙idf B) g)) ⟩
+    ∧-fmap (⊙idf A' ⊙∘ f) (g ⊙∘ ⊙idf B)
+      =⟨ ap (λ h → ∧-fmap h g) (⊙λ= (⊙∘-unit-l f)) ⟩
+    ∧-fmap f g =∎
