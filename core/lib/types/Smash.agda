@@ -244,7 +244,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
     ⊙∧-fmap : X ⊙∧ Y ⊙→ X' ⊙∧ Y'
     ⊙∧-fmap = ∧-fmap , ap2 smin (snd f) (snd g)
 
-    {-∧-fmap-norm-l : ∀ x →
+    ∧-fmap-norm-l : ∀ x →
       ap ∧-fmap (∧-norm-l x) ◃∎
       =ₛ
       ap (λ y' → smin (fst f x) y') (snd g) ◃∙
@@ -285,4 +285,279 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
       ap (smin (fst f x)) (snd g) ◃∙
       smgluel (fst f x) ◃∙
       ! (smgluel (fst f (pt X))) ◃∙
-      ! (ap (smin (fst f (pt X))) (snd g)) ◃∎ ∎ₛ-}
+      ! (ap (smin (fst f (pt X))) (snd g)) ◃∎ ∎ₛ
+
+    ∧-fmap-norm-r : ∀ y →
+      ap ∧-fmap (∧-norm-r y) ◃∎
+      =ₛ
+      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+      smgluer (fst g y) ◃∙
+      ! (smgluer (fst g (pt Y))) ◃∙
+      ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎
+    ∧-fmap-norm-r y =
+      ap ∧-fmap (∧-norm-r y) ◃∎
+        =ₛ⟨ ap-seq-∙ ∧-fmap (∧-norm-r-seq y) ⟩
+      ap ∧-fmap (smgluer y) ◃∙
+      ap ∧-fmap (! (smgluer (pt Y))) ◃∎
+        =ₛ₁⟨ 1 & 1 & ap-! ∧-fmap (smgluer (pt Y)) ⟩
+      ap ∧-fmap (smgluer y) ◃∙
+      ! (ap ∧-fmap (smgluer (pt Y))) ◃∎
+        =ₛ⟨ 0 & 1 & ∧-fmap-smgluer-β y ⟩
+      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+      ∧-norm-r (fst g y) ◃∙
+      ! (ap ∧-fmap (smgluer (pt Y))) ◃∎
+        =ₛ⟨ 2 & 1 & !-=ₛ (∧-fmap-smgluer-β (pt Y)) ⟩
+      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+      ∧-norm-r (fst g y) ◃∙
+      ! (∧-norm-r (fst g (pt Y))) ◃∙
+      ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎
+        =ₛ⟨ 2 & 1 & !-=ₛ (expand (∧-norm-r-seq (fst g (pt Y)))) ⟩
+      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+      ∧-norm-r (fst g y) ◃∙
+      ! (! (smgluer (pt Y'))) ◃∙
+      ! (smgluer (fst g (pt Y))) ◃∙
+      ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎
+        =ₛ⟨ 1 & 1 & expand (∧-norm-r-seq (fst g y)) ⟩
+      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+      smgluer (fst g y) ◃∙
+      ! (smgluer (pt Y')) ◃∙
+      ! (! (smgluer (pt Y'))) ◃∙
+      ! (smgluer (fst g (pt Y))) ◃∙
+      ! (ap (λ x → smin x (fst g (pt Y))) (snd f)) ◃∎
+        =ₛ⟨ 2 & 2 & seq-!-inv-r (! (smgluer (pt Y')) ◃∎) ⟩
+      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+      smgluer (fst g y) ◃∙
+      ! (smgluer (fst g (pt Y))) ◃∙
+      ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎ ∎ₛ
+
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
+
+  module WedgeSwap =
+    SmashRec {X = X} {Y = Y}
+      {C = Y ∧ X}
+      (λ x y → smin y x)
+      (smin (pt Y) (pt X))
+      (smin (pt Y) (pt X))
+      ∧-norm-r
+      ∧-norm-l
+
+  ∧-swap : X ∧ Y → Y ∧ X
+  ∧-swap = WedgeSwap.f
+
+  ⊙∧-swap : X ⊙∧ Y ⊙→ Y ⊙∧ X
+  ⊙∧-swap = ∧-swap , idp
+
+  ∧-swap-norm-l-β : ∀ x →
+    ap ∧-swap (∧-norm-l x) == ∧-norm-r x
+  ∧-swap-norm-l-β x =
+    ap ∧-swap (∧-norm-l x)
+      =⟨ ap-∙ ∧-swap (smgluel x) (! (smgluel (pt X))) ⟩
+    ap ∧-swap (smgluel x) ∙ ap ∧-swap (! (smgluel (pt X)))
+      =⟨ ap2 _∙_
+             (WedgeSwap.smgluel-β x)
+             (ap-! ∧-swap (smgluel (pt X)) ∙
+              ap ! (WedgeSwap.smgluel-β (pt X))) ⟩
+    ∧-norm-r x ∙ ! (∧-norm-r (pt X))
+      =⟨ ap (λ u → ∧-norm-r x ∙ ! u) (!-inv-r (smgluer (pt X))) ⟩
+    ∧-norm-r x ∙ idp
+      =⟨ ∙-unit-r (∧-norm-r x) ⟩
+    ∧-norm-r x =∎
+
+  ∧-swap-norm-r-β : ∀ y →
+    ap ∧-swap (∧-norm-r y) == ∧-norm-l y
+  ∧-swap-norm-r-β y =
+    ap ∧-swap (∧-norm-r y)
+      =⟨ ap-∙ ∧-swap (smgluer y) (! (smgluer (pt Y))) ⟩
+    ap ∧-swap (smgluer y) ∙ ap ∧-swap (! (smgluer (pt Y)))
+      =⟨ ap2 _∙_
+             (WedgeSwap.smgluer-β y)
+             (ap-! ∧-swap (smgluer (pt Y)) ∙
+              ap ! (WedgeSwap.smgluer-β (pt Y))) ⟩
+    ∧-norm-l y ∙ ! (∧-norm-l (pt Y))
+      =⟨ ap (λ u → ∧-norm-l y ∙ ! u) (!-inv-r (smgluel (pt Y))) ⟩
+    ∧-norm-l y ∙ idp
+      =⟨ ∙-unit-r (∧-norm-l y) ⟩
+    ∧-norm-l y =∎
+
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
+
+  module WedgeSwapInvolutive =
+    SmashElim {X = X} {Y = Y}
+      {P = λ xy → ∧-swap Y X (∧-swap X Y xy) == xy}
+      (λ x y → idp)
+      (smgluel (pt X))
+      (smgluer (pt Y))
+      (λ x → ↓-app=idf-in $ ! $
+        ap (∧-swap Y X ∘ ∧-swap X Y) (smgluel x) ∙ smgluel (pt X)
+          =⟨ ap (_∙ smgluel (pt X)) $
+             ap-∘ (∧-swap Y X) (∧-swap X Y) (smgluel x) ⟩
+        ap (∧-swap Y X) (ap (∧-swap X Y) (smgluel x)) ∙ smgluel (pt X)
+          =⟨ ap (λ p → ap (∧-swap Y X) p ∙ smgluel (pt X)) $
+             WedgeSwap.smgluel-β X Y x ⟩
+        ap (∧-swap Y X) (∧-norm-r x) ∙ smgluel (pt X)
+          =⟨ ap (_∙ smgluel (pt X)) (∧-swap-norm-r-β Y X x) ⟩
+        ∧-norm-l x ∙ smgluel (pt X)
+          =⟨ ∙-assoc (smgluel x) (! (smgluel (pt X))) (smgluel (pt X))⟩
+        smgluel x ∙ ! (smgluel (pt X)) ∙ smgluel (pt X)
+          =⟨ ap (smgluel x ∙_) (!-inv-l (smgluel (pt X))) ⟩
+        smgluel x ∙ idp
+          =⟨ ∙-unit-r (smgluel x) ⟩
+        smgluel x
+          =⟨ ! (∙'-unit-l (smgluel x)) ⟩
+        idp ∙' smgluel x =∎)
+      (λ y → ↓-app=idf-in $ ! $
+        ap (∧-swap Y X ∘ ∧-swap X Y) (smgluer y) ∙ smgluer (pt Y)
+          =⟨ ap (_∙ smgluer (pt Y)) $
+             ap-∘ (∧-swap Y X) (∧-swap X Y) (smgluer y) ⟩
+        ap (∧-swap Y X) (ap (∧-swap X Y) (smgluer y)) ∙ smgluer (pt Y)
+          =⟨ ap (λ p → ap (∧-swap Y X) p ∙ smgluer (pt Y)) $
+             WedgeSwap.smgluer-β X Y y ⟩
+        ap (∧-swap Y X) (∧-norm-l y) ∙ smgluer (pt Y)
+          =⟨ ap (_∙ smgluer (pt Y)) (∧-swap-norm-l-β Y X y) ⟩
+        ∧-norm-r y ∙ smgluer (pt Y)
+          =⟨ ∙-assoc (smgluer y) (! (smgluer (pt Y))) (smgluer (pt Y)) ⟩
+        smgluer y ∙ ! (smgluer (pt Y)) ∙ smgluer (pt Y)
+          =⟨ ap (smgluer y ∙_) (!-inv-l (smgluer (pt Y))) ⟩
+        smgluer y ∙ idp
+          =⟨ ∙-unit-r (smgluer y) ⟩
+        smgluer y
+          =⟨ ! (∙'-unit-l (smgluer y)) ⟩
+        idp ∙' smgluer y =∎)
+
+  ∧-swap-inv : ∀ xy → ∧-swap Y X (∧-swap X Y xy) == xy
+  ∧-swap-inv = WedgeSwapInvolutive.f
+
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
+
+  ∧-swap-is-equiv : is-equiv (∧-swap X Y)
+  ∧-swap-is-equiv = is-eq _ (∧-swap Y X) (∧-swap-inv Y X) (∧-swap-inv X Y)
+
+  ∧-swap-equiv : (X ∧ Y) ≃ (Y ∧ X)
+  ∧-swap-equiv = ∧-swap X Y , ∧-swap-is-equiv
+
+module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
+         (f : X ⊙→ X') (g : Y ⊙→ Y') where
+
+  ∧-swap-naturality : ∀ xy →
+    ∧-fmap g f (∧-swap X Y xy) == ∧-swap X' Y' (∧-fmap f g xy)
+  ∧-swap-naturality =
+    Smash-elim {X = X} {Y = Y}
+      {P = λ xy → ∧-fmap g f (∧-swap X Y xy) == ∧-swap X' Y' (∧-fmap f g xy)}
+      (λ x y → idp)
+      (ap2 smin (snd g) (snd f))
+      (ap2 smin (snd g) (snd f))
+      (λ x → ↓-='-in-=ₛ $
+        idp ◃∙
+        ap (∧-swap X' Y' ∘ ∧-fmap f g) (smgluel x) ◃∎
+          =ₛ⟨ 0 & 1 & expand [] ⟩
+        ap (∧-swap X' Y' ∘ ∧-fmap f g) (smgluel x) ◃∎
+          =ₛ₁⟨ ap-∘ (∧-swap X' Y') (∧-fmap f g) (smgluel x) ⟩
+        ap (∧-swap X' Y') (ap (∧-fmap f g) (smgluel x)) ◃∎
+          =ₛ⟨ ap-seq-=ₛ (∧-swap X' Y') (∧-fmap-smgluel-β f g x) ⟩
+        ap (∧-swap X' Y') (ap (smin (fst f x)) (snd g)) ◃∙
+        ap (∧-swap X' Y') (∧-norm-l (fst f x)) ◃∎
+          =ₛ₁⟨ 0 & 1 & ∘-ap (∧-swap X' Y') (smin (fst f x)) (snd g) ⟩
+        ap (λ y' → smin y' (fst f x)) (snd g) ◃∙
+        ap (∧-swap X' Y') (∧-norm-l (fst f x)) ◃∎
+          =ₛ₁⟨ 1 & 1 & ∧-swap-norm-l-β X' Y' (fst f x) ⟩
+        ap (λ y' → smin y' (fst f x)) (snd g) ◃∙
+        ∧-norm-r (fst f x) ◃∎
+          =ₛ⟨ 1 & 1 & expand (∧-norm-r-seq (fst f x)) ⟩
+        ap (λ y' → smin y' (fst f x)) (snd g) ◃∙
+        smgluer (fst f x) ◃∙
+        ! (smgluer (pt X')) ◃∎
+          =ₛ⟨ 2 & 0 & !ₛ (seq-!-inv-l (smgluer (fst f (pt X)) ◃∎)) ⟩
+        ap (λ y' → smin y' (fst f x)) (snd g) ◃∙
+        smgluer (fst f x) ◃∙
+        ! (smgluer (fst f (pt X))) ◃∙
+        smgluer (fst f (pt X)) ◃∙
+        ! (smgluer (pt X')) ◃∎
+          =ₛ₁⟨ 3 & 2 & ! (homotopy-to-cst-ap (smin (pt Y')) smbaser smgluer (snd f)) ⟩
+        ap (λ y' → smin y' (fst f x)) (snd g) ◃∙
+        smgluer (fst f x) ◃∙
+        ! (smgluer (fst f (pt X))) ◃∙
+        ap (smin (pt Y')) (snd f) ◃∎
+          =ₛ⟨ 3 & 0 & !ₛ (seq-!-inv-l (ap (λ y' → smin y' (fst f (pt X))) (snd g) ◃∎)) ⟩
+        ap (λ y' → smin y' (fst f x)) (snd g) ◃∙
+        smgluer (fst f x) ◃∙
+        ! (smgluer (fst f (pt X))) ◃∙
+        ! (ap (λ y' → smin y' (fst f (pt X))) (snd g)) ◃∙
+        ap (λ y' → smin y' (fst f (pt X))) (snd g) ◃∙
+        ap (smin (pt Y')) (snd f) ◃∎
+          =ₛ⟨ 4 & 2 & !ₛ (ap2-out smin (snd g) (snd f)) ⟩
+        ap (λ y' → smin y' (fst f x)) (snd g) ◃∙
+        smgluer (fst f x) ◃∙
+        ! (smgluer (fst f (pt X))) ◃∙
+        ! (ap (λ y' → smin y' (fst f (pt X))) (snd g)) ◃∙
+        ap2 smin (snd g) (snd f) ◃∎
+          =ₛ⟨ 0 & 4 & !ₛ (∧-fmap-norm-r g f x) ⟩
+        ap (∧-fmap g f) (∧-norm-r x) ◃∙
+        ap2 smin (snd g) (snd f) ◃∎
+          =ₛ₁⟨ 0 & 1 & ! (ap (ap (∧-fmap g f)) (WedgeSwap.smgluel-β X Y x)) ⟩
+        ap (∧-fmap g f) (ap (∧-swap X Y) (smgluel x)) ◃∙
+        ap2 smin (snd g) (snd f) ◃∎
+          =ₛ₁⟨ 0 & 1 & ∘-ap (∧-fmap g f) (∧-swap X Y) (smgluel x) ⟩
+        ap (∧-fmap g f ∘ ∧-swap X Y) (smgluel x) ◃∙
+        ap2 smin (snd g) (snd f) ◃∎ ∎ₛ)
+      (λ y → ↓-='-in-=ₛ $
+        idp ◃∙
+        ap (∧-swap X' Y' ∘ ∧-fmap f g) (smgluer y) ◃∎
+          =ₛ⟨ 0 & 1 & expand [] ⟩
+        ap (∧-swap X' Y' ∘ ∧-fmap f g) (smgluer y) ◃∎
+          =ₛ₁⟨ ap-∘ (∧-swap X' Y') (∧-fmap f g) (smgluer y) ⟩
+        ap (∧-swap X' Y') (ap (∧-fmap f g) (smgluer y)) ◃∎
+          =ₛ⟨ ap-seq-=ₛ (∧-swap X' Y') (∧-fmap-smgluer-β f g y) ⟩
+        ap (∧-swap X' Y') (ap (λ x' → smin x' (fst g y)) (snd f)) ◃∙
+        ap (∧-swap X' Y') (∧-norm-r (fst g y)) ◃∎
+          =ₛ₁⟨ 0 & 1 & ∘-ap (∧-swap X' Y') (λ x' → smin x' (fst g y)) (snd f) ⟩
+        ap (smin (fst g y)) (snd f) ◃∙
+        ap (∧-swap X' Y') (∧-norm-r (fst g y)) ◃∎
+          =ₛ₁⟨ 1 & 1 & ∧-swap-norm-r-β X' Y' (fst g y) ⟩
+        ap (smin (fst g y)) (snd f) ◃∙
+        ∧-norm-l (fst g y) ◃∎
+          =ₛ⟨ 1 & 1 & expand (∧-norm-l-seq (fst g y)) ⟩
+        ap (smin (fst g y)) (snd f) ◃∙
+        smgluel (fst g y) ◃∙
+        ! (smgluel (pt Y')) ◃∎
+          =ₛ⟨ 2 & 0 & !ₛ (seq-!-inv-l (smgluel (fst g (pt Y)) ◃∎)) ⟩
+        ap (smin (fst g y)) (snd f) ◃∙
+        smgluel (fst g y) ◃∙
+        ! (smgluel (fst g (pt Y))) ◃∙
+        smgluel (fst g (pt Y)) ◃∙
+        ! (smgluel (pt Y')) ◃∎
+          =ₛ₁⟨ 3 & 2 & ! (homotopy-to-cst-ap (λ y' → smin y' (pt X')) smbasel smgluel (snd g)) ⟩
+        ap (smin (fst g y)) (snd f) ◃∙
+        smgluel (fst g y) ◃∙
+        ! (smgluel (fst g (pt Y))) ◃∙
+        ap (λ y' → smin y' (pt X')) (snd g) ◃∎
+          =ₛ⟨ 3 & 0 & !ₛ (seq-!-inv-l (ap (smin (fst g (pt Y))) (snd f) ◃∎)) ⟩
+        ap (smin (fst g y)) (snd f) ◃∙
+        smgluel (fst g y) ◃∙
+        ! (smgluel (fst g (pt Y))) ◃∙
+        ! (ap (smin (fst g (pt Y))) (snd f)) ◃∙
+        ap (smin (fst g (pt Y))) (snd f) ◃∙
+        ap (λ y' → smin y' (pt X')) (snd g) ◃∎
+          =ₛ⟨ 4 & 2 & !ₛ (ap2-out' smin (snd g) (snd f)) ⟩
+        ap (smin (fst g y)) (snd f) ◃∙
+        smgluel (fst g y) ◃∙
+        ! (smgluel (fst g (pt Y))) ◃∙
+        ! (ap (smin (fst g (pt Y))) (snd f)) ◃∙
+        ap2 smin (snd g) (snd f) ◃∎
+          =ₛ⟨ 0 & 4 & !ₛ (∧-fmap-norm-l g f y) ⟩
+        ap (∧-fmap g f) (∧-norm-l y) ◃∙
+        ap2 smin (snd g) (snd f) ◃∎
+          =ₛ₁⟨ 0 & 1 & ! (ap (ap (∧-fmap g f)) (WedgeSwap.smgluer-β X Y y)) ⟩
+        ap (∧-fmap g f) (ap (∧-swap X Y) (smgluer y)) ◃∙
+        ap2 smin (snd g) (snd f) ◃∎
+          =ₛ₁⟨ 0 & 1 & ∘-ap (∧-fmap g f) (∧-swap X Y) (smgluer y) ⟩
+        ap (∧-fmap g f ∘ ∧-swap X Y) (smgluer y) ◃∙
+        ap2 smin (snd g) (snd f) ◃∎ ∎ₛ)
+
+  ∧-swap-fmap : ∀ xy →
+    ∧-swap Y' X' (∧-fmap g f (∧-swap X Y xy)) == ∧-fmap f g xy
+  ∧-swap-fmap xy =
+    ∧-swap Y' X' (∧-fmap g f (∧-swap X Y xy))
+      =⟨ ap (∧-swap Y' X') (∧-swap-naturality xy) ⟩
+    ∧-swap Y' X' (∧-swap X' Y' (∧-fmap f g xy))
+      =⟨ ∧-swap-inv X' Y' (∧-fmap f g xy) ⟩
+    ∧-fmap f g xy =∎

@@ -214,6 +214,23 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
       → (u ∙ ap g p) == (ap f p ∙' v)
     ↓-='-out' {p = idp} q = (∙-unit-r _) ∙ q ∙ ! (∙'-unit-l _)
 
+    ↓-='-in-=ₛ : ∀ {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+      → u ◃∙ ap g p ◃∎ =ₛ ap f p ◃∙ v ◃∎
+      → (u == v [ (λ x → f x == g x) ↓ p ])
+    ↓-='-in-=ₛ {p = idp} {u} (=ₛ-in q) = ! (∙-unit-r u) ∙ q
+
+    ↓-='-out-=ₛ : ∀ {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+      → (u == v [ (λ x → f x == g x) ↓ p ])
+      → u ◃∙ ap g p ◃∎ =ₛ ap f p ◃∙ v ◃∎
+    ↓-='-out-=ₛ {p = idp} {u} {v} q =
+      u ◃∙ idp ◃∎
+        =ₛ⟨ 1 & 1 & expand [] ⟩
+      u ◃∎
+        =ₛ₁⟨ q ⟩
+      v ◃∎
+        =ₛ⟨ 0 & 0 & contract ⟩
+      idp ◃∙ v ◃∎ ∎ₛ
+
 {- Identity type where the type is dependent -}
 
 module _ {i j} {A : Type i} {B : A → Type j} {f g : Π A B} where

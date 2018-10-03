@@ -469,3 +469,28 @@ module _ {i} {j} {k} {A : Ptd i} {A' : Ptd j} (f : A ⊙→ A') (B : Ptd k)
   -- Proposition 4.3.2 in Guillaume Brunerie's thesis
   ∧-fmap-conn-l : has-conn-fibers (n +2+ m) (∧-fmap f (⊙idf B))
   ∧-fmap-conn-l = conn-in (λ P → ConnIn.section P , ConnIn.is-section P)
+
+private
+  ∧-swap-conn : ∀ {i} {j} (X : Ptd i) (Y : Ptd j) (n : ℕ₋₂)
+    → has-conn-fibers n (∧-swap X Y)
+  ∧-swap-conn X Y n yx =
+    Trunc-preserves-level {n = -2} n $
+    equiv-is-contr-map (∧-swap-is-equiv X Y) yx
+
+∧-fmap-conn-r : ∀ {i} {j} {k}
+  (A : Ptd i) {B : Ptd j} {B' : Ptd k} (g : B ⊙→ B')
+  {k l : ℕ₋₂}
+  → is-connected (S k) (de⊙ A)
+  → has-conn-fibers l (fst g)
+  → has-conn-fibers (k +2+ l) (∧-fmap (⊙idf A) g)
+∧-fmap-conn-r A {B} {B'} g {k} {l} A-is-Sk-conn g-is-l-conn =
+  transport
+    (has-conn-fibers (k +2+ l))
+    (λ= (∧-swap-fmap (⊙idf A) g)) $
+  ∘-conn (∧-swap A B)
+         (∧-swap B' A ∘ ∧-fmap g (⊙idf A))
+         (∧-swap-conn A B _) $
+  ∘-conn (∧-fmap g (⊙idf A))
+         (∧-swap B' A)
+         (∧-fmap-conn-l g A g-is-l-conn A-is-Sk-conn)
+         (∧-swap-conn B' A _)
