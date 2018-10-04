@@ -503,8 +503,8 @@ private
     → has-conn-fibers (minT n m) (g ∘ f)
   ∘-conn' {n = n} {m = m} g f g-conn f-conn =
     ∘-conn f g
-      (λ b → lower-connectivity-≤T (minT≤l n m) (f-conn b))
-      (λ c → lower-connectivity-≤T (minT≤r n m) (g-conn c))
+      (λ b → connected-≤T (minT≤l n m) {{f-conn b}})
+      (λ c → connected-≤T (minT≤r n m) {{g-conn c}})
 
 {- Proposition 4.3.5 in Guillaume Brunerie's thesis -}
 ∧-fmap-conn : ∀ {i i' j j'}

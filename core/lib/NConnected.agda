@@ -259,14 +259,18 @@ connected-at-level-is-contr {{pA}} {{cA}} =
 connected-≤T : ∀ {i} {m n : ℕ₋₂} {A : Type i}
   → m ≤T n → {{_ : is-connected n A}} → is-connected m A
 connected-≤T {m = m} {n = n} {A = A} leq =
-  transport (λ B → is-contr B)
-            (ua (Trunc-fuse A m n) ∙ ap (λ k → Trunc k A) (minT-out-l leq))
-            (Trunc-preserves-level m ⟨⟩)
+  transport is-contr (ua (Trunc-fuse-≤ A leq)) (Trunc-preserves-level m ⟨⟩)
 
 {- Equivalent types have the same connectedness -}
 equiv-preserves-conn : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
   {{_ : is-connected n A}} → is-connected n B
 equiv-preserves-conn {n = n} e = equiv-preserves-level (Trunc-emap e)
+
+trunc-proj-conn : ∀ {i} (A : Type i) (n : ℕ₋₂)
+  → has-conn-fibers n ([_] {n = n} {A = A})
+trunc-proj-conn A n =
+  conn-in $ λ P →
+  Trunc-elim {P = fst ∘ P} {{snd ∘ P}} , λ t a → idp
 
 {- Composite of two connected functions is connected -}
 ∘-conn : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
@@ -285,11 +289,3 @@ equiv-preserves-conn {n = n} e = equiv-preserves-level (Trunc-emap e)
           =⟨ conn-extend-β cf (P ∘ g) h x ⟩
         h x
           =∎
-
-lower-connectivity-≤T : ∀ {i} {A : Type i} {m n : ℕ₋₂}
-  → (m ≤T n)
-  → is-connected n A
-  → is-connected m A
-lower-connectivity-≤T {_} {A} {m} {n} m≤n A-conn =
-  transport is-contr (ua (Trunc-fuse-≤ A m≤n)) $
-  Trunc-preserves-level m A-conn
