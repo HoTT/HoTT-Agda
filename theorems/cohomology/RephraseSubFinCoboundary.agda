@@ -18,13 +18,13 @@ abstract
     (JB-ac : has-choice 0 JB lzero)
     (JB-dec : has-dec-eq JB)
     {J} (p : Fin J ≃ Coprod JA JB)
-    (f : ⊙FinBouquet I (S n) ⊙→ ⊙Susp (⊙Bouquet JB n)) g
+    (f : ⊙FinBouquet I (S n) ⊙→ ⊙Susp (Bouquet JB n)) g
     → GroupIso.f (C-FinBouquet-diag (S n) I)
         (CEl-fmap (ℕ-to-ℤ (S n)) f
           (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Bouquet JB n))
             (GroupIso.g (C-SubFinBouquet-diag n JB-ac (–> p)) g)))
     ∼ λ <I → Group.subsum-r (C2 0) (–> p)
-          (λ b → Group.exp (C2 0) (g b) (⊙SphereS-endo-degree n (⊙Susp-fmap (⊙bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)))
+          (λ b → Group.exp (C2 0) (g b) (⊙SphereS-endo-degree n (⊙Susp-fmap (bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)))
   rephrase-in-degree n {I} {JA} {JB} JB-ac JB-dec {J} p f g <I =
     GroupIso.f (C-FinBouquet-diag (S n) I)
       (CEl-fmap (ℕ-to-ℤ (S n)) f
@@ -69,7 +69,7 @@ abstract
     GroupIso.f (C-FinBouquet-diag (S n) I)
       (Group.subsum-r (C (ℕ-to-ℤ (S n)) (⊙FinBouquet I (S n))) (–> p)
         (λ b → CEl-fmap (ℕ-to-ℤ (S n)) f
-          (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (⊙bwproj JB-dec b))
+          (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (bwproj JB-dec b))
             (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Sphere n))
               (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                 (GroupIso.g (C-Sphere-diag n) (g b)))))))
@@ -77,7 +77,7 @@ abstract
       =⟨ C-FinBouquet-diag-β (S n) I
           (Group.subsum-r (C (ℕ-to-ℤ (S n)) (⊙FinBouquet I (S n))) (–> p)
             (λ b → CEl-fmap (ℕ-to-ℤ (S n)) f
-              (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (⊙bwproj JB-dec b))
+              (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (bwproj JB-dec b))
                 (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Sphere n))
                   (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                     (GroupIso.g (C-Sphere-diag n) (g b)))))))
@@ -87,7 +87,7 @@ abstract
         (CEl-fmap (ℕ-to-ℤ (S n)) (⊙fwin <I)
           (Group.subsum-r (C (ℕ-to-ℤ (S n)) (⊙FinBouquet I (S n))) (–> p)
             (λ b → CEl-fmap (ℕ-to-ℤ (S n)) f
-              (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (⊙bwproj JB-dec b))
+              (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (bwproj JB-dec b))
                 (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Sphere n))
                   (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                     (GroupIso.g (C-Sphere-diag n) (g b)))))))))
@@ -97,7 +97,7 @@ abstract
           ∘ᴳ C-fmap (ℕ-to-ℤ (S n)) (⊙fwin <I))
           (–> p)
           (λ b → CEl-fmap (ℕ-to-ℤ (S n)) f
-            (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (⊙bwproj JB-dec b))
+            (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (bwproj JB-dec b))
               (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Sphere n))
                 (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                   (GroupIso.g (C-Sphere-diag n) (g b)))))) ⟩
@@ -106,16 +106,16 @@ abstract
         (CEl-fmap (ℕ-to-ℤ (S n)) ⊙lower
           (CEl-fmap (ℕ-to-ℤ (S n)) (⊙fwin <I)
             (CEl-fmap (ℕ-to-ℤ (S n)) f
-              (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (⊙bwproj JB-dec b))
+              (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (bwproj JB-dec b))
                 (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Sphere n))
                   (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                     (GroupIso.g (C-Sphere-diag n) (g b)))))))))
       =⟨ ap (Group.subsum-r (C2 0) (–> p))
           (λ= λ b → ap (GroupIso.f (C-Sphere-diag (S n)) ∘ CEl-fmap (ℕ-to-ℤ (S n)) ⊙lower) $
               ∘-CEl-fmap (ℕ-to-ℤ (S n)) (⊙fwin <I) f _
-            ∙ ∘-CEl-fmap (ℕ-to-ℤ (S n)) (f ⊙∘ ⊙fwin <I) (⊙Susp-fmap (⊙bwproj JB-dec b)) _
+            ∙ ∘-CEl-fmap (ℕ-to-ℤ (S n)) (f ⊙∘ ⊙fwin <I) (⊙Susp-fmap (bwproj JB-dec b)) _
             ∙ CEl-fmap-⊙Sphere-endo-η (ℕ-to-ℤ (S n)) n
-                (⊙Susp-fmap (⊙bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)
+                (⊙Susp-fmap (bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)
                 (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Sphere n))
                   (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                     (GroupIso.g (C-Sphere-diag n) (g b))))) ⟩
@@ -126,7 +126,7 @@ abstract
             (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Sphere n))
               (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                 (GroupIso.g (C-Sphere-diag n) (g b))))
-            (⊙SphereS-endo-degree n (⊙Susp-fmap (⊙bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)))))
+            (⊙SphereS-endo-degree n (⊙Susp-fmap (bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)))))
       =⟨ ap (Group.subsum-r (C2 0) (–> p))
           (λ= λ b →
             GroupHom.pres-exp
@@ -134,22 +134,22 @@ abstract
               (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Sphere n))
                 (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                   (GroupIso.g (C-Sphere-diag n) (g b))))
-              (⊙SphereS-endo-degree n (⊙Susp-fmap (⊙bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I))) ⟩
+              (⊙SphereS-endo-degree n (⊙Susp-fmap (bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I))) ⟩
     Group.subsum-r (C2 0) (–> p)
       (λ b → Group.exp (C2 0)
         (GroupIso.f (C-Sphere-diag n)
           (–> (CEl-Susp (ℕ-to-ℤ n) (⊙Lift (⊙Sphere n)))
-            (CEl-fmap (ℕ-to-ℤ (S n)) (⊙lift {j = lzero} ⊙∘ ⊙Susp-fmap {Y = ⊙Sphere n} ⊙lower)
+            (CEl-fmap (ℕ-to-ℤ (S n)) (⊙lift {j = lzero} ⊙∘ ⊙Susp-fmap {B = Sphere n} lower)
               (CEl-fmap (ℕ-to-ℤ (S n)) ⊙lower
                 (<– (CEl-Susp (ℕ-to-ℤ n) (⊙Sphere n))
                   (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                     (GroupIso.g (C-Sphere-diag n) (g b))))))))
-        (⊙SphereS-endo-degree n (⊙Susp-fmap (⊙bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)))
+        (⊙SphereS-endo-degree n (⊙Susp-fmap (bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)))
       =⟨ ap (Group.subsum-r (C2 0) (–> p))
-          (λ= λ b → ap (λ g → Group.exp (C2 0) g (⊙SphereS-endo-degree n (⊙Susp-fmap (⊙bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I))) $
+          (λ= λ b → ap (λ g → Group.exp (C2 0) g (⊙SphereS-endo-degree n (⊙Susp-fmap (bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I))) $
             ap (GroupIso.f (C-Sphere-diag n) ∘ –> (CEl-Susp (ℕ-to-ℤ n) (⊙Lift (⊙Sphere n))))
-              ( CEl-fmap-∘ (ℕ-to-ℤ (S n)) ⊙lift (⊙Susp-fmap {Y = ⊙Sphere n} ⊙lower) _
-              ∙ ap (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap {Y = ⊙Sphere n} ⊙lower))
+              ( CEl-fmap-∘ (ℕ-to-ℤ (S n)) ⊙lift (⊙Susp-fmap {B = Sphere n} lower) _
+              ∙ ap (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap {B = Sphere n} lower))
                   ( ∘-CEl-fmap (ℕ-to-ℤ (S n)) ⊙lift ⊙lower _
                   ∙ CEl-fmap-idf (ℕ-to-ℤ (S n)) _))
             ∙ ap (GroupIso.f (C-Sphere-diag n))
@@ -160,17 +160,17 @@ abstract
             ∙ GroupIso.f-g (C-Sphere-diag n) (g b)) ⟩
     Group.subsum-r (C2 0) (–> p)
       (λ b → Group.exp (C2 0) (g b)
-        (⊙SphereS-endo-degree n (⊙Susp-fmap (⊙bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)))
+        (⊙SphereS-endo-degree n (⊙Susp-fmap (bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)))
       =∎
 
   {- the version specialzied to [Fin J]. -}
-  rephrase-in-degree' : ∀ n {I J : ℕ} (f : ⊙FinBouquet I (S n) ⊙→ ⊙Susp (⊙FinBouquet J n)) g
+  rephrase-in-degree' : ∀ n {I J : ℕ} (f : ⊙FinBouquet I (S n) ⊙→ ⊙Susp (FinBouquet J n)) g
     → GroupIso.f (C-FinBouquet-diag (S n) I)
         (CEl-fmap (ℕ-to-ℤ (S n)) f
           (<– (CEl-Susp (ℕ-to-ℤ n) (⊙FinBouquet J n))
             (GroupIso.g (C-FinBouquet-diag n J) g)))
     ∼ λ <I → Group.sum (C2 0)
-          (λ <J → Group.exp (C2 0) (g <J) (⊙SphereS-endo-degree n (⊙Susp-fmap (⊙fwproj <J) ⊙∘ f ⊙∘ ⊙fwin <I)))
+          (λ <J → Group.exp (C2 0) (g <J) (⊙SphereS-endo-degree n (⊙Susp-fmap (fwproj <J) ⊙∘ f ⊙∘ ⊙fwin <I)))
   rephrase-in-degree' n {I} {J} f g =
     rephrase-in-degree n {I} {JA = Empty} {JB = Fin J}
       (Fin-has-choice 0 lzero) Fin-has-dec-eq (⊔₁-Empty (Fin J) ⁻¹) f g

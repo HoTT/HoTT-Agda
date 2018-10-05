@@ -3,6 +3,7 @@
 open import HoTT
 open import homotopy.EilenbergMacLane
 open import homotopy.SmashFmapConn
+open import homotopy.SuspSmash2
 
 module cohomology.CupProduct.OnEM.Higher {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
@@ -12,7 +13,7 @@ private
   module G = AbGroup G
   module H = AbGroup H
   module G⊗H = TensorProduct G H
-open EMExplicit -- G⊗H.abgroup
+open EMExplicit
 
 cp₁₁-embase-r : (x : EM₁ G.grp) → cp₁₁ x embase == [ north ]₂
 cp₁₁-embase-r = M.f
@@ -58,25 +59,45 @@ module ∧-cp₁₁-Rec =
 ∧-cp₁₁ : ⊙EM₁ G.grp ∧ ⊙EM₁ H.grp → EM G⊗H.abgroup 2
 ∧-cp₁₁ = ∧-cp₁₁-Rec.f
 
+⊙∧-cp₁₁ : ⊙EM₁ G.grp ⊙∧ ⊙EM₁ H.grp ⊙→ ⊙EM G⊗H.abgroup 2
+⊙∧-cp₁₁ = ∧-cp₁₁-Rec.f , idp
+
+EM2-Susp : ∀ (k : ℕ)
+  → Susp^ k (EM G⊗H.abgroup 2)
+  → EM G⊗H.abgroup (S (S k))
+EM2-Susp k =
+  transport (λ l → Trunc l (Susp^ (S k) (EM₁ G⊗H.grp))) (+2+-comm ⟨ k ⟩₋₂ 2) ∘
+  Trunc-fmap (<– (Susp^-Susp-split-iso k (EM₁ G⊗H.grp))) ∘
+  Susp^-Trunc-swap (Susp (EM₁ G⊗H.grp)) k 2
+
+cp' : ∀ (n m : ℕ)
+  → ⊙Susp^ n (⊙EM₁ G.grp) ∧ ⊙Susp^ m (⊙EM₁ H.grp)
+  → EM G⊗H.abgroup (S n + S m)
+cp' n m =
+  transport (EM G⊗H.abgroup) (! (+-βr (S n) m)) ∘
+  EM2-Susp (n + m) ∘
+  Susp^-fmap (n + m) ∧-cp₁₁ ∘
+  Σ^∧Σ^-out (⊙EM₁ G.grp) (⊙EM₁ H.grp) n m
+
 smash-truncate : ∀ (n m : ℕ)
   → ⊙Susp^ n (⊙EM₁ G.grp) ∧ ⊙Susp^ m (⊙EM₁ H.grp)
   → ⊙EM G (S n) ∧ ⊙EM H (S m)
 smash-truncate n m =
   ∧-fmap
-    ([_] {n = ⟨ S n ⟩} {A = Susp^ n (⊙EM₁ G.grp)} , idp)
-    ([_] {n = ⟨ S m ⟩} {A = Susp^ m (⊙EM₁ H.grp)} , idp)
+    ([_] {n = ⟨ S n ⟩} {A = Susp^ n (EM₁ G.grp)} , idp)
+    ([_] {n = ⟨ S m ⟩} {A = Susp^ m (EM₁ H.grp)} , idp)
 
 smash-truncate-conn : ∀ (n m : ℕ)
   → has-conn-fibers ⟨ S n + S m ⟩ (smash-truncate n m)
 smash-truncate-conn n m =
   transport (λ k → has-conn-fibers k (smash-truncate n m)) p $
   ∧-fmap-conn
-    ([_] {n = ⟨ S n ⟩} {A = Susp^ n (⊙EM₁ G.grp)} , idp)
-    ([_] {n = ⟨ S m ⟩} {A = Susp^ m (⊙EM₁ H.grp)} , idp)
+    ([_] {n = ⟨ S n ⟩} {A = Susp^ n (EM₁ G.grp)} , idp)
+    ([_] {n = ⟨ S m ⟩} {A = Susp^ m (EM₁ H.grp)} , idp)
     (EM-conn G n)
     (⊙Susp^-conn' m {{EM₁-conn}})
-    (trunc-proj-conn (Susp^ n (⊙EM₁ G.grp)) ⟨ S n ⟩)
-    (trunc-proj-conn (Susp^ m (⊙EM₁ H.grp)) ⟨ S m ⟩)
+    (trunc-proj-conn (Susp^ n (EM₁ G.grp)) ⟨ S n ⟩)
+    (trunc-proj-conn (Susp^ m (EM₁ H.grp)) ⟨ S m ⟩)
   where
   p₁ : ⟨ m ⟩₋₁ +2+ ⟨ S n ⟩ == ⟨ S n + S m ⟩
   p₁ =
@@ -105,3 +126,12 @@ smash-truncate-conn n m =
     minT ⟨ S n + S m ⟩ ⟨ S n + S m ⟩
       =⟨ minT-out-l ≤T-refl ⟩
     ⟨ S n + S m ⟩ =∎
+
+cp : ∀ (n m : ℕ)
+  → ⊙EM G (S n) ∧ ⊙EM H (S m)
+  → EM G⊗H.abgroup (S n + S m)
+cp n m =
+  conn-extend
+    (smash-truncate-conn n m)
+    (λ _ → EM G⊗H.abgroup (S n + S m) , EM-level G⊗H.abgroup (S n + S m))
+    (cp' n m)

@@ -8,10 +8,10 @@ module homotopy.SuspAdjointLoop {i} where
 private
   SuspFunctor : PtdFunctor i i
   SuspFunctor = record {
-    obj = ⊙Susp;
-    arr = ⊙Susp-fmap;
-    id = ⊙Susp-fmap-idf;
-    comp = ⊙Susp-fmap-∘}
+    obj = ⊙Susp ∘ de⊙;
+    arr = ⊙Susp-fmap ∘ fst;
+    id = ⊙Susp-fmap-idf ∘ de⊙;
+    comp = λ f g → ⊙Susp-fmap-∘ (fst f) (fst g)}
 
   LoopFunctor : PtdFunctor i i
   LoopFunctor = record {
@@ -22,22 +22,22 @@ private
 
   module _ (X : Ptd i) where
 
-    η : de⊙ X → Ω (⊙Susp X)
+    η : de⊙ X → Ω (⊙Susp (de⊙ X))
     η x = σloop X x
 
     module E = SuspRec (pt X) (pt X) (idf _)
 
-    ε : de⊙ (⊙Susp (⊙Ω X)) → de⊙ X
+    ε : Susp (Ω X) → de⊙ X
     ε = E.f
 
-    ⊙η : X ⊙→ ⊙Ω (⊙Susp X)
+    ⊙η : X ⊙→ ⊙Ω (⊙Susp (de⊙ X))
     ⊙η = (η , σloop-pt)
 
-    ⊙ε : ⊙Susp (⊙Ω X) ⊙→ X
+    ⊙ε : ⊙Susp (Ω X) ⊙→ X
     ⊙ε = (ε , idp)
 
   η-natural : {X Y : Ptd i} (f : X ⊙→ Y)
-    → ⊙η Y ⊙∘ f == ⊙Ω-fmap (⊙Susp-fmap f) ⊙∘ ⊙η X
+    → ⊙η Y ⊙∘ f == ⊙Ω-fmap (⊙Susp-fmap (fst f)) ⊙∘ ⊙η X
   η-natural {X = X} (f , idp) = ⊙λ='
     (λ x → ! $
       ap-∙ (Susp-fmap f) (merid x) (! (merid (pt X)))
@@ -53,7 +53,7 @@ private
     pt-lemma f idp idp = idp
 
   ε-natural : {X Y : Ptd i} (f : X ⊙→ Y)
-    → ⊙ε Y ⊙∘ ⊙Susp-fmap (⊙Ω-fmap f) == f ⊙∘ ⊙ε X
+    → ⊙ε Y ⊙∘ ⊙Susp-fmap (Ω-fmap f) == f ⊙∘ ⊙ε X
   ε-natural (f , idp) = ⊙λ='
     (SuspElim.f idp idp
       (λ p → ↓-='-from-square $ vert-degen-square $
@@ -64,14 +64,14 @@ private
         ∙ ∘-ap f (ε _) (merid p)))
     idp
 
-  εΣ-Ση : (X : Ptd i) → ⊙ε (⊙Susp X) ⊙∘ ⊙Susp-fmap (⊙η X) == ⊙idf _
+  εΣ-Ση : (X : Ptd i) → ⊙ε (⊙Susp (de⊙ X)) ⊙∘ ⊙Susp-fmap (η X) == ⊙idf _
   εΣ-Ση X = ⊙λ='
     (SuspElim.f
       idp
       (merid (pt X))
       (λ x → ↓-='-from-square $
-        (ap-∘ (ε (⊙Susp X)) (Susp-fmap (η X)) (merid x)
-         ∙ ap (ap (ε (⊙Susp X))) (SuspFmap.merid-β (η X) x)
+        (ap-∘ (ε (⊙Susp (de⊙ X))) (Susp-fmap (η X)) (merid x)
+         ∙ ap (ap (ε (⊙Susp (de⊙ X)))) (SuspFmap.merid-β (η X) x)
          ∙ E.merid-β _ (merid x ∙ ! (merid (pt X))))
         ∙v⊡ square-lemma (merid x) (merid (pt X))
         ⊡v∙ ! (ap-idf (merid x))))

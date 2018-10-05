@@ -147,6 +147,12 @@ module _ {i} (G : Group i) where
                           (ap-∙ f (emloop g₁) (emloop g₂) ∙v⊡ (emloop** g₁ ⊡h emloop** g₂))
                           (∙-ap (cst c) (emloop g₁) (emloop g₂)) ⟩
         ap (ap f) (emloop-comp' G g₁ g₂) ∙v⊡
+        (ap-∙ f (emloop g₁) (emloop g₂) ∙v⊡ emloop** g₁ ⊡h emloop** g₂) ⊡v∙ ∙-ap (cst c) (emloop g₁) (emloop g₂)
+          =⟨ ap (ap (ap f) (emloop-comp' G g₁ g₂) ∙v⊡_) $
+             ∙v⊡-⊡v∙-comm (ap-∙ f (emloop g₁) (emloop g₂))
+                          (emloop** g₁ ⊡h emloop** g₂)
+                          (∙-ap (cst c) (emloop g₁) (emloop g₂)) ⟩
+        ap (ap f) (emloop-comp' G g₁ g₂) ∙v⊡
         ↓-='-square-comp' (emloop** g₁) (emloop** g₂)
           =⟨ ap (ap (ap f) (emloop-comp' G g₁ g₂) ∙v⊡_) $
              ↓-='-square-comp'=↓-='-square-comp {f = f} {g = cst c}

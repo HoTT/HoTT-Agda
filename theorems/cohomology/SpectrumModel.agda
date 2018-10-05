@@ -68,20 +68,20 @@ module SpectrumModel where
   {- Susp Axiom -}
   private
     C-Susp' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀) (X : Ptd i)
-      → Trunc-⊙→Ω-group (⊙Susp X) E₁ ≃ᴳ Trunc-⊙→Ω-group X E₀
+      → Trunc-⊙→Ω-group (⊙Susp (de⊙ X)) E₁ ≃ᴳ Trunc-⊙→Ω-group X E₀
     C-Susp' {E₁ = E₁} iso X = Trunc-⊙→Ω-group-emap-codom X iso
                           ∘eᴳ Trunc-⊙→Ω-iso-Trunc-⊙→Ω X E₁
 
     -- This can be further simplified
     C-Susp-fmap' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀) {X Y : Ptd i} (f : X ⊙→ Y)
       → CommSquareᴳ
-          (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁)
+          (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap (fst f)) E₁)
           (Trunc-⊙→Ω-group-fmap-dom f E₀)
           (fst (C-Susp' iso Y)) (fst (C-Susp' iso X))
     C-Susp-fmap' {E₁} {E₀} iso {X} {Y} f = comm-sqrᴳ λ x →
         GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
           (GroupIso.f (Trunc-⊙→Ω-iso-Trunc-⊙→Ω X E₁)
-            (GroupHom.f (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁) x))
+            (GroupHom.f (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap (fst f)) E₁) x))
           =⟨ Trunc-⊙→Ω-iso-Trunc-⊙→Ω-nat-dom f E₁
             |in-ctx (λ h → GroupHom.f h x)
             |in-ctx GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso)) ⟩
@@ -96,12 +96,12 @@ module SpectrumModel where
             (GroupIso.f (Trunc-⊙→Ω-iso-Trunc-⊙→Ω Y E₁) x))
           =∎
 
-  C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
+  C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp (de⊙ X)) ≃ᴳ C n X
   C-Susp n X = C-Susp' (spectrum (succ n)) X
 
   C-Susp-fmap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
     → CommSquareᴳ
-        (C-fmap (succ n) (⊙Susp-fmap f)) (C-fmap n f)
+        (C-fmap (succ n) (⊙Susp-fmap (fst f))) (C-fmap n f)
         (fst (C-Susp n Y)) (fst (C-Susp n X))
   C-Susp-fmap n f = C-Susp-fmap' (spectrum (succ n)) f
 

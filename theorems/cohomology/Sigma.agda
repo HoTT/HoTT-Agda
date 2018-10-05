@@ -30,9 +30,9 @@ open import cohomology.PtdMapSequence CT
 
 private
   abstract
-    cst-C-Σbwin-is-exact : is-exact (cst-hom {G = C n (⊙Susp X)}) (C-fmap n ⊙Σbwin)
+    cst-C-Σbwin-is-exact : is-exact (cst-hom {G = C n (⊙Susp (de⊙ X))}) (C-fmap n ⊙Σbwin)
     cst-C-Σbwin-is-exact = equiv-preserves-exact
-      {φ₁ = cst-hom {G = C n (⊙Susp X)}}
+      {φ₁ = cst-hom {G = C n (⊙Susp (de⊙ X))}}
       {ξG = C-fmap n (⊙Susp-to-⊙Cof² ⊙select)} {ξH = idhom _} {ξK = idhom _}
       (comm-sqrᴳ λ x →
         CEl-fmap n (⊙cfcod²' ⊙select) x

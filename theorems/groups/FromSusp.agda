@@ -10,14 +10,15 @@ module _ {i} (X : Ptd i) where
   private
     A = de⊙ X
     e = pt X
+    ⊙ΣX = ⊙Susp (de⊙ X)
 
   module Pinch = SuspRec (winl north) (winr south)
     (λ a → ap winl (σloop X a) ∙ wglue ∙ ap winr (merid a))
 
-  pinch : Susp A → ⊙Susp X ∨ ⊙Susp X
+  pinch : Susp A → ⊙ΣX ∨ ⊙ΣX
   pinch = Pinch.f
 
-  ⊙pinch : ⊙Susp X ⊙→ ⊙Susp X ⊙∨ ⊙Susp X
+  ⊙pinch : ⊙ΣX ⊙→ ⊙ΣX ⊙∨ ⊙ΣX
   ⊙pinch = pinch , idp
 
   private
@@ -48,7 +49,7 @@ module _ {i} (X : Ptd i) where
         merid x
           =∎
 
-      ⊙unit-r : ⊙projl ⊙∘ ⊙pinch ⊙∼ ⊙idf (⊙Susp X)
+      ⊙unit-r : ⊙projl ⊙∘ ⊙pinch ⊙∼ ⊙idf ⊙ΣX
       ⊙unit-r = unit-r , idp
 
       unit-l : ∀ x → projr (pinch x) == x
@@ -65,10 +66,10 @@ module _ {i} (X : Ptd i) where
         merid x
           =∎
 
-      ⊙unit-l : ⊙projr ⊙∘ ⊙pinch ⊙∼ ⊙idf (⊙Susp X)
+      ⊙unit-l : ⊙projr ⊙∘ ⊙pinch ⊙∼ ⊙idf ⊙ΣX
       ⊙unit-l = unit-l , idp
 
-  Susp-co-h-space-structure : CoHSpaceStructure (⊙Susp X)
+  Susp-co-h-space-structure : CoHSpaceStructure ⊙ΣX
   Susp-co-h-space-structure = record {
     ⊙coμ = ⊙pinch;
     ⊙unit-l = ⊙unit-l;
@@ -78,7 +79,7 @@ module _ {i} (X : Ptd i) where
     ⊙inv = ⊙Susp-flip X
 
     abstract
-      inv-l : ∀ σ → ⊙WedgeRec.f (⊙Susp-flip X) (⊙idf (⊙Susp X)) (pinch σ) == north
+      inv-l : ∀ σ → ⊙WedgeRec.f (⊙Susp-flip X) (⊙idf ⊙ΣX) (pinch σ) == north
       inv-l = Susp-elim (! (merid (pt X))) (! (merid (pt X))) λ x →
         ↓-app=cst-in $ ! $ ap (_∙ ! (merid (pt X))) $
           ap (W.f ∘ pinch) (merid x)
@@ -100,15 +101,15 @@ module _ {i} (X : Ptd i) where
             =⟨ !-inv-l (! (merid (pt X)) ∙ merid x) ⟩
           idp
             =∎
-        where module W = ⊙WedgeRec (⊙Susp-flip X) (⊙idf (⊙Susp X))
+        where module W = ⊙WedgeRec (⊙Susp-flip X) (⊙idf ⊙ΣX)
 
-      ⊙inv-l : ⊙Wedge-rec (⊙Susp-flip X) (⊙idf (⊙Susp X)) ⊙∘ ⊙pinch ⊙∼ ⊙cst
+      ⊙inv-l : ⊙Wedge-rec (⊙Susp-flip X) (⊙idf ⊙ΣX) ⊙∘ ⊙pinch ⊙∼ ⊙cst
       ⊙inv-l = inv-l , ↓-idf=cst-in' idp
 
       assoc : ∀ σ
-        → fst (⊙–> (⊙∨-assoc (⊙Susp X) (⊙Susp X) (⊙Susp X)))
-            (∨-fmap ⊙pinch (⊙idf (⊙Susp X)) (pinch σ))
-        == ∨-fmap (⊙idf (⊙Susp X)) ⊙pinch (pinch σ)
+        → fst (⊙–> (⊙∨-assoc ⊙ΣX ⊙ΣX ⊙ΣX))
+            (∨-fmap ⊙pinch (⊙idf _) (pinch σ))
+        == ∨-fmap (⊙idf ⊙ΣX) ⊙pinch (pinch σ)
       assoc = Susp-elim idp idp λ x → ↓-='-in' $ ! $
         ap (Assoc.f ∘ FmapL.f ∘ pinch) (merid x)
           =⟨ ap-∘ (Assoc.f ∘ FmapL.f) pinch (merid x) ⟩
@@ -179,10 +180,10 @@ module _ {i} (X : Ptd i) where
         ap (FmapR.f ∘ pinch) (merid x)
           =∎
         where
-          module Assoc = WedgeAssoc (⊙Susp X) (⊙Susp X) (⊙Susp X)
-          module AssocInl = WedgeAssocInl (⊙Susp X) (⊙Susp X) (⊙Susp X)
-          module FmapL = WedgeFmap ⊙pinch (⊙idf (⊙Susp X))
-          module FmapR = WedgeFmap (⊙idf (⊙Susp X)) ⊙pinch
+          module Assoc = WedgeAssoc ⊙ΣX ⊙ΣX ⊙ΣX
+          module AssocInl = WedgeAssocInl ⊙ΣX ⊙ΣX ⊙ΣX
+          module FmapL = WedgeFmap ⊙pinch (⊙idf ⊙ΣX)
+          module FmapR = WedgeFmap (⊙idf ⊙ΣX) ⊙pinch
 
           lemma₀ : ∀ x → ap pinch (σloop X x)
             == ap winl (σloop X x) ∙ wglue ∙ ap winr (σloop X x) ∙ ! wglue
@@ -214,19 +215,19 @@ module _ {i} (X : Ptd i) where
           lemma₁ idp idp p₂ idp idp = ∙-unit-r (p₂ ∙ idp)
 
       ⊙assoc :
-           ⊙–> (⊙∨-assoc (⊙Susp X) (⊙Susp X) (⊙Susp X)) ⊙∘
-           ⊙∨-fmap ⊙pinch (⊙idf (⊙Susp X)) ⊙∘ ⊙pinch
-        ⊙∼ ⊙∨-fmap (⊙idf (⊙Susp X)) ⊙pinch ⊙∘ ⊙pinch
+           ⊙–> (⊙∨-assoc ⊙ΣX ⊙ΣX ⊙ΣX) ⊙∘
+           ⊙∨-fmap ⊙pinch (⊙idf ⊙ΣX) ⊙∘ ⊙pinch
+        ⊙∼ ⊙∨-fmap (⊙idf ⊙ΣX) ⊙pinch ⊙∘ ⊙pinch
       ⊙assoc = assoc , idp
 
-  Susp-cogroup-structure : CogroupStructure (⊙Susp X)
+  Susp-cogroup-structure : CogroupStructure ⊙ΣX
   Susp-cogroup-structure = record {
     co-h-struct = Susp-co-h-space-structure;
     ⊙inv = ⊙Susp-flip X;
     ⊙inv-l = ⊙inv-l;
     ⊙assoc = ⊙assoc}
 
-  Susp⊙→-group-structure : ∀ {j} (Y : Ptd j) → GroupStructure (⊙Susp X ⊙→ Y)
+  Susp⊙→-group-structure : ∀ {j} (Y : Ptd j) → GroupStructure (⊙ΣX ⊙→ Y)
   Susp⊙→-group-structure Y = cogroup⊙→-group-structure Susp-cogroup-structure Y
 
   Trunc-Susp⊙→-group : ∀ {j} (Y : Ptd j) → Group (lmax i j)
@@ -235,15 +236,15 @@ module _ {i} (X : Ptd i) where
 {-
 module _ {i j} (X : Ptd i) where
 
-  Lift-Susp-co-h-space-structure : CoHSpaceStructure (⊙Lift {j = j} (⊙Susp X))
+  Lift-Susp-co-h-space-structure : CoHSpaceStructure (⊙Lift {j = j} ⊙ΣX)
   Lift-Susp-co-h-space-structure =
     Lift-co-h-space-structure {j = j} (Susp-co-h-space-structure X)
 
-  Lift-Susp-cogroup-structure : CogroupStructure (⊙Lift {j = j} (⊙Susp X))
+  Lift-Susp-cogroup-structure : CogroupStructure (⊙Lift {j = j} ⊙ΣX)
   Lift-Susp-cogroup-structure =
     Lift-cogroup-structure {j = j} (Susp-cogroup-structure X)
 
-  LiftSusp⊙→-group-structure : ∀ {k} (Y : Ptd k) → GroupStructure (⊙Lift {j = j} (⊙Susp X) ⊙→ Y)
+  LiftSusp⊙→-group-structure : ∀ {k} (Y : Ptd k) → GroupStructure (⊙Lift {j = j} ⊙ΣX ⊙→ Y)
   LiftSusp⊙→-group-structure Y = cogroup⊙→-group-structure Lift-Susp-cogroup-structure Y
 
   Trunc-LiftSusp⊙→-group : ∀ {k} (Y : Ptd k) → Group (lmax (lmax i j) k)

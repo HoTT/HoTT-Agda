@@ -19,7 +19,7 @@ module FreudenthalEquiv
   Q : Susp (de⊙ X) → Type i
   Q x = Trunc k (north == x)
 
-  ⊙up : X ⊙→ ⊙Ω (⊙Susp X)
+  ⊙up : X ⊙→ ⊙Ω (⊙Susp (de⊙ X))
   ⊙up = SAL.η _
 
   up = fst ⊙up
@@ -232,13 +232,13 @@ module FreudenthalEquiv
   eq : Trunc k (de⊙ X) ≃ Trunc k (north' (de⊙ X) == north)
   eq = equiv decodeN encode decode-encode encode-decodeN
 
-  ⊙eq : ⊙Trunc k X ⊙≃ ⊙Trunc k (⊙Ω (⊙Susp X))
+  ⊙eq : ⊙Trunc k X ⊙≃ ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X)))
   ⊙eq = ≃-to-⊙≃ eq (ap [_] (!-inv-r (merid (pt X))))
 
   path : Trunc k (de⊙ X) == Trunc k (north' (de⊙ X) == north)
   path = ua eq
 
-  ⊙path : ⊙Trunc k X == ⊙Trunc k (⊙Ω (⊙Susp X))
+  ⊙path : ⊙Trunc k X == ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X)))
   ⊙path = ⊙ua ⊙eq
 
 {- Used to prove stability in iterated suspensions -}
@@ -249,9 +249,9 @@ module FreudenthalIso
   open FreudenthalEquiv n ⟨ S k ⟩ kle X public
 
   hom : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X)
-     →ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X)))
+     →ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp (de⊙ X))))
   hom = Ω^S-group-fmap k (decodeN , decodeN-pt)
 
   iso : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X)
-     ≃ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X)))
+     ≃ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp (de⊙ X))))
   iso = Ω^S-group-emap k ⊙eq

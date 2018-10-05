@@ -168,42 +168,42 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
       (J (λ y p → decode' {y} (encode' {y} [ p ]) == [ p ])
          (ap [_] (!-inv-r (merid e))))
 
-  eq' : Trunc 1 (Ω (⊙Susp X)) ≃ A
+  eq' : Trunc 1 (Ω (⊙Susp (de⊙ X))) ≃ A
   eq' = equiv encode' decodeN' encode'-decodeN' decode'-encode'
 
-  ⊙decodeN : ⊙Trunc 1 X ⊙→ ⊙Trunc 1 (⊙Ω (⊙Susp X))
+  ⊙decodeN : ⊙Trunc 1 X ⊙→ ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X)))
   ⊙decodeN = ⊙Trunc-fmap (SAL.η X)
 
-  decodeN : Trunc 1 A → Trunc 1 (Ω (⊙Susp X))
+  decodeN : Trunc 1 A → Trunc 1 (Ω (⊙Susp (de⊙ X)))
   decodeN = fst ⊙decodeN
 
-  encodeN : Trunc 1 (Ω (⊙Susp X)) → Trunc 1 A
+  encodeN : Trunc 1 (Ω (⊙Susp (de⊙ X))) → Trunc 1 A
   encodeN = [_] ∘ encode' {x = north}
 
-  eq : Trunc 1 (Ω (⊙Susp X)) ≃ Trunc 1 A
+  eq : Trunc 1 (Ω (⊙Susp (de⊙ X))) ≃ Trunc 1 A
   eq = encodeN ,
     replace-inverse (snd ((unTrunc-equiv A)⁻¹ ∘e eq'))
       {decodeN}
       (Trunc-elim (λ _ → idp))
 
-  ⊙eq : ⊙Trunc 1 (⊙Ω (⊙Susp X)) ⊙≃ ⊙Trunc 1 X
+  ⊙eq : ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X))) ⊙≃ ⊙Trunc 1 X
   ⊙eq = ≃-to-⊙≃ eq idp
 
-  ⊙eq⁻¹ : ⊙Trunc 1 X ⊙≃ ⊙Trunc 1 (⊙Ω (⊙Susp X))
+  ⊙eq⁻¹ : ⊙Trunc 1 X ⊙≃ ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X)))
   ⊙eq⁻¹ = ⊙decodeN , snd (eq ⁻¹)
 
-  iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X)))
+  iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X))))
       ≃ᴳ Ω^S-group 0 (⊙Trunc 1 X)
   iso = Ω^S-group-emap 0 ⊙eq
 
   abstract
-    π₂-Susp : πS 1 (⊙Susp X) ≃ᴳ πS 0 X
+    π₂-Susp : πS 1 (⊙Susp (de⊙ X)) ≃ᴳ πS 0 X
     π₂-Susp =
-      πS 1 (⊙Susp X)
-        ≃ᴳ⟨ πS-Ω-split-iso 0 (⊙Susp X) ⟩
-      πS 0 (⊙Ω (⊙Susp X))
-        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (⊙Ω (⊙Susp X)) ⁻¹ᴳ ⟩
-      Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X)))
+      πS 1 (⊙Susp (de⊙ X))
+        ≃ᴳ⟨ πS-Ω-split-iso 0 (⊙Susp (de⊙ X)) ⟩
+      πS 0 (⊙Ω (⊙Susp (de⊙ X)))
+        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (⊙Ω (⊙Susp (de⊙ X))) ⁻¹ᴳ ⟩
+      Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X))))
         ≃ᴳ⟨ iso ⟩
       Ω^S-group 0 (⊙Trunc 1 X)
         ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 X ⟩

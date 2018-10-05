@@ -31,7 +31,7 @@ module MayerVietorisFunctions (ps : ⊙Span {i} {i} {i}) where
   mv-diff : Susp (de⊙ Z) → Susp (X ∨ Y)
   mv-diff = MVDiff.f
 
-  ⊙mv-diff : ⊙Susp Z ⊙→ ⊙Susp (X ⊙∨ Y)
+  ⊙mv-diff : ⊙Susp (de⊙ Z) ⊙→ ⊙Susp (X ∨ Y)
   ⊙mv-diff = (mv-diff , idp)
 
 {- We use path induction (via [⊙pushout-J]) to assume that the
@@ -161,7 +161,7 @@ module MayerVietorisBase
   eq : Cofiber reglue ≃ Susp (de⊙ Z)
   eq = equiv into out into-out out-into
 
-  ⊙eq : ⊙Cofiber ⊙reglue ⊙≃ ⊙Susp Z
+  ⊙eq : ⊙Cofiber ⊙reglue ⊙≃ ⊙Susp (de⊙ Z)
   ⊙eq = ≃-to-⊙≃ eq idp
 
   {- Transporting [cfcod reglue] over the equivalence -}
@@ -210,7 +210,7 @@ module MayerVietoris (ps : ⊙Span {i} {i} {i}) where
       open ⊙Span ps
       open MayerVietorisFunctions ps public
       field
-        ⊙eq : ⊙Cofiber ⊙reglue ⊙≃ ⊙Susp Z
+        ⊙eq : ⊙Cofiber ⊙reglue ⊙≃ ⊙Susp (de⊙ Z)
         cfcod-comm-sqr : CommSquare
           (cfcod' reglue) extract-glue
           (idf _) (fst (⊙–> ⊙eq))

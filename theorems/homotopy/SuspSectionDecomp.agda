@@ -15,7 +15,7 @@ module SuspSectionDecomp where
   private
     f = fst ⊙f
 
-  module Into = SuspRec {C = de⊙ (⊙Susp X ⊙∨ ⊙Susp (⊙Cofiber ⊙f))}
+  module Into = SuspRec {C = ⊙Susp (de⊙ X) ∨ ⊙Susp (Cofiber f)}
     (winl south)
     (winr south)
     (λ y → ! (ap winl (merid (g y))) ∙ wglue ∙ ap winr (merid (cfcod y)))
@@ -25,7 +25,7 @@ module SuspSectionDecomp where
   module OutWinl = SuspRec south south
     (λ x → ! (merid (f x)) ∙ merid (pt Y))
 
-  out-winr-glue : de⊙ (⊙Cofiber ⊙f) → south' (de⊙ Y) == south
+  out-winr-glue : Cofiber f → south' (de⊙ Y) == south
   out-winr-glue = CofiberRec.f
     idp
     (λ y → ! (merid (f (g y))) ∙ merid y)
@@ -39,7 +39,7 @@ module SuspSectionDecomp where
   out-winl = OutWinl.f
   out-winr = OutWinr.f
 
-  module Out = WedgeRec {X = ⊙Susp X} {Y = ⊙Susp (⊙Cofiber ⊙f)}
+  module Out = WedgeRec {X = ⊙Susp (de⊙ X)} {Y = ⊙Susp (Cofiber f)}
     out-winl out-winr idp
 
   out = Out.f
@@ -162,5 +162,5 @@ module SuspSectionDecomp where
               (ap (ap winr ∘ merid) (cfglue (g y)))
               (ap (ap winl ∘ merid) (inv (g y)))
 
-  eq : Susp (de⊙ Y) ≃ ⊙Susp X ∨ ⊙Susp (⊙Cofiber ⊙f)
+  eq : Susp (de⊙ Y) ≃ ⊙Susp (de⊙ X) ∨ ⊙Susp (Cofiber f)
   eq = equiv into out into-out out-into

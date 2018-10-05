@@ -22,7 +22,7 @@ CX₁/X₀-is-abelian = CXₙ/Xₙ₋₁-is-abelian 1
 cw-co∂-head' : CX₀ 0 →ᴳ CXₙ/Xₙ₋₁ 1
 cw-co∂-head' = co∂
 
-⊙cw-∂-head'-before-Susp : ⊙Xₙ/Xₙ₋₁ (⊙Skeleton.skel ⊙skel) ⊙→ ⊙Susp (⊙cw-head ⊙skel)
+⊙cw-∂-head'-before-Susp : ⊙Xₙ/Xₙ₋₁ (⊙Skeleton.skel ⊙skel) ⊙→ ⊙Susp (cw-head (⊙Skeleton.skel ⊙skel))
 ⊙cw-∂-head'-before-Susp = ⊙∂-before-Susp
 
 cw-∂-head'-before-Susp : Xₙ/Xₙ₋₁ (⊙Skeleton.skel ⊙skel) → Susp (cw-head (⊙Skeleton.skel ⊙skel))

@@ -108,7 +108,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
 
     π₂ : πS 1 (⊙EM 2) ≃ᴳ πS 0 X
     π₂ = Π₂.π₂-Susp
-     ∘eᴳ πS-Trunc-fuse-≤-iso 1 2 (⊙Susp X) ≤T-refl
+     ∘eᴳ πS-Trunc-fuse-≤-iso 1 2 (⊙Susp (de⊙ X)) ≤T-refl
 
     πS-diag : (n : ℕ) → πS n (⊙EM (S n)) ≃ᴳ πS 0 X
     πS-diag 0 = π₁
@@ -147,7 +147,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
     spectrum1 =
       ⊙Ω (⊙EM 2)
         ⊙≃⟨ ≃-to-⊙≃ (=ₜ-equiv _ _) idp ⟩
-      ⊙Trunc 1 (⊙Ω (⊙Susp X))
+      ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X)))
         ⊙≃⟨ Π₂.⊙eq ⟩
       ⊙EM 1 ⊙≃∎
 

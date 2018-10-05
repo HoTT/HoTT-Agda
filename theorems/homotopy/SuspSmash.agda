@@ -103,5 +103,5 @@ module SuspSmash where
   eq : Susp (Smash X Y) ≃ (de⊙ X * de⊙ Y)
   eq = equiv into out into-out out-into
 
-  ⊙eq : ⊙Susp (⊙Smash X Y) ⊙≃ (X ⊙* Y)
+  ⊙eq : ⊙Susp (X ∧ Y) ⊙≃ (X ⊙* Y)
   ⊙eq = ≃-to-⊙≃ eq idp

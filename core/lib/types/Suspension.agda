@@ -66,8 +66,8 @@ susp-⊙span : ∀ {i} → Ptd i → ⊙Span
 susp-⊙span X =
   ⊙span ⊙Unit ⊙Unit X (⊙cst {X = X}) (⊙cst {X = X})
 
-⊙Susp : ∀ {i} → Ptd i → Ptd i
-⊙Susp ⊙[ A , _ ] = ⊙[ Susp A , north ]
+⊙Susp : ∀ {i} → Type i → Ptd i
+⊙Susp A = ⊙[ Susp A , north ]
 
 
 σloop : ∀ {i} (X : Ptd i) → de⊙ X → north' (de⊙ X) == north' (de⊙ X)
@@ -86,7 +86,7 @@ module SuspFlip {i} {A : Type i} = SuspRec
 Susp-flip : ∀ {i} {A : Type i} → Susp A → Susp A
 Susp-flip = SuspFlip.f
 
-⊙Susp-flip : ∀ {i} (X : Ptd i) → ⊙Susp X ⊙→ ⊙Susp X
+⊙Susp-flip : ∀ {i} (X : Ptd i) → ⊙Susp (de⊙ X) ⊙→ ⊙Susp (de⊙ X)
 ⊙Susp-flip X = (Susp-flip , ! (merid (pt X)))
 
 Susp-flip-equiv : ∀ {i} {A : Type i} → Susp A ≃ Susp A
@@ -101,9 +101,9 @@ module _ {i j} where
     → (Susp A → Susp B)
   Susp-fmap = SuspFmap.f
 
-  ⊙Susp-fmap : {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
-    → ⊙Susp X ⊙→ ⊙Susp Y
-  ⊙Susp-fmap (f , fpt) = (Susp-fmap f , idp)
+  ⊙Susp-fmap : {A : Type i} {B : Type j} (f : A → B)
+    → ⊙Susp A ⊙→ ⊙Susp B
+  ⊙Susp-fmap f = (Susp-fmap f , idp)
 
 module _ {i} where
 
@@ -111,9 +111,9 @@ module _ {i} where
   Susp-fmap-idf A = Susp-elim idp idp $ λ a →
     ↓-='-in' (ap-idf (merid a) ∙ ! (SuspFmap.merid-β (idf A) a))
 
-  ⊙Susp-fmap-idf : (X : Ptd i)
-    → ⊙Susp-fmap (⊙idf X) == ⊙idf (⊙Susp X)
-  ⊙Susp-fmap-idf X = ⊙λ=' (Susp-fmap-idf (de⊙ X)) idp
+  ⊙Susp-fmap-idf : (A : Type i)
+    → ⊙Susp-fmap (idf A) == ⊙idf (⊙Susp A)
+  ⊙Susp-fmap-idf A = ⊙λ=' (Susp-fmap-idf A) idp
 
 module _ {i j} where
 
@@ -122,8 +122,8 @@ module _ {i j} where
   Susp-fmap-cst b = Susp-elim idp (! (merid b)) $ (λ a →
     ↓-app=cst-from-square $ SuspFmap.merid-β (cst b) a ∙v⊡ tr-square _)
 
-  ⊙Susp-fmap-cst : {X : Ptd i} {Y : Ptd j}
-    → ⊙Susp-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst
+  ⊙Susp-fmap-cst : {A : Type i} {Y : Ptd j}
+    → ⊙Susp-fmap {A = A} (λ _ → pt Y) == ⊙cst
   ⊙Susp-fmap-cst = ⊙λ=' (Susp-fmap-cst _) idp
 
   Susp-flip-fmap : {A : Type i} {B : Type j} (f : A → B)
@@ -150,10 +150,10 @@ module _ {i j k} where
       ∙ SuspFmap.merid-β g (f a)
       ∙ ! (SuspFmap.merid-β (g ∘ f) a))
 
-  ⊙Susp-fmap-∘ : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-    (g : Y ⊙→ Z) (f : X ⊙→ Y)
-    → ⊙Susp-fmap (g ⊙∘ f) == ⊙Susp-fmap g ⊙∘ ⊙Susp-fmap f
-  ⊙Susp-fmap-∘ g f = ⊙λ=' (Susp-fmap-∘ (fst g) (fst f)) idp
+  ⊙Susp-fmap-∘ : {A : Type i} {B : Type j} {C : Type k}
+    (g : B → C) (f : A → B)
+    → ⊙Susp-fmap (g ∘ f) == ⊙Susp-fmap g ⊙∘ ⊙Susp-fmap f
+  ⊙Susp-fmap-∘ g f = ⊙λ=' (Susp-fmap-∘ g f) idp
 
 
 {- Extract the 'glue component' of a pushout -}
@@ -183,27 +183,43 @@ module _ {i j} {A : Type i} {B : Type j} (eq : A ≃ B) where
     test₀ : fst Susp-emap == Susp-fmap (fst eq)
     test₀ = idp
 
-module _ {i j} {X : Ptd i} {Y : Ptd j} where
+module _ {i j} {A : Type i} {B : Type j} where
 
-  ⊙Susp-emap : X ⊙≃ Y → ⊙Susp X ⊙≃ ⊙Susp Y
-  ⊙Susp-emap ⊙eq = ≃-to-⊙≃ (Susp-emap (⊙≃-to-≃ ⊙eq)) idp
+  ⊙Susp-emap : A ≃ B → ⊙Susp A ⊙≃ ⊙Susp B
+  ⊙Susp-emap eq = ≃-to-⊙≃ (Susp-emap eq) idp
 
 {- Interaction with [Lift] -}
-module _ {i j} (X : Type i) where
+module _ {i j} (A : Type i) where
 
-  Susp-Lift-econv : Susp (Lift {j = j} X) ≃ Lift {j = j} (Susp X)
+  Susp-Lift-econv : Susp (Lift {j = j} A) ≃ Lift {j = j} (Susp A)
   Susp-Lift-econv = lift-equiv ∘e Susp-emap lower-equiv
 
-  Susp-Lift-conv : Susp (Lift {j = j} X) == Lift {j = j} (Susp X)
+  Susp-Lift-conv : Susp (Lift {j = j} A) == Lift {j = j} (Susp A)
   Susp-Lift-conv = ua Susp-Lift-econv
 
-module _ {i j} (X : Ptd i) where
+module _ {i j} (A : Type i) where
 
-  ⊙Susp-Lift-econv : ⊙Susp (⊙Lift {j = j} X) ⊙≃ ⊙Lift {j = j} (⊙Susp X)
-  ⊙Susp-Lift-econv = ⊙lift-equiv {j = j} ⊙∘e ⊙Susp-emap {X = ⊙Lift {j = j} X} {Y = X} ⊙lower-equiv
+  ⊙Susp-Lift-econv : ⊙Susp (Lift {j = j} A) ⊙≃ ⊙Lift {j = j} (⊙Susp A)
+  ⊙Susp-Lift-econv = ⊙lift-equiv {j = j} ⊙∘e ⊙Susp-emap {A = Lift {j = j} A} {B = A} lower-equiv
 
-  ⊙Susp-Lift-conv : ⊙Susp (⊙Lift {j = j} X) == ⊙Lift {j = j} (⊙Susp X)
+  ⊙Susp-Lift-conv : ⊙Susp (Lift {j = j} A) == ⊙Lift {j = j} (⊙Susp A)
   ⊙Susp-Lift-conv = ⊙ua ⊙Susp-Lift-econv
+
+Susp-Trunc-swap : ∀ {i} (A : Type i) (m : ℕ₋₂)
+  → Susp (Trunc m A)
+  → Trunc (S m) (Susp A)
+Susp-Trunc-swap A m =
+  Susp-rec
+    [ north ]
+    [ south ]
+    (Trunc-rec
+      {B = [ north ] == [ south ]}
+      {{has-level-apply (Trunc-level {n = S m}) [ north ] [ south ]}}
+      (λ x → ap [_] (merid x)))
+
+⊙Susp-Trunc-swap : ∀ {i} (A : Type i) (m : ℕ₋₂)
+  → ⊙Susp (Trunc m A) ⊙→ ⊙Trunc (S m) (⊙Susp A)
+⊙Susp-Trunc-swap A m = Susp-Trunc-swap A m , idp
 
 {- Suspension of an n-connected space is n+1-connected -}
 abstract

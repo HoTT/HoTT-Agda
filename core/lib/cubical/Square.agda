@@ -509,7 +509,7 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
     → Square v (ap f q) (ap g q) w
     → Square u (ap f (p ∙ q)) (ap g (p ∙ q)) w
   ↓-='-square-comp' {p = p} {q = q} sq₁ sq₂ =
-    (ap-∙ f p q ∙v⊡ (sq₁ ⊡h sq₂)) ⊡v∙ ∙-ap g p q
+    ap-∙ f p q ∙v⊡ ((sq₁ ⊡h sq₂) ⊡v∙ ∙-ap g p q)
 
   ↓-='-square-comp'=↓-='-square-comp : {x y z : A} {p : x == y} {q : y == z}
     {u : f x == g x} {v : f y == g y} {w : f z == g z}

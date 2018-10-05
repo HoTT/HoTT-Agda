@@ -54,6 +54,15 @@ module lib.types.Pointed where
   → (f : Y ⊙→ Z) → f ⊙∘ (⊙cst :> (X ⊙→ Y)) ⊙∼ ⊙cst
 ⊙∘-cst-r {X = X} f = (λ _ → snd f) , ↓-idf=cst-in' idp
 
+private
+  ⊙coe-pt : ∀ {i} {A B : Ptd i} (p : A == B)
+    → coe (ap de⊙ p) (pt A) == pt B
+  ⊙coe-pt idp = idp
+
+⊙coe : ∀ {i} {A B : Ptd i}
+  → A == B → A ⊙→ B
+⊙coe p = coe (ap de⊙ p) , ⊙coe-pt p
+
 {- Pointed equivalences -}
 
 -- Extracting data from an pointed equivalence
@@ -78,7 +87,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
   _⊙⁻¹ : Y ⊙≃ X
   _⊙⁻¹ = ⊙<– , is-equiv-inverse (snd ⊙e)
 
-module _ {i j} {X : Ptd i} {Y : Ptd j} where 
+module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
   ⊙<–-inv-l : (⊙e : X ⊙≃ Y) → ⊙<– ⊙e ⊙∘ ⊙–> ⊙e ⊙∼ ⊙idf _
   ⊙<–-inv-l ⊙e = <–-inv-l (⊙≃-to-≃ ⊙e) , ↓-idf=cst-in' (lemma ⊙e) where

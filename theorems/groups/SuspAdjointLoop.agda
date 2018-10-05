@@ -12,8 +12,9 @@ module groups.SuspAdjointLoop {i} where
   module _ (X Y : Ptd i) where
 
     private
+      ⊙ΣX = ⊙Susp (de⊙ X)
       pres-comp : preserves-comp
-        (GroupStructure.comp (⊙→Ω-group-structure (⊙Susp X) Y))
+        (GroupStructure.comp (⊙→Ω-group-structure ⊙ΣX Y))
         (GroupStructure.comp (⊙→Ω-group-structure X (⊙Ω Y)))
         (–> (A.eq X (⊙Ω Y)))
     abstract
@@ -47,15 +48,15 @@ module groups.SuspAdjointLoop {i} where
             =⟨ ⊙Ω-fmap2-∙ ⟩
           ⊙Ω-∙ ∎
 
-    ⊙→Ω-iso-⊙→Ω : ⊙→Ω-group-structure (⊙Susp X) Y ≃ᴳˢ ⊙→Ω-group-structure X (⊙Ω Y)
+    ⊙→Ω-iso-⊙→Ω : ⊙→Ω-group-structure ⊙ΣX Y ≃ᴳˢ ⊙→Ω-group-structure X (⊙Ω Y)
     ⊙→Ω-iso-⊙→Ω = ≃-to-≃ᴳˢ (A.eq X (⊙Ω Y)) pres-comp
 
-    Trunc-⊙→Ω-iso-Trunc-⊙→Ω : Trunc-⊙→Ω-group (⊙Susp X) Y ≃ᴳ Trunc-⊙→Ω-group X (⊙Ω Y)
+    Trunc-⊙→Ω-iso-Trunc-⊙→Ω : Trunc-⊙→Ω-group ⊙ΣX Y ≃ᴳ Trunc-⊙→Ω-group X (⊙Ω Y)
     Trunc-⊙→Ω-iso-Trunc-⊙→Ω = Trunc-group-emap ⊙→Ω-iso-⊙→Ω
 
   abstract
     Trunc-⊙→Ω-iso-Trunc-⊙→Ω-nat-dom : {X Y : Ptd i} (f : X ⊙→ Y) (Z : Ptd i)
-      → fst (Trunc-⊙→Ω-iso-Trunc-⊙→Ω X Z) ∘ᴳ Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) Z
+      → fst (Trunc-⊙→Ω-iso-Trunc-⊙→Ω X Z) ∘ᴳ Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap (fst f)) Z
         == Trunc-⊙→Ω-group-fmap-dom f (⊙Ω Z) ∘ᴳ fst (Trunc-⊙→Ω-iso-Trunc-⊙→Ω Y Z)
     Trunc-⊙→Ω-iso-Trunc-⊙→Ω-nat-dom f Z = group-hom= $ λ= $ Trunc-elim
       (λ g → ap [_] (! (A.nat-dom f (⊙Ω Z) g)))
@@ -140,33 +141,36 @@ module groups.SuspAdjointLoop {i} where
   module _ (X Y : Ptd i) where
 
     private
+      ⊙ΣX = ⊙Susp (de⊙ X)
+      ⊙ΣY = ⊙Susp (de⊙ Y)
+
       pres-comp : preserves-comp
         (GroupStructure.comp (Susp⊙→-group-structure X Y))
-        (GroupStructure.comp (Susp⊙→-group-structure (⊙Susp X) (⊙Susp Y)))
-        (⊙Susp-fmap :> ((⊙Susp X ⊙→ Y) → _))
+        (GroupStructure.comp (Susp⊙→-group-structure ⊙ΣX ⊙ΣY))
+        ((⊙Susp-fmap ∘ fst) :> ((⊙ΣX ⊙→ Y) → _))
     abstract
       pres-comp = ∼-preserves-preserves-comp
         (GroupStructure.comp (Susp⊙→-group-structure X Y))
-        (GroupStructure.comp (Susp⊙→-group-structure (⊙Susp X) (⊙Susp Y)))
+        (GroupStructure.comp (Susp⊙→-group-structure ⊙ΣX ⊙ΣY))
         (λ f →
-          <– (A.eq (⊙Susp X) (⊙Susp Y)) (<– (A.eq X (⊙Ω (⊙Susp Y))) (⊙Ω-fmap (A.η Y) ⊙∘ –> (A.eq X Y) f))
-            =⟨ ap (<– (A.eq (⊙Susp X) (⊙Susp Y)) ∘ <– (A.eq X (⊙Ω (⊙Susp Y)))) $ A.nat-cod X (A.η Y) f ⟩
-          <– (A.eq (⊙Susp X) (⊙Susp Y)) (<– (A.eq X (⊙Ω (⊙Susp Y))) (–> (A.eq X (⊙Ω (⊙Susp Y))) (A.η Y ⊙∘ f)))
-            =⟨ ap (<– (A.eq (⊙Susp X) (⊙Susp Y))) $ <–-inv-l (A.eq X (⊙Ω (⊙Susp Y))) (A.η Y ⊙∘ f)  ⟩
-          <– (A.eq (⊙Susp X) (⊙Susp Y)) (A.η Y ⊙∘ f)
-            =⟨ ap (<– (A.eq (⊙Susp X) (⊙Susp Y))) $ A.η-natural f ⟩
-          <– (A.eq (⊙Susp X) (⊙Susp Y)) (–> (A.eq (⊙Susp X) (⊙Susp Y)) (⊙Susp-fmap f))
-            =⟨ <–-inv-l (A.eq (⊙Susp X) (⊙Susp Y)) (⊙Susp-fmap f) ⟩
-          ⊙Susp-fmap f
+          <– (A.eq ⊙ΣX ⊙ΣY) (<– (A.eq X (⊙Ω ⊙ΣY)) (⊙Ω-fmap (A.η Y) ⊙∘ –> (A.eq X Y) f))
+            =⟨ ap (<– (A.eq ⊙ΣX ⊙ΣY) ∘ <– (A.eq X (⊙Ω ⊙ΣY))) $ A.nat-cod X (A.η Y) f ⟩
+          <– (A.eq ⊙ΣX ⊙ΣY) (<– (A.eq X (⊙Ω ⊙ΣY)) (–> (A.eq X (⊙Ω ⊙ΣY)) (A.η Y ⊙∘ f)))
+            =⟨ ap (<– (A.eq ⊙ΣX ⊙ΣY)) $ <–-inv-l (A.eq X (⊙Ω ⊙ΣY)) (A.η Y ⊙∘ f)  ⟩
+          <– (A.eq ⊙ΣX ⊙ΣY) (A.η Y ⊙∘ f)
+            =⟨ ap (<– (A.eq ⊙ΣX ⊙ΣY)) $ A.η-natural f ⟩
+          <– (A.eq ⊙ΣX ⊙ΣY) (–> (A.eq ⊙ΣX ⊙ΣY) (⊙Susp-fmap (fst f)))
+            =⟨ <–-inv-l (A.eq ⊙ΣX ⊙ΣY) (⊙Susp-fmap (fst f)) ⟩
+          ⊙Susp-fmap (fst f)
             =∎)
         (GroupStructureHom.pres-comp $
-              GroupStructureIso.g-shom (Susp⊙→-iso-⊙→Ω (⊙Susp X) (⊙Susp Y))
-          ∘ᴳˢ GroupStructureIso.g-shom (⊙→Ω-iso-⊙→Ω X (⊙Susp Y))
+              GroupStructureIso.g-shom (Susp⊙→-iso-⊙→Ω ⊙ΣX ⊙ΣY)
+          ∘ᴳˢ GroupStructureIso.g-shom (⊙→Ω-iso-⊙→Ω X ⊙ΣY)
           ∘ᴳˢ ⊙→Ω-group-structure-fmap-codom X (A.η Y)
           ∘ᴳˢ GroupStructureIso.f-shom (Susp⊙→-iso-⊙→Ω X Y))
 
-    Susp⊙→-Susp-fmap-shom : Susp⊙→-group-structure X Y →ᴳˢ Susp⊙→-group-structure (⊙Susp X) (⊙Susp Y)
-    Susp⊙→-Susp-fmap-shom = group-structure-hom ⊙Susp-fmap pres-comp
+    Susp⊙→-Susp-fmap-shom : Susp⊙→-group-structure X Y →ᴳˢ Susp⊙→-group-structure ⊙ΣX ⊙ΣY
+    Susp⊙→-Susp-fmap-shom = group-structure-hom (⊙Susp-fmap ∘ fst) pres-comp
 
-    Trunc-Susp⊙→-Susp-fmap-hom : Trunc-Susp⊙→-group X Y →ᴳ Trunc-Susp⊙→-group (⊙Susp X) (⊙Susp Y)
+    Trunc-Susp⊙→-Susp-fmap-hom : Trunc-Susp⊙→-group X Y →ᴳ Trunc-Susp⊙→-group ⊙ΣX ⊙ΣY
     Trunc-Susp⊙→-Susp-fmap-hom = Trunc-group-fmap Susp⊙→-Susp-fmap-shom

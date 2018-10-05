@@ -184,14 +184,14 @@ module homotopy.SphereEndomorphism where
 
     final-fix : ∀ n →
       CommSquareEquiv
-        (⊙Susp-fmap :> (⊙Sphere-endo (S n) → _))
+        ((⊙Susp-fmap ∘ fst) :> (⊙Sphere-endo (S n) → _))
         (SAL.η _ ⊙∘_)
         (idf _)
         (–> (SAL.eq _ _))
     final-fix n = comm-sqr (λ f → ! (SAL.η-natural f)) , idf-is-equiv _ , snd (SAL.eq _ _)
 
   Trunc-⊙SphereS-endo-Susp-is-equiv : ∀ n →
-    is-equiv (Trunc-fmap ⊙Susp-fmap :> (Trunc-⊙Sphere-endo (S n) → _))
+    is-equiv (Trunc-fmap (⊙Susp-fmap ∘ fst) :> (Trunc-⊙Sphere-endo (S n) → _))
   Trunc-⊙SphereS-endo-Susp-is-equiv n =
     CommSquareEquiv-preserves'-equiv
       (Trunc-csemap (final-fix n))
