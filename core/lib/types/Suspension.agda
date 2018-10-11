@@ -11,8 +11,10 @@ open import lib.types.PushoutFmap
 open import lib.types.PushoutFlattening
 open import lib.types.Unit
 open import lib.types.Paths
+open import lib.types.Pi
 open import lib.types.Truncation
 open import lib.types.Lift
+open import lib.cubical.Cube
 open import lib.cubical.Square
 
 -- Suspension is defined as a particular case of pushout
@@ -48,19 +50,176 @@ module _ {i} {A : Type i} where
 
   module SuspElim {j} {P : Susp A → Type j} (n : P north)
     (s : P south) (p : (x : A) → n == s [ P ↓ merid x ]) where
-    open module P = PushoutElim (λ _ → n) (λ _ → s) p
-      public using (f) renaming (glue-β to merid-β)
+
+    private
+      module P = PushoutElim (λ _ → n) (λ _ → s) p
+
+    abstract
+      f : Π (Susp A) P
+      f = P.f
+
+      north-β : f north ↦ n
+      north-β = P.left-β unit
+      {-# REWRITE north-β #-}
+
+      south-β : f south ↦ s
+      south-β = P.right-β unit
+      {-# REWRITE south-β #-}
+
+      merid-β : ∀ a → apd f (merid a) == p a
+      merid-β = P.glue-β
 
   open SuspElim public using () renaming (f to Susp-elim)
 
   module SuspRec {j} {C : Type j} (n s : C) (p : A → n == s) where
-    open module P = PushoutRec {d = susp-span A} (λ _ → n) (λ _ → s) p
-      public using (f) renaming (glue-β to merid-β)
+    private
+      module P = PushoutRec {d = susp-span A} (λ _ → n) (λ _ → s) p
+
+    abstract
+      f : Susp A → C
+      f = P.f
+
+      north-β : f north ↦ n
+      north-β = P.left-β unit
+      {-# REWRITE north-β #-}
+
+      south-β : f south ↦ s
+      south-β = P.right-β unit
+      {-# REWRITE south-β #-}
+
+      merid-β : ∀ a → ap f (merid a) == p a
+      merid-β = P.glue-β
 
   open SuspRec public using () renaming (f to Susp-rec)
 
   module SuspRecType {j} (n s : Type j) (p : A → n ≃ s)
     = PushoutRecType {d = susp-span A} (λ _ → n) (λ _ → s) p
+
+module SuspPathElim
+  {i} {j} {A : Type i} {B : Type j}
+  (f g : Susp A → B)
+  (n : f north == g north)
+  (s : f south == g south)
+  (m : ∀ a → Square n (ap f (merid a)) (ap g (merid a)) s)
+  where
+
+  private
+    module M =
+      SuspElim
+        {P = λ sa → f sa == g sa}
+        n
+        s
+        (λ a → ↓-='-from-square (m a))
+
+  open M public
+
+  merid-square-β : ∀ a → natural-square M.f (merid a) == m a
+  merid-square-β a = natural-square-β M.f (merid a) (M.merid-β a)
+
+module SuspDoublePathElim
+  {i} {j} {k} {A : Type i} {B : Type j} {C : Type k}
+  (f g : Susp A → Susp B → C)
+  (n-n : f north north == g north north)
+  (n-s : f north south == g north south)
+  (s-n : f south north == g south north)
+  (s-s : f south south == g south south)
+  (n-m : ∀ b → Square n-n (ap (f north) (merid b)) (ap (g north) (merid b)) n-s)
+  (s-m : ∀ b → Square s-n (ap (f south) (merid b)) (ap (g south) (merid b)) s-s)
+  (m-n : ∀ a → Square n-n (ap (λ sa → f sa north) (merid a)) (ap (λ sa → g sa north) (merid a)) s-n)
+  (m-s : ∀ a → Square n-s (ap (λ sa → f sa south) (merid a)) (ap (λ sa → g sa south) (merid a)) s-s)
+  (m-m : ∀ a b →
+    Cube (m-n a)
+         (m-s a)
+         (n-m b)
+         (natural-square (λ sb → ap (λ sa → f sa sb) (merid a)) (merid b))
+         (natural-square (λ sb → ap (λ sa → g sa sb) (merid a)) (merid b))
+         (s-m b))
+  where
+
+  private
+    module N =
+      SuspElim
+        {P = λ sb → f north sb == g north sb}
+        n-n
+        n-s
+        (λ b → ↓-='-from-square (n-m b))
+
+    n-natural-square : ∀ (b : B) →
+      natural-square N.f (merid b) == n-m b
+    n-natural-square b = natural-square-β N.f (merid b) (N.merid-β b)
+
+    module S =
+      SuspElim
+        {P = λ sb → f south sb == g south sb}
+        s-n
+        s-s
+        (λ b → ↓-='-from-square (s-m b))
+
+    s-natural-square : ∀ (b : B) →
+      natural-square S.f (merid b) == s-m b
+    s-natural-square b = natural-square-β S.f (merid b) (S.merid-β b)
+
+    module M (sb : Susp B) =
+      SuspElim {A = A}
+        {P = λ sa → f sa sb == g sa sb}
+        (N.f sb)
+        (S.f sb)
+        (λ a → Susp-elim
+          {P = λ sb → N.f sb == S.f sb [ (λ sa → f sa sb == g sa sb) ↓ merid a ]}
+          (↓-='-from-square (m-n a))
+          (↓-='-from-square (m-s a))
+          (λ b → ap↓ ↓-='-from-square $
+            cube-to-↓-square $
+            cube-shift-back (! (n-natural-square b)) $
+            cube-shift-front (! (s-natural-square b)) $
+            m-m a b)
+          sb)
+
+  abstract
+    p : ∀ sa sb → f sa sb == g sa sb
+    p sa sb = M.f sb sa
+
+    north-north-β : p north north ↦ n-n
+    north-north-β = N.north-β
+    {-# REWRITE north-north-β #-}
+
+    north-south-β : p north south ↦ n-s
+    north-south-β = N.south-β
+    {-# REWRITE north-south-β #-}
+
+    south-north-β : p south north ↦ s-n
+    south-north-β = S.north-β
+    {-# REWRITE south-north-β #-}
+
+    south-south-β : p south south ↦ s-s
+    south-south-β = S.south-β
+    {-# REWRITE south-south-β #-}
+
+    north-merid-β : ∀ b → apd (p north) (merid b) == ↓-='-from-square (n-m b)
+    north-merid-β = N.merid-β
+
+    north-merid-square-β : ∀ b → natural-square (p north) (merid b) == n-m b
+    north-merid-square-β b = natural-square-β (p north) (merid b) (north-merid-β b)
+
+    south-merid-β : ∀ b → apd (p south) (merid b) == ↓-='-from-square (s-m b)
+    south-merid-β = S.merid-β
+
+    south-merid-square-β : ∀ b → natural-square (p south) (merid b) == s-m b
+    south-merid-square-β b = natural-square-β (p south) (merid b) (south-merid-β b)
+
+    merid-north-β : ∀ a → apd (λ sa → p sa north) (merid a) == ↓-='-from-square (m-n a)
+    merid-north-β = M.merid-β north
+
+    merid-north-square-β : ∀ a → natural-square (λ sa → p sa north) (merid a) == m-n a
+    merid-north-square-β a =
+      natural-square-β (λ sa → p sa north) (merid a) (merid-north-β a)
+
+    merid-south-β : ∀ a → apd (λ sa → p sa south) (merid a) == ↓-='-from-square (m-s a)
+    merid-south-β = M.merid-β south
+
+    merid-south-square-β : ∀ a → natural-square (λ sa → p sa south) (merid a) == m-s a
+    merid-south-square-β a =
+      natural-square-β (λ sa → p sa south) (merid a) (merid-south-β a)
 
 susp-⊙span : ∀ {i} → Ptd i → ⊙Span
 susp-⊙span X =
@@ -89,8 +248,29 @@ Susp-flip = SuspFlip.f
 ⊙Susp-flip : ∀ {i} (X : Ptd i) → ⊙Susp (de⊙ X) ⊙→ ⊙Susp (de⊙ X)
 ⊙Susp-flip X = (Susp-flip , ! (merid (pt X)))
 
+Susp-flip-flip : ∀ {i} {A : Type i} (sa : Susp A)
+  → Susp-flip (Susp-flip sa) == sa
+Susp-flip-flip =
+  Susp-elim
+    idp
+    idp $ λ a → ↓-='-in' $
+  ap (λ z → z) (merid a)
+    =⟨ ap-idf (merid a) ⟩
+  merid a
+    =⟨ ! (!-! (merid a)) ⟩
+  ! (! (merid a))
+    =⟨ ap ! (! (SuspFlip.merid-β a)) ⟩
+  ! (ap Susp-flip (merid a))
+    =⟨ !-ap Susp-flip (merid a) ⟩
+  ap Susp-flip (! (merid a))
+    =⟨ ap (ap Susp-flip) (! (SuspFlip.merid-β a)) ⟩
+  ap Susp-flip (ap Susp-flip (merid a))
+    =⟨ ∘-ap Susp-flip Susp-flip (merid a) ⟩
+  ap (Susp-flip ∘ Susp-flip) (merid a) =∎
+
 Susp-flip-equiv : ∀ {i} {A : Type i} → Susp A ≃ Susp A
-Susp-flip-equiv {A = A} = Pushout-flip-equiv (susp-span A)
+Susp-flip-equiv {A = A} =
+  equiv Susp-flip Susp-flip Susp-flip-flip Susp-flip-flip
 
 module _ {i j} where
 
@@ -126,9 +306,9 @@ module _ {i j} where
     → ⊙Susp-fmap {A = A} (λ _ → pt Y) == ⊙cst
   ⊙Susp-fmap-cst = ⊙λ=' (Susp-fmap-cst _) idp
 
-  Susp-flip-fmap : {A : Type i} {B : Type j} (f : A → B)
+  Susp-flip-fmap-comm : {A : Type i} {B : Type j} (f : A → B)
     → ∀ σ → Susp-flip (Susp-fmap f σ) == Susp-fmap f (Susp-flip σ)
-  Susp-flip-fmap f = Susp-elim idp idp $ λ y → ↓-='-in' $
+  Susp-flip-fmap-comm f = Susp-elim idp idp $ λ y → ↓-='-in' $
     ap-∘ (Susp-fmap f) Susp-flip (merid y)
     ∙ ap (ap (Susp-fmap f)) (SuspFlip.merid-β y)
     ∙ ap-! (Susp-fmap f) (merid y)
@@ -136,6 +316,73 @@ module _ {i j} where
     ∙ ! (SuspFlip.merid-β (f y))
     ∙ ! (ap (ap Susp-flip) (SuspFmap.merid-β f y))
     ∙ ∘-ap Susp-flip (Susp-fmap f) (merid y)
+
+  Susp-fmap-flip : {A : Type i} (x : Susp (Susp A))
+    → Susp-fmap Susp-flip x == Susp-flip x
+  Susp-fmap-flip =
+    Susp-elim
+      {P = λ x → Susp-fmap Susp-flip x == Susp-flip x}
+      (merid north)
+      (! (merid south)) $ λ y →
+    ↓-='-in-=ₛ $
+    merid north ◃∙
+    ap Susp-flip (merid y) ◃∎
+      =ₛ₁⟨ 1 & 1 & SuspFlip.merid-β y ⟩
+    merid north ◃∙
+    ! (merid y) ◃∎
+      =ₛ⟨ =ₛ-in {t = merid (Susp-flip y) ◃∙ ! (merid south) ◃∎} $
+          Susp-elim
+             {P = λ y → merid north ∙ ! (merid y) == merid (Susp-flip y) ∙ ! (merid south)}
+             (!-inv-r (merid north) ∙ ! (!-inv-r (merid south)))
+             idp
+             (λ a → ↓-='-in-=ₛ $
+               (!-inv-r (merid north) ∙ ! (!-inv-r (merid south))) ◃∙
+               ap (λ z → merid (Susp-flip z) ∙ ! (merid south)) (merid a) ◃∎
+                 =ₛ⟨ 0 & 1 & expand (!-inv-r (merid north) ◃∙ ! (!-inv-r (merid south)) ◃∎) ⟩
+               !-inv-r (merid north) ◃∙
+               ! (!-inv-r (merid south)) ◃∙
+               ap (λ z → merid (Susp-flip z) ∙ ! (merid south)) (merid a) ◃∎
+                 =ₛ₁⟨ 2 & 1 & ap-∘ (λ z' → merid z' ∙ ! (merid south)) Susp-flip (merid a) ⟩
+               !-inv-r (merid north) ◃∙
+               ! (!-inv-r (merid south)) ◃∙
+               ap (λ z' → merid z' ∙ ! (merid south)) (ap Susp-flip (merid a)) ◃∎
+                 =ₛ₁⟨ 2 & 1 & ap (ap (λ z' → merid z' ∙ ! (merid south)))
+                                 (SuspFlip.merid-β a) ⟩
+               !-inv-r (merid north) ◃∙
+               ! (!-inv-r (merid south)) ◃∙
+               ap (λ z' → merid z' ∙ ! (merid south)) (! (merid a)) ◃∎
+                 =ₛ₁⟨ 2 & 1 & ap-∘ (_∙ ! (merid south)) merid (! (merid a)) ⟩
+               !-inv-r (merid north) ◃∙
+               ! (!-inv-r (merid south)) ◃∙
+               ap (_∙ ! (merid south)) (ap merid (! (merid a))) ◃∎
+                 =ₛ₁⟨ 2 & 1 & ap (ap (_∙ ! (merid south))) (ap-! merid (merid a)) ⟩
+               !-inv-r (merid north) ◃∙
+               ! (!-inv-r (merid south)) ◃∙
+               ap (_∙ ! (merid south)) (! (ap merid (merid a))) ◃∎
+                 =ₛ⟨ pre-rotate-out $ coh-helper (ap merid (merid a)) ⟩
+               ap (λ q → merid north ∙ ! q) (ap merid (merid a)) ◃∎
+                 =ₛ₁⟨ ∘-ap (λ q → merid north ∙ ! q) merid (merid a) ⟩
+               ap (λ z → merid north ∙ ! (merid z)) (glue a) ◃∎
+                 =ₛ⟨ 1 & 0 & contract ⟩
+               ap (λ z → merid north ∙ ! (merid z)) (glue a) ◃∙ idp ◃∎ ∎ₛ )
+             y ⟩
+    merid (Susp-flip y) ◃∙
+    ! (merid south) ◃∎
+      =ₛ₁⟨ 0 & 1 & ! (SuspFmap.merid-β Susp-flip y) ⟩
+    ap (Susp-fmap Susp-flip) (merid y) ◃∙
+    ! (merid south) ◃∎ ∎ₛ
+    where
+      coh-helper : ∀ {j} {B : Type j}
+        {b-north b-south : B}
+        {merid₁ merid₂ : b-north == b-south}
+        (p : merid₁ == merid₂)
+        → ! (!-inv-r merid₂) ◃∙
+          ap (_∙ ! merid₂) (! p) ◃∎
+          =ₛ
+          ! (!-inv-r merid₁) ◃∙
+          ap (λ q → merid₁ ∙ ! q) p ◃∎
+      coh-helper {merid₁ = idp} {merid₂ = .idp} idp =
+        =ₛ-in idp
 
 module _ {i j k} where
 
@@ -171,12 +418,27 @@ module _ {i j k} {s : Span {i} {j} {k}} where
 
 module _ {i j} {A : Type i} {B : Type j} (eq : A ≃ B) where
 
-  susp-span-emap : SpanEquiv (susp-span A) (susp-span B)
-  susp-span-emap = ( span-map (idf _) (idf _) (fst eq) (comm-sqr λ _ → idp) (comm-sqr λ _ → idp)
-                  , idf-is-equiv _ , idf-is-equiv _ , snd eq)
-
   Susp-emap : Susp A ≃ Susp B
-  Susp-emap = Pushout-emap susp-span-emap
+  Susp-emap =
+    equiv
+      (Susp-fmap (–> eq))
+      (Susp-fmap (<– eq))
+      (λ sb →
+        Susp-fmap (–> eq) (Susp-fmap (<– eq) sb)
+          =⟨ ! (Susp-fmap-∘ (–> eq) (<– eq) sb) ⟩
+        Susp-fmap ((–> eq) ∘ (<– eq)) sb
+          =⟨ ap (λ f → Susp-fmap f sb) (λ= (<–-inv-r eq)) ⟩
+        Susp-fmap (idf B) sb
+          =⟨ Susp-fmap-idf _ sb ⟩
+        sb =∎)
+      (λ sa →
+        Susp-fmap (<– eq) (Susp-fmap (–> eq) sa)
+          =⟨ ! (Susp-fmap-∘ (<– eq) (–> eq) sa) ⟩
+        Susp-fmap ((<– eq) ∘ (–> eq)) sa
+          =⟨ ap (λ f → Susp-fmap f sa) (λ= (<–-inv-l eq)) ⟩
+        Susp-fmap (idf A) sa
+          =⟨ Susp-fmap-idf _ sa ⟩
+        sa =∎)
 
   private
     -- This is to make sure that we did not screw up [Susp-emap].

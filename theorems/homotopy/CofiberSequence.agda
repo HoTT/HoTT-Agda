@@ -177,7 +177,7 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
     , idf-is-equiv _
     , idf-is-equiv _
     , snd (Equiv.eqv f)
-    , snd (Susp-flip-equiv ∘e (Equiv.eqv (⊙cfcod' f)))
+    , snd (Susp-flip-equiv ∘e Equiv.eqv (⊙cfcod' f))
 
   iterated-equiv-cyclic : PtdMapSeqEquiv iterated-cofiber-seq cyclic-cofiber-seq
     (⊙idf X) (⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f))

@@ -136,6 +136,11 @@ ap-square-symmetry : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
   → ap-square f (square-symmetry sq) == square-symmetry (ap-square f sq)
 ap-square-symmetry f ids = idp
 
+horiz-degen-square-symmetry : ∀ {i} {A : Type i}
+  {a a' : A} {p q : a == a'} (r : p == q)
+  → square-symmetry (horiz-degen-square r) == vert-degen-square r
+horiz-degen-square-symmetry {p = idp} α@idp = idp
+
 {- Alternate induction principles -}
 
 square-left-J : ∀ {i j} {A : Type i} {a₀₀ a₀₁ : A} {p₀₋ : a₀₀ == a₀₁}
@@ -360,6 +365,11 @@ infixr 80 _⊡v_ _⊡v'_ _⊡h_ _⊡h'_
 infixr 80 _∙v⊡_ _∙h⊡_
 infixl 85 _⊡v∙_ _⊡h∙_
 
+∙h⊡-hid-square-⊡h∙ : ∀ {i} {A : Type i} {a₀₀ a₀₁ : A} {p p' : a₀₀ == a₀₁}
+  (q : p' == p)
+  → ! q ∙h⊡ hid-square ⊡h∙ q == hid-square
+∙h⊡-hid-square-⊡h∙ q@idp = idp
+
 ∙v⊡-assoc : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
   {p₋₀ p₋₀' p₋₀'' : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
   {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
@@ -378,6 +388,33 @@ infixl 85 _⊡v∙_ _⊡h∙_
   → (sq ⊡v∙ q) ⊡v∙ r == sq ⊡v∙ (q ∙ r)
 ⊡v∙-assoc sq q@idp r = idp
 
+⊡h∙-assoc : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+  {p₋₁ : a₀₁ == a₁₁} {p₁₋ p₁₋' p₁₋'' : a₁₀ == a₁₁}
+  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+  (q : p₁₋ == p₁₋')
+  (r : p₁₋' == p₁₋'')
+  → (sq ⊡h∙ q) ⊡h∙ r == sq ⊡h∙ (q ∙ r)
+⊡h∙-assoc sq q@idp r = idp
+
+∙v⊡-⊡h∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ p₋₀' : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+  {p₋₁ : a₀₁ == a₁₁} {p₁₋ p₁₋' : a₁₀ == a₁₁}
+  (q : p₋₀ == p₋₀')
+  (sq : Square p₀₋ p₋₀' p₋₁ p₁₋)
+  (r : p₁₋ == p₁₋')
+  → (q ∙v⊡ sq) ⊡h∙ r == q ∙v⊡ (sq ⊡h∙ r)
+∙v⊡-⊡h∙-comm q@idp sq r = idp
+
+⊡v∙-⊡h∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+  {p₋₁ p₋₁' : a₀₁ == a₁₁} {p₁₋ p₁₋' : a₁₀ == a₁₁}
+  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+  (q : p₋₁ == p₋₁')
+  (r : p₁₋ == p₁₋')
+  → (sq ⊡v∙ q) ⊡h∙ r == (sq ⊡h∙ r) ⊡v∙ q
+⊡v∙-⊡h∙-comm sq q@idp r = idp
+
 ∙v⊡-⊡v∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
   {p₋₀ p₋₀' : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
   {p₋₁ p₋₁' : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
@@ -386,6 +423,15 @@ infixl 85 _⊡v∙_ _⊡h∙_
   (r : p₋₁ == p₋₁')
   → (q ∙v⊡ sq) ⊡v∙ r == q ∙v⊡ (sq ⊡v∙ r)
 ∙v⊡-⊡v∙-comm q@idp sq r = idp
+
+∙h⊡-⊡h∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ : a₀₀ == a₁₀} {p₀₋ p₀₋' : a₀₀ == a₀₁}
+  {p₋₁ : a₀₁ == a₁₁} {p₁₋ p₁₋' : a₁₀ == a₁₁}
+  (q : p₀₋ == p₀₋')
+  (sq : Square p₀₋' p₋₀ p₋₁ p₁₋)
+  (r : p₁₋ == p₁₋')
+  → (q ∙h⊡ sq) ⊡h∙ r == q ∙h⊡ (sq ⊡h∙ r)
+∙h⊡-⊡h∙-comm q@idp sq r = idp
 
 ⊡h-⊡v∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ a₂₀ a₂₁ : A}
   {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ p₋₁' : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
@@ -396,6 +442,24 @@ infixl 85 _⊡v∙_ _⊡h∙_
   (s : q₋₁ == q₋₁')
   → (p-sq ⊡h q-sq) ⊡v∙ (ap2 _∙_ r s) == (p-sq ⊡v∙ r) ⊡h (q-sq ⊡v∙ s)
 ⊡h-⊡v∙-comm p-sq q-sq r@idp s@idp = idp
+
+module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
+
+  ap-square-∙v⊡ : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₋₀ p₋₀' : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    (q : p₋₀ == p₋₀')
+    (sq : Square p₀₋ p₋₀' p₋₁ p₁₋)
+    → ap (ap f) q ∙v⊡ ap-square f sq == ap-square f (q ∙v⊡ sq)
+  ap-square-∙v⊡ q@idp sq = idp
+
+  ap-square-⊡v∙ : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₋₀ : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+    {p₋₁ p₋₁' : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+    (q : p₋₁ == p₋₁')
+    → ap-square f sq ⊡v∙ ap (ap f) q == ap-square f (sq ⊡v∙ q)
+  ap-square-⊡v∙ sq q@idp = idp
 
 module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
 
@@ -457,23 +521,56 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
 
 module _ {i j} {A : Type i} {B : Type j} where
 
-  natural-square : {f₁ f₂ : A → B} (p : ∀ a → f₁ a == f₂ a)
+  natural-square : {f₁ f₂ : A → B} (h : ∀ a → f₁ a == f₂ a)
     {a₁ a₂ : A} (q : a₁ == a₂)
-    → Square (p a₁) (ap f₁ q) (ap f₂ q) (p a₂)
-  natural-square p idp = hid-square
+    → Square (h a₁) (ap f₁ q) (ap f₂ q) (h a₂)
+  natural-square h idp = hid-square
+
+  natural-square-path : {f₁ f₂ : A → B} (h h' : ∀ a → f₁ a == f₂ a)
+    (H : ∀ a → h' a == h a)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → ! (H a₁) ∙h⊡ natural-square h' q ⊡h∙ H a₂ == natural-square h q
+  natural-square-path h h' H {a₁} idp = ∙h⊡-hid-square-⊡h∙ (H a₁)
 
   natural-square-idp : {f₁ : A → B} {a₁ a₂ : A} (q : a₁ == a₂)
     → natural-square {f₁ = f₁} (λ _ → idp) q == vid-square
   natural-square-idp idp = idp
 
+  natural-square-cst : ∀ (b₁ b₂ : B) (h : A → b₁ == b₂)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → ! (ap-cst b₁ q) ∙v⊡ natural-square {f₁ = λ a → b₁} {f₂ = λ a → b₂} h q ⊡v∙ ap-cst b₂ q
+      ==
+      horiz-degen-square (ap h q)
+  natural-square-cst b₁ b₂ h q@idp = ! horiz-degen-square-idp
+
   {- Used for getting square equivalents of glue-β terms -}
-  natural-square-β : {f₁ f₂ : A → B} (p : (a : A) → f₁ a == f₂ a)
+  natural-square-β : {f₁ f₂ : A → B} (h : (a : A) → f₁ a == f₂ a)
     {x y : A} (q : x == y)
-    {sq : Square (p x) (ap f₁ q) (ap f₂ q) (p y)}
-    → apd p q == ↓-='-from-square sq
-    → natural-square p q == sq
+    {sq : Square (h x) (ap f₁ q) (ap f₂ q) (h y)}
+    → apd h q == ↓-='-from-square sq
+    → natural-square h q == sq
   natural-square-β _ idp α =
     ! horiz-degen-square-idp ∙ ap horiz-degen-square α ∙ horiz-degen-square-β _
+
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k} where
+
+  natural-square-ap : (g : B → C)
+    {f₁ f₂ : A → B} (h : ∀ a → f₁ a == f₂ a)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → natural-square (ap g ∘ h) q
+      ==
+      ap-∘ g f₁ q ∙v⊡
+      ap-square g (natural-square h q) ⊡v∙
+      ∘-ap g f₂ q
+  natural-square-ap g h q@idp = ! ap-square-hid
+
+  natural-square-symmetry : (f : A → B → C)
+    {a₁ a₂ : A} (p : a₁ == a₂)
+    {b₁ b₂ : B} (q : b₁ == b₂)
+    → square-symmetry (natural-square (λ b → ap (λ a → f a b) p) q)
+      ==
+      natural-square (λ a → ap (f a) q) p
+  natural-square-symmetry f p@idp q@idp = idp
 
 module _ {i} {A : Type i} where
 
@@ -671,3 +768,17 @@ module _ {i} {A : Type i} where
   lt-square idp = ids
 
   tl-square = lt-square
+
+  tr-square-∙v⊡-⊡h∙ : {a₀ a₁ : A} {p p' : a₀ == a₁} (r : p == p')
+    → ! r ∙v⊡ tr-square p ⊡h∙ ap ! r == tr-square p'
+  tr-square-∙v⊡-⊡h∙ r@idp = idp
+
+  tr-square-! : {a₀ a₁ : A} (p : a₀ == a₁)
+    → tr-square (! p) ⊡h∙ !-! p == rt-square p
+  tr-square-! p@idp = idp
+
+module _ {i} {j} {A : Type i} {B : Type j} (f : A → B) where
+
+  ap-tr-square : {a₀ a₁ : A} (p : a₀ == a₁)
+    → ap-square f (tr-square p) ⊡h∙ ap-! f p == tr-square (ap f p)
+  ap-tr-square p@idp = idp

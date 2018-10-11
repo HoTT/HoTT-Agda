@@ -3,7 +3,7 @@
 open import HoTT
 open import homotopy.EilenbergMacLane
 open import homotopy.SmashFmapConn
-open import homotopy.SuspSmash2
+open import homotopy.SuspSmash
 
 module cohomology.CupProduct.OnEM.Higher {i} {j} (G : AbGroup i) (H : AbGroup j) where
 

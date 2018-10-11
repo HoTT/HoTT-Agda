@@ -280,6 +280,15 @@ module _ {i j} {A : Type i} {B : Type j} (b : B) where
       ap2 _∙_ (ap-cst p) (ap-cst q) ◃∎
   ap-cst-coh idp idp = =ₛ-in idp
 
+ap-∘-cst-coh : ∀ {i} {j} {k} {A : Type i} {B : Type j} {C : Type k}
+  (g : B → C) (b : B)
+  {x y : A} (p : x == y)
+  → ∘-ap g (λ _ → b) p ◃∙
+    ap-cst (g b) p ◃∎
+    =ₛ
+    ap (ap g) (ap-cst b p) ◃∎
+ap-∘-cst-coh g b p@idp = =ₛ-in idp
+
 {- Naturality of homotopies -}
 
 module _ {i} {A : Type i} where

@@ -2,106 +2,194 @@
 
 open import HoTT
 open import homotopy.elims.SuspSmash
-open import homotopy.elims.CofPushoutSection
 
--- Σ(X∧Y) ≃ X * Y
+-- (ΣX)∧Y ≃ Σ(X∧Y)
 
-module homotopy.SuspSmash {i j} (X : Ptd i) (Y : Ptd j) where
+module homotopy.SuspSmash where
 
-private
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
-  {- path lemmas -}
   private
-    reduce-x : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : z == y)
-      → p ∙ ! q ∙ q ∙ ! p ∙ p == p
-    reduce-x idp idp = idp
+    x₀ = pt X
+    y₀ = pt Y
 
-    reduce-y : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : x == z)
-      → p ∙ ! p ∙ q ∙ ! q ∙ p == p
-    reduce-y idp idp = idp
+  module Σ∧-out-smin (y : de⊙ Y) =
+    SuspRec
+      {C = Susp (X ∧ Y)}
+      north
+      south
+      (λ x → merid (smin x y))
 
-  module Into = SuspRec {A = Smash X Y}
-    {C = de⊙ X * de⊙ Y}
-    (left (pt X))
-    (right (pt Y))
-    (Smash-rec
-      (λ x y →
-        jglue (pt X) (pt Y) ∙ ! (jglue x (pt Y))
-        ∙ jglue x y
-        ∙ ! (jglue (pt X) y) ∙ jglue (pt X) (pt Y))
-      (jglue (pt X) (pt Y))
-      (jglue (pt X) (pt Y))
-      (λ x → reduce-x (jglue (pt X) (pt Y)) (jglue x (pt Y)))
-      (λ y → reduce-y (jglue (pt X) (pt Y)) (jglue (pt X) y)))
+  Σ∧-out-smgluel-merid : ∀ (x : de⊙ X) →
+    Square idp
+           (ap (Σ∧-out-smin.f y₀) (merid x))
+           (ap (λ sx → north) (merid x))
+           (! (merid (smin x₀ y₀)))
+  Σ∧-out-smgluel-merid x =
+    ((Σ∧-out-smin.merid-β y₀ x ∙ ap merid (∧-norm-l x)) ∙v⊡
+     tr-square (merid (smin x₀ y₀))) ⊡v∙
+    ! (ap-cst north (merid x))
 
-  into = Into.f
-
-  module Out = JoinRec
-    {C = Susp (Smash X Y)}
-    (λ _ → north)
-    (λ _ → south)
-    (λ x y → merid (smin x y))
-
-  out = Out.f
-
-  abstract
-    into-out : (j : de⊙ X * de⊙ Y) → into (out j) == j
-    into-out = Join-elim
-      (λ x → glue (pt X , pt Y) ∙ ! (glue (x , pt Y)))
-      (λ y → ! (glue (pt X , pt Y)) ∙ glue (pt X , y))
-      (λ x y → ↓-∘=idf-from-square into out $
-        (ap (ap into) (Out.glue-β x y)
-         ∙ Into.merid-β (smin x y))
-        ∙v⊡ lemma (glue (pt X , pt Y)) (glue (x , pt Y))
-                  (glue (pt X , y)) (glue (x , y)))
-      where
-      lemma : ∀ {i} {A : Type i} {x y z w : A}
-        (p : x == y) (q : z == y) (r : x == w) (s : z == w)
-        → Square (p ∙ ! q) (p ∙ ! q ∙ s ∙ ! r ∙ p) s (! p ∙ r)
-      lemma idp idp idp s =
-        vert-degen-square (∙-unit-r s)
-
-    out-into : (σ : Susp (Smash X Y)) → out (into σ) == σ
-    out-into = SuspSmash-elim
+  module Σ∧OutSmgluel =
+    SuspPathElim
+      (Σ∧-out-smin.f y₀)
+      (λ sx → north)
       idp
+      (! (merid (smin x₀ y₀)))
+      Σ∧-out-smgluel-merid
+
+  module Σ∧Out =
+    SmashRec {X = ⊙Susp (de⊙ X)} {Y = Y}
+      {C = Susp (X ∧ Y)}
+      (λ sx y → Σ∧-out-smin.f y sx)
+      north
+      north
+      Σ∧OutSmgluel.f
+      (λ y → idp)
+
+  Σ∧-out : ⊙Susp (de⊙ X) ∧ Y → Susp (X ∧ Y)
+  Σ∧-out = Σ∧Out.f
+
+  ⊙Σ∧-out : ⊙Susp (de⊙ X) ⊙∧ Y ⊙→ ⊙Susp (X ∧ Y)
+  ⊙Σ∧-out = Σ∧-out , idp
+
+  Σ∧-out-∧-norm-r : ∀ (y : de⊙ Y) →
+    ap Σ∧-out (∧-norm-r y) == idp
+  Σ∧-out-∧-norm-r y =
+    ap Σ∧-out (∧-norm-r y)
+      =⟨ ap-∙ Σ∧-out (smgluer y) (! (smgluer y₀)) ⟩
+    ap Σ∧-out (smgluer y) ∙ ap Σ∧-out (! (smgluer y₀))
+      =⟨ ap2 _∙_
+             (Σ∧Out.smgluer-β y)
+             (ap-! Σ∧-out (smgluer y₀) ∙
+              ap ! (Σ∧Out.smgluer-β y₀)) ⟩
+    idp =∎
+
+  module ∧Σ-out-smin (x : de⊙ X) =
+    SuspRec
+      {C = Susp (X ∧ Y)}
+      north
+      south
+      (λ y → merid (smin x y))
+
+  ∧Σ-out-smgluer-merid : ∀ (y : de⊙ Y) →
+    Square idp
+           (ap (λ sy → ∧Σ-out-smin.f x₀ sy) (merid y))
+           (ap (λ sy → north) (merid y))
+           (! (merid (smin x₀ y₀)))
+  ∧Σ-out-smgluer-merid y =
+    ((∧Σ-out-smin.merid-β x₀ y ∙ ap merid (∧-norm-r y)) ∙v⊡
+     tr-square (merid (smin x₀ y₀))) ⊡v∙
+    ! (ap-cst north (merid y))
+
+  module ∧ΣOutSmgluer =
+    SuspPathElim
+      (λ sy → ∧Σ-out-smin.f x₀ sy)
+      (λ sy → north)
       idp
-      (λ x y → ↓-∘=idf-in' out into $
-        ap (ap out) (Into.merid-β (smin x y))
-        ∙ lemma₁ out (Out.glue-β (pt X) (pt Y))
-                     (Out.glue-β x (pt Y))
-                     (Out.glue-β x y)
-                     (Out.glue-β (pt X) y)
-                     (Out.glue-β (pt X) (pt Y))
-        ∙ lemma₂ {p = merid (smin (pt X) (pt Y))}
-                 {q = merid (smin x (pt Y))}
-                 {r = merid (smin x y)}
-                 {s = merid (smin (pt X) y)}
-                 {t = merid (smin (pt X) (pt Y))}
-            (ap merid (smgluel (pt X) ∙ ! (smgluel x)))
-            (ap merid (smgluer y ∙ ! (smgluer (pt Y)))))
-      where
-      lemma₁ : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
-        {x y z u v w : A}
-        {p : x == y} {q : z == y} {r : z == u} {s : v == u} {t : v == w}
-        {p' : f x == f y} {q' : f z == f y} {r' : f z == f u}
-        {s' : f v == f u} {t' : f v == f w}
-        (α : ap f p == p') (β : ap f q == q') (γ : ap f r == r')
-        (δ : ap f s == s') (ε : ap f t == t')
-        → ap f (p ∙ ! q ∙ r ∙ ! s ∙ t) == p' ∙ ! q' ∙ r' ∙ ! s' ∙ t'
-      lemma₁ f {p = idp} {q = idp} {r = idp} {s = idp} {t = idp}
-            idp idp idp idp idp
-        = idp
+      (! (merid (smin x₀ y₀)))
+      ∧Σ-out-smgluer-merid
 
-      lemma₂ : ∀ {i} {A : Type i} {x y z u : A}
-        {p q : x == y} {r : x == z} {s t : u == z}
-        (α : p == q) (β : s == t)
-        → p ∙ ! q  ∙ r ∙ ! s ∙ t == r
-      lemma₂ {p = idp} {r = idp} {s = idp} idp idp = idp
+  module ∧ΣOut =
+    SmashRec {X = X} {Y = ⊙Susp (de⊙ Y)}
+      {C = Susp (X ∧ Y)}
+      (λ x sy → ∧Σ-out-smin.f x sy)
+      north
+      north
+      (λ x → idp)
+      ∧ΣOutSmgluer.f
 
-module SuspSmash where
+  ∧Σ-out : X ∧ ⊙Susp (de⊙ Y) → Susp (X ∧ Y)
+  ∧Σ-out = ∧ΣOut.f
 
-  eq : Susp (Smash X Y) ≃ (de⊙ X * de⊙ Y)
-  eq = equiv into out into-out out-into
+  ⊙∧Σ-out : X ⊙∧ ⊙Susp (de⊙ Y) ⊙→ ⊙Susp (X ∧ Y)
+  ⊙∧Σ-out = ∧Σ-out , idp
 
-  ⊙eq : ⊙Susp (X ∧ Y) ⊙≃ (X ⊙* Y)
-  ⊙eq = ≃-to-⊙≃ eq idp
+  ∧Σ-out-∧-norm-l : ∀ (x : de⊙ X) →
+    ap ∧Σ-out (∧-norm-l x) == idp
+  ∧Σ-out-∧-norm-l x =
+    ap ∧Σ-out (∧-norm-l x)
+      =⟨ ap-∙ ∧Σ-out (smgluel x) (! (smgluel x₀)) ⟩
+    ap ∧Σ-out (smgluel x) ∙ ap ∧Σ-out (! (smgluel x₀))
+      =⟨ ap2 _∙_
+             (∧ΣOut.smgluel-β x)
+             (ap-! ∧Σ-out (smgluel x₀) ∙
+              ap ! (∧ΣOut.smgluel-β x₀)) ⟩
+    idp =∎
+
+  Σ∧-in-merid-smin : de⊙ X → de⊙ Y → pt (⊙Susp (de⊙ X) ⊙∧ Y) == pt (⊙Susp (de⊙ X) ⊙∧ Y)
+  Σ∧-in-merid-smin x y = ↯ $
+    smin north y₀
+      =⟪ ! (∧-norm-r y) ⟫
+    smin north y
+      =⟪ ap (λ sx → smin sx y) (merid x ∙ ! (merid x₀)) ⟫
+    smin north y
+      =⟪ ∧-norm-r y ⟫
+    smin north y₀ ∎∎
+
+  Σ∧-in-merid-smgluel : ∀ (x : de⊙ X) → Σ∧-in-merid-smin x y₀ == idp
+  Σ∧-in-merid-smgluel x = ↯ $
+    Σ∧-in-merid-smin x y₀
+      =⟪ ap (λ u → ! u ∙ ap (λ sx → smin sx y₀) (merid x ∙ ! (merid x₀)) ∙ u)
+            (!-inv-r (smgluer y₀)) ⟫
+    ap (λ sx → smin sx y₀) (merid x ∙ ! (merid x₀)) ∙ idp
+      =⟪ ap (_∙ idp) $
+         homotopy-to-cst-ap (λ sx → smin sx y₀)
+                            smbasel
+                            smgluel
+                            (merid x ∙ ! (merid x₀)) ⟫
+    (smgluel north ∙ ! (smgluel north)) ∙ idp
+      =⟪ ap (_∙ idp) (!-inv-r (smgluel north)) ⟫
+    idp ∎∎
+
+  Σ∧-in-merid-smgluer : ∀ (y : de⊙ Y) → Σ∧-in-merid-smin x₀ y == idp
+  Σ∧-in-merid-smgluer y = ↯ $
+    Σ∧-in-merid-smin x₀ y
+      =⟪ ap (λ p → ! (∧-norm-r y) ∙ ap (λ sx → smin sx y) p ∙ ∧-norm-r y)
+            (!-inv-r (merid x₀)) ⟫
+    ! (∧-norm-r y) ∙ ∧-norm-r y
+      =⟪ !-inv-l (∧-norm-r y) ⟫
+    idp ∎∎
+
+  Σ∧-in : Susp (X ∧ Y) → ⊙Susp (de⊙ X) ∧ Y
+  Σ∧-in =
+    Susp-rec
+      {C = ⊙Susp (de⊙ X) ∧ Y}
+      (smin north y₀)
+      (smin north y₀)
+      (Smash-rec
+        {C = smin north y₀ == smin north y₀}
+        Σ∧-in-merid-smin
+        idp
+        idp
+        Σ∧-in-merid-smgluel
+        Σ∧-in-merid-smgluer)
+
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
+
+  Σ^∧-out : (n : ℕ) → ⊙Susp^ n X ∧ Y → Susp^ n (X ∧ Y)
+  Σ^∧-out O = idf _
+  Σ^∧-out (S n) = Susp-fmap (Σ^∧-out n) ∘ Σ∧-out (⊙Susp^ n X) Y
+
+  ⊙Σ^∧-out : (n : ℕ) → ⊙Susp^ n X ⊙∧ Y ⊙→ ⊙Susp^ n (X ⊙∧ Y)
+  ⊙Σ^∧-out O = ⊙idf _
+  ⊙Σ^∧-out (S n) = ⊙Susp-fmap (Σ^∧-out n) ⊙∘ ⊙Σ∧-out (⊙Susp^ n X) Y
+
+  ∧Σ^-out : (n : ℕ) → X ∧ ⊙Susp^ n Y → Susp^ n (X ∧ Y)
+  ∧Σ^-out O = idf _
+  ∧Σ^-out (S n) = Susp-fmap (∧Σ^-out n) ∘ ∧Σ-out X (⊙Susp^ n Y)
+
+  ⊙∧Σ^-out : (n : ℕ) → X ⊙∧ ⊙Susp^ n Y ⊙→ ⊙Susp^ n (X ⊙∧ Y)
+  ⊙∧Σ^-out O = ⊙idf _
+  ⊙∧Σ^-out (S n) = ⊙Susp-fmap (∧Σ^-out n) ⊙∘ ⊙∧Σ-out X (⊙Susp^ n Y)
+
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
+
+  ⊙Σ^∧Σ^-out : ∀ (n m : ℕ) → ⊙Susp^ n X ⊙∧ ⊙Susp^ m Y ⊙→ ⊙Susp^ (n + m) (X ⊙∧ Y)
+  ⊙Σ^∧Σ^-out n m =
+    ⊙coe (⊙Susp^-+ n m {X ⊙∧ Y}) ⊙∘
+    ⊙Susp^-fmap n (⊙∧Σ^-out X Y m) ⊙∘
+    ⊙Σ^∧-out X (⊙Susp^ m Y) n
+
+  Σ^∧Σ^-out : ∀ (n m : ℕ) → ⊙Susp^ n X ∧ ⊙Susp^ m Y → Susp^ (n + m) (X ∧ Y)
+  Σ^∧Σ^-out n m = fst (⊙Σ^∧Σ^-out n m)

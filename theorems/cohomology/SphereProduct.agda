@@ -2,7 +2,7 @@
 
 open import HoTT
 open import homotopy.SuspProduct
-open import homotopy.SuspSmash
+open import homotopy.SuspSmashJoin
 open import homotopy.JoinSusp
 open import cohomology.Theory
 
@@ -18,7 +18,7 @@ module cohomology.SphereProduct {i} (CT : CohomologyTheory i)
     space-eq =
       ⊙∨-emap (⊙ide (⊙Sphere (S m)))
         (⊙∨-emap (⊙ide (⊙Susp (de⊙ X)))
-          (⊙*-Sphere-l m X ⊙∘e SuspSmash.⊙eq (⊙Sphere m) X))
+          (⊙*-Sphere-l m X ⊙∘e SuspSmashJoin.⊙eq (⊙Sphere m) X))
       ⊙∘e SuspProduct.⊙eq (⊙Sphere m) X
 
   C-Sphere× : C n (⊙Sphere m ⊙× X)
