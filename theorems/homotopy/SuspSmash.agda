@@ -670,32 +670,3 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         ∧-swap-∧Σ-out-smgluer sy ∙v⊡
         Σ∧-∧Σ-swap-smgluer sy ⊡v∙
         ! (Σ∧-out-∧-swap-smgluer sy))
-
-module _ {i j} (X : Ptd i) (Y : Ptd j) where
-
-  Σ^∧-out : (n : ℕ) → ⊙Susp^ n X ∧ Y → Susp^ n (X ∧ Y)
-  Σ^∧-out O = idf _
-  Σ^∧-out (S n) = Susp-fmap (Σ^∧-out n) ∘ Σ∧-out (⊙Susp^ n X) Y
-
-  ⊙Σ^∧-out : (n : ℕ) → ⊙Susp^ n X ⊙∧ Y ⊙→ ⊙Susp^ n (X ⊙∧ Y)
-  ⊙Σ^∧-out O = ⊙idf _
-  ⊙Σ^∧-out (S n) = ⊙Susp-fmap (Σ^∧-out n) ⊙∘ ⊙Σ∧-out (⊙Susp^ n X) Y
-
-  ∧Σ^-out : (n : ℕ) → X ∧ ⊙Susp^ n Y → Susp^ n (X ∧ Y)
-  ∧Σ^-out O = idf _
-  ∧Σ^-out (S n) = Susp-fmap (∧Σ^-out n) ∘ ∧Σ-out X (⊙Susp^ n Y)
-
-  ⊙∧Σ^-out : (n : ℕ) → X ⊙∧ ⊙Susp^ n Y ⊙→ ⊙Susp^ n (X ⊙∧ Y)
-  ⊙∧Σ^-out O = ⊙idf _
-  ⊙∧Σ^-out (S n) = ⊙Susp-fmap (∧Σ^-out n) ⊙∘ ⊙∧Σ-out X (⊙Susp^ n Y)
-
-module _ {i j} (X : Ptd i) (Y : Ptd j) where
-
-  ⊙Σ^∧Σ^-out : ∀ (n m : ℕ) → ⊙Susp^ n X ⊙∧ ⊙Susp^ m Y ⊙→ ⊙Susp^ (n + m) (X ⊙∧ Y)
-  ⊙Σ^∧Σ^-out n m =
-    ⊙coe (⊙Susp^-+ n m {X ⊙∧ Y}) ⊙∘
-    ⊙Susp^-fmap n (⊙∧Σ^-out X Y m) ⊙∘
-    ⊙Σ^∧-out X (⊙Susp^ m Y) n
-
-  Σ^∧Σ^-out : ∀ (n m : ℕ) → ⊙Susp^ n X ∧ ⊙Susp^ m Y → Susp^ (n + m) (X ∧ Y)
-  Σ^∧Σ^-out n m = fst (⊙Σ^∧Σ^-out n m)

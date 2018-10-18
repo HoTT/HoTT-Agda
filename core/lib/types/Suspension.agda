@@ -285,28 +285,31 @@ module _ {i j} where
     → ⊙Susp A ⊙→ ⊙Susp B
   ⊙Susp-fmap f = (Susp-fmap f , idp)
 
-module _ {i} where
+module _ {i} (A : Type i) where
 
-  Susp-fmap-idf : (A : Type i) → ∀ a → Susp-fmap (idf A) a == a
-  Susp-fmap-idf A = Susp-elim idp idp $ λ a →
+  Susp-fmap-idf : ∀ a → Susp-fmap (idf A) a == a
+  Susp-fmap-idf = Susp-elim idp idp $ λ a →
     ↓-='-in' (ap-idf (merid a) ∙ ! (SuspFmap.merid-β (idf A) a))
 
-  ⊙Susp-fmap-idf : (A : Type i)
-    → ⊙Susp-fmap (idf A) == ⊙idf (⊙Susp A)
-  ⊙Susp-fmap-idf A = ⊙λ=' (Susp-fmap-idf A) idp
+  ⊙Susp-fmap-idf : ⊙Susp-fmap (idf A) == ⊙idf (⊙Susp A)
+  ⊙Susp-fmap-idf = ⊙λ=' Susp-fmap-idf idp
 
-module _ {i j} where
+Susp-fmap-coe : ∀ {i} {A B : Type i} (p : A == B)
+  → ∀ sa → Susp-fmap (coe p) sa == transport Susp p sa
+Susp-fmap-coe {i} {A} {.A} p@idp = Susp-fmap-idf A
 
-  Susp-fmap-cst : {A : Type i} {B : Type j} (b : B)
+module _ {i} {A : Type i} where
+
+  Susp-fmap-cst : ∀ {j} {B : Type j} (b : B)
     (a : Susp A) → Susp-fmap (cst b) a == north
   Susp-fmap-cst b = Susp-elim idp (! (merid b)) $ (λ a →
     ↓-app=cst-from-square $ SuspFmap.merid-β (cst b) a ∙v⊡ tr-square _)
 
-  ⊙Susp-fmap-cst : {A : Type i} {Y : Ptd j}
+  ⊙Susp-fmap-cst : ∀ {j} {Y : Ptd j}
     → ⊙Susp-fmap {A = A} (λ _ → pt Y) == ⊙cst
   ⊙Susp-fmap-cst = ⊙λ=' (Susp-fmap-cst _) idp
 
-  Susp-flip-fmap-comm : {A : Type i} {B : Type j} (f : A → B)
+  Susp-flip-fmap-comm : ∀ {j} {B : Type j} (f : A → B)
     → ∀ σ → Susp-flip (Susp-fmap f σ) == Susp-fmap f (Susp-flip σ)
   Susp-flip-fmap-comm f = Susp-elim idp idp $ λ y → ↓-='-in' $
     ap-∘ (Susp-fmap f) Susp-flip (merid y)
@@ -317,7 +320,7 @@ module _ {i j} where
     ∙ ! (ap (ap Susp-flip) (SuspFmap.merid-β f y))
     ∙ ∘-ap Susp-flip (Susp-fmap f) (merid y)
 
-  Susp-fmap-flip : {A : Type i} (x : Susp (Susp A))
+  Susp-fmap-flip : (x : Susp (Susp A))
     → Susp-fmap Susp-flip x == Susp-flip x
   Susp-fmap-flip =
     Susp-elim

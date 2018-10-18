@@ -45,6 +45,9 @@ module _ {i} where
   prop-path : {A : Type i} (p : is-prop A) (x y : A) → x == y
   prop-path p x y = contr-center (has-level-apply p x y)
 
+  set-path : {A : Type i} (p : is-set A) {a a' : A} (q r : a == a') → q == r
+  set-path p {a} {a'} q r = prop-path (has-level-apply p a a') q r
+
   {- To be a mere proposition, it is sufficient that all points are equal -}
 
   has-all-paths : Type i → Type i

@@ -5,6 +5,7 @@ open import lib.Function
 open import lib.NType
 open import lib.PathGroupoid
 open import lib.Relation
+open import lib.types.Bool
 open import lib.types.Coproduct
 open import lib.types.Empty
 
@@ -77,6 +78,13 @@ instance
   ℕ-level {⟨-2⟩} = ℕ-is-set
   ℕ-level {n = S n} = raise-level (S (S n)) ℕ-level
 
+even : ℕ → Bool
+even O = true
+even (S n) = negate (even n)
+
+odd : ℕ → Bool
+odd = negate ∘ even
+
 {- Inequalities -}
 infix 40 _<_ _≤_
 
@@ -124,7 +132,7 @@ S≰O _ (inr ())
 
 ≤-trans : {m n k : ℕ} → m ≤ n → n ≤ k → m ≤ k
 ≤-trans (inl idp) lte₂ = lte₂
-≤-trans lte₁ (inl idp) = lte₁
+≤-trans lte₁@(inr _) (inl idp) = lte₁
 ≤-trans (inr lt₁) (inr lt₂) = inr (<-trans lt₁ lt₂)
 
 private
