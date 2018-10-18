@@ -110,22 +110,22 @@ Susp^-+-pt (S m) n =
   → ⊙Susp^ m (⊙Susp^ n X) == ⊙Susp^ (m + n) X
 ⊙Susp^-+ m n {X} = ptd= (Susp^-+ m n {de⊙ X}) (Susp^-+-pt m n)
 
+Susp^-comm-seq : ∀ {i} (m n : ℕ) {A : Type i}
+  → Susp^ m (Susp^ n A) =-= Susp^ n (Susp^ m A)
+Susp^-comm-seq m n {A} =
+  Susp^ m (Susp^ n A)
+    =⟪ Susp^-+ m n ⟫
+  Susp^ (m + n) A
+    =⟪ ap (λ k → Susp^ k A) (+-comm m n) ⟫
+  Susp^ (n + m) A
+    =⟪ ! (Susp^-+ n m) ⟫
+  Susp^ n (Susp^ m A) ∎∎
+
+Susp^-comm : ∀ {i} (m n : ℕ) {A : Type i}
+  → Susp^ m (Susp^ n A) == Susp^ n (Susp^ m A)
+Susp^-comm m n {A} = ↯ (Susp^-comm-seq m n {A})
+
 abstract
-  Susp^-comm-seq : ∀ {i} (m n : ℕ) {A : Type i}
-    → Susp^ m (Susp^ n A) =-= Susp^ n (Susp^ m A)
-  Susp^-comm-seq m n {A} =
-    Susp^ m (Susp^ n A)
-      =⟪ Susp^-+ m n ⟫
-    Susp^ (m + n) A
-      =⟪ ap (λ k → Susp^ k A) (+-comm m n) ⟫
-    Susp^ (n + m) A
-      =⟪ ! (Susp^-+ n m) ⟫
-    Susp^ n (Susp^ m A) ∎∎
-
-  Susp^-comm : ∀ {i} (m n : ℕ) {A : Type i}
-    → Susp^ m (Susp^ n A) == Susp^ n (Susp^ m A)
-  Susp^-comm m n {A} = ↯ (Susp^-comm-seq m n {A})
-
   Susp^-comm-diag : ∀ {i} (m : ℕ) {A : Type i}
     → Susp^-comm m m {A} ◃∎ =ₛ []
   Susp^-comm-diag m {A} =

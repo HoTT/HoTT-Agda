@@ -41,6 +41,12 @@ and-false-r : ∀ b → and b false == false
 and-false-r true = idp
 and-false-r false = idp
 
+and-comm : ∀ b c → and b c == and c b
+and-comm false false = idp
+and-comm false true = idp
+and-comm true false = idp
+and-comm true true = idp
+
 private
   Bool-true≠false-type : Bool → Type₀
   Bool-true≠false-type true  = Unit

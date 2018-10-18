@@ -657,9 +657,9 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
          vid-square)
         (λ y → cube-to-↓-square (Σ∧-∧Σ-swap-smgluer-merid y))
 
-  Σ∧-∧Σ-swap : Susp-fmap (∧-swap X Y) ∘ ∧Σ-out X Y
+  swap-∧Σ-out : Susp-fmap (∧-swap X Y) ∘ ∧Σ-out X Y
              ∼ Σ∧-out Y X ∘ ∧-swap X (⊙Susp (de⊙ Y))
-  Σ∧-∧Σ-swap =
+  swap-∧Σ-out =
     Smash-elim
       Σ∧-∧Σ-swap-smin.f
       idp
@@ -670,3 +670,23 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         ∧-swap-∧Σ-out-smgluer sy ∙v⊡
         Σ∧-∧Σ-swap-smgluer sy ⊡v∙
         ! (Σ∧-out-∧-swap-smgluer sy))
+
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
+
+  swap-Σ∧-out : Susp-fmap (∧-swap X Y) ∘ Σ∧-out X Y
+              ∼ ∧Σ-out Y X ∘ ∧-swap (⊙Susp (de⊙ X)) Y
+  swap-Σ∧-out s =
+    Susp-fmap (∧-swap X Y) (Σ∧-out X Y s)
+      =⟨ ap (Susp-fmap (∧-swap X Y) ∘ Σ∧-out X Y) $ ! $
+         ∧-swap-inv (⊙Susp (de⊙ X)) Y s ⟩
+    Susp-fmap (∧-swap X Y) (Σ∧-out X Y (∧-swap Y (⊙Susp (de⊙ X)) (∧-swap (⊙Susp (de⊙ X)) Y s)))
+      =⟨ ap (Susp-fmap (∧-swap X Y)) $ ! $
+         swap-∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s) ⟩
+    Susp-fmap (∧-swap X Y) (Susp-fmap (∧-swap Y X) (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s)))
+      =⟨ ! $ Susp-fmap-∘ (∧-swap X Y) (∧-swap Y X) (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s)) ⟩
+    Susp-fmap (∧-swap X Y ∘ ∧-swap Y X) (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s))
+      =⟨ ap (λ f → Susp-fmap f (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s)))
+            (λ= (∧-swap-inv Y X)) ⟩
+    Susp-fmap (idf _) (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s))
+      =⟨ Susp-fmap-idf _ (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s)) ⟩
+    ∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s) =∎
