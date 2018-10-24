@@ -58,11 +58,11 @@ module _ {i} (G : Group i) where
       (emloop* g₁ ⊡h emloop* g₂))
     where
 
-    private
+    emloop** : ∀ g → Square embase* (ap f (emloop g))
+                                    (ap (cst c) (emloop' G g)) embase*
+    emloop** g = emloop* g ⊡v∙ ! (ap-cst c (emloop g))
 
-      emloop** : ∀ g → Square embase* (ap f (emloop g))
-                                      (ap (cst c) (emloop' G g)) embase*
-      emloop** g = emloop* g ⊡v∙ ! (ap-cst c (emloop g))
+    private
 
       emloop-comp** : ∀ g₁ g₂ →
         emloop** (G.comp g₁ g₂) ⊡v∙ ap (ap (cst c)) (emloop-comp' G g₁ g₂)

@@ -155,7 +155,6 @@ module TensorProduct₀ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
 module TensorProduct₁ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
-
   private
     module G⊗H = TensorProduct₀ G H
     module H⊗G = TensorProduct₀ H G
@@ -178,33 +177,33 @@ module TensorProduct₁ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
   open G⊗H public
 
-module TensorProduct {i} {j} (G : AbGroup i) (H : AbGroup j) where
+module TensorProduct₂ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
   private
     module G⊗H = TensorProduct₁ G H
     module H⊗G = TensorProduct₁ H G
 
+  swap-swap : ∀ s → GroupHom.f (H⊗G.swap ∘ᴳ G⊗H.swap) s == s
+  swap-swap s =
+    ap (λ ϕ → GroupHom.f ϕ s) $
+    G⊗H.UniversalProperty.hom= G⊗H.abgroup {ϕ = H⊗G.swap ∘ᴳ G⊗H.swap} {ψ = idhom _} $
+    λ g h → ap (GroupHom.f H⊗G.swap) (G⊗H.swap-β g h) ∙ H⊗G.swap-β h g
+
+  swap-swap-idhom : H⊗G.swap ∘ᴳ G⊗H.swap == idhom G⊗H.grp
+  swap-swap-idhom = group-hom= (λ= swap-swap)
+
+  open G⊗H public
+
+module TensorProduct {i} {j} (G : AbGroup i) (H : AbGroup j) where
+
+  private
+    module G⊗H = TensorProduct₂ G H
+    module H⊗G = TensorProduct₂ H G
+
+  swap-is-equiv : is-equiv (GroupHom.f G⊗H.swap)
+  swap-is-equiv = is-eq _ (GroupHom.f H⊗G.swap) H⊗G.swap-swap G⊗H.swap-swap
+
   commutative : G⊗H.grp ≃ᴳ H⊗G.grp
-  commutative =
-    to-hom , is-eq to from to-from from-to
-    where
-    to-hom : G⊗H.grp →ᴳ H⊗G.grp
-    to-hom = G⊗H.swap
-    to : G⊗H.El → H⊗G.El
-    to = GroupHom.f to-hom
-    from-hom : H⊗G.grp →ᴳ G⊗H.grp
-    from-hom = H⊗G.swap
-    from : H⊗G.El → G⊗H.El
-    from = GroupHom.f from-hom
-    to-from : ∀ s → to (from s) == s
-    to-from s =
-      ap (λ ϕ → GroupHom.f ϕ s) $
-      H⊗G.UniversalProperty.hom= H⊗G.abgroup {ϕ = to-hom ∘ᴳ from-hom} {ψ = idhom _} $
-      λ h g → ap to (H⊗G.swap-β h g) ∙ G⊗H.swap-β g h
-    from-to : ∀ t → from (to t) == t
-    from-to t =
-      ap (λ ϕ → GroupHom.f ϕ t) $
-      G⊗H.UniversalProperty.hom= G⊗H.abgroup {ϕ = from-hom ∘ᴳ to-hom} {ψ = idhom _} $
-      λ g h → ap from (G⊗H.swap-β g h) ∙ H⊗G.swap-β h g
+  commutative = G⊗H.swap , swap-is-equiv
 
   open G⊗H public

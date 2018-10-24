@@ -8,6 +8,7 @@ open import lib.Relation
 open import lib.types.Bool
 open import lib.types.Coproduct
 open import lib.types.Empty
+open import lib.types.Sigma
 
 module lib.types.Nat where
 
@@ -77,6 +78,11 @@ instance
   ℕ-level : {n : ℕ₋₂} → has-level (S (S n)) ℕ
   ℕ-level {⟨-2⟩} = ℕ-is-set
   ℕ-level {n = S n} = raise-level (S (S n)) ℕ-level
+
++-0 : ∀ (m n : ℕ) → m + n == 0 → (m == 0) × (n == 0)
++-0 O O _ = idp , idp
++-0 O (S n) h = ⊥-elim (ℕ-S≠O n h)
++-0 (S m) n h = ⊥-elim (ℕ-S≠O (m + n) h)
 
 even : ℕ → Bool
 even O = true

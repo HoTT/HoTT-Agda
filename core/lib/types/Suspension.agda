@@ -309,9 +309,9 @@ module _ {i} {A : Type i} where
     → ⊙Susp-fmap {A = A} (λ _ → pt Y) == ⊙cst
   ⊙Susp-fmap-cst = ⊙λ=' (Susp-fmap-cst _) idp
 
-  Susp-flip-fmap-comm : ∀ {j} {B : Type j} (f : A → B)
+  Susp-flip-natural : ∀ {j} {B : Type j} (f : A → B)
     → ∀ σ → Susp-flip (Susp-fmap f σ) == Susp-fmap f (Susp-flip σ)
-  Susp-flip-fmap-comm f = Susp-elim idp idp $ λ y → ↓-='-in' $
+  Susp-flip-natural f = Susp-elim idp idp $ λ y → ↓-='-in' $
     ap-∘ (Susp-fmap f) Susp-flip (merid y)
     ∙ ap (ap (Susp-fmap f)) (SuspFlip.merid-β y)
     ∙ ap-! (Susp-fmap f) (merid y)
@@ -470,17 +470,94 @@ module _ {i j} (A : Type i) where
   ⊙Susp-Lift-conv : ⊙Susp (Lift {j = j} A) == ⊙Lift {j = j} (⊙Susp A)
   ⊙Susp-Lift-conv = ⊙ua ⊙Susp-Lift-econv
 
-Susp-Trunc-swap : ∀ {i} (A : Type i) (m : ℕ₋₂)
-  → Susp (Trunc m A)
-  → Trunc (S m) (Susp A)
-Susp-Trunc-swap A m =
-  Susp-rec
-    [ north ]
-    [ south ]
-    (Trunc-rec
-      {B = [ north ] == [ south ]}
-      {{has-level-apply (Trunc-level {n = S m}) [ north ] [ south ]}}
-      (λ x → ap [_] (merid x)))
+module _ {i} (A : Type i) (m : ℕ₋₂) where
+
+  module SuspTruncSwap =
+    SuspRec
+      {C = Trunc (S m) (Susp A)}
+      [ north ]
+      [ south ]
+      (Trunc-rec
+        {B = [ north ] == [ south ]}
+        {{has-level-apply (Trunc-level {n = S m}) [ north ] [ south ]}}
+        (λ x → ap [_] (merid x)))
+
+  Susp-Trunc-swap : Susp (Trunc m A) → Trunc (S m) (Susp A)
+  Susp-Trunc-swap = SuspTruncSwap.f
+
+  Susp-Trunc-swap-Susp-fmap-trunc : ∀ (s : Susp A) →
+    Susp-Trunc-swap (Susp-fmap [_] s) == [ s ]
+  Susp-Trunc-swap-Susp-fmap-trunc =
+    Susp-elim
+      idp
+      idp $
+    λ a → ↓-='-in' $ ! $
+    ap (Susp-Trunc-swap ∘ Susp-fmap [_]) (merid a)
+      =⟨ ap-∘ Susp-Trunc-swap (Susp-fmap [_]) (merid a) ⟩
+    ap Susp-Trunc-swap (ap (Susp-fmap [_]) (merid a))
+      =⟨ ap (ap Susp-Trunc-swap) (SuspFmap.merid-β [_] a) ⟩
+    ap Susp-Trunc-swap (merid [ a ])
+      =⟨ SuspTruncSwap.merid-β [ a ] ⟩
+    ap [_] (merid a) =∎
+
+  Susp-Trunc-swap-Susp-flip :
+    Susp-Trunc-swap ∘ Susp-flip ∼
+    Trunc-fmap Susp-flip ∘ Susp-Trunc-swap
+  Susp-Trunc-swap-Susp-flip =
+    Susp-elim
+      idp
+      idp $
+    Trunc-elim {{λ t → ↓-level (=-preserves-level Trunc-level)}} $ λ a →
+    ↓-='-in' $
+    ap (Trunc-fmap Susp-flip ∘ Susp-Trunc-swap) (merid [ a ])
+      =⟨ ap-∘ (Trunc-fmap Susp-flip) Susp-Trunc-swap (merid [ a ]) ⟩
+    ap (Trunc-fmap Susp-flip) (ap Susp-Trunc-swap (merid [ a ]))
+      =⟨ ap (ap (Trunc-fmap Susp-flip)) (SuspTruncSwap.merid-β [ a ]) ⟩
+    ap (Trunc-fmap Susp-flip) (ap [_] (merid a))
+      =⟨ ∘-ap (Trunc-fmap Susp-flip) [_] (merid a) ⟩
+    ap ([_] ∘ Susp-flip) (merid a)
+      =⟨ ap-∘ [_] Susp-flip (merid a) ⟩
+    ap [_] (ap Susp-flip (merid a))
+      =⟨ ap (ap [_]) (SuspFlip.merid-β a) ⟩
+    ap [_] (! (merid a))
+      =⟨ ap-! [_] (merid a) ⟩
+    ! (ap [_] (merid a))
+      =⟨ ap ! (! (SuspTruncSwap.merid-β [ a ])) ⟩
+    ! (ap Susp-Trunc-swap (merid [ a ]))
+      =⟨ !-ap Susp-Trunc-swap (merid [ a ]) ⟩
+    ap Susp-Trunc-swap (! (merid [ a ]))
+      =⟨ ap (ap Susp-Trunc-swap) (! (SuspFlip.merid-β [ a ])) ⟩
+    ap Susp-Trunc-swap (ap Susp-flip (merid [ a ]))
+      =⟨ ∘-ap Susp-Trunc-swap Susp-flip (merid [ a ]) ⟩
+    ap (Susp-Trunc-swap ∘ Susp-flip) (merid [ a ]) =∎
+
+abstract
+  Susp-Trunc-swap-natural : ∀ {i} {j} {A : Type i} {B : Type j} (f : A → B) (m : ℕ₋₂)
+    → Susp-Trunc-swap B m ∘ Susp-fmap (Trunc-fmap f) ∼
+      Trunc-fmap (Susp-fmap f) ∘ Susp-Trunc-swap A m
+  Susp-Trunc-swap-natural {A = A} {B} f m =
+    Susp-elim
+      idp
+      idp $
+    Trunc-elim {{λ t → ↓-level (=-preserves-level Trunc-level)}} $ λ s →
+    ↓-='-in' $
+    ap (Trunc-fmap (Susp-fmap f) ∘ Susp-Trunc-swap A m) (merid [ s ])
+      =⟨ ap-∘ (Trunc-fmap (Susp-fmap f)) (Susp-Trunc-swap A m) (merid [ s ]) ⟩
+    ap (Trunc-fmap (Susp-fmap f)) (ap (Susp-Trunc-swap A m) (merid [ s ]))
+      =⟨ ap (ap (Trunc-fmap (Susp-fmap f))) (SuspTruncSwap.merid-β A m [ s ]) ⟩
+    ap (Trunc-fmap (Susp-fmap f)) (ap [_] (merid s))
+      =⟨ ∘-ap (Trunc-fmap (Susp-fmap f)) [_] (merid s) ⟩
+    ap ([_] ∘ Susp-fmap f) (merid s)
+      =⟨ ap-∘ [_] (Susp-fmap f) (merid s) ⟩
+    ap [_] (ap (Susp-fmap f) (merid s))
+      =⟨ ap (ap [_]) (SuspFmap.merid-β f s) ⟩
+    ap [_] (merid (f s))
+      =⟨ ! (SuspTruncSwap.merid-β B m [ f s ]) ⟩
+    ap (Susp-Trunc-swap B m) (merid [ f s ])
+      =⟨ ap (ap (Susp-Trunc-swap B m)) (! (SuspFmap.merid-β (Trunc-fmap f) [ s ])) ⟩
+    ap (Susp-Trunc-swap B m) (ap (Susp-fmap (Trunc-fmap f)) (merid [ s ]))
+      =⟨ ∘-ap (Susp-Trunc-swap B m) (Susp-fmap (Trunc-fmap f)) (merid [ s ]) ⟩
+    ap (Susp-Trunc-swap B m ∘ Susp-fmap (Trunc-fmap f)) (merid [ s ]) =∎
 
 ⊙Susp-Trunc-swap : ∀ {i} (A : Type i) (m : ℕ₋₂)
   → ⊙Susp (Trunc m A) ⊙→ ⊙Trunc (S m) (⊙Susp A)

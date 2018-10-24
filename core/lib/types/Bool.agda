@@ -37,6 +37,10 @@ and : Bool → Bool → Bool
 and true b = b
 and false _ = false
 
+xor : Bool → Bool → Bool
+xor true = negate
+xor false = idf Bool
+
 and-false-r : ∀ b → and b false == false
 and-false-r true = idp
 and-false-r false = idp

@@ -33,6 +33,26 @@ abstract
   ⊙Susp^-conn' O = ⟨⟩
   ⊙Susp^-conn' (S n) = Susp-conn (⊙Susp^-conn' n)
 
+module _ {i} {A : Type i} where
+  maybe-Susp^-flip : ∀ (n : ℕ)
+    → Bool
+    → Susp^ n A → Susp^ n A
+  maybe-Susp^-flip 0 _ = idf _
+  maybe-Susp^-flip (S _) true  = Susp-flip
+  maybe-Susp^-flip (S _) false = idf _
+
+  Susp-fmap-maybe-Susp^-flip : ∀ (n : ℕ) (b : Bool)
+    → (n == 0 → b == false)
+    → maybe-Susp^-flip (S n) b ∼ Susp-fmap (maybe-Susp^-flip n b)
+  Susp-fmap-maybe-Susp^-flip O b h x =
+    maybe-Susp^-flip 1 b x
+      =⟨ ap (λ c → maybe-Susp^-flip 1 c x) (h idp) ⟩
+    x
+      =⟨ ! (Susp-fmap-idf A x) ⟩
+    Susp-fmap (idf A) x =∎
+  Susp-fmap-maybe-Susp^-flip (S n) true h x = ! (Susp-fmap-flip x)
+  Susp-fmap-maybe-Susp^-flip (S n) false h x = ! (Susp-fmap-idf (Susp^ (S n) A) x)
+
 Susp^-+ : ∀ {i} (m n : ℕ) {A : Type i}
   → Susp^ m (Susp^ n A) == Susp^ (m + n) A
 Susp^-+ O n = idp
@@ -317,14 +337,6 @@ abstract
       =ₛ⟨ ∙-ap-seq Susp (Susp^-comm m (S n) ◃∙ Susp^-comm 1 n ◃∎) ⟩
     ap Susp (Susp^-comm m (S n) ∙ Susp^-comm 1 n) ◃∎ ∎ₛ
 
-Susp^-Trunc-swap : ∀ {i} (A : Type i) (n : ℕ) (m : ℕ₋₂)
-  → Susp^ n (Trunc m A)
-  → Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n A)
-Susp^-Trunc-swap A O m = idf _
-Susp^-Trunc-swap A (S n) m =
-  Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) ∘
-  Susp-fmap (Susp^-Trunc-swap A n m)
-
 Susp^-fmap : ∀ {i j} (n : ℕ) {A : Type i} {B : Type j}
   → (A → B) → Susp^ n A → Susp^ n B
 Susp^-fmap O f = f
@@ -344,6 +356,10 @@ Susp^-fmap-idf (S n) A = ↯ $
   Susp-fmap (idf _)
     =⟪ λ= (Susp-fmap-idf _) ⟫
   idf (Susp^ (S n) A) ∎∎
+
+transport-Susp^ : ∀ {i} {A B : Type i} (n : ℕ) (p : A == B)
+  → transport (Susp^ n) p == Susp^-fmap n (coe p)
+transport-Susp^ n idp = ! (Susp^-fmap-idf n _)
 
 ⊙Susp^-fmap-idf : ∀ {i} (n : ℕ) (X : Ptd i)
   → ⊙Susp^-fmap n (⊙idf X) == ⊙idf (⊙Susp^ n X)
@@ -412,7 +428,7 @@ Susp^-comm-flip m (S n) A s =
   Susp-flip (transport Susp (Susp^-comm m (S n) ∙ Susp^-comm 1 n) s)
     =⟨ ! (ap Susp-flip (Susp-fmap-coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n) s)) ⟩
   Susp-flip (Susp-fmap (coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n)) s)
-    =⟨ Susp-flip-fmap-comm (coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n)) s ⟩
+    =⟨ Susp-flip-natural (coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n)) s ⟩
   Susp-fmap (coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n)) (Susp-flip s)
     =⟨ Susp-fmap-coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n) (Susp-flip s) ⟩
   transport Susp (Susp^-comm m (S n) ∙ Susp^-comm 1 n) (Susp-flip s)
@@ -420,27 +436,46 @@ Susp^-comm-flip m (S n) A s =
   coe (Susp^-comm (S m) (S n)) (Susp-flip s) =∎
 
 abstract
-  Susp^-+-fmap : ∀ {i j} (m n : ℕ) {A : Type i} {B : Type j} (f : A → B)
+  maybe-Susp^-flip-Susp^-comm : ∀ {i} (A : Type i) (m n : ℕ) (b : Bool)
+    → Susp^-fmap n (maybe-Susp^-flip m b) ∘ coe (Susp^-comm m n {A = A}) ∼
+      coe (Susp^-comm m n {A = A}) ∘ maybe-Susp^-flip m b
+  maybe-Susp^-flip-Susp^-comm A O n b s =
+    Susp^-fmap n (idf A) (coe (Susp^-comm 0 n) s)
+      =⟨ ap (λ p → Susp^-fmap n (idf A) (coe p s))
+            (Susp^-comm-0-l n _) ⟩
+    Susp^-fmap n (idf A) s
+      =⟨ app= (Susp^-fmap-idf n A) s ⟩
+    s
+      =⟨ ap (λ p → coe p s) (! (Susp^-comm-0-l n _)) ⟩
+    coe (Susp^-comm 0 n) s =∎
+  maybe-Susp^-flip-Susp^-comm A (S m) n true = Susp^-comm-flip m n A
+  maybe-Susp^-flip-Susp^-comm A (S m) n false s =
+    Susp^-fmap n (idf (Susp (Susp^ m A))) (coe (Susp^-comm (S m) n) s)
+      =⟨ app= (Susp^-fmap-idf n _) (coe (Susp^-comm (S m) n) s) ⟩
+    coe (Susp^-comm (S m) n) s =∎
+
+abstract
+  Susp^-+-natural : ∀ {i j} (m n : ℕ) {A : Type i} {B : Type j} (f : A → B)
     → coe (Susp^-+ m n) ∘ Susp^-fmap m (Susp^-fmap n f) ∼
       Susp^-fmap (m + n) f ∘ coe (Susp^-+ m n)
-  Susp^-+-fmap O n f sa = idp
-  Susp^-+-fmap (S m) n f sa =
+  Susp^-+-natural O n f sa = idp
+  Susp^-+-natural (S m) n f sa =
     transport Susp (Susp^-+ m n) (Susp^-fmap (S m) (Susp^-fmap n f) sa)
       =⟨ ! (Susp-fmap-coe (Susp^-+ m n) (Susp^-fmap (S m) (Susp^-fmap n f) sa)) ⟩
     Susp-fmap (coe (Susp^-+ m n)) (Susp^-fmap (S m) (Susp^-fmap n f) sa)
       =⟨ ! (Susp-fmap-∘ (coe (Susp^-+ m n)) (Susp^-fmap m (Susp^-fmap n f)) sa) ⟩
     Susp-fmap (coe (Susp^-+ m n) ∘ Susp^-fmap m (Susp^-fmap n f)) sa
-      =⟨ ap (λ f → Susp-fmap f sa) (λ= (Susp^-+-fmap m n f)) ⟩
+      =⟨ ap (λ f → Susp-fmap f sa) (λ= (Susp^-+-natural m n f)) ⟩
     Susp-fmap (Susp^-fmap (m + n) f ∘ coe (Susp^-+ m n)) sa
       =⟨ Susp-fmap-∘ (Susp^-fmap (m + n) f) (coe (Susp^-+ m n)) sa ⟩
     Susp^-fmap (S m + n) f (Susp-fmap (coe (Susp^-+ m n)) sa)
       =⟨ ap (Susp^-fmap (S m + n) f) (Susp-fmap-coe (Susp^-+ m n) sa) ⟩
     Susp^-fmap (S m + n) f (transport Susp (Susp^-+ m n) sa) =∎
 
-  Susp^-+-fmap' : ∀ {i j} (m n : ℕ) {A : Type i} {B : Type j} (f : A → B)
+  Susp^-+-natural' : ∀ {i j} (m n : ℕ) {A : Type i} {B : Type j} (f : A → B)
     → Susp^-fmap m (Susp^-fmap n f) ∘ coe (! (Susp^-+ m n)) ∼
       coe (! (Susp^-+ m n)) ∘ Susp^-fmap (m + n) f
-  Susp^-+-fmap' m n f sa =
+  Susp^-+-natural' m n f sa =
     Susp^-fmap m (Susp^-fmap n f) (coe (! (Susp^-+ m n)) sa)
       =⟨ ap (λ p → coe p (Susp^-fmap m (Susp^-fmap n f) (coe (! (Susp^-+ m n)) sa))) $
          ! $ !-inv-r (Susp^-+ m n) ⟩
@@ -450,7 +485,7 @@ abstract
                (Susp^-fmap m (Susp^-fmap n f) (coe (! (Susp^-+ m n)) sa)) ⟩
     coe (! (Susp^-+ m n)) (coe (Susp^-+ m n) (Susp^-fmap m (Susp^-fmap n f) (coe (! (Susp^-+ m n)) sa)))
       =⟨ ap (coe (! (Susp^-+ m n))) $
-         Susp^-+-fmap m n f (coe (! (Susp^-+ m n)) sa) ⟩
+         Susp^-+-natural m n f (coe (! (Susp^-+ m n)) sa) ⟩
     coe (! (Susp^-+ m n)) (Susp^-fmap (m + n) f (coe (Susp^-+ m n) (coe (! (Susp^-+ m n)) sa)))
       =⟨ ap (coe (! (Susp^-+ m n)) ∘ Susp^-fmap (m + n) f) $
          ! $ coe-∙ (! (Susp^-+ m n)) (Susp^-+ m n) sa ⟩
@@ -459,11 +494,11 @@ abstract
          !-inv-l (Susp^-+ m n) ⟩
     coe (! (Susp^-+ m n)) (Susp^-fmap (m + n) f sa) =∎
 
-  Susp^-comm-fmap : ∀ {i j} {A : Type i} {B : Type j} (m n : ℕ)
+  Susp^-comm-natural : ∀ {i j} {A : Type i} {B : Type j} (m n : ℕ)
     (f : A → B)
     → coe (Susp^-comm m n) ∘ Susp^-fmap m (Susp^-fmap n f) ∼
       Susp^-fmap n (Susp^-fmap m f) ∘ coe (Susp^-comm m n)
-  Susp^-comm-fmap {A = A} {B = B} m n f s =
+  Susp^-comm-natural {A = A} {B = B} m n f s =
     coe (Susp^-comm m n) (Susp^-fmap m (Susp^-fmap n f) s)
       =⟨ coe-∙ (Susp^-+ m n)
                (ap (λ k → Susp^ k B) (+-comm m n) ∙ ! (Susp^-+ n m))
@@ -471,7 +506,7 @@ abstract
     coe (ap (λ k → Susp^ k B) (+-comm m n) ∙ ! (Susp^-+ n m))
         (coe (Susp^-+ m n) (Susp^-fmap m (Susp^-fmap n f) s))
       =⟨ ap (coe (ap (λ k → Susp^ k B) (+-comm m n) ∙ ! (Susp^-+ n m)))
-            (Susp^-+-fmap m n f s) ⟩
+            (Susp^-+-natural m n f s) ⟩
     coe (ap (λ k → Susp^ k B) (+-comm m n) ∙ ! (Susp^-+ n m))
         (Susp^-fmap (m + n) f (coe (Susp^-+ m n) s))
       =⟨ coe-∙ (ap (λ k → Susp^ k B) (+-comm m n))
@@ -485,7 +520,7 @@ abstract
               (coe (Susp^-+ m n) s) ⟩
     coe (! (Susp^-+ n m)) (Susp^-fmap (n + m) f
       (transport (λ k → Susp^ k A) (+-comm m n) (coe (Susp^-+ m n) s)))
-      =⟨ ! $ Susp^-+-fmap' n m f
+      =⟨ ! $ Susp^-+-natural' n m f
            (transport (λ k → Susp^ k A) (+-comm m n) (coe (Susp^-+ m n) s)) ⟩
     Susp^-fmap n (Susp^-fmap m f)
       (coe (! (Susp^-+ n m)) (transport (λ k → Susp^ k A) (+-comm m n) (coe (Susp^-+ m n) s)))
@@ -498,6 +533,163 @@ abstract
       =⟨ ! $ ap (Susp^-fmap n (Susp^-fmap m f)) $
          coe-∙ (Susp^-+ m n) (ap (λ k → Susp^ k A) (+-comm m n) ∙ ! (Susp^-+ n m)) s ⟩
     Susp^-fmap n (Susp^-fmap m f) (coe (Susp^-comm m n) s) =∎
+
+module _ {i} (A : Type i) (m : ℕ₋₂) where
+
+  Susp^-Trunc-swap : ∀ (n : ℕ)
+    → Susp^ n (Trunc m A)
+    → Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n A)
+  Susp^-Trunc-swap O = idf _
+  Susp^-Trunc-swap (S n) =
+    Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) ∘
+    Susp-fmap (Susp^-Trunc-swap n)
+
+  Susp^-Trunc-swap-maybe-Susp^-flip : ∀ (n : ℕ) (b : Bool)
+    → Susp^-Trunc-swap n ∘ maybe-Susp^-flip n b ∼
+      Trunc-fmap (maybe-Susp^-flip n b) ∘ Susp^-Trunc-swap n
+  Susp^-Trunc-swap-maybe-Susp^-flip O b x = ! (Trunc-fmap-idf x)
+  Susp^-Trunc-swap-maybe-Susp^-flip (S n) true x =
+    (Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) $
+     Susp-fmap (Susp^-Trunc-swap n) $
+     Susp-flip x)
+      =⟨ ap (Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m)) $
+         ! $ Susp-flip-natural (Susp^-Trunc-swap n) x ⟩
+    (Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) $
+     Susp-flip $
+     Susp-fmap (Susp^-Trunc-swap n) x)
+      =⟨ Susp-Trunc-swap-Susp-flip (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) $
+         Susp-fmap (Susp^-Trunc-swap n) x ⟩
+    (Trunc-fmap Susp-flip $
+     Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) $
+     Susp-fmap (Susp^-Trunc-swap n) x) =∎
+  Susp^-Trunc-swap-maybe-Susp^-flip (S n) false x = ! (Trunc-fmap-idf (Susp^-Trunc-swap (S n) x))
+
+  private
+    to : ∀ n → Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n (Trunc m A)) → Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n A)
+    to n = Trunc-rec {{Trunc-level}} (Susp^-Trunc-swap n)
+
+    from : ∀ n → Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n A) → Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n (Trunc m A))
+    from n = Trunc-fmap (Susp^-fmap n [_])
+
+    abstract
+      from-Susp^-Trunc-swap : ∀ n → from n ∘ Susp^-Trunc-swap n ∼ [_]
+      from-Susp^-Trunc-swap O =
+        Trunc-elim
+          {P = λ s → from 0 (Susp^-Trunc-swap 0 s) == [ s ]}
+          {{λ s → =-preserves-level Trunc-level}}
+          (λ a → idp)
+      from-Susp^-Trunc-swap (S n) x =
+        (from (S n) $
+         Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) $
+         Susp-fmap (Susp^-Trunc-swap n) x)
+          =⟨ ! $ Susp-Trunc-swap-natural (Susp^-fmap n [_]) (⟨ n ⟩₋₂ +2+ m) $
+             Susp-fmap (Susp^-Trunc-swap n) x ⟩
+        (Susp-Trunc-swap (Susp^ n (Trunc m A)) (⟨ n ⟩₋₂ +2+ m) $
+         Susp-fmap (Trunc-fmap (Susp^-fmap n [_])) $
+         Susp-fmap (Susp^-Trunc-swap n) x)
+          =⟨ ap (Susp-Trunc-swap (Susp^ n (Trunc m A)) (⟨ n ⟩₋₂ +2+ m)) $
+             ! $ Susp-fmap-∘ (Trunc-fmap (Susp^-fmap n [_])) (Susp^-Trunc-swap n) x ⟩
+        (Susp-Trunc-swap (Susp^ n (Trunc m A)) (⟨ n ⟩₋₂ +2+ m) $
+         Susp-fmap (from n ∘ Susp^-Trunc-swap n) x)
+          =⟨ ap (Susp-Trunc-swap (Susp^ n (Trunc m A)) (⟨ n ⟩₋₂ +2+ m)) $
+             ap (λ f → Susp-fmap f x) (λ= (from-Susp^-Trunc-swap n)) ⟩
+        Susp-Trunc-swap (Susp^ n (Trunc m A)) (⟨ n ⟩₋₂ +2+ m) (Susp-fmap [_] x)
+          =⟨ Susp-Trunc-swap-Susp-fmap-trunc (Susp^ n (Trunc m A)) (⟨ n ⟩₋₂ +2+ m) x ⟩
+        [ x ] =∎
+
+      from-to : ∀ n → from n ∘ to n ∼ idf _
+      from-to n =
+        Trunc-elim
+          {P = λ t → from n (to n t) == t}
+          {{λ t → =-preserves-level Trunc-level}}
+          (from-Susp^-Trunc-swap n)
+
+      Susp^-Trunc-swap-Susp^-fmap-trunc : ∀ n →
+        Susp^-Trunc-swap n ∘ Susp^-fmap n [_] ∼ [_]
+      Susp^-Trunc-swap-Susp^-fmap-trunc 0 s = idp
+      Susp^-Trunc-swap-Susp^-fmap-trunc (S n) s =
+        (Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) $
+         Susp-fmap (Susp^-Trunc-swap n) $
+         Susp^-fmap (S n) [_] s)
+          =⟨ ap (Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m)) $
+             ! $ Susp-fmap-∘ (Susp^-Trunc-swap n) (Susp^-fmap n [_]) s ⟩
+        (Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) $
+         Susp-fmap (Susp^-Trunc-swap n ∘ Susp^-fmap n [_]) s)
+          =⟨ ap (Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m)) $
+             app= (ap Susp-fmap (λ= (Susp^-Trunc-swap-Susp^-fmap-trunc n))) s ⟩
+        Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) (Susp-fmap [_] s)
+          =⟨ Susp-Trunc-swap-Susp-fmap-trunc (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) s ⟩
+        [ s ] =∎
+
+      to-from : ∀ n → to n ∘ from n ∼ idf _
+      to-from n = Trunc-elim {{λ t → =-preserves-level Trunc-level}}
+                             (Susp^-Trunc-swap-Susp^-fmap-trunc n)
+
+  Susp^-Trunc-equiv : ∀ (n : ℕ)
+    → Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n (Trunc m A)) ≃ Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n A)
+  Susp^-Trunc-equiv n = equiv (to n) (from n) (to-from n) (from-to n)
+
+module _ {i} {j} {A : Type i} {B : Type j} (f : A → B) (m : ℕ₋₂) where
+
+  Susp^-Trunc-swap-natural : ∀ (n : ℕ)
+    → Susp^-Trunc-swap B m n ∘ Susp^-fmap n (Trunc-fmap f) ∼
+      Trunc-fmap (Susp^-fmap n f) ∘ Susp^-Trunc-swap A m n
+  Susp^-Trunc-swap-natural O s = idp
+  Susp^-Trunc-swap-natural (S n) s =
+    (Susp-Trunc-swap (Susp^ n B) (⟨ n ⟩₋₂ +2+ m) $
+     Susp-fmap (Susp^-Trunc-swap B m n) $
+     Susp^-fmap (S n) (Trunc-fmap f) s)
+      =⟨ ap (Susp-Trunc-swap (Susp^ n B) (⟨ n ⟩₋₂ +2+ m)) $
+         ! $ Susp-fmap-∘ (Susp^-Trunc-swap B m n) (Susp^-fmap n (Trunc-fmap f)) s ⟩
+    (Susp-Trunc-swap (Susp^ n B) (⟨ n ⟩₋₂ +2+ m) $
+     Susp-fmap (Susp^-Trunc-swap B m n ∘ Susp^-fmap n (Trunc-fmap f)) s)
+      =⟨ ap (Susp-Trunc-swap (Susp^ n B) (⟨ n ⟩₋₂ +2+ m)) $
+         app= (ap Susp-fmap (λ= (Susp^-Trunc-swap-natural n))) s ⟩
+    (Susp-Trunc-swap (Susp^ n B) (⟨ n ⟩₋₂ +2+ m) $
+     Susp-fmap (Trunc-fmap (Susp^-fmap n f) ∘ Susp^-Trunc-swap A m n) s)
+      =⟨ ap (Susp-Trunc-swap (Susp^ n B) (⟨ n ⟩₋₂ +2+ m)) $
+         Susp-fmap-∘ (Trunc-fmap (Susp^-fmap n f)) (Susp^-Trunc-swap A m n) s ⟩
+    (Susp-Trunc-swap (Susp^ n B) (⟨ n ⟩₋₂ +2+ m) $
+     Susp-fmap (Trunc-fmap (Susp^-fmap n f)) $
+     Susp-fmap (Susp^-Trunc-swap A m n) s)
+      =⟨ Susp-Trunc-swap-natural (Susp^-fmap n f) (⟨ n ⟩₋₂ +2+ m) $
+         Susp-fmap (Susp^-Trunc-swap A m n) s ⟩
+    (Trunc-fmap (Susp^-fmap (S n) f) $
+     Susp-Trunc-swap (Susp^ n A) (⟨ n ⟩₋₂ +2+ m) $
+     Susp-fmap (Susp^-Trunc-swap A m n) s) =∎
+
+  Susp^-Trunc-equiv-natural : ∀ (n : ℕ)
+    → –> (Susp^-Trunc-equiv B m n) ∘ Trunc-fmap (Susp^-fmap n (Trunc-fmap f)) ∼
+      Trunc-fmap (Susp^-fmap n f) ∘ –> (Susp^-Trunc-equiv A m n)
+  Susp^-Trunc-equiv-natural n =
+    Trunc-elim {{λ t → =-preserves-level Trunc-level}}
+               (Susp^-Trunc-swap-natural n)
+
+  Susp^-Trunc-equiv-natural' : ∀ (n : ℕ)
+    → <– (Susp^-Trunc-equiv B m n) ∘ Trunc-fmap (Susp^-fmap n f) ∼
+      Trunc-fmap (Susp^-fmap n (Trunc-fmap f)) ∘ <– (Susp^-Trunc-equiv A m n)
+  Susp^-Trunc-equiv-natural' n x =
+    (<– (Susp^-Trunc-equiv B m n) $
+     Trunc-fmap (Susp^-fmap n f) x)
+      =⟨ ap (<– (Susp^-Trunc-equiv B m n)) $
+         ap (Trunc-fmap (Susp^-fmap n f)) $
+         ! $ <–-inv-r (Susp^-Trunc-equiv A m n) x ⟩
+    (<– (Susp^-Trunc-equiv B m n) $
+     Trunc-fmap (Susp^-fmap n f) $
+     –> (Susp^-Trunc-equiv A m n) $
+     <– (Susp^-Trunc-equiv A m n) x)
+      =⟨ ap (<– (Susp^-Trunc-equiv B m n)) $
+         ! $ Susp^-Trunc-equiv-natural n $
+         <– (Susp^-Trunc-equiv A m n) x ⟩
+    (<– (Susp^-Trunc-equiv B m n) $
+     –> (Susp^-Trunc-equiv B m n) $
+     Trunc-fmap (Susp^-fmap n (Trunc-fmap f)) $
+     <– (Susp^-Trunc-equiv A m n) x)
+      =⟨ <–-inv-l (Susp^-Trunc-equiv B m n) $
+         Trunc-fmap (Susp^-fmap n (Trunc-fmap f)) $
+         <– (Susp^-Trunc-equiv A m n) x ⟩
+    (Trunc-fmap (Susp^-fmap n (Trunc-fmap f)) $
+     <– (Susp^-Trunc-equiv A m n) x) =∎
 
 Susp^-Susp-split-iso : ∀ {i} (n : ℕ) (A : Type i)
   → Susp (Susp^ n A) ≃ Susp^ n (Susp A)

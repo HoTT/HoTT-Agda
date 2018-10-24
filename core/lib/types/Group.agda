@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.NType2
 open import lib.types.Coproduct
 open import lib.types.Fin
 open import lib.types.Int
@@ -86,6 +87,12 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
 
     inv-inv : (g : El) → inv (inv g) == g
     inv-inv g = inv-unique-r (inv g) g (inv-l g)
+
+    inv-equiv : El ≃ El
+    inv-equiv = equiv inv inv inv-inv inv-inv
+
+    inv-is-equiv : is-equiv inv
+    inv-is-equiv = snd inv-equiv
 
     inv-is-inj : is-inj inv
     inv-is-inj g₁ g₂ p = ! (inv-inv g₁) ∙ ap inv p ∙ inv-inv g₂
@@ -220,6 +227,12 @@ Group₀ = Group lzero
 is-abelian : ∀ {i} → Group i → Type i
 is-abelian G = (a b : Group.El G) → Group.comp G a b == Group.comp G b a
 
+is-abelian-is-prop : ∀ {i} (G : Group i) → is-prop (is-abelian G)
+is-abelian-is-prop G =
+  Π-level $ λ a →
+  Π-level $ λ b →
+  has-level-apply (Group.El-level G) _ _
+
 AbGroup : ∀ i → Type (lsucc i)
 AbGroup i = Σ (Group i) is-abelian
 
@@ -288,6 +301,12 @@ contr-is-trivialᴳ : ∀ {i} (G : Group i)
   {{_ : is-contr (Group.El G)}} → is-trivialᴳ G
 contr-is-trivialᴳ G g =
   contr-has-all-paths _ _
+
+abgroup= : ∀ {i} (G H : AbGroup i)
+  → AbGroup.grp G == AbGroup.grp H
+  → G == H
+abgroup= G H p =
+  pair= p (contr-center (↓-level (is-abelian-is-prop (AbGroup.grp H))))
 
 {- group-structure= -}
 

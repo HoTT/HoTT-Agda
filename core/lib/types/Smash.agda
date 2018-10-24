@@ -159,6 +159,26 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
       smgluer-β : ∀ (y : de⊙ Y) → ap f (smgluer y) == smgluer* y
       smgluer-β = PushoutRec.glue-β (uncurry smin*) (Coprod-rec (λ _ → smbasel*) (λ _ → smbaser*)) (Coprod-elim smgluel* smgluer*) ∘ inr
 
+      ∧-norm-l-β : ∀ (x : de⊙ X) → ap f (∧-norm-l x) == smgluel* x ∙ ! (smgluel* (pt X))
+      ∧-norm-l-β x =
+        ap f (∧-norm-l x)
+          =⟨ ap-∙ f (smgluel x) (! (smgluel (pt X))) ⟩
+        ap f (smgluel x) ∙ ap f (! (smgluel (pt X)))
+          =⟨ ap2 _∙_ (smgluel-β x)
+                     (ap-! f (smgluel (pt X)) ∙
+                      ap ! (smgluel-β (pt X))) ⟩
+        smgluel* x ∙ ! (smgluel* (pt X)) =∎
+
+      ∧-norm-r-β : ∀ (y : de⊙ Y) → ap f (∧-norm-r y) == smgluer* y ∙ ! (smgluer* (pt Y))
+      ∧-norm-r-β y =
+        ap f (∧-norm-r y)
+          =⟨ ap-∙ f (smgluer y) (! (smgluer (pt Y))) ⟩
+        ap f (smgluer y) ∙ ap f (! (smgluer (pt Y)))
+          =⟨ ap2 _∙_ (smgluer-β y)
+                     (ap-! f (smgluer (pt Y)) ∙
+                      ap ! (smgluer-β (pt Y))) ⟩
+        smgluer* y ∙ ! (smgluer* (pt Y)) =∎
+
   Smash-rec = SmashRec.f
 
   module SmashPathOverElim {k} {P : Smash X Y → Type k}
@@ -493,12 +513,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     ap ∧-swap (∧-norm-l x) == ∧-norm-r x
   ∧-swap-norm-l-β x =
     ap ∧-swap (∧-norm-l x)
-      =⟨ ap-∙ ∧-swap (smgluel x) (! (smgluel (pt X))) ⟩
-    ap ∧-swap (smgluel x) ∙ ap ∧-swap (! (smgluel (pt X)))
-      =⟨ ap2 _∙_
-             (SmashSwap.smgluel-β x)
-             (ap-! ∧-swap (smgluel (pt X)) ∙
-              ap ! (SmashSwap.smgluel-β (pt X))) ⟩
+      =⟨ SmashSwap.∧-norm-l-β x ⟩
     ∧-norm-r x ∙ ! (∧-norm-r (pt X))
       =⟨ ap (λ u → ∧-norm-r x ∙ ! u) (!-inv-r (smgluer (pt X))) ⟩
     ∧-norm-r x ∙ idp
@@ -509,12 +524,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     ap ∧-swap (∧-norm-r y) == ∧-norm-l y
   ∧-swap-norm-r-β y =
     ap ∧-swap (∧-norm-r y)
-      =⟨ ap-∙ ∧-swap (smgluer y) (! (smgluer (pt Y))) ⟩
-    ap ∧-swap (smgluer y) ∙ ap ∧-swap (! (smgluer (pt Y)))
-      =⟨ ap2 _∙_
-             (SmashSwap.smgluer-β y)
-             (ap-! ∧-swap (smgluer (pt Y)) ∙
-              ap ! (SmashSwap.smgluer-β (pt Y))) ⟩
+      =⟨ SmashSwap.∧-norm-r-β y ⟩
     ∧-norm-l y ∙ ! (∧-norm-l (pt Y))
       =⟨ ap (λ u → ∧-norm-l y ∙ ! u) (!-inv-r (smgluel (pt Y))) ⟩
     ∧-norm-l y ∙ idp

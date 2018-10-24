@@ -206,11 +206,36 @@ Trunc-fmap-idf : ∀ {i} {n : ℕ₋₂} {A : Type i}
 Trunc-fmap-idf =
   Trunc-elim (λ _ → idp)
 
+⊙Trunc-fmap-idf : ∀ {i} {n : ℕ₋₂} {X : Ptd i}
+  → ⊙Trunc-fmap (⊙idf X) ⊙∼ ⊙idf (⊙Trunc n X)
+⊙Trunc-fmap-idf = Trunc-fmap-idf , idp
+
+Trunc-fmap-coe : ∀ {i} {n : ℕ₋₂} {A B : Type i}
+  (p : A == B)
+  → Trunc-fmap (coe p) == transport (Trunc n) p
+Trunc-fmap-coe p@idp = λ= Trunc-fmap-idf
+
 Trunc-fmap-∘ : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type k}
-  → (g : B → C) → (f : A → B)
+  (g : B → C) (f : A → B)
   → ∀ x → Trunc-fmap {n = n} g (Trunc-fmap f x) == Trunc-fmap (g ∘ f) x
 Trunc-fmap-∘ g f =
   Trunc-elim (λ _ → idp)
+
+⊙Trunc-fmap-∘ : ∀ {i j k} {n : ℕ₋₂} {A : Ptd i} {B : Ptd j} {C : Ptd k}
+  (g : B ⊙→ C) (f : A ⊙→ B)
+  → ⊙Trunc-fmap {n = n} g ⊙∘ ⊙Trunc-fmap f ⊙∼ ⊙Trunc-fmap (g ⊙∘ f)
+⊙Trunc-fmap-∘ {n = n} g f =
+  Trunc-fmap-∘ (fst g) (fst f) , pres-pt-path
+  where
+  pres-pt-path : snd (⊙Trunc-fmap {n = n} g ⊙∘ ⊙Trunc-fmap f) == snd (⊙Trunc-fmap (g ⊙∘ f))
+  pres-pt-path =
+    ap (Trunc-fmap (fst g)) (ap [_] (snd f)) ∙ ap [_] (snd g)
+      =⟨ ap (_∙ ap [_] (snd g))
+            (∘-ap (Trunc-fmap (fst g)) [_] (snd f) ∙
+             ap-∘ [_] (fst g) (snd f)) ⟩
+    ap [_] (ap (fst g) (snd f)) ∙ ap [_] (snd g)
+      =⟨ ∙-ap [_] (ap (fst g) (snd f)) (snd g) ⟩
+    ap [_] (ap (fst g) (snd f) ∙ snd g) =∎
 
 Trunc-csmap : ∀ {i₀ i₁ j₀ j₁} {n : ℕ₋₂}
   {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}

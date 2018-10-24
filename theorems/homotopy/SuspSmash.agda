@@ -55,15 +55,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   Σ∧-out-∧-norm-r : ∀ (y : de⊙ Y) →
     ap Σ∧-out (∧-norm-r y) == idp
-  Σ∧-out-∧-norm-r y =
-    ap Σ∧-out (∧-norm-r y)
-      =⟨ ap-∙ Σ∧-out (smgluer y) (! (smgluer y₀)) ⟩
-    ap Σ∧-out (smgluer y) ∙ ap Σ∧-out (! (smgluer y₀))
-      =⟨ ap2 _∙_
-             (Σ∧Out.smgluer-β y)
-             (ap-! Σ∧-out (smgluer y₀) ∙
-              ap ! (Σ∧Out.smgluer-β y₀)) ⟩
-    idp =∎
+  Σ∧-out-∧-norm-r y = Σ∧Out.∧-norm-r-β y
 
   module ∧Σ-out-smin (x : de⊙ X) =
     SuspRec
@@ -107,15 +99,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   ∧Σ-out-∧-norm-l : ∀ (x : de⊙ X) →
     ap ∧Σ-out (∧-norm-l x) == idp
-  ∧Σ-out-∧-norm-l x =
-    ap ∧Σ-out (∧-norm-l x)
-      =⟨ ap-∙ ∧Σ-out (smgluel x) (! (smgluel x₀)) ⟩
-    ap ∧Σ-out (smgluel x) ∙ ap ∧Σ-out (! (smgluel x₀))
-      =⟨ ap2 _∙_
-             (∧ΣOut.smgluel-β x)
-             (ap-! ∧Σ-out (smgluel x₀) ∙
-              ap ! (∧ΣOut.smgluel-β x₀)) ⟩
-    idp =∎
+  ∧Σ-out-∧-norm-l x = ∧ΣOut.∧-norm-l-β x
 
   Σ∧-in-merid-smin : de⊙ X → de⊙ Y → pt (⊙Susp (de⊙ X) ⊙∧ Y) == pt (⊙Susp (de⊙ X) ⊙∧ Y)
   Σ∧-in-merid-smin x y = ↯ $
@@ -229,12 +213,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
       ap (Σ∧-out Y X) (ap (∧-swap X (⊙Susp (de⊙ Y))) (smgluer sy))
         =⟨ ap (ap (Σ∧-out Y X)) (SmashSwap.smgluer-β X (⊙Susp (de⊙ Y)) sy) ⟩
       ap (Σ∧-out Y X) (∧-norm-l sy)
-        =⟨ ap-∙ (Σ∧-out Y X) (smgluel sy) (! (smgluel north)) ⟩
-      ap (Σ∧-out Y X) (smgluel sy) ∙ ap (Σ∧-out Y X) (! (smgluel north))
-        =⟨ ap2 _∙_
-               (Σ∧Out.smgluel-β Y X sy)
-               (ap-! (Σ∧-out Y X) (smgluel north) ∙
-                ap ! (Σ∧Out.smgluel-β Y X north)) ⟩
+        =⟨ Σ∧Out.∧-norm-l-β Y X sy ⟩
       Σ∧OutSmgluel.f Y X sy ∙ idp
         =⟨ ∙-unit-r (Σ∧OutSmgluel.f Y X sy) ⟩
       Σ∧OutSmgluel.f Y X sy =∎

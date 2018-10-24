@@ -25,13 +25,6 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   ⊙∧Σ^-out (S n) = ⊙Susp-fmap (∧Σ^-out n) ⊙∘ ⊙∧Σ-out X (⊙Susp^ n Y)
 
 private
-  maybe-Susp^-flip : ∀ {i} {A : Type i} (n : ℕ)
-    → Bool
-    → Susp^ n A → Susp^ n A
-  maybe-Susp^-flip 0 _ = idf _
-  maybe-Susp^-flip (S _) true  = Susp-flip
-  maybe-Susp^-flip (S _) false = idf _
-
   maybe-Susp^-flip-+ : ∀ {i} {A : Type i} (m n : ℕ)
     (b : Bool)
     → (m == 0 → b == false)
@@ -44,7 +37,7 @@ private
     transport Susp (Susp^-+ m n) (Susp-flip s)
       =⟨ ! (Susp-fmap-coe (Susp^-+ m n) (Susp-flip s)) ⟩
     Susp-fmap (coe (Susp^-+ m n)) (Susp-flip s)
-      =⟨ ! (Susp-flip-fmap-comm (coe (Susp^-+ m n)) s) ⟩
+      =⟨ ! (Susp-flip-natural (coe (Susp^-+ m n)) s) ⟩
     Susp-flip (Susp-fmap (coe (Susp^-+ m n)) s)
       =⟨ ap Susp-flip (Susp-fmap-coe (Susp^-+ m n) s) ⟩
     Susp-flip (transport Susp (Susp^-+ m n) s) =∎
@@ -67,7 +60,7 @@ private
     transport Susp (Susp^-comm m (S n) ∙ Susp^-comm 1 n) (Susp-flip s)
       =⟨ ! (Susp-fmap-coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n) (Susp-flip s)) ⟩
     Susp-fmap (coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n)) (Susp-flip s)
-      =⟨ ! (Susp-flip-fmap-comm (coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n)) s) ⟩
+      =⟨ ! (Susp-flip-natural (coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n)) s) ⟩
     Susp-flip (Susp-fmap (coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n)) s)
       =⟨ ap Susp-flip (Susp-fmap-coe (Susp^-comm m (S n) ∙ Susp^-comm 1 n) s) ⟩
     Susp-flip (transport Susp (Susp^-comm m (S n) ∙ Susp^-comm 1 n) s)
@@ -82,40 +75,23 @@ private
   maybe-Susp^-flip-inv m@(S _) true s = Susp-flip-flip s
   maybe-Susp^-flip-inv m@(S _) false s = idp
 
-  maybe-Susp^-flip-fmap : ∀ {i} {j} {A : Type i} {B : Type j} (f : A → B)
+abstract
+  maybe-Susp^-flip-natural : ∀ {i} {j} {A : Type i} {B : Type j} (f : A → B)
     (n : ℕ) (b : Bool)
     → Susp^-fmap n f ∘ maybe-Susp^-flip n b ∼
       maybe-Susp^-flip n b ∘ Susp^-fmap n f
-  maybe-Susp^-flip-fmap f O b s = idp
-  maybe-Susp^-flip-fmap f (S n) true s =
-    ! (Susp-flip-fmap-comm (Susp^-fmap n f) s)
-  maybe-Susp^-flip-fmap f (S n) false s = idp
-
-  maybe-Susp^-flip-fmap-comm : ∀ {i} (A : Type i) (m n : ℕ) (b : Bool)
-    → Susp^-fmap n (maybe-Susp^-flip m b) ∘ coe (Susp^-comm m n {A = A}) ∼
-      coe (Susp^-comm m n {A = A}) ∘ maybe-Susp^-flip m b
-  maybe-Susp^-flip-fmap-comm A O n b s =
-    Susp^-fmap n (idf A) (coe (Susp^-comm 0 n) s)
-      =⟨ ap (λ p → Susp^-fmap n (idf A) (coe p s))
-            (Susp^-comm-0-l n _) ⟩
-    Susp^-fmap n (idf A) s
-      =⟨ app= (Susp^-fmap-idf n A) s ⟩
-    s
-      =⟨ ap (λ p → coe p s) (! (Susp^-comm-0-l n _)) ⟩
-    coe (Susp^-comm 0 n) s =∎
-  maybe-Susp^-flip-fmap-comm A (S m) n true = Susp^-comm-flip m n A
-  maybe-Susp^-flip-fmap-comm A (S m) n false s =
-    Susp^-fmap n (idf (Susp (Susp^ m A))) (coe (Susp^-comm (S m) n) s)
-      =⟨ app= (Susp^-fmap-idf n _) (coe (Susp^-comm (S m) n) s) ⟩
-    coe (Susp^-comm (S m) n) s =∎
+  maybe-Susp^-flip-natural f O b s = idp
+  maybe-Susp^-flip-natural f (S n) true s =
+    ! (Susp-flip-natural (Susp^-fmap n f) s)
+  maybe-Susp^-flip-natural f (S n) false s = idp
 
 odd-Susp^-flip : ∀ {i} {A : Type i} (n : ℕ) → Susp^ n A → Susp^ n A
 odd-Susp^-flip n = maybe-Susp^-flip n (odd n)
 
-odd-Susp^-flip-fmap : ∀ {i} {j} {A : Type i} {B : Type j} (f : A → B) (n : ℕ)
+odd-Susp^-flip-natural : ∀ {i} {j} {A : Type i} {B : Type j} (f : A → B) (n : ℕ)
   → Susp^-fmap n f ∘ odd-Susp^-flip n ∼
     odd-Susp^-flip n ∘ Susp^-fmap n f
-odd-Susp^-flip-fmap f n = maybe-Susp^-flip-fmap f n (odd n)
+odd-Susp^-flip-natural f n = maybe-Susp^-flip-natural f n (odd n)
 
 private
   odd-Susp^-flip-S-helper : ∀ {i} {A : Type i} (n : ℕ) (b : Bool)
@@ -203,7 +179,7 @@ odd-odd-Susp^-flip-S-r m n =
     =⟨ ap (Susp^-fmap 2 (∧Σ^-out X Y m)) (∧Σ-Σ∧-out X (⊙Susp^ m Y) s) ⟩
   Susp^-fmap 2 (∧Σ^-out X Y m) (Susp-flip
     (Susp-fmap (Σ∧-out X (⊙Susp^ m Y)) (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s)))
-    =⟨ ! $ Susp-flip-fmap-comm
+    =⟨ ! $ Susp-flip-natural
          (Susp-fmap (∧Σ^-out X Y m))
          (Susp-fmap (Σ∧-out X (⊙Susp^ m Y)) (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s)) ⟩
   Susp-flip (Susp^-fmap 2 (∧Σ^-out X Y m) (Susp-fmap (Σ∧-out X (⊙Susp^ m Y))
@@ -248,7 +224,7 @@ odd-odd-Susp^-flip-S-r m n =
          (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)) ⟩
   Susp-flip (Susp-fmap (coe (Susp^-comm m 1)) (Susp-fmap (odd-Susp^-flip m)
     (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))))
-    =⟨ Susp-flip-fmap-comm
+    =⟨ Susp-flip-natural
          (coe (Susp^-comm m 1))
          (Susp-fmap (odd-Susp^-flip m)
            (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))) ⟩
@@ -321,13 +297,13 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         (coe (Susp^-comm m 1) (odd-Susp^-flip m
           (Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))))
       =⟨ ! $ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n)) $
-         Susp^-comm-fmap m 1 (Σ^∧-out X Y n)
+         Susp^-comm-natural m 1 (Σ^∧-out X Y n)
            (odd-Susp^-flip m (Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s))) ⟩
     Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n)
       (coe (Susp^-comm m 1) (Susp^-fmap m (Susp-fmap (Σ^∧-out X Y n))
         (odd-Susp^-flip m (Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))))
       =⟨ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) ∘ coe (Susp^-comm m 1)) $
-         odd-Susp^-flip-fmap (Susp-fmap (Σ^∧-out X Y n)) m $
+         odd-Susp^-flip-natural (Susp-fmap (Σ^∧-out X Y n)) m $
          Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s) ⟩
     Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) (coe (Susp^-comm m 1)
       (odd-Susp^-flip m (Susp^-fmap m (Susp-fmap (Σ^∧-out X Y n))
@@ -345,7 +321,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     Susp-fmap (coe (Susp^-comm m n)) (Susp-fmap (odd-odd-Susp^-flip m n) (coe (Susp^-comm m 1)
       (odd-Susp^-flip m (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))))
       =⟨ ap (Susp-fmap (coe (Susp^-comm m n))) $
-         maybe-Susp^-flip-fmap-comm _ m 1 (and (odd m) (odd n)) $
+         maybe-Susp^-flip-Susp^-comm _ m 1 (and (odd m) (odd n)) $
          odd-Susp^-flip m (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)) ⟩
     Susp-fmap (coe (Susp^-comm m n)) (coe (Susp^-comm m 1)
       (maybe-Susp^-flip m (and (odd m) (odd n)) (odd-Susp^-flip m
@@ -454,7 +430,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   Σ^∧Σ^-out-swap m n s =
     transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) (Susp^-fmap (m + n) (∧-swap X Y) (Σ^∧Σ^-out X Y m n s))
       =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $ ! $
-         Susp^-+-fmap m n (∧-swap X Y) $
+         Susp^-+-natural m n (∧-swap X Y) $
          Susp^-fmap m (∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s) ⟩
     transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) (coe (Susp^-+ m n {Y ∧ X})
       (Susp^-fmap m (Susp^-fmap n (∧-swap X Y)) (Susp^-fmap m (∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s))))

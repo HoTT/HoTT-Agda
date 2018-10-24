@@ -8,7 +8,7 @@ open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.FunCategory
 open import lib.two-semi-categories.FundamentalCategory
 
-module cohomology.CupProduct.OnEM.Definition {i} {j} (G : AbGroup i) (H : AbGroup j) where
+module cohomology.CupProduct.OnEM.InLowDegrees {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
 private
   module G = AbGroup G
