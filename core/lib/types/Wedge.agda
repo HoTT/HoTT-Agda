@@ -415,14 +415,14 @@ module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
             =⟨ ap (_∙ ap winr wglue) (!-inv-l wglue) ⟩
           ap winr wglue
             =∎)
-        (↓-∘=idf-in' to from (ap (ap to) From.glue-β ∙ ∘-ap to winl wglue ∙ WedgeAssocInl.glue-β))
+        (↓-∘=idf-in' to from {p = wglue} (ap (ap to) From.glue-β ∙ ∘-ap to winl wglue ∙ WedgeAssocInl.glue-β))
 
       from-to : ∀ x → from (to x) == x
       from-to = Wedge-elim
         (Wedge-elim (λ x → idp) (λ y → idp) $ ↓-='-in' $ ! $
           ap-∘ from WedgeAssocInl.f wglue ∙ ap (ap from) WedgeAssocInl.glue-β ∙ From.glue-β)
         (λ z → idp)
-        (↓-∘=idf-in' from to $
+        (↓-∘=idf-in' from to {p = wglue} $
           ap from (ap to wglue)
             =⟨ ap (ap from) WedgeAssoc.glue-β ⟩
           ap from (wglue ∙ ap winr wglue)

@@ -140,13 +140,13 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
 
       abstract
         to-from : (x : S¹G.T) → to (from x) == x
-        to-from = S¹G.elim (λ _ → idp) (λ _ → ↓-∘=idf-in' to from
+        to-from = S¹G.elim (λ _ → idp) (λ _ → ↓-∘=idf-in' to from {p = S¹G.pp tt}
           (ap to (ap from (S¹G.pp tt)) =⟨ From.pp-β tt |in-ctx ap to ⟩
            ap to loop                  =⟨ To.loop-β ⟩
            S¹G.pp tt =∎))
 
         from-to : (x : S¹) → from (to x) == x
-        from-to = S¹-elim idp (↓-∘=idf-in' from to
+        from-to = S¹-elim idp (↓-∘=idf-in' from to {p = loop}
           (ap from (ap to loop)   =⟨ To.loop-β |in-ctx ap from ⟩
            ap from (S¹G.pp tt)    =⟨ From.pp-β tt ⟩
            loop =∎))

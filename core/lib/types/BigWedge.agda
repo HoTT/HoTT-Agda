@@ -120,7 +120,7 @@ module _ {i} (Pick : Bool → Ptd i) where
       f-g = Wedge-elim
         (λ _ → idp)
         (λ _ → idp)
-        (↓-∘=idf-in' f g $
+        (↓-∘=idf-in' f g {p = wglue} {v = idp} $
           ap f (ap g wglue)
             =⟨ ap (ap f) G.glue-β ⟩
           ap f (! (bwglue true) ∙ bwglue false)

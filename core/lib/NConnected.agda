@@ -54,7 +54,7 @@ abstract
 
           f-g : ∀ t → f (g t) == t
           f-g t = λ= $ λ a → transport
-            (λ r →  Trunc-rec {{snd (P (h a))}} _ r == t a)
+            (λ r → helper t (h a) r == t a)
             (! (contr-path(c (h a)) [ (a , idp) ]))
             idp
 
