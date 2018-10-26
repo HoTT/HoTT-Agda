@@ -342,10 +342,15 @@ Susp^-fmap : ∀ {i j} (n : ℕ) {A : Type i} {B : Type j}
 Susp^-fmap O f = f
 Susp^-fmap (S n) f = Susp-fmap (Susp^-fmap n f)
 
+⊙Susp^-fmap-pt : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
+  (f : X ⊙→ Y)
+  → Susp^-fmap n (fst f) (pt (⊙Susp^ n X)) == pt (⊙Susp^ n Y)
+⊙Susp^-fmap-pt O f = snd f
+⊙Susp^-fmap-pt (S n) f = idp
+
 ⊙Susp^-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
   → X ⊙→ Y → ⊙Susp^ n X ⊙→ ⊙Susp^ n Y
-⊙Susp^-fmap O f = f
-⊙Susp^-fmap (S n) f = ⊙Susp-fmap (Susp^-fmap n (fst f))
+⊙Susp^-fmap n f = Susp^-fmap n (fst f) , ⊙Susp^-fmap-pt n f
 
 Susp^-fmap-idf : ∀ {i} (n : ℕ) (A : Type i)
   → Susp^-fmap n (idf A) == idf (Susp^ n A)

@@ -2,10 +2,10 @@
 
 open import HoTT
 open import homotopy.EilenbergMacLane
+open import homotopy.EilenbergMacLane1
 open import homotopy.EilenbergMacLaneFunctor
 open import homotopy.SmashFmapConn
 open import homotopy.IterSuspSmash
-open import cohomology.CupProduct.OnEM.InLowDegrees
 open import cohomology.CupProduct.OnEM.InLowDegrees2
 
 module cohomology.CupProduct.OnEM.InAllDegrees where
@@ -206,3 +206,58 @@ module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
       (smash-truncate-conn m n)
       (λ _ → EM G⊗H.abgroup (S m + S n) , EM-level G⊗H.abgroup (S m + S n))
       (cpₕₕ' m n)
+
+  ∧-cp₀ₕ' : ∀ (n : ℕ)
+    → G.⊙El ∧ ⊙EM H (S n) → EM G⊗H.abgroup (S n)
+  ∧-cp₀ₕ' n =
+    Smash-rec
+      (λ g → Trunc-fmap (Susp^-fmap n (cp₀₁ G H g)))
+      (pt (⊙EM G⊗H.abgroup (S n)))
+      (pt (⊙EM G⊗H.abgroup (S n)))
+      (λ g → snd (⊙EM-fmap H G⊗H.abgroup (G⊗H.ins-r-hom g) (S n)))
+      (λ y →
+        EM-fmap H G⊗H.abgroup (G⊗H.ins-r-hom G.ident) (S n) y
+          =⟨ ap (λ φ → EM-fmap H G⊗H.abgroup φ (S n) y) $
+             group-hom= {φ = G⊗H.ins-r-hom G.ident} {ψ = cst-hom} $
+             λ= G⊗H.⊗-ident-l ⟩
+        EM-fmap H G⊗H.abgroup cst-hom (S n) y
+          =⟨ app= (EM-fmap-cst-hom H G⊗H.abgroup (S n)) y ⟩
+        pt (⊙EM G⊗H.abgroup (S n)) =∎)
+
+  ∧-cp₀ₕ : ∀ (n : ℕ)
+    → ⊙EM G 0 ∧ ⊙EM H (S n) → EM G⊗H.abgroup (S n)
+  ∧-cp₀ₕ n =
+    ∧-cp₀ₕ' n ∘
+    ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙idf (⊙EM H (S n)))
+
+  ∧-cpₕ₀' : ∀ (m : ℕ)
+    → ⊙EM G (S m) ∧ H.⊙El → EM G⊗H.abgroup (S m)
+  ∧-cpₕ₀' m =
+    Smash-rec
+      (λ x h → EM-fmap G G⊗H.abgroup (G⊗H.ins-l-hom h) (S m) x)
+      (pt (⊙EM G⊗H.abgroup (S m)))
+      (pt (⊙EM G⊗H.abgroup (S m)))
+      (λ x →
+        EM-fmap G G⊗H.abgroup (G⊗H.ins-l-hom (pt H.⊙El)) (S m) x
+          =⟨ ap (λ φ → EM-fmap G G⊗H.abgroup φ (S m) x) $
+             group-hom= {φ = G⊗H.ins-l-hom H.ident} {ψ = cst-hom} $
+             λ= G⊗H.⊗-ident-r ⟩
+        EM-fmap G G⊗H.abgroup cst-hom (S m) x
+          =⟨ app= (EM-fmap-cst-hom G G⊗H.abgroup (S m)) x ⟩
+        pt (⊙EM G⊗H.abgroup (S m)) =∎)
+      (λ h → snd (⊙EM-fmap G G⊗H.abgroup (G⊗H.ins-l-hom h) (S m)))
+
+  ∧-cpₕ₀ : ∀ (m : ℕ)
+    → ⊙EM G (S m) ∧ ⊙EM H 0 → EM G⊗H.abgroup (S m + 0)
+  ∧-cpₕ₀ m =
+    transport (EM G⊗H.abgroup) (+-comm 0 (S m)) ∘
+    ∧-cpₕ₀' m ∘
+    ∧-fmap (⊙idf (⊙EM G (S m))) (⊙<– (⊙emloop-equiv H.grp))
+
+  ∧-cp : ∀ (m n : ℕ)
+    → ⊙EM G m ∧ ⊙EM H n
+    → EM G⊗H.abgroup (m + n)
+  ∧-cp O O = ∧-cp₀₀ G H
+  ∧-cp O (S n) = ∧-cp₀ₕ n
+  ∧-cp (S m) O = ∧-cpₕ₀ m
+  ∧-cp (S m) (S n) = cpₕₕ m n

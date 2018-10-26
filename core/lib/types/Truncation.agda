@@ -203,8 +203,7 @@ Trunc-fpmap h = Trunc-elim (ap [_] ∘ h)
 
 Trunc-fmap-idf : ∀ {i} {n : ℕ₋₂} {A : Type i}
   → ∀ x → Trunc-fmap {n = n} (idf A) x == x
-Trunc-fmap-idf =
-  Trunc-elim (λ _ → idp)
+Trunc-fmap-idf = Trunc-elim (λ _ → idp)
 
 ⊙Trunc-fmap-idf : ∀ {i} {n : ℕ₋₂} {X : Ptd i}
   → ⊙Trunc-fmap (⊙idf X) ⊙∼ ⊙idf (⊙Trunc n X)
@@ -215,11 +214,18 @@ Trunc-fmap-coe : ∀ {i} {n : ℕ₋₂} {A B : Type i}
   → Trunc-fmap (coe p) == transport (Trunc n) p
 Trunc-fmap-coe p@idp = λ= Trunc-fmap-idf
 
+Trunc-fmap-cst : ∀ {i} {j} {n : ℕ₋₂} {A : Type i} {B : Type j}
+  → ∀ (b : B) → Trunc-fmap {n = n} {A = A} (cst b) ∼ cst [ b ]
+Trunc-fmap-cst b = Trunc-elim (λ a → idp)
+
+⊙Trunc-fmap-cst : ∀ {i} {j} {n : ℕ₋₂} {X : Ptd i} {Y : Ptd j}
+  → ⊙Trunc-fmap {n = n} (⊙cst {X = X} {Y = Y}) ⊙∼ ⊙cst
+⊙Trunc-fmap-cst {Y = Y} = Trunc-fmap-cst (pt Y) , idp
+
 Trunc-fmap-∘ : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type k}
   (g : B → C) (f : A → B)
   → ∀ x → Trunc-fmap {n = n} g (Trunc-fmap f x) == Trunc-fmap (g ∘ f) x
-Trunc-fmap-∘ g f =
-  Trunc-elim (λ _ → idp)
+Trunc-fmap-∘ g f = Trunc-elim (λ _ → idp)
 
 ⊙Trunc-fmap-∘ : ∀ {i j k} {n : ℕ₋₂} {A : Ptd i} {B : Ptd j} {C : Ptd k}
   (g : B ⊙→ C) (f : A ⊙→ B)

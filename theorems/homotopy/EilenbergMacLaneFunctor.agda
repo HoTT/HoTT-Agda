@@ -76,7 +76,7 @@ module _ {i} (G : Group i) where
   EM₁-fmap-idhom : EM₁-fmap (idhom G) ∼ idf (EM₁ G)
   EM₁-fmap-idhom =
     EM₁-set-elim
-      {P = λ x → EM₁-fmap (idhom G) x == idf (EM₁ G) x}
+      {P = λ x → EM₁-fmap (idhom G) x == x}
       {{λ x → has-level-apply (EM₁-level₁ G) (EM₁-fmap (idhom G) x) x}}
       idp $
     λ g → ↓-='-in' $ ! $
@@ -88,6 +88,24 @@ module _ {i} (G : Group i) where
 
   ⊙EM₁-fmap-idhom : ⊙EM₁-fmap (idhom G) ⊙∼ ⊙idf (⊙EM₁ G)
   ⊙EM₁-fmap-idhom = EM₁-fmap-idhom , idp
+
+module _ {i j} (G : Group i) (H : Group j) where
+
+  EM₁-fmap-cst-hom : EM₁-fmap (cst-hom {G = G} {H = H}) ∼ cst embase
+  EM₁-fmap-cst-hom =
+    EM₁-set-elim
+      {P = λ x → EM₁-fmap cst-hom x == embase}
+      {{λ x → has-level-apply (EM₁-level₁ H) (EM₁-fmap cst-hom x) embase}}
+      idp $
+    λ g → ↓-app=cst-in' $ ! $
+    ap (EM₁-fmap cst-hom) (emloop g)
+      =⟨ EM₁-fmap-emloop-β cst-hom g ⟩
+    emloop (Group.ident H)
+      =⟨ emloop-ident ⟩
+    idp =∎
+
+  ⊙EM₁-fmap-cst-hom : ⊙EM₁-fmap (cst-hom {G = G} {H = H}) ⊙∼ ⊙cst
+  ⊙EM₁-fmap-cst-hom = EM₁-fmap-cst-hom , idp
 
 module _ {i j} (G : AbGroup i) (H : AbGroup j) (φ : AbGroup.grp G →ᴳ AbGroup.grp H) where
 
@@ -490,6 +508,29 @@ module _ {i} (G : AbGroup i) where
   EM-fmap-idhom : ∀ (n : ℕ)
     → EM-fmap G G (idhom G.grp) n == idf (EM G n)
   EM-fmap-idhom n = ap fst (⊙EM-fmap-idhom n)
+
+module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
+
+  ⊙EM-fmap-cst-hom : ∀ (n : ℕ)
+    → ⊙EM-fmap G H cst-hom n == ⊙cst
+  ⊙EM-fmap-cst-hom O =
+    ⊙Ω-fmap (⊙EM₁-fmap cst-hom)
+      =⟨ ap ⊙Ω-fmap (⊙λ= (⊙EM₁-fmap-cst-hom (AbGroup.grp G) (AbGroup.grp H))) ⟩
+    ⊙Ω-fmap ⊙cst
+      =⟨ ⊙Ω-fmap-cst ⟩
+    ⊙cst =∎
+  ⊙EM-fmap-cst-hom (S n) =
+    ⊙Trunc-fmap (⊙Susp^-fmap n (⊙EM₁-fmap cst-hom))
+      =⟨ ap (⊙Trunc-fmap ∘ ⊙Susp^-fmap n) (⊙λ= (⊙EM₁-fmap-cst-hom (AbGroup.grp G) (AbGroup.grp H))) ⟩
+    ⊙Trunc-fmap (⊙Susp^-fmap n ⊙cst)
+      =⟨ ap ⊙Trunc-fmap (⊙Susp^-fmap-cst n) ⟩
+    ⊙Trunc-fmap ⊙cst
+      =⟨ ⊙λ= ⊙Trunc-fmap-cst ⟩
+    ⊙cst =∎
+
+  EM-fmap-cst-hom : ∀ (n : ℕ)
+    → EM-fmap G H cst-hom n == cst (pt (⊙EM H n))
+  EM-fmap-cst-hom n = ap fst (⊙EM-fmap-cst-hom n)
 
 transport-EM : ∀ {i} {G H : AbGroup i}
   (p : G == H) (n : ℕ)

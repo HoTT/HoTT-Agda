@@ -43,11 +43,37 @@ module TensorProduct₀ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     _⊗_ : G.El → H.El → El
     _⊗_ g h = insert (g , h)
 
-    lin-l : ∀ g₁ g₂ h → G.comp g₁ g₂ ⊗ h == comp (g₁ ⊗ h) (g₂ ⊗ h)
-    lin-l g₁ g₂ h = rel-holds (linear-l g₁ g₂ h)
+    ⊗-lin-l : ∀ g₁ g₂ h → G.comp g₁ g₂ ⊗ h == comp (g₁ ⊗ h) (g₂ ⊗ h)
+    ⊗-lin-l g₁ g₂ h = rel-holds (linear-l g₁ g₂ h)
 
-    lin-r : ∀ g h₁ h₂ → g ⊗ H.comp h₁ h₂ == comp (g ⊗ h₁) (g ⊗ h₂)
-    lin-r g h₁ h₂ = rel-holds (linear-r g h₁ h₂)
+    ⊗-lin-r : ∀ g h₁ h₂ → g ⊗ H.comp h₁ h₂ == comp (g ⊗ h₁) (g ⊗ h₂)
+    ⊗-lin-r g h₁ h₂ = rel-holds (linear-r g h₁ h₂)
+
+    ⊗-ident-l : ∀ h → G.ident ⊗ h == ident
+    ⊗-ident-l h = cancel-l (G.ident ⊗ h) $
+      comp (G.ident ⊗ h) (G.ident ⊗ h)
+        =⟨ ! (⊗-lin-l G.ident G.ident h) ⟩
+      G.comp G.ident G.ident ⊗ h
+        =⟨ ap (_⊗ h) (G.unit-l G.ident) ⟩
+      G.ident ⊗ h
+        =⟨ ! (unit-r (G.ident ⊗ h)) ⟩
+      comp (G.ident ⊗ h) ident =∎
+
+    ⊗-ident-r : ∀ g → g ⊗ H.ident == ident
+    ⊗-ident-r g = cancel-r (g ⊗ H.ident) $
+      comp (g ⊗ H.ident) (g ⊗ H.ident)
+        =⟨ ! (⊗-lin-r g H.ident H.ident) ⟩
+      g ⊗ H.comp H.ident H.ident
+        =⟨ ap (g ⊗_) (H.unit-l H.ident) ⟩
+      g ⊗ H.ident
+        =⟨ ! (unit-r (g ⊗ H.ident)) ⟩
+      comp (g ⊗ H.ident) ident =∎
+
+  ins-l-hom : H.El → G.grp →ᴳ grp
+  ins-l-hom h = group-hom (_⊗ h) (λ g₁ g₂ → ⊗-lin-l g₁ g₂ h)
+
+  ins-r-hom : G.El → H.grp →ᴳ grp
+  ins-r-hom g = group-hom (g ⊗_) (⊗-lin-r g)
 
   module BilinearMaps {k} (L : AbGroup k) where
 
@@ -164,8 +190,8 @@ module TensorProduct₁ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     b =
       record
       { bmap = λ g h → h H⊗G.⊗ g
-      ; linearity-l = λ g₁ g₂ h → H⊗G.lin-r h g₁ g₂
-      ; linearity-r = λ g h₁ h₂ → H⊗G.lin-l h₁ h₂ g
+      ; linearity-l = λ g₁ g₂ h → H⊗G.⊗-lin-r h g₁ g₂
+      ; linearity-r = λ g h₁ h₂ → H⊗G.⊗-lin-l h₁ h₂ g
       }
 
   swap : (G⊗H.grp →ᴳ H⊗G.grp)

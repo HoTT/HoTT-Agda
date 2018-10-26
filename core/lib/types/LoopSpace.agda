@@ -104,6 +104,9 @@ module _ {i} {X : Ptd i} where
 ⊙Ω-fmap-idf : ∀ {i} {X : Ptd i} → ⊙Ω-fmap (⊙idf X) == ⊙idf _
 ⊙Ω-fmap-idf = ⊙λ=' ap-idf idp
 
+⊙Ω-fmap-cst : ∀ {i} {j} {X : Ptd i} {Y : Ptd j} → ⊙Ω-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst
+⊙Ω-fmap-cst {Y = Y} = ⊙λ=' (ap-cst (pt Y)) idp
+
 ⊙Ω-fmap2-fst : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → ⊙Ω-fmap2 {X = X} {Y = Y} ⊙fst == ⊙fst
 ⊙Ω-fmap2-fst = ⊙λ=' (uncurry ap2-fst) idp

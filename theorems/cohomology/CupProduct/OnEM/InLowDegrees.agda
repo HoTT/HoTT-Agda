@@ -2,7 +2,8 @@
 
 open import HoTT
 open import homotopy.EilenbergMacLane
-open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
+open import homotopy.EilenbergMacLane1
+open import homotopy.EilenbergMacLaneFunctor
 open import homotopy.EM1HSpaceAssoc
 open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.FunCategory
@@ -15,36 +16,31 @@ private
   module H = AbGroup H
   module G⊗H = TensorProduct G H
   open G⊗H using (_⊗_)
+  open EMExplicit
+
+∧-cp₀₀' : G.⊙El ∧ H.⊙El → G⊗H.El
+∧-cp₀₀' =
+  Smash-rec
+    G⊗H._⊗_
+    G⊗H.ident
+    G⊗H.ident
+    G⊗H.⊗-ident-r
+    G⊗H.⊗-ident-l
+
+∧-cp₀₀ : ⊙EM G 0 ∧ ⊙EM H 0 → EM G⊗H.abgroup 0
+∧-cp₀₀ =
+  –> (emloop-equiv G⊗H.grp) ∘
+  ∧-cp₀₀' ∘
+  ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp))
 
 open EM₁HSpaceAssoc G⊗H.abgroup hiding (comp-functor) renaming (mult to EM₁-mult) public
 
-module _ (g : G.El) where
-  private
-    loop' : H.El → embase' G⊗H.grp == embase
-    loop' h = emloop (g ⊗ h)
+cp₀₁ : G.El → EM₁ H.grp → EM₁ G⊗H.grp
+cp₀₁ g = EM₁-fmap (G⊗H.ins-r-hom g)
 
-    comp' : (h₁ h₂ : H.El) → loop' (H.comp h₁ h₂) == loop' h₁ ∙ loop' h₂
-    comp' h₁ h₂ =
-      emloop (g ⊗ H.comp h₁ h₂)
-        =⟨ ap emloop (G⊗H.lin-r g h₁ h₂) ⟩
-      emloop (G⊗H.comp (g ⊗ h₁) (g ⊗ h₂))
-        =⟨ emloop-comp (g ⊗ h₁) (g ⊗ h₂) ⟩
-      emloop (g ⊗ h₁) ∙ emloop (g ⊗ h₂) =∎
-
-    module Rec = EM₁Level₁Rec {G = H.grp} {C = EM₁ G⊗H.grp} {{EM₁-level₁ G⊗H.grp}}
-                              embase
-                              (group-hom loop' comp')
-
-  abstract
-    cp₀₁ : EM₁ H.grp → EM₁ G⊗H.grp
-    cp₀₁ = Rec.f
-
-    cp₀₁-embase-β : cp₀₁ embase ↦ embase
-    cp₀₁-embase-β = Rec.embase-β
-    {-# REWRITE cp₀₁-embase-β #-}
-
-    cp₀₁-emloop-β : ∀ h → ap cp₀₁ (emloop h) == emloop (g ⊗ h)
-    cp₀₁-emloop-β = Rec.emloop-β
+abstract
+  cp₀₁-emloop-β : ∀ g h → ap (cp₀₁ g) (emloop h) == emloop (g ⊗ h)
+  cp₀₁-emloop-β g = EM₁-fmap-emloop-β (G⊗H.ins-r-hom g)
 
 cp₀₁-distr-l : (g₁ g₂ : G.El) (y : EM₁ H.grp)
   → cp₀₁ (G.comp g₁ g₂) y == EM₁-mult (cp₀₁ g₁ y) (cp₀₁ g₂ y)
@@ -72,7 +68,7 @@ cp₀₁-distr-l g₁ g₂ =
       emloop (g₁ ⊗ h) ∙ emloop (g₂ ⊗ h)
         =⟨ ! (emloop-comp (g₁ ⊗ h) (g₂ ⊗ h)) ⟩
       emloop (G⊗H.comp (g₁ ⊗ h) (g₂ ⊗ h))
-        =⟨ ap emloop (! (G⊗H.lin-l g₁ g₂ h)) ⟩
+        =⟨ ap emloop (! (G⊗H.⊗-lin-l g₁ g₂ h)) ⟩
       emloop (G.comp g₁ g₂ ⊗ h)
         =⟨ ! (cp₀₁-emloop-β (G.comp g₁ g₂) h) ⟩
       ap f (emloop h)
@@ -247,14 +243,12 @@ module _ where
 
 module CP₁₁ where
 
-  open EMExplicit G⊗H.abgroup
-
   private
     C : Type (lmax i j)
-    C = EM₁ H.grp → EM 2
+    C = EM₁ H.grp → EM G⊗H.abgroup 2
 
     C-level : has-level 2 C
-    C-level = Π-level (λ _ → EM-level 2)
+    C-level = Π-level (λ _ → EM-level G⊗H.abgroup 2)
 
     D₀ : TwoSemiCategory lzero i
     D₀ = group-to-cat G.grp
@@ -272,13 +266,13 @@ module CP₁₁ where
     D₃ = fun-cat (EM₁ H.grp) D₃'
 
     D₄' : TwoSemiCategory (lmax i j) (lmax i j)
-    D₄' = 2-type-fundamental-cat (EM 2)
+    D₄' = 2-type-fundamental-cat (EM G⊗H.abgroup 2)
 
     D₄ : TwoSemiCategory (lmax i j) (lmax i j)
     D₄ = fun-cat (EM₁ H.grp) D₄'
 
     D₅ : TwoSemiCategory (lmax i j) (lmax i j)
-    D₅ = 2-type-fundamental-cat (EM₁ H.grp → EM 2) {{C-level}}
+    D₅ = 2-type-fundamental-cat (EM₁ H.grp → EM G⊗H.abgroup 2) {{C-level}}
 
     F₀₁ : TwoSemiFunctor D₀ D₁
     F₀₁ = ab-group-cat-to-dual G
@@ -304,7 +298,7 @@ module CP₁₁ where
   F₀₄ : TwoSemiFunctor D₀ D₄
   F₀₄ = F₀₁ –F→ F₁₄
 
-  module F₄₅-Funext = FunextFunctors (EM₁ H.grp) (EM 2) {{⟨⟩}}
+  module F₄₅-Funext = FunextFunctors (EM₁ H.grp) (EM G⊗H.abgroup 2) {{⟨⟩}}
   F₄₅ : TwoSemiFunctor D₄ D₅
   F₄₅ = F₄₅-Funext.λ=-functor
 
@@ -326,7 +320,7 @@ module CP₁₁ where
     module CP₁₁-Rec = EM₁Rec {G = G.grp} {C = C} {{C-level}} F₀₅
 
   abstract
-    cp₁₁ : EM₁ G.grp → EM₁ H.grp → EM 2
+    cp₁₁ : EM₁ G.grp → EM₁ H.grp → EM G⊗H.abgroup 2
     cp₁₁ = CP₁₁-Rec.f
 
     cp₁₁-embase-β : cp₁₁ embase ↦ (λ _ → [ north ])

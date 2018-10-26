@@ -283,6 +283,9 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
   emloop-equiv : G.El ≃ (embase' G == embase)
   emloop-equiv = equiv emloop encode decode-encode encode-emloop
 
+  ⊙emloop-equiv : G.⊙El ⊙≃ ⊙Ω (⊙EM₁ G)
+  ⊙emloop-equiv = ≃-to-⊙≃ emloop-equiv emloop-ident
+
   instance
     EM₁-level₁ : {n : ℕ₋₂} → has-level (S (S (S n))) (EM₁ G)
     EM₁-level₁ {⟨-2⟩} = has-level-in pathspace-is-set
