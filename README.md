@@ -9,9 +9,10 @@ Setup
 -----
 
 The code is loosely broken into `hott-core` and `hott-theorems` Agda libraries.
-You need Agda 2.5.3 or newer
+You need Agda 2.5.3
 and include at least the path to `hott-core.agda-lib` in your Agda library list.
 See `CHANGELOG` of Agda 2.5 for more information.
+Support for Agda 2.5.4 or newer is currently lacking.
 
 Agda Options
 ------------
@@ -267,6 +268,7 @@ This directory contains proofs of interesting homotopy-theoretic theorems.
 - `EilenbergMacLane`: Defines the Eilenberg–MacLane spaces `⊙EM G n`, proves that `⊙Ω (⊙EM G (S n))` is pointedly equivalent to `⊙EM G n` for each `n` and that their homotopy groups are as required. See *Eilenberg-MacLane Spaces in Homotopy Type Theory* by Dan Licata and Eric Finster.
 - `EilenbergMacLane1`: Proves that the fundamental group of the Eilenberg–MacLane space `⊙EM₁ G` (which is defined as a HIT) is in fact `G`.
 - `FiberOfWedgeToProduct`: Let `X` of `Y` be two types with basepoints `x₀` and `y₀`. This contains a proof that the fiber of the induced map `X ∨ Y → X × Y` over a point `(x , y)` is equivalent to the join `(x₀ == x) * (y₀ == y)`.
+- `FinSet`: Equivalence between two different definitions of finite sets.
 - `FinWedge`: Contains helper functions and lemmas for dealing with wedges indexed over `Fin I` for some `I : ℕ`.
 - `Freudenthal`: Proves the Freudenthal suspension theorem.
 - `GroupSetsRepresentCovers`: Let `X` be a 0-connected type. This file gives an equivalence between coverings of `X` and `πS 0 X`-sets (where `πS 0 X` is the fundamental group of `X`).
@@ -281,6 +283,7 @@ This directory contains proofs of interesting homotopy-theoretic theorems.
 - `JoinSusp`: Contains equivalences `Bool * A ≃ Susp A`, `Susp A * B ≃ Susp (A * B)` and `⊙Sphere m ⊙* X ⊙≃ ⊙Susp^ (S m) X` ((m+1)-fold suspension is equivalent to joining with an m-sphere).
 - `LoopSpaceCircle`: Proves that the fundamental group of the circle is equivalent to the integers.
 - `ModalWedgeExtension`: Lemmas about modalities and the function `X ∨ Y → X × Y` for pointed types `X` and `Y`.
+- `Pigeonhole`: The finite pigeonhole principle.
 - `PathSetIsInitalCover`: Proves that the covering constructed from the path set of a type `X` is initial in the category of coverings of `X`.
 - `Pi2HSusp`: Given an H-space `X`, constructs an isomorphism `π₂-Susp : πS 1 (⊙Susp X) ≃ᴳ πS 0 X` between the fundamental group of `X` and the second homotopy group of its suspension.
 - `PinSn`: Proves that the n-th homotopy group of the n-sphere is isomorphic to the integers.
