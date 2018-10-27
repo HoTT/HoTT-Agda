@@ -22,11 +22,9 @@ pt (pBAut A) = A , [ idp ]
 
 BAut-trunc-path : ∀ {i} (A X : Type i) → (tp : Trunc -1 (A == X))
                   → Trunc -1 ((A , [ idp ]) == (X , tp) :> BAut A)
-BAut-trunc-path {i} A X = Trunc-elim (λ p → Trunc-level)
-                          λ p → [ pair= p (prop-has-all-paths-↓ Trunc-level) ]
+BAut-trunc-path {i} A X = Trunc-elim λ p → [ pair= p prop-has-all-paths-↓ ]
 
 BAut-conn : ∀ {i} (A : Type i) → is-connected 0 (BAut A)
-fst (BAut-conn A) = [ pt (pBAut A) ]
-snd (BAut-conn A) = Trunc-elim (λ x → raise-level (from-nat 0) Trunc-level [ A , [ idp ] ] x)
-                               (λ { (X , tp) → <– (Trunc=-equiv [ A , [ idp ] ] [ X , tp ])
-                                                  (BAut-trunc-path A X tp) })
+fst (has-level-apply (BAut-conn A)) = [ pt (pBAut A) ]
+snd (has-level-apply (BAut-conn A)) = Trunc-elim (λ { (X , tp) → <– (=ₜ-equiv [ A , [ idp ] ] [ X , tp ])
+                                                                    (BAut-trunc-path A X tp) })

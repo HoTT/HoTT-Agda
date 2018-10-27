@@ -174,8 +174,8 @@ module _ {i j k} {A : Type i} {B : Type j} (P : A ⊔ B → Type k) where
                               (inr _) → idp
 
 -- the empty type is a unit for the coproduct
-Coprod-unit-left : ∀ {i} (A : Type i) → ⊥ ⊔ A ≃ A
-Coprod-unit-left {i} (A) = equiv to from to-from from-to
+Coprod-unit-l : ∀ {i} (A : Type i) → ⊥ ⊔ A ≃ A
+Coprod-unit-l {i} (A) = equiv to from to-from from-to
   where
     to : ⊥ ⊔ A → A
     to (inl ())

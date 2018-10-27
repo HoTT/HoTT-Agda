@@ -53,6 +53,9 @@ import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInitalCover
 import homotopy.CircleCover
 
+{- finite sets -}
+import homotopy.FinSet
+
 {- van kampen -}
 -- see index3.agda
 
