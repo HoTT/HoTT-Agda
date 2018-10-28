@@ -2,9 +2,65 @@
 
 open import HoTT
 open import homotopy.EilenbergMacLane
+open import homotopy.EilenbergMacLane1
 open import homotopy.EilenbergMacLaneFunctor
 
 module cohomology.CupProduct.OnEM.CommutativityInLowDegrees where
+
+module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
+
+  private
+    module G = AbGroup G
+    module H = AbGroup H
+    module G⊗H = TensorProduct G H
+    module H⊗G = TensorProduct H G
+
+  import cohomology.CupProduct.OnEM.InLowDegrees G H as GH
+  import cohomology.CupProduct.OnEM.InLowDegrees H G as HG
+  open EMExplicit
+
+  ∧-cp₀₀'-comm : GroupHom.f G⊗H.swap ∘ GH.∧-cp₀₀'
+               ∼ HG.∧-cp₀₀' ∘ ∧-swap G.⊙El H.⊙El
+  ∧-cp₀₀'-comm =
+    Smash-elim
+      G⊗H.swap-β
+      p
+      p
+      (λ g → contr-center (↓-level (has-level-apply H⊗G.El-level _ _)))
+      (λ h → contr-center (↓-level (has-level-apply H⊗G.El-level _ _)))
+    where
+    p : GroupHom.f G⊗H.swap G⊗H.ident == H.ident H⊗G.⊗ G.ident
+    p =
+      GroupHom.f G⊗H.swap G⊗H.ident
+        =⟨ GroupHom.pres-ident G⊗H.swap ⟩
+      H⊗G.ident
+        =⟨ ! (H⊗G.⊗-ident-l G.ident) ⟩
+      H.ident H⊗G.⊗ G.ident =∎
+
+  ∧-cp₀₀-comm : EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 ∘ GH.∧-cp₀₀
+              ∼ HG.∧-cp₀₀ ∘ ∧-swap (⊙EM G 0) (⊙EM H 0)
+  ∧-cp₀₀-comm s =
+    (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 $
+     GH.∧-cp₀₀ s)
+      =⟨ EM₁-fmap-emloop-β G⊗H.swap $
+         GH.∧-cp₀₀' $
+         ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s ⟩
+    (–> (emloop-equiv H⊗G.grp) $
+     GroupHom.f G⊗H.swap $
+     GH.∧-cp₀₀' $
+     ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s)
+      =⟨ ap (–> (emloop-equiv H⊗G.grp)) $
+         ∧-cp₀₀'-comm $
+         ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s ⟩
+    (–> (emloop-equiv H⊗G.grp) $
+     HG.∧-cp₀₀' $
+     ∧-swap G.⊙El H.⊙El $
+     ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s)
+      =⟨ ap (–> (emloop-equiv H⊗G.grp)) $
+         ap (HG.∧-cp₀₀') $
+         ! $ ∧-swap-naturality (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s ⟩
+    (HG.∧-cp₀₀ $
+     ∧-swap (⊙EM G 0) (⊙EM H 0) s) =∎
 
 module CP₀₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
 

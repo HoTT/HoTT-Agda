@@ -8,6 +8,7 @@ open import homotopy.EilenbergMacLaneFunctor
 open import cohomology.CupProduct.OnEM.InLowDegrees
 open import cohomology.CupProduct.OnEM.InLowDegrees2
 open import cohomology.CupProduct.OnEM.InAllDegrees
+open import cohomology.CupProduct.OnEM.CommutativityInLowDegrees using (∧-cp₀₀-comm)
 open import cohomology.CupProduct.OnEM.CommutativityInLowDegrees2
 
 module cohomology.CupProduct.OnEM.CommutativityInAllDegrees {i} {j} (G : AbGroup i) (H : AbGroup j) where
@@ -26,23 +27,23 @@ cp-swap m n =
   transport (EM H⊗G.abgroup) (+-comm m n) ∘
   EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap (m + n)
 
-cpₕₕ'-comm : ∀ (m n : ℕ) (x : ⊙Susp^ m (⊙EM₁ G.grp) ∧ ⊙Susp^ n (⊙EM₁ H.grp))
+∧-cpₕₕ'-comm : ∀ (m n : ℕ) (x : ⊙Susp^ m (⊙EM₁ G.grp) ∧ ⊙Susp^ n (⊙EM₁ H.grp))
   → (cp-swap (S m) (S n) $
-     cpₕₕ' G H m n x)
+     ∧-cpₕₕ' G H m n x)
     ==
     (cond-neg H⊗G.abgroup (S n + S m) (and (odd (S m)) (odd (S n))) $
-     cpₕₕ' H G n m $
-     ∧-swap _ _ x)
-cpₕₕ'-comm m n x =
+     ∧-cpₕₕ' H G n m $
+     ∧-swap (⊙Susp^ m (⊙EM₁ G.grp)) (⊙Susp^ n (⊙EM₁ H.grp)) x)
+∧-cpₕₕ'-comm m n x =
   (transport (EM H⊗G.abgroup) (+-comm (S m) (S n)) $
    EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap (S m + S n) $
-   cpₕₕ' G H m n x)
+   ∧-cpₕₕ' G H m n x)
     =⟨ ap (transport (EM H⊗G.abgroup) (+-comm (S m) (S n))) $
        app= (! (transport-EM-uaᴬᴳ G⊗H.abgroup H⊗G.abgroup G⊗H.commutative (S m + S n))) $
-       cpₕₕ' G H m n x ⟩
+       ∧-cpₕₕ' G H m n x ⟩
   (transport (EM H⊗G.abgroup) (+-comm (S m) (S n)) $
    transport (λ K → EM K (S m + S n)) (uaᴬᴳ G⊗H.abgroup H⊗G.abgroup G⊗H.commutative) $
-   cpₕₕ' G H m n x)
+   ∧-cpₕₕ' G H m n x)
     =⟨ ap (transport (EM H⊗G.abgroup) (+-comm (S m) (S n))) $
        app= (! (transp-naturality {B = λ K → Susp^ (m + n) (EM K 2)}
                                   {C = λ K → EM K (S m + S n)}
@@ -331,7 +332,7 @@ cpₕₕ'-comm m n x =
        Σ^∧Σ^-out (⊙EM₁ H.grp) (⊙EM₁ G.grp) n m $
        ∧-swap (⊙Susp^ m (⊙EM₁ G.grp)) (⊙Susp^ n (⊙EM₁ H.grp)) x ⟩
   (cond-neg H⊗G.abgroup (S n + S m) (and (odd (S m)) (odd (S n))) $
-   cpₕₕ' H G n m $
+   ∧-cpₕₕ' H G n m $
    ∧-swap (⊙Susp^ m (⊙EM₁ G.grp)) (⊙Susp^ n (⊙EM₁ H.grp)) x) =∎
   where
     p₁ : transport (λ K → Susp^ (m + n) (EM K 2)) (uaᴬᴳ G⊗H.abgroup H⊗G.abgroup G⊗H.commutative)
@@ -363,3 +364,143 @@ cpₕₕ'-comm m n x =
     bp true  false = idp
     bp false true  = idp
     bp false false = idp
+
+∧-cpₕₕ-comm : ∀ (m n : ℕ) (x : ⊙EM G (S m) ∧ ⊙EM H (S n))
+  → (cp-swap (S m) (S n) $
+     ∧-cpₕₕ G H m n x)
+    ==
+    (cond-neg H⊗G.abgroup (S n + S m) (and (odd (S m)) (odd (S n))) $
+     ∧-cpₕₕ H G n m $
+     ∧-swap (⊙EM G (S m)) (⊙EM H (S n)) x)
+∧-cpₕₕ-comm m n =
+  conn-extend (smash-truncate-conn G H m n) P $ λ y →
+  (cp-swap (S m) (S n) $
+   ∧-cpₕₕ G H m n $
+   smash-truncate G H m n y)
+    =⟨ ap (cp-swap (S m) (S n)) $
+       conn-extend-β
+         (smash-truncate-conn G H m n)
+         (λ _ → EM G⊗H.abgroup (S m + S n) , EM-level G⊗H.abgroup (S m + S n))
+         (∧-cpₕₕ' G H m n)
+         y ⟩
+  (cp-swap (S m) (S n) $
+   ∧-cpₕₕ' G H m n y)
+    =⟨ ∧-cpₕₕ'-comm m n y ⟩
+  (cond-neg H⊗G.abgroup (S (n + S m)) (and (odd (S m)) (odd (S n))) $
+   ∧-cpₕₕ' H G n m $
+   ∧-swap (⊙Susp^ m (⊙EM₁ G.grp)) (⊙Susp^ n (⊙EM₁ H.grp)) y)
+    =⟨ ap (cond-neg H⊗G.abgroup (S (n + S m)) (and (odd (S m)) (odd (S n)))) $ ! $
+       conn-extend-β
+         (smash-truncate-conn H G n m)
+         (λ _ → EM H⊗G.abgroup (S n + S m) , EM-level H⊗G.abgroup (S n + S m))
+         (∧-cpₕₕ' H G n m) $
+       ∧-swap (⊙Susp^ m (⊙EM₁ G.grp)) (⊙Susp^ n (⊙EM₁ H.grp)) y ⟩
+  (cond-neg H⊗G.abgroup (S (n + S m)) (and (odd (S m)) (odd (S n))) $
+   ∧-cpₕₕ H G n m $
+   smash-truncate H G n m $
+   ∧-swap (⊙Susp^ m (⊙EM₁ G.grp)) (⊙Susp^ n (⊙EM₁ H.grp)) y)
+    =⟨ ap (cond-neg H⊗G.abgroup (S (n + S m)) (and (odd (S m)) (odd (S n)))) $
+       ap (∧-cpₕₕ H G n m) $
+       ∧-swap-naturality
+         ([_] {n = ⟨ S m ⟩} {A = Susp^ m (EM₁ G.grp)} , idp)
+         ([_] {n = ⟨ S n ⟩} {A = Susp^ n (EM₁ H.grp)} , idp)
+         y ⟩
+  (cond-neg H⊗G.abgroup (S (n + S m)) (and (odd (S m)) (odd (S n))) $
+   ∧-cpₕₕ H G n m $
+   ∧-swap (⊙EM G (S m)) (⊙EM H (S n)) $
+   smash-truncate G H m n y) =∎
+  where
+  Q : ⊙EM G (S m) ∧ ⊙EM H (S n) → Type (lmax i j)
+  Q x =
+    (cp-swap (S m) (S n) $
+     ∧-cpₕₕ G H m n x)
+    ==
+    (cond-neg H⊗G.abgroup (S n + S m) (and (odd (S m)) (odd (S n))) $
+     ∧-cpₕₕ H G n m $
+     ∧-swap (⊙EM G (S m)) (⊙EM H (S n)) x)
+  Q-level : ∀ x → has-level ⟨ S m + S n ⟩ (Q x)
+  Q-level x =
+    transport (λ k → has-level ⟨ k ⟩ (Q x)) (+-comm (S n) (S m)) $
+    =-preserves-level (EM-level H⊗G.abgroup (S n + S m))
+  P : ⊙EM G (S m) ∧ ⊙EM H (S n) → ⟨ S m + S n ⟩ -Type (lmax i j)
+  P x = Q x , Q-level x
+
+∧-cp-comm : ∀ (m n : ℕ) (x : ⊙EM G m ∧ ⊙EM H n)
+  → (cp-swap m n $
+     ∧-cp G H m n x)
+    ==
+    (cond-neg H⊗G.abgroup (n + m) (and (odd m) (odd n)) $
+     ∧-cp H G n m $
+     ∧-swap (⊙EM G m) (⊙EM H n) x)
+∧-cp-comm O O x =
+  (transport (EM H⊗G.abgroup) (+-comm 0 0) $
+   EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 $
+   ∧-cp G H 0 0 x)
+    =⟨ app= (ap (transport (EM H⊗G.abgroup)) (set-path ℕ-level (+-comm 0 0) idp)) $
+       EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 $
+       ∧-cp G H 0 0 x ⟩
+  (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 $
+   ∧-cp G H 0 0 x)
+    =⟨ ∧-cp₀₀-comm G H x ⟩
+  (∧-cp H G 0 0 $
+   ∧-swap (⊙EM G 0) (⊙EM H 0) x) =∎
+∧-cp-comm O (S n) x =
+  (cp-swap 0 (S n) $
+   ∧-cp₀ₕ G H n x)
+    =⟨ ap (cp-swap 0 (S n)) $
+       ap (∧-cp₀ₕ G H n) $
+       ! $ ∧-swap-inv (⊙EM G 0) (⊙EM H (S n)) x ⟩
+  (∧-cpₕ₀ H G n $
+   ∧-swap (⊙EM G 0) (⊙EM H (S n)) x) =∎
+∧-cp-comm (S m) O x =
+  (cp-swap (S m) 0 $
+   ∧-cpₕ₀ G H m x)
+    =⟨ ! $ app= (transp-naturality (λ {k} → EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap k) (+-comm (S m) 0)) $
+       ∧-cpₕ₀ G H m x ⟩
+  (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap (S m) $
+   transport (EM G⊗H.abgroup) (+-comm (S m) 0) $
+   ∧-cpₕ₀ G H m x)
+    =⟨ ap (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap (S m)) $
+       ! $ transp-∙ {B = EM G⊗H.abgroup} (+-comm 0 (S m)) (+-comm (S m) 0) $
+       EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap (S m) $
+       ∧-cp₀ₕ H G m $
+       ∧-swap (⊙EM G (S m)) (⊙EM H 0) x ⟩
+  (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap (S m) $
+   transport (EM G⊗H.abgroup) (+-comm 0 (S m) ∙ +-comm (S m) 0) $
+   EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap (S m) $
+   ∧-cp₀ₕ H G m $
+   ∧-swap (⊙EM G (S m)) (⊙EM H 0) x)
+    =⟨ ap (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap (S m)) $
+       app= (ap (transport (EM G⊗H.abgroup))
+                (set-path ℕ-level (+-comm 0 (S m) ∙ +-comm (S m) 0) idp)) $
+       EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap (S m) $
+       ∧-cp₀ₕ H G m $
+       ∧-swap (⊙EM G (S m)) (⊙EM H 0) x ⟩
+  (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap (S m) $
+   EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap (S m) $
+   ∧-cp₀ₕ H G m $
+   ∧-swap (⊙EM G (S m)) (⊙EM H 0) x)
+    =⟨ ! $ app= (EM-fmap-∘ H⊗G.abgroup G⊗H.abgroup H⊗G.abgroup G⊗H.swap H⊗G.swap (S m)) $
+       ∧-cp₀ₕ H G m $
+       ∧-swap (⊙EM G (S m)) (⊙EM H 0) x ⟩
+  (EM-fmap H⊗G.abgroup H⊗G.abgroup (G⊗H.swap ∘ᴳ H⊗G.swap) (S m) $
+   ∧-cp₀ₕ H G m $
+   ∧-swap (⊙EM G (S m)) (⊙EM H 0) x)
+    =⟨ app= (ap (λ φ → EM-fmap H⊗G.abgroup H⊗G.abgroup φ (S m)) H⊗G.swap-swap-idhom) $
+       ∧-cp₀ₕ H G m $
+       ∧-swap (⊙EM G (S m)) (⊙EM H 0) x ⟩
+  (EM-fmap H⊗G.abgroup H⊗G.abgroup (idhom H⊗G.grp) (S m) $
+   ∧-cp₀ₕ H G m $
+   ∧-swap (⊙EM G (S m)) (⊙EM H 0) x)
+    =⟨ app= (EM-fmap-idhom H⊗G.abgroup (S m)) $
+       ∧-cp₀ₕ H G m $
+       ∧-swap (⊙EM G (S m)) (⊙EM H 0) x ⟩
+  (∧-cp₀ₕ H G m $
+   ∧-swap (⊙EM G (S m)) (⊙EM H 0) x)
+    =⟨ app= (ap (cond-neg H⊗G.abgroup (S m)) (! (and-false-r (odd (S m))))) $
+       ∧-cp₀ₕ H G m $
+       ∧-swap (⊙EM G (S m)) (⊙EM H 0) x ⟩
+  (cond-neg H⊗G.abgroup (S m) (and (odd (S m)) (odd O)) $
+   ∧-cp₀ₕ H G m $
+   ∧-swap (⊙EM G (S m)) (⊙EM H 0) x) =∎
+∧-cp-comm (S m) (S n) x = ∧-cpₕₕ-comm m n x
