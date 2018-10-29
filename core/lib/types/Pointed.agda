@@ -55,13 +55,31 @@ module lib.types.Pointed where
 ⊙∘-cst-r {X = X} f = (λ _ → snd f) , ↓-idf=cst-in' idp
 
 private
-  ⊙coe-pt : ∀ {i} {A B : Ptd i} (p : A == B)
-    → coe (ap de⊙ p) (pt A) == pt B
+  ⊙coe-pt : ∀ {i} {X Y : Ptd i} (p : X == Y)
+    → coe (ap de⊙ p) (pt X) == pt Y
   ⊙coe-pt idp = idp
 
-⊙coe : ∀ {i} {A B : Ptd i}
-  → A == B → A ⊙→ B
+⊙coe : ∀ {i} {X Y : Ptd i}
+  → X == Y → X ⊙→ Y
 ⊙coe p = coe (ap de⊙ p) , ⊙coe-pt p
+
+private
+  ⊙coe'-pt : ∀ {i} {X Y : Ptd i} (p : de⊙ X == de⊙ Y) (q : pt X == pt Y [ idf _ ↓ p ])
+    → coe p (pt X) == pt Y
+  ⊙coe'-pt p@idp q = q
+
+⊙coe' : ∀ {i} {X Y : Ptd i} (p : de⊙ X == de⊙ Y) (q : pt X == pt Y [ idf _ ↓ p ])
+  → X ⊙→ Y
+⊙coe' p q = coe p , ⊙coe'-pt p q
+
+private
+  ⊙transport-pt : ∀ {i j} {A : Type i} (B : A → Ptd j) {x y : A} (p : x == y)
+    → transport (de⊙ ∘ B) p (pt (B x)) == pt (B y)
+  ⊙transport-pt B idp = idp
+
+⊙transport : ∀ {i j} {A : Type i} (B : A → Ptd j) {x y : A} (p : x == y)
+  → (B x ⊙→ B y)
+⊙transport B p = transport (de⊙ ∘ B) p , ⊙transport-pt B p
 
 {- Pointed equivalences -}
 

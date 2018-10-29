@@ -5,6 +5,7 @@ open import lib.NConnected
 open import lib.types.Bool
 open import lib.types.Nat
 open import lib.types.Paths
+open import lib.types.Pointed
 open import lib.types.TLevel
 open import lib.types.Suspension
 open import lib.types.Truncation
@@ -144,6 +145,27 @@ Susp^-comm-seq m n {A} =
 Susp^-comm : ∀ {i} (m n : ℕ) {A : Type i}
   → Susp^ m (Susp^ n A) == Susp^ n (Susp^ m A)
 Susp^-comm m n {A} = ↯ (Susp^-comm-seq m n {A})
+
+Susp^-swap : ∀ {i} (m n : ℕ) {A : Type i}
+  → Susp^ m (Susp^ n A)
+  → Susp^ n (Susp^ m A)
+Susp^-swap m n {A} = coe (Susp^-comm m n {A})
+
+abstract
+  Susp^-comm-pt : ∀ {i} (m n : ℕ) {X : Ptd i}
+    → Susp^-pt m (⊙Susp^ n X) == Susp^-pt n (⊙Susp^ m X) [ idf _ ↓ Susp^-comm m n ]
+  Susp^-comm-pt m n {X} =
+    Susp^-+-pt m n ∙ᵈ
+    ↓-ap-in (idf _) (λ k → Susp^ k (de⊙ X)) (apd (λ k → Susp^-pt k X) (+-comm m n)) ∙ᵈ
+    !ᵈ (Susp^-+-pt n m)
+
+⊙Susp^-comm : ∀ {i} (m n : ℕ) {X : Ptd i}
+  → ⊙Susp^ m (⊙Susp^ n X) == ⊙Susp^ n (⊙Susp^ m X)
+⊙Susp^-comm m n {X} = ptd= (Susp^-comm m n {de⊙ X}) (Susp^-comm-pt m n)
+
+⊙Susp^-swap : ∀ {i} (m n : ℕ) {X : Ptd i}
+  → ⊙Susp^ m (⊙Susp^ n X) ⊙→ ⊙Susp^ n (⊙Susp^ m X)
+⊙Susp^-swap m n {X} = ⊙coe' (Susp^-comm m n {de⊙ X}) (Susp^-comm-pt m n)
 
 abstract
   Susp^-comm-diag : ∀ {i} (m : ℕ) {A : Type i}
@@ -633,6 +655,18 @@ module _ {i} (A : Type i) (m : ℕ₋₂) where
   Susp^-Trunc-equiv : ∀ (n : ℕ)
     → Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n (Trunc m A)) ≃ Trunc (⟨ n ⟩₋₂ +2+ m) (Susp^ n A)
   Susp^-Trunc-equiv n = equiv (to n) (from n) (to-from n) (from-to n)
+
+module _ {i} (X : Ptd i) (m : ℕ₋₂) where
+
+  Susp^-Trunc-swap-pt : ∀ (n : ℕ)
+    → Susp^-Trunc-swap (de⊙ X) m n (pt (⊙Susp^ n (⊙Trunc m X))) ==
+      pt (⊙Trunc (⟨ n ⟩₋₂ +2+ m) (⊙Susp^ n X))
+  Susp^-Trunc-swap-pt O = idp
+  Susp^-Trunc-swap-pt (S n) = idp
+
+  ⊙Susp^-Trunc-swap : ∀ (n : ℕ)
+    → ⊙Susp^ n (⊙Trunc m X) ⊙→ ⊙Trunc (⟨ n ⟩₋₂ +2+ m) (⊙Susp^ n X)
+  ⊙Susp^-Trunc-swap n = Susp^-Trunc-swap (de⊙ X) m n , Susp^-Trunc-swap-pt n
 
 module _ {i} {j} {A : Type i} {B : Type j} (f : A → B) (m : ℕ₋₂) where
 

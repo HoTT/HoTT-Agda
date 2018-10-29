@@ -27,11 +27,17 @@ private
     G⊗H.⊗-ident-r
     G⊗H.⊗-ident-l
 
+⊙∧-cp₀₀' : G.⊙El ⊙∧ H.⊙El ⊙→ G⊗H.⊙El
+⊙∧-cp₀₀' = ∧-cp₀₀' , G⊗H.⊗-ident-l H.ident
+
+⊙∧-cp₀₀ : ⊙EM G 0 ⊙∧ ⊙EM H 0 ⊙→ ⊙EM G⊗H.abgroup 0
+⊙∧-cp₀₀ =
+  ⊙–> (⊙emloop-equiv G⊗H.grp) ⊙∘
+  ⊙∧-cp₀₀' ⊙∘
+  ⊙∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp))
+
 ∧-cp₀₀ : ⊙EM G 0 ∧ ⊙EM H 0 → EM G⊗H.abgroup 0
-∧-cp₀₀ =
-  –> (emloop-equiv G⊗H.grp) ∘
-  ∧-cp₀₀' ∘
-  ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp))
+∧-cp₀₀ = fst ⊙∧-cp₀₀
 
 open EM₁HSpaceAssoc G⊗H.abgroup hiding (comp-functor) renaming (mult to EM₁-mult) public
 

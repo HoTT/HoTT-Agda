@@ -67,20 +67,28 @@ abstract
               helper (k ∘ h) b [ (xl , p) ] == k b
             lemma xl ._ idp = idp
 
-conn-extend : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
-  → {h : A → B} → has-conn-fibers n h
-  → (P : B → n -Type k)
-  → Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-conn-extend c P f = is-equiv.g (pre∘-conn-is-equiv c P) f
+module ConnExtend {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
+                  {h : A → B} (c : has-conn-fibers n h)
+                  (P : B → n -Type k) (f : Π A (fst ∘ P ∘ h)) where
 
-conn-out = conn-extend
+  ext : Π B (fst ∘ P)
+  ext = is-equiv.g (pre∘-conn-is-equiv c P) f
 
-conn-extend-β : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
-  {h : A → B} (c : has-conn-fibers n h)
-  (P : B → n -Type k) (f : Π A (fst ∘ P ∘ h))
-  → ∀ a → (conn-extend c P f (h a)) == f a
-conn-extend-β c P f = app= (is-equiv.f-g (pre∘-conn-is-equiv c P) f)
+  ext-β : ∀ a → ext (h a) == f a
+  ext-β = app= (is-equiv.f-g (pre∘-conn-is-equiv c P) f)
 
+open ConnExtend renaming (ext to conn-extend; ext-β to conn-extend-β) public
+
+module ⊙ConnExtend {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {n : ℕ₋₂}
+                   (h : X ⊙→ Y) (c : has-conn-fibers n (fst h))
+                   (Z-level : has-level n (de⊙ Z)) (f : X ⊙→ Z) where
+
+  open ConnExtend c (λ _ → de⊙ Z , Z-level) (fst f) public
+
+  ⊙ext : Y ⊙→ Z
+  ⊙ext = ext , ap ext (! (snd h)) ∙ ext-β (pt X) ∙ snd f
+
+open ⊙ConnExtend using () renaming (⊙ext to ⊙conn-extend) public
 
 {- generalized "almost induction principle" for maps into ≥n-types
    TODO: rearrange this to use ≤T?                                 -}

@@ -18,4 +18,4 @@ module index2stage2 where
 import cw.cohomology.AxiomaticIsoCellular
 
 {- cup product -}
-import cohomology.CupProduct.OnEM.CommutativityInAllDegrees
+import cohomology.CupProduct.Definition

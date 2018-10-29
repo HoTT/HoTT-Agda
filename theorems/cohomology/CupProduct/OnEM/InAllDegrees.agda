@@ -19,6 +19,11 @@ module _ {i} (A : AbGroup i) where
   inv-path : A == A
   inv-path = uaᴬᴳ A A (inv-iso A)
 
+  ⊙cond-neg : ∀ (k : ℕ) → Bool
+    → ⊙EM A k ⊙→ ⊙EM A k
+  ⊙cond-neg k b =
+    ⊙transport (λ G → ⊙EM G k) {x = A} {y = A} (Bool-elim inv-path idp b)
+
   cond-neg : ∀ (k : ℕ) → Bool
     → EM A k → EM A k
   cond-neg k b =
@@ -65,13 +70,17 @@ module _ {i} (A : AbGroup i) where
     transport (λ G → EM G (S (S k))) {x = A} {y = A} inv-path x =∎
   maybe-Susp^-flip-cond-neg (S k) false h x = Trunc-fmap-idf x
 
+  ⊙EM2-Susp : ∀ (k : ℕ)
+    → ⊙Susp^ k (⊙EM A 2) ⊙→ ⊙EM A (S (S k))
+  ⊙EM2-Susp k =
+    ⊙transport (λ l → ⊙Trunc l (⊙Susp^ (S k) (⊙EM₁ A.grp))) (+2+-comm ⟨ k ⟩₋₂ 2) ⊙∘
+    ⊙Trunc-fmap (⊙Susp^-swap k 1 {⊙EM₁ A.grp}) ⊙∘
+    ⊙Susp^-Trunc-swap (⊙Susp (EM₁ A.grp)) 2 k
+
   EM2-Susp : ∀ (k : ℕ)
     → Susp^ k (EM A 2)
     → EM A (S (S k))
-  EM2-Susp k =
-    transport (λ l → Trunc l (Susp^ (S k) (EM₁ A.grp))) (+2+-comm ⟨ k ⟩₋₂ 2) ∘
-    Trunc-fmap (coe (Susp^-comm k 1 {EM₁ A.grp})) ∘
-    Susp^-Trunc-swap (Susp (EM₁ A.grp)) 2 k
+  EM2-Susp k = fst (⊙EM2-Susp k)
 
   EM2-Susp-maybe-Susp^-flip : ∀ (k : ℕ) (b : Bool)
     → (k == 0 → b == false)
@@ -126,13 +135,17 @@ module _ {i} (A : AbGroup i) where
         =⟨ ! (Susp-fmap-maybe-Susp^-flip k b h (coe (Susp^-comm k 1) y)) ⟩
       maybe-Susp^-flip (S k) b (coe (Susp^-comm k 1) y) =∎
 
+  ⊙cpₕₕ'' : ∀ (m n : ℕ)
+    → ⊙Susp^ (m + n) (⊙EM A 2) ⊙→ ⊙EM A (S m + S n)
+  ⊙cpₕₕ'' m n =
+    ⊙cond-neg (S m + S n) (odd n) ⊙∘
+    ⊙transport (⊙EM A) (! (+-βr (S m) n)) ⊙∘
+    ⊙EM2-Susp (m + n)
+
   cpₕₕ'' : ∀ (m n : ℕ)
     → Susp^ (m + n) (EM A 2)
     → EM A (S m + S n)
-  cpₕₕ'' m n =
-    cond-neg (S m + S n) (odd n) ∘
-    transport (EM A) (! (+-βr (S m) n)) ∘
-    EM2-Susp (m + n)
+  cpₕₕ'' m n = fst (⊙cpₕₕ'' m n)
 
 module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
@@ -142,21 +155,30 @@ module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     module G⊗H = TensorProduct G H
   open EMExplicit
 
+  ⊙∧-cpₕₕ' : ∀ (m n : ℕ)
+    → ⊙Susp^ m (⊙EM₁ G.grp) ⊙∧ ⊙Susp^ n (⊙EM₁ H.grp) ⊙→ ⊙EM G⊗H.abgroup (S m + S n)
+  ⊙∧-cpₕₕ' m n =
+    ⊙cpₕₕ'' G⊗H.abgroup m n ⊙∘
+    ⊙Susp^-fmap (m + n) (⊙∧-cp₁₁ G H) ⊙∘
+    ⊙Σ^∧Σ^-out (⊙EM₁ G.grp) (⊙EM₁ H.grp) m n
+
   ∧-cpₕₕ' : ∀ (m n : ℕ)
     → ⊙Susp^ m (⊙EM₁ G.grp) ∧ ⊙Susp^ n (⊙EM₁ H.grp)
     → EM G⊗H.abgroup (S m + S n)
-  ∧-cpₕₕ' m n =
-    cpₕₕ'' G⊗H.abgroup m n ∘
-    Susp^-fmap (m + n) (∧-cp₁₁ G H) ∘
-    Σ^∧Σ^-out (⊙EM₁ G.grp) (⊙EM₁ H.grp) m n
+  ∧-cpₕₕ' m n = fst (⊙∧-cpₕₕ' m n)
+
+  ⊙smash-truncate : ∀ (m n : ℕ)
+    → ⊙Susp^ m (⊙EM₁ G.grp) ⊙∧ ⊙Susp^ n (⊙EM₁ H.grp)
+    ⊙→ ⊙EM G (S m) ⊙∧ ⊙EM H (S n)
+  ⊙smash-truncate m n =
+    ⊙∧-fmap
+      ([_] {n = ⟨ S m ⟩} {A = Susp^ m (EM₁ G.grp)} , idp)
+      ([_] {n = ⟨ S n ⟩} {A = Susp^ n (EM₁ H.grp)} , idp)
 
   smash-truncate : ∀ (m n : ℕ)
     → ⊙Susp^ m (⊙EM₁ G.grp) ∧ ⊙Susp^ n (⊙EM₁ H.grp)
     → ⊙EM G (S m) ∧ ⊙EM H (S n)
-  smash-truncate m n =
-    ∧-fmap
-      ([_] {n = ⟨ S m ⟩} {A = Susp^ m (EM₁ G.grp)} , idp)
-      ([_] {n = ⟨ S n ⟩} {A = Susp^ n (EM₁ H.grp)} , idp)
+  smash-truncate m n = fst (⊙smash-truncate m n)
 
   smash-truncate-conn : ∀ (m n : ℕ)
     → has-conn-fibers ⟨ S m + S n ⟩ (smash-truncate m n)
@@ -198,14 +220,21 @@ module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
         =⟨ minT-out-l ≤T-refl ⟩
       ⟨ S m + S n ⟩ =∎
 
+  module SmashCPₕₕ (m n : ℕ) =
+    ⊙ConnExtend
+      (⊙smash-truncate m n)
+      (smash-truncate-conn m n)
+      (EM-level G⊗H.abgroup (S m + S n))
+      (⊙∧-cpₕₕ' m n)
+
+  ⊙∧-cpₕₕ : ∀ (m n : ℕ)
+    → ⊙EM G (S m) ⊙∧ ⊙EM H (S n) ⊙→ ⊙EM G⊗H.abgroup (S m + S n)
+  ⊙∧-cpₕₕ m n = SmashCPₕₕ.⊙ext m n
+
   ∧-cpₕₕ : ∀ (m n : ℕ)
     → ⊙EM G (S m) ∧ ⊙EM H (S n)
     → EM G⊗H.abgroup (S m + S n)
-  ∧-cpₕₕ m n =
-    conn-extend
-      (smash-truncate-conn m n)
-      (λ _ → EM G⊗H.abgroup (S m + S n) , EM-level G⊗H.abgroup (S m + S n))
-      (∧-cpₕₕ' m n)
+  ∧-cpₕₕ m n = fst (⊙∧-cpₕₕ m n)
 
   ∧-cp₀ₕ' : ∀ (n : ℕ)
     → G.⊙El ∧ ⊙EM H (S n) → EM G⊗H.abgroup (S n)
@@ -224,11 +253,19 @@ module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
           =⟨ app= (EM-fmap-cst-hom H G⊗H.abgroup (S n)) y ⟩
         pt (⊙EM G⊗H.abgroup (S n)) =∎)
 
+  ⊙∧-cp₀ₕ' : ∀ (n : ℕ)
+    → G.⊙El ⊙∧ ⊙EM H (S n) ⊙→ ⊙EM G⊗H.abgroup (S n)
+  ⊙∧-cp₀ₕ' n = ∧-cp₀ₕ' n , snd (⊙Trunc-fmap (⊙Susp^-fmap n (cp₀₁ G H G.ident , idp)))
+
+  ⊙∧-cp₀ₕ : ∀ (n : ℕ)
+    → ⊙EM G 0 ⊙∧ ⊙EM H (S n) ⊙→ ⊙EM G⊗H.abgroup (S n)
+  ⊙∧-cp₀ₕ n =
+    ⊙∧-cp₀ₕ' n ⊙∘
+    ⊙∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙idf (⊙EM H (S n)))
+
   ∧-cp₀ₕ : ∀ (n : ℕ)
     → ⊙EM G 0 ∧ ⊙EM H (S n) → EM G⊗H.abgroup (S n)
-  ∧-cp₀ₕ n =
-    ∧-cp₀ₕ' n ∘
-    ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙idf (⊙EM H (S n)))
+  ∧-cp₀ₕ n = fst (⊙∧-cp₀ₕ n)
 
 module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
@@ -236,6 +273,14 @@ module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     module G⊗H = TensorProduct G H
     module H⊗G = TensorProduct H G
   open EMExplicit
+
+  ⊙∧-cpₕ₀ : ∀ (m : ℕ)
+    → ⊙EM G (S m) ⊙∧ ⊙EM H 0 ⊙→ ⊙EM G⊗H.abgroup (S m + 0)
+  ⊙∧-cpₕ₀ m =
+    ⊙transport (⊙EM G⊗H.abgroup) (+-comm 0 (S m)) ⊙∘
+    ⊙EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap (S m) ⊙∘
+    ⊙∧-cp₀ₕ H G m ⊙∘
+    ⊙∧-swap (⊙EM G (S m)) (⊙EM H 0)
 
   ∧-cpₕ₀ : ∀ (m : ℕ)
     → ⊙EM G (S m) ∧ ⊙EM H 0 → EM G⊗H.abgroup (S m + 0)
@@ -245,10 +290,15 @@ module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     ∧-cp₀ₕ H G m ∘
     ∧-swap (⊙EM G (S m)) (⊙EM H 0)
 
+  ⊙∧-cp : ∀ (m n : ℕ)
+    → ⊙EM G m ⊙∧ ⊙EM H n
+    ⊙→ ⊙EM G⊗H.abgroup (m + n)
+  ⊙∧-cp O O = ⊙∧-cp₀₀ G H
+  ⊙∧-cp O (S n) = ⊙∧-cp₀ₕ G H n
+  ⊙∧-cp (S m) O = ⊙∧-cpₕ₀ m
+  ⊙∧-cp (S m) (S n) = ⊙∧-cpₕₕ G H m n
+
   ∧-cp : ∀ (m n : ℕ)
     → ⊙EM G m ∧ ⊙EM H n
     → EM G⊗H.abgroup (m + n)
-  ∧-cp O O = ∧-cp₀₀ G H
-  ∧-cp O (S n) = ∧-cp₀ₕ G H n
-  ∧-cp (S m) O = ∧-cpₕ₀ m
-  ∧-cp (S m) (S n) = ∧-cpₕₕ G H m n
+  ∧-cp m n = fst (⊙∧-cp m n)

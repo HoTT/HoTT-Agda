@@ -12,17 +12,25 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   Σ^∧-out O = idf _
   Σ^∧-out (S n) = Susp-fmap (Σ^∧-out n) ∘ Σ∧-out (⊙Susp^ n X) Y
 
+  private
+    Σ^∧-out-pt : (n : ℕ) → Σ^∧-out n (pt (⊙Susp^ n X ⊙∧ Y)) == pt (⊙Susp^ n (X ⊙∧ Y))
+    Σ^∧-out-pt O = idp
+    Σ^∧-out-pt (S n) = idp
+
   ⊙Σ^∧-out : (n : ℕ) → ⊙Susp^ n X ⊙∧ Y ⊙→ ⊙Susp^ n (X ⊙∧ Y)
-  ⊙Σ^∧-out O = ⊙idf _
-  ⊙Σ^∧-out (S n) = ⊙Susp-fmap (Σ^∧-out n) ⊙∘ ⊙Σ∧-out (⊙Susp^ n X) Y
+  ⊙Σ^∧-out n = Σ^∧-out n , Σ^∧-out-pt n
 
   ∧Σ^-out : (n : ℕ) → X ∧ ⊙Susp^ n Y → Susp^ n (X ∧ Y)
   ∧Σ^-out O = idf _
   ∧Σ^-out (S n) = Susp-fmap (∧Σ^-out n) ∘ ∧Σ-out X (⊙Susp^ n Y)
 
+  private
+    ∧Σ^-out-pt : (n : ℕ) → ∧Σ^-out n (pt (X ⊙∧ ⊙Susp^ n Y)) == pt (⊙Susp^ n (X ⊙∧ Y))
+    ∧Σ^-out-pt O = idp
+    ∧Σ^-out-pt (S n) = idp
+
   ⊙∧Σ^-out : (n : ℕ) → X ⊙∧ ⊙Susp^ n Y ⊙→ ⊙Susp^ n (X ⊙∧ Y)
-  ⊙∧Σ^-out O = ⊙idf _
-  ⊙∧Σ^-out (S n) = ⊙Susp-fmap (∧Σ^-out n) ⊙∘ ⊙∧Σ-out X (⊙Susp^ n Y)
+  ⊙∧Σ^-out n = ∧Σ^-out n , ∧Σ^-out-pt n
 
 private
   maybe-Susp^-flip-+ : ∀ {i} {A : Type i} (m n : ℕ)
@@ -382,7 +390,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   ⊙Σ^∧Σ^-out : ∀ (m n : ℕ) → ⊙Susp^ m X ⊙∧ ⊙Susp^ n Y ⊙→ ⊙Susp^ (m + n) (X ⊙∧ Y)
   ⊙Σ^∧Σ^-out m n =
-    ⊙coe (⊙Susp^-+ m n {X ⊙∧ Y}) ⊙∘
+    ⊙coe' (Susp^-+ m n {X ∧ Y}) (Susp^-+-pt m n {X ⊙∧ Y}) ⊙∘
     ⊙Susp^-fmap m (⊙∧Σ^-out X Y n) ⊙∘
     ⊙Σ^∧-out X (⊙Susp^ n Y) m
 
