@@ -172,89 +172,117 @@ odd-odd-Susp^-flip-S-r m n =
     Susp-fmap (∧Σ^-out X Y m) ∘ Σ∧-out X (⊙Susp^ m Y)
   ∼ coe (Susp^-comm m 1) ∘ odd-Susp^-flip m ∘ Susp^-fmap m (Σ∧-out X Y) ∘ ∧Σ^-out (⊙Susp (de⊙ X)) Y m
 ∧Σ-Σ^∧-out X Y O s =
-  Susp-fmap (idf (X ∧ Y)) (Σ∧-out X Y s)
+  (Susp-fmap (idf (X ∧ Y)) $
+   Σ∧-out X Y s)
     =⟨ Susp-fmap-idf (X ∧ Y) (Σ∧-out X Y s) ⟩
   Σ∧-out X Y s
     =⟨ ! $ ap (λ p → coe p (Σ∧-out X Y s)) $
        Susp^-comm-0-l 1 (X ∧ Y) ⟩
-  coe (Susp^-comm 0 1) (Σ∧-out X Y s) =∎
+  (coe (Susp^-comm 0 1) $
+   Σ∧-out X Y s) =∎
 ∧Σ-Σ^∧-out X Y (S m) s =
-  Susp-fmap (∧Σ^-out X Y (S m)) (Σ∧-out X (⊙Susp^ (S m) Y) s)
-    =⟨ Susp-fmap-∘ (Susp-fmap (∧Σ^-out X Y m))
-                   (∧Σ-out X (⊙Susp^ m Y))
-                   (Σ∧-out X (⊙Susp^ (S m) Y) s) ⟩
-  Susp^-fmap 2 (∧Σ^-out X Y m) (Susp-fmap (∧Σ-out X (⊙Susp^ m Y)) (Σ∧-out X (⊙Susp^ (S m) Y) s))
+  (Susp-fmap (∧Σ^-out X Y (S m)) $
+   Σ∧-out X (⊙Susp^ (S m) Y) s)
+    =⟨ Susp-fmap-∘ (Susp-fmap (∧Σ^-out X Y m)) (∧Σ-out X (⊙Susp^ m Y)) $
+       Σ∧-out X (⊙Susp^ (S m) Y) s ⟩
+  (Susp^-fmap 2 (∧Σ^-out X Y m) $
+   Susp-fmap (∧Σ-out X (⊙Susp^ m Y)) $
+   Σ∧-out X (⊙Susp^ (S m) Y) s)
     =⟨ ap (Susp^-fmap 2 (∧Σ^-out X Y m)) (∧Σ-Σ∧-out X (⊙Susp^ m Y) s) ⟩
-  Susp^-fmap 2 (∧Σ^-out X Y m) (Susp-flip
-    (Susp-fmap (Σ∧-out X (⊙Susp^ m Y)) (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s)))
-    =⟨ ! $ Susp-flip-natural
-         (Susp-fmap (∧Σ^-out X Y m))
-         (Susp-fmap (Σ∧-out X (⊙Susp^ m Y)) (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s)) ⟩
-  Susp-flip (Susp^-fmap 2 (∧Σ^-out X Y m) (Susp-fmap (Σ∧-out X (⊙Susp^ m Y))
-    (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s)))
-    =⟨ ! $ ap Susp-flip $
-       Susp-fmap-∘
-         (Susp-fmap (∧Σ^-out X Y m))
-         (Σ∧-out X (⊙Susp^ m Y))
-         (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s) ⟩
-  Susp-flip (Susp-fmap (Susp-fmap (∧Σ^-out X Y m) ∘ Σ∧-out X (⊙Susp^ m Y))
-    (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s))
-    =⟨ ap (λ f → Susp-flip (Susp-fmap f (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s))) $
-       λ= $ ∧Σ-Σ^∧-out X Y m ⟩
-  Susp-flip (Susp-fmap
+  (Susp^-fmap 2 (∧Σ^-out X Y m) $
+   Susp-flip $
+   Susp-fmap (Σ∧-out X (⊙Susp^ m Y)) $
+   ∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s)
+    =⟨ ! $ Susp-flip-natural (Susp-fmap (∧Σ^-out X Y m)) $
+       Susp-fmap (Σ∧-out X (⊙Susp^ m Y)) $
+       ∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s ⟩
+  (Susp-flip $
+   Susp^-fmap 2 (∧Σ^-out X Y m) $
+   Susp-fmap (Σ∧-out X (⊙Susp^ m Y)) $
+   ∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s)
+    =⟨ ap Susp-flip $
+       ! $ Susp-fmap-∘ (Susp-fmap (∧Σ^-out X Y m)) (Σ∧-out X (⊙Susp^ m Y)) $
+       ∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s ⟩
+  (Susp-flip $
+   Susp-fmap (Susp-fmap (∧Σ^-out X Y m) ∘ Σ∧-out X (⊙Susp^ m Y)) $
+   ∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s)
+    =⟨ ap Susp-flip $
+       app= (ap Susp-fmap (λ= (∧Σ-Σ^∧-out X Y m))) $
+       ∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s ⟩
+  (Susp-flip $
+   Susp-fmap
     (coe (Susp^-comm m 1) ∘
      odd-Susp^-flip m ∘
      Susp^-fmap m (Σ∧-out X Y) ∘
-     ∧Σ^-out (⊙Susp (de⊙ X)) Y m)
-    (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s))
+     ∧Σ^-out (⊙Susp (de⊙ X)) Y m) $
+   ∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s)
     =⟨ ap Susp-flip $
        Susp-fmap-∘
          (coe (Susp^-comm m 1) ∘
           odd-Susp^-flip m ∘
           Susp^-fmap m (Σ∧-out X Y))
-         (∧Σ^-out (⊙Susp (de⊙ X)) Y m)
-         (∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s) ⟩
-  Susp-flip (Susp-fmap
-    (coe (Susp^-comm m 1) ∘ odd-Susp^-flip m ∘ Susp^-fmap m (Σ∧-out X Y))
-    (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))
+         (∧Σ^-out (⊙Susp (de⊙ X)) Y m) $
+       ∧Σ-out (⊙Susp (de⊙ X)) (⊙Susp^ m Y) s ⟩
+  (Susp-flip $
+   Susp-fmap (coe (Susp^-comm m 1) ∘ odd-Susp^-flip m ∘ Susp^-fmap m (Σ∧-out X Y)) $
+   ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)
     =⟨ ap Susp-flip $
        Susp-fmap-∘
          (coe (Susp^-comm m 1) ∘ odd-Susp^-flip m)
-         (Susp^-fmap m (Σ∧-out X Y))
-         (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s) ⟩
-  Susp-flip (Susp-fmap
-    (coe (Susp^-comm m 1) ∘ odd-Susp^-flip m)
-    (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)))
+         (Susp^-fmap m (Σ∧-out X Y)) $
+       ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s ⟩
+  (Susp-flip $
+   Susp-fmap (coe (Susp^-comm m 1) ∘ odd-Susp^-flip m) $
+   Susp^-fmap (S m) (Σ∧-out X Y) $
+   ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)
     =⟨ ap Susp-flip $
        Susp-fmap-∘
          (coe (Susp^-comm m 1))
-         (odd-Susp^-flip m)
-         (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)) ⟩
-  Susp-flip (Susp-fmap (coe (Susp^-comm m 1)) (Susp-fmap (odd-Susp^-flip m)
-    (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))))
-    =⟨ Susp-flip-natural
-         (coe (Susp^-comm m 1))
-         (Susp-fmap (odd-Susp^-flip m)
-           (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))) ⟩
-  Susp-fmap (coe (Susp^-comm m 1)) (Susp-flip (Susp-fmap (odd-Susp^-flip m)
-    (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))))
-    =⟨ Susp-fmap-coe
-         (Susp^-comm m 1)
-         (Susp-flip (Susp-fmap (odd-Susp^-flip m)
-           (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)))) ⟩
-  transport Susp (Susp^-comm m 1) (Susp-flip (Susp-fmap (odd-Susp^-flip m)
-    (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))))
-    =⟨ ap (λ p → coe p (Susp-flip (Susp-fmap (odd-Susp^-flip m)
-                   (Susp^-fmap (S m) (Σ∧-out X Y)
-                     (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))))) $
-       ! $ Susp^-comm-S-1 m ⟩
-  coe (Susp^-comm (S m) 1) (Susp-flip (Susp-fmap (odd-Susp^-flip m)
-    (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))))
-    =⟨ ap (coe (Susp^-comm (S m) 1)) $ ! $
-       odd-Susp^-flip-S m
-         (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)) ⟩
-  coe (Susp^-comm (S m) 1) (odd-Susp^-flip (S m)
-    (Susp^-fmap (S m) (Σ∧-out X Y) (∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s))) =∎
+         (odd-Susp^-flip m) $
+       Susp^-fmap (S m) (Σ∧-out X Y) $
+       ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s ⟩
+  (Susp-flip $
+   Susp-fmap (coe (Susp^-comm m 1)) $
+   Susp-fmap (odd-Susp^-flip m) $
+   Susp^-fmap (S m) (Σ∧-out X Y) $
+   ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)
+    =⟨ Susp-flip-natural (coe (Susp^-comm m 1)) $
+       Susp-fmap (odd-Susp^-flip m) $
+       Susp^-fmap (S m) (Σ∧-out X Y) $
+       ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s ⟩
+  (Susp-fmap (coe (Susp^-comm m 1)) $
+   Susp-flip $
+   Susp-fmap (odd-Susp^-flip m) $
+   Susp^-fmap (S m) (Σ∧-out X Y) $
+   ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)
+    =⟨ Susp-fmap-coe (Susp^-comm m 1) $
+       Susp-flip $
+       Susp-fmap (odd-Susp^-flip m) $
+       Susp^-fmap (S m) (Σ∧-out X Y) $
+       ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s ⟩
+  (transport Susp (Susp^-comm m 1) $
+   Susp-flip $
+   Susp-fmap (odd-Susp^-flip m) $
+   Susp^-fmap (S m) (Σ∧-out X Y) $
+   ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)
+    =⟨ app= (ap coe (! (Susp^-comm-S-1 m))) $
+       Susp-flip $
+       Susp-fmap (odd-Susp^-flip m) $
+       Susp^-fmap (S m) (Σ∧-out X Y) $
+       ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s ⟩
+  (coe (Susp^-comm (S m) 1) $
+   Susp-flip $
+   Susp-fmap (odd-Susp^-flip m) $
+   Susp^-fmap (S m) (Σ∧-out X Y) $
+   ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s)
+    =⟨ ap (coe (Susp^-comm (S m) 1)) $
+       ! $ odd-Susp^-flip-S m $
+       Susp^-fmap (S m) (Σ∧-out X Y) $
+       ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s ⟩
+  (coe (Susp^-comm (S m) 1) $
+   odd-Susp^-flip (S m) $
+   Susp^-fmap (S m) (Σ∧-out X Y) $
+   ∧Σ^-out (⊙Susp (de⊙ X)) Y (S m) s) =∎
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
@@ -264,129 +292,216 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   ∧Σ^-Σ^∧-out O m s =
     ∧Σ^-out X Y m s
       =⟨ ! (app= (Susp^-fmap-idf m (X ∧ Y)) (∧Σ^-out X Y m s)) ⟩
-    Susp^-fmap m (idf (X ∧ Y)) (∧Σ^-out X Y m s)
-      =⟨ app= (! (odd-odd-Susp^-flip-0-r m))
-              (Susp^-fmap m (idf (X ∧ Y)) (∧Σ^-out X Y m s)) ⟩
-    odd-odd-Susp^-flip m 0 (Susp^-fmap m (idf (X ∧ Y)) (∧Σ^-out X Y m s))
-      =⟨ ap (λ p → coe p (odd-odd-Susp^-flip m 0 (Susp^-fmap m (idf (X ∧ Y)) (∧Σ^-out X Y m s))))
-            (! (Susp^-comm-0-r m _)) ⟩
-    coe (Susp^-comm m 0) (odd-odd-Susp^-flip m 0 (Susp^-fmap m (idf (X ∧ Y)) (∧Σ^-out X Y m s))) =∎
+    (Susp^-fmap m (idf (X ∧ Y)) $
+     ∧Σ^-out X Y m s)
+      =⟨ app= (! (odd-odd-Susp^-flip-0-r m)) $
+         Susp^-fmap m (idf (X ∧ Y)) $
+         ∧Σ^-out X Y m s ⟩
+    (odd-odd-Susp^-flip m 0 $
+     Susp^-fmap m (idf (X ∧ Y)) $
+     ∧Σ^-out X Y m s)
+      =⟨ app= (ap (λ p → coe p) (! (Susp^-comm-0-r m _))) $
+         odd-odd-Susp^-flip m 0 $
+         Susp^-fmap m (idf (X ∧ Y)) $
+         ∧Σ^-out X Y m s ⟩
+    (coe (Susp^-comm m 0) $
+     odd-odd-Susp^-flip m 0 $
+     Susp^-fmap m (idf (X ∧ Y)) $
+     ∧Σ^-out X Y m s) =∎
   ∧Σ^-Σ^∧-out (S n) m s =
-    Susp^-fmap (S n) (∧Σ^-out X Y m)
-      (Susp-fmap (Σ^∧-out X (⊙Susp^ m Y) n) (Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s))
-      =⟨ ! $ Susp-fmap-∘
-           (Susp^-fmap n (∧Σ^-out X Y m))
-           (Σ^∧-out X (⊙Susp^ m Y) n)
-           (Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s) ⟩
-    Susp-fmap (Susp^-fmap n (∧Σ^-out X Y m) ∘ Σ^∧-out X (⊙Susp^ m Y) n)
-              (Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s)
-      =⟨ ap (λ f → Susp-fmap f (Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s))
-            (λ= (∧Σ^-Σ^∧-out n m)) ⟩
-    Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n ∘ Susp^-fmap m (Σ^∧-out X Y n) ∘ ∧Σ^-out (⊙Susp^ n X) Y m)
-      (Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s)
+    (Susp^-fmap (S n) (∧Σ^-out X Y m) $
+     Susp-fmap (Σ^∧-out X (⊙Susp^ m Y) n) $
+     Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s)
+      =⟨ ! $ Susp-fmap-∘ (Susp^-fmap n (∧Σ^-out X Y m)) (Σ^∧-out X (⊙Susp^ m Y) n) $
+         Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s ⟩
+    (Susp-fmap (Susp^-fmap n (∧Σ^-out X Y m) ∘ Σ^∧-out X (⊙Susp^ m Y) n) $
+     Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s)
+      =⟨ app= (ap Susp-fmap (λ= (∧Σ^-Σ^∧-out n m))) $
+         Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s ⟩
+    (Susp-fmap (coe (Susp^-comm m n) ∘
+                odd-odd-Susp^-flip m n ∘
+                Susp^-fmap m (Σ^∧-out X Y n) ∘
+                ∧Σ^-out (⊙Susp^ n X) Y m) $
+     Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s)
       =⟨ Susp-fmap-∘
           (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n ∘ Susp^-fmap m (Σ^∧-out X Y n))
-          (∧Σ^-out (⊙Susp^ n X) Y m)
-          (Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s) ⟩
-    Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n ∘ Susp^-fmap m (Σ^∧-out X Y n))
-      (Susp-fmap (∧Σ^-out (⊙Susp^ n X) Y m) (Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s))
-      =⟨ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n ∘ Susp^-fmap m (Σ^∧-out X Y n)))
-            (∧Σ-Σ^∧-out (⊙Susp^ n X) Y m s) ⟩
-    Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n ∘ Susp^-fmap m (Σ^∧-out X Y n))
-      (coe (Susp^-comm m 1) (odd-Susp^-flip m
-        (Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s))))
+          (∧Σ^-out (⊙Susp^ n X) Y m) $
+         Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s ⟩
+    (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n ∘ Susp^-fmap m (Σ^∧-out X Y n)) $
+     Susp-fmap (∧Σ^-out (⊙Susp^ n X) Y m) $
+     Σ∧-out (⊙Susp^ n X) (⊙Susp^ m Y) s)
+      =⟨ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n ∘ Susp^-fmap m (Σ^∧-out X Y n))) $
+         ∧Σ-Σ^∧-out (⊙Susp^ n X) Y m s ⟩
+    (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n ∘ Susp^-fmap m (Σ^∧-out X Y n)) $
+     coe (Susp^-comm m 1) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
       =⟨ Susp-fmap-∘
            (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n)
-           (Susp^-fmap m (Σ^∧-out X Y n))
-           (coe (Susp^-comm m 1) (odd-Susp^-flip m
-             (Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))) ⟩
-    Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n)
-      (Susp^-fmap (S m) (Σ^∧-out X Y n)
-        (coe (Susp^-comm m 1) (odd-Susp^-flip m
-          (Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))))
-      =⟨ ! $ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n)) $
-         Susp^-comm-natural m 1 (Σ^∧-out X Y n)
-           (odd-Susp^-flip m (Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s))) ⟩
-    Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n)
-      (coe (Susp^-comm m 1) (Susp^-fmap m (Susp-fmap (Σ^∧-out X Y n))
-        (odd-Susp^-flip m (Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))))
-      =⟨ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) ∘ coe (Susp^-comm m 1)) $
+           (Susp^-fmap m (Σ^∧-out X Y n)) $
+         coe (Susp^-comm m 1) $
+         odd-Susp^-flip m $
+         Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) $
+         ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s ⟩
+    (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) $
+     Susp^-fmap (S m) (Σ^∧-out X Y n) $
+     coe (Susp^-comm m 1) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
+      =⟨ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n)) $
+         ! $ Susp^-comm-natural m 1 (Σ^∧-out X Y n) $
+         odd-Susp^-flip m $
+         Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) $
+         ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s ⟩
+    (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) $
+     coe (Susp^-comm m 1) $
+     Susp^-fmap m (Susp-fmap (Σ^∧-out X Y n)) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
+      =⟨ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n)) $
+         ap (coe (Susp^-comm m 1)) $
          odd-Susp^-flip-natural (Susp-fmap (Σ^∧-out X Y n)) m $
-         Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s) ⟩
-    Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) (coe (Susp^-comm m 1)
-      (odd-Susp^-flip m (Susp^-fmap m (Susp-fmap (Σ^∧-out X Y n))
-        (Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))))
-      =⟨ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) ∘ coe (Susp^-comm m 1) ∘ odd-Susp^-flip m) $
+         Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) $
+         ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s ⟩
+    (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) $
+     coe (Susp^-comm m 1) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Susp-fmap (Σ^∧-out X Y n)) $
+     Susp^-fmap m (Σ∧-out (⊙Susp^ n X) Y) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
+      =⟨ ap (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n)) $
+         ap (coe (Susp^-comm m 1)) $
+         ap (odd-Susp^-flip m) $
          ! $ app= (Susp^-fmap-∘ m (Susp-fmap (Σ^∧-out X Y n)) (Σ∧-out (⊙Susp^ n X) Y)) $
          ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s ⟩
-    Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) (coe (Susp^-comm m 1)
-      (odd-Susp^-flip m (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s))))
-      =⟨ Susp-fmap-∘
-           (coe (Susp^-comm m n))
-           (odd-odd-Susp^-flip m n)
-           (coe (Susp^-comm m 1) (odd-Susp^-flip m
-             (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))) ⟩
-    Susp-fmap (coe (Susp^-comm m n)) (Susp-fmap (odd-odd-Susp^-flip m n) (coe (Susp^-comm m 1)
-      (odd-Susp^-flip m (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))))
+    (Susp-fmap (coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n) $
+     coe (Susp^-comm m 1) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Σ^∧-out X Y (S n)) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
+      =⟨ Susp-fmap-∘ (coe (Susp^-comm m n)) (odd-odd-Susp^-flip m n) $
+         coe (Susp^-comm m 1) $
+         odd-Susp^-flip m $
+         Susp^-fmap m (Σ^∧-out X Y (S n)) $
+         ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s ⟩
+    (Susp-fmap (coe (Susp^-comm m n)) $
+     Susp-fmap (odd-odd-Susp^-flip m n) $
+     coe (Susp^-comm m 1) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Σ^∧-out X Y (S n)) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
       =⟨ ap (Susp-fmap (coe (Susp^-comm m n))) $
          maybe-Susp^-flip-Susp^-comm _ m 1 (and (odd m) (odd n)) $
-         odd-Susp^-flip m (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)) ⟩
-    Susp-fmap (coe (Susp^-comm m n)) (coe (Susp^-comm m 1)
-      (maybe-Susp^-flip m (and (odd m) (odd n)) (odd-Susp^-flip m
-        (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))))
+         odd-Susp^-flip m $
+         Susp^-fmap m (Σ^∧-out X Y (S n)) $
+         ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s ⟩
+    (Susp-fmap (coe (Susp^-comm m n)) $
+     coe (Susp^-comm m 1) $
+     maybe-Susp^-flip m (and (odd m) (odd n)) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Σ^∧-out X Y (S n)) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
       =⟨ Susp-fmap-coe (Susp^-comm m n) $
-         coe (Susp^-comm m 1) (maybe-Susp^-flip m (and (odd m) (odd n)) (odd-Susp^-flip m
-           (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))) ⟩
-    transport Susp (Susp^-comm m n) (coe (Susp^-comm m 1)
-      (maybe-Susp^-flip m (and (odd m) (odd n)) (odd-Susp^-flip m
-        (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))))
+         coe (Susp^-comm m 1) $
+         maybe-Susp^-flip m (and (odd m) (odd n)) $
+         odd-Susp^-flip m $
+         Susp^-fmap m (Σ^∧-out X Y (S n)) $
+         ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s ⟩
+    (transport Susp (Susp^-comm m n) $
+     coe (Susp^-comm m 1) $
+     maybe-Susp^-flip m (and (odd m) (odd n)) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Σ^∧-out X Y (S n)) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
       =⟨ ! $ coe-∙ (Susp^-comm m 1) (ap Susp (Susp^-comm m n)) $
-         maybe-Susp^-flip m (and (odd m) (odd n)) (odd-Susp^-flip m
-           (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s))) ⟩
-    coe (Susp^-comm m 1 ∙ ap Susp (Susp^-comm m n))
-      (maybe-Susp^-flip m (and (odd m) (odd n)) (odd-Susp^-flip m
-        (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s))))
+         maybe-Susp^-flip m (and (odd m) (odd n)) $
+         odd-Susp^-flip m $
+         Susp^-fmap m (Σ^∧-out X Y (S n)) $
+         ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s ⟩
+    (coe (Susp^-comm m 1 ∙ ap Susp (Susp^-comm m n)) $
+     maybe-Susp^-flip m (and (odd m) (odd n)) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Σ^∧-out X Y (S n)) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
       =⟨ app= (ap coe (! (=ₛ-out (Susp^-comm-S-r m n)))) $
-         maybe-Susp^-flip m (and (odd m) (odd n)) (odd-Susp^-flip m
-           (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)))
-      ⟩
-    coe (Susp^-comm m (S n))
-      (maybe-Susp^-flip m (and (odd m) (odd n)) (odd-Susp^-flip m
-        (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s))))
+         maybe-Susp^-flip m (and (odd m) (odd n)) $
+         odd-Susp^-flip m $
+         Susp^-fmap m (Σ^∧-out X Y (S n)) $
+         ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s
+       ⟩
+    (coe (Susp^-comm m (S n)) $
+     maybe-Susp^-flip m (and (odd m) (odd n)) $
+     odd-Susp^-flip m $
+     Susp^-fmap m (Σ^∧-out X Y (S n)) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s)
       =⟨ ! $ ap (coe (Susp^-comm m (S n))) $
          odd-odd-Susp^-flip-S-r m n $
-         Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s) ⟩
-    coe (Susp^-comm m (S n)) (odd-odd-Susp^-flip m (S n)
-      (Susp^-fmap m (Σ^∧-out X Y (S n)) (∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s))) =∎
+         Susp^-fmap m (Σ^∧-out X Y (S n)) $
+         ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s ⟩
+    (coe (Susp^-comm m (S n)) $
+     odd-odd-Susp^-flip m (S n) $
+     Susp^-fmap m (Σ^∧-out X Y (S n)) $
+     ∧Σ^-out (⊙Susp (Susp^ n (de⊙ X))) Y m s) =∎
 
   ∧Σ^-Σ^∧-out' : ∀ (m n : ℕ)
     → Susp^-fmap n (Σ^∧-out X Y m) ∘ ∧Σ^-out (⊙Susp^ m X) Y n
     ∼ coe (Susp^-comm m n) ∘ odd-odd-Susp^-flip m n ∘ Susp^-fmap m (∧Σ^-out X Y n) ∘ Σ^∧-out X (⊙Susp^ n Y) m
   ∧Σ^-Σ^∧-out' m n s =
-    Susp^-fmap n (Σ^∧-out X Y m) (∧Σ^-out (⊙Susp^ m X) Y n s)
+    (Susp^-fmap n (Σ^∧-out X Y m) $
+     ∧Σ^-out (⊙Susp^ m X) Y n s)
       =⟨ ! $ maybe-Susp^-flip-inv n (and (odd n) (odd m)) $
-         Susp^-fmap n (Σ^∧-out X Y m) (∧Σ^-out (⊙Susp^ m X) Y n s) ⟩
-    odd-odd-Susp^-flip n m (odd-odd-Susp^-flip n m
-      (Susp^-fmap n (Σ^∧-out X Y m) (∧Σ^-out (⊙Susp^ m X) Y n s)))
+         Susp^-fmap n (Σ^∧-out X Y m) $
+         ∧Σ^-out (⊙Susp^ m X) Y n s ⟩
+    (odd-odd-Susp^-flip n m $
+     odd-odd-Susp^-flip n m $
+     Susp^-fmap n (Σ^∧-out X Y m) $
+     ∧Σ^-out (⊙Susp^ m X) Y n s)
       =⟨ ap (odd-odd-Susp^-flip n m) $
          app= (ap coe (! (!-inv-r (Susp^-comm n m)))) $
-         odd-odd-Susp^-flip n m (Susp^-fmap n (Σ^∧-out X Y m) (∧Σ^-out (⊙Susp^ m X) Y n s)) ⟩
-    odd-odd-Susp^-flip n m (coe (Susp^-comm n m ∙ ! (Susp^-comm n m))
-      (odd-odd-Susp^-flip n m (Susp^-fmap n (Σ^∧-out X Y m) (∧Σ^-out (⊙Susp^ m X) Y n s))))
+         odd-odd-Susp^-flip n m $
+         Susp^-fmap n (Σ^∧-out X Y m) $
+         ∧Σ^-out (⊙Susp^ m X) Y n s ⟩
+    (odd-odd-Susp^-flip n m $
+     coe (Susp^-comm n m ∙ ! (Susp^-comm n m)) $
+     odd-odd-Susp^-flip n m $
+     Susp^-fmap n (Σ^∧-out X Y m) $
+     ∧Σ^-out (⊙Susp^ m X) Y n s)
       =⟨ ap (odd-odd-Susp^-flip n m) $
          coe-∙ (Susp^-comm n m) (! (Susp^-comm n m)) $
-         odd-odd-Susp^-flip n m (Susp^-fmap n (Σ^∧-out X Y m) (∧Σ^-out (⊙Susp^ m X) Y n s)) ⟩
-    odd-odd-Susp^-flip n m (coe (! (Susp^-comm n m)) (coe (Susp^-comm n m)
-      (odd-odd-Susp^-flip n m (Susp^-fmap n (Σ^∧-out X Y m) (∧Σ^-out (⊙Susp^ m X) Y n s)))))
-      =⟨ ap (odd-odd-Susp^-flip n m ∘ coe (! (Susp^-comm n m))) $ ! $
-         ∧Σ^-Σ^∧-out m n s ⟩
-    odd-odd-Susp^-flip n m (coe (! (Susp^-comm n m)) (Susp^-fmap m (∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s)))
+         odd-odd-Susp^-flip n m $
+         Susp^-fmap n (Σ^∧-out X Y m) $
+         ∧Σ^-out (⊙Susp^ m X) Y n s ⟩
+    (odd-odd-Susp^-flip n m $
+     coe (! (Susp^-comm n m)) $
+     coe (Susp^-comm n m) $
+     odd-odd-Susp^-flip n m $
+     Susp^-fmap n (Σ^∧-out X Y m) $
+     ∧Σ^-out (⊙Susp^ m X) Y n s)
+      =⟨ ap (odd-odd-Susp^-flip n m) $
+         ap (coe (! (Susp^-comm n m))) $
+         ! $ ∧Σ^-Σ^∧-out m n s ⟩
+    (odd-odd-Susp^-flip n m $
+     coe (! (Susp^-comm n m)) $
+     Susp^-fmap m (∧Σ^-out X Y n) $
+     Σ^∧-out X (⊙Susp^ n Y) m s)
       =⟨ ap (odd-odd-Susp^-flip n m) $
          app= (ap coe (Susp^-comm-! n m)) $
-         Susp^-fmap m (∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s) ⟩
-    odd-odd-Susp^-flip n m (coe (Susp^-comm m n) (Susp^-fmap m (∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s)))
-      =⟨ odd-odd-Susp^-flip-comm m n (Susp^-fmap m (∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s)) ⟩
-    coe (Susp^-comm m n) (odd-odd-Susp^-flip m n (Susp^-fmap m (∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s))) =∎
+         Susp^-fmap m (∧Σ^-out X Y n) $
+         Σ^∧-out X (⊙Susp^ n Y) m s ⟩
+    (odd-odd-Susp^-flip n m $
+     coe (Susp^-comm m n) $
+     Susp^-fmap m (∧Σ^-out X Y n) $
+     Σ^∧-out X (⊙Susp^ n Y) m s)
+      =⟨ odd-odd-Susp^-flip-comm m n $
+         Susp^-fmap m (∧Σ^-out X Y n) $
+         Σ^∧-out X (⊙Susp^ n Y) m s ⟩
+    (coe (Susp^-comm m n) $
+     odd-odd-Susp^-flip m n $
+     Susp^-fmap m (∧Σ^-out X Y n) $
+     Σ^∧-out X (⊙Susp^ n Y) m s) =∎
 
   ⊙Σ^∧Σ^-out : ∀ (m n : ℕ) → ⊙Susp^ m X ⊙∧ ⊙Susp^ n Y ⊙→ ⊙Susp^ (m + n) (X ⊙∧ Y)
   ⊙Σ^∧Σ^-out m n =
@@ -436,60 +551,102 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     → transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) ∘ Susp^-fmap (m + n) (∧-swap X Y) ∘ Σ^∧Σ^-out X Y m n ∼
       maybe-Susp^-flip (n + m) (and (odd n) (odd m)) ∘ Σ^∧Σ^-out Y X n m ∘ ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y)
   Σ^∧Σ^-out-swap m n s =
-    transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) (Susp^-fmap (m + n) (∧-swap X Y) (Σ^∧Σ^-out X Y m n s))
-      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $ ! $
-         Susp^-+-natural m n (∧-swap X Y) $
-         Susp^-fmap m (∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s) ⟩
-    transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) (coe (Susp^-+ m n {Y ∧ X})
-      (Susp^-fmap m (Susp^-fmap n (∧-swap X Y)) (Susp^-fmap m (∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s))))
-      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) ∘ coe (Susp^-+ m n {Y ∧ X})) $ ! $
-         app= (Susp^-fmap-∘ m (Susp^-fmap n (∧-swap X Y)) (∧Σ^-out X Y n)) $
+    (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) $
+     Susp^-fmap (m + n) (∧-swap X Y) $
+     Σ^∧Σ^-out X Y m n s)
+      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
+         ! $ Susp^-+-natural m n (∧-swap X Y) $
+         Susp^-fmap m (∧Σ^-out X Y n) $
          Σ^∧-out X (⊙Susp^ n Y) m s ⟩
-    transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) (coe (Susp^-+ m n {Y ∧ X})
-      (Susp^-fmap m (Susp^-fmap n (∧-swap X Y) ∘ ∧Σ^-out X Y n) (Σ^∧-out X (⊙Susp^ n Y) m s)))
-      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) ∘ coe (Susp^-+ m n {Y ∧ X})) $
+    (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) $
+     coe (Susp^-+ m n {Y ∧ X}) $
+     Susp^-fmap m (Susp^-fmap n (∧-swap X Y)) $
+     Susp^-fmap m (∧Σ^-out X Y n) $
+     Σ^∧-out X (⊙Susp^ n Y) m s)
+      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
+         ap (coe (Susp^-+ m n {Y ∧ X})) $
+         ! $ app= (Susp^-fmap-∘ m (Susp^-fmap n (∧-swap X Y)) (∧Σ^-out X Y n)) $
+         Σ^∧-out X (⊙Susp^ n Y) m s ⟩
+    (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) $
+     coe (Susp^-+ m n {Y ∧ X}) $
+     Susp^-fmap m (Susp^-fmap n (∧-swap X Y) ∘ ∧Σ^-out X Y n) $
+     Σ^∧-out X (⊙Susp^ n Y) m s)
+      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
+         ap (coe (Susp^-+ m n {Y ∧ X})) $
          app= (ap (Susp^-fmap m) (λ= (swap-∧Σ^-out X Y n))) $
          Σ^∧-out X (⊙Susp^ n Y) m s ⟩
-    transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) (coe (Susp^-+ m n {Y ∧ X})
-      (Susp^-fmap m (Σ^∧-out Y X n ∘ ∧-swap X (⊙Susp^ n Y)) (Σ^∧-out X (⊙Susp^ n Y) m s)))
-      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) ∘ coe (Susp^-+ m n {Y ∧ X})) $
+    (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) $
+     coe (Susp^-+ m n {Y ∧ X}) $
+     Susp^-fmap m (Σ^∧-out Y X n ∘ ∧-swap X (⊙Susp^ n Y)) $
+     Σ^∧-out X (⊙Susp^ n Y) m s)
+      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
+         ap (coe (Susp^-+ m n {Y ∧ X})) $
          app= (Susp^-fmap-∘ m (Σ^∧-out Y X n) (∧-swap X (⊙Susp^ n Y))) $
          Σ^∧-out X (⊙Susp^ n Y) m s ⟩
-    transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) (coe (Susp^-+ m n {Y ∧ X})
-      (Susp^-fmap m (Σ^∧-out Y X n) (Susp^-fmap m (∧-swap X (⊙Susp^ n Y)) (Σ^∧-out X (⊙Susp^ n Y) m s))))
-      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) ∘
-             coe (Susp^-+ m n {Y ∧ X}) ∘
-             Susp^-fmap m (Σ^∧-out Y X n)) $
+    (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) $
+     coe (Susp^-+ m n {Y ∧ X}) $
+     Susp^-fmap m (Σ^∧-out Y X n) $
+     Susp^-fmap m (∧-swap X (⊙Susp^ n Y)) $
+     Σ^∧-out X (⊙Susp^ n Y) m s)
+      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
+         ap (coe (Susp^-+ m n {Y ∧ X})) $
+         ap (Susp^-fmap m (Σ^∧-out Y X n)) $
          swap-Σ^∧-out X (⊙Susp^ n Y) m s ⟩
-    transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) (coe (Susp^-+ m n {Y ∧ X})
-      (Susp^-fmap m (Σ^∧-out Y X n) (∧Σ^-out (⊙Susp^ n Y) X m (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s))))
-      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) ∘ coe (Susp^-+ m n {Y ∧ X})) $
+    (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) $
+     coe (Susp^-+ m n {Y ∧ X}) $
+     Susp^-fmap m (Σ^∧-out Y X n) $
+     ∧Σ^-out (⊙Susp^ n Y) X m $
+     ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s)
+      =⟨ ap (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
+         ap (coe (Susp^-+ m n {Y ∧ X})) $
          ∧Σ^-Σ^∧-out' Y X n m $
          ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s ⟩
-    transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) (coe (Susp^-+ m n {Y ∧ X})
-      (coe (Susp^-comm n m) (odd-odd-Susp^-flip n m
-        (Susp^-fmap n (∧Σ^-out Y X m) (Σ^∧-out Y (⊙Susp^ m X) n (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s))))))
+    (transport (λ k → Susp^ k (Y ∧ X)) (+-comm m n) $
+     coe (Susp^-+ m n {Y ∧ X}) $
+     coe (Susp^-comm n m) $
+     odd-odd-Susp^-flip n m $
+     Susp^-fmap n (∧Σ^-out Y X m) $
+     Σ^∧-out Y (⊙Susp^ m X) n $
+     ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s)
       =⟨ ! $ coe-∙ (Susp^-+ m n {Y ∧ X}) (ap (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
-         coe (Susp^-comm n m) (odd-odd-Susp^-flip n m
-           (Susp^-fmap n (∧Σ^-out Y X m) (Σ^∧-out Y (⊙Susp^ m X) n (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s)))) ⟩
-    coe (Susp^-+ m n {Y ∧ X} ∙ ap (λ k → Susp^ k (Y ∧ X)) (+-comm m n))
-      (coe (Susp^-comm n m) (odd-odd-Susp^-flip n m
-        (Susp^-fmap n (∧Σ^-out Y X m) (Σ^∧-out Y (⊙Susp^ m X) n (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s)))))
+         coe (Susp^-comm n m) $
+         odd-odd-Susp^-flip n m $
+         Susp^-fmap n (∧Σ^-out Y X m) $
+         Σ^∧-out Y (⊙Susp^ m X) n $
+         ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s ⟩
+    (coe (Susp^-+ m n {Y ∧ X} ∙ ap (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
+     coe (Susp^-comm n m) $
+     odd-odd-Susp^-flip n m $
+     Susp^-fmap n (∧Σ^-out Y X m) $
+     Σ^∧-out Y (⊙Susp^ m X) n $
+     ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s)
       =⟨ ! $ coe-∙ (Susp^-comm n m) (Susp^-+ m n {Y ∧ X} ∙ ap (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
-         odd-odd-Susp^-flip n m
-           (Susp^-fmap n (∧Σ^-out Y X m) (Σ^∧-out Y (⊙Susp^ m X) n (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s))) ⟩
-    coe (Susp^-comm n m ∙ Susp^-+ m n {Y ∧ X} ∙ ap (λ k → Susp^ k (Y ∧ X)) (+-comm m n))
-      (odd-odd-Susp^-flip n m
-        (Susp^-fmap n (∧Σ^-out Y X m) (Σ^∧-out Y (⊙Susp^ m X) n (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s))))
+         odd-odd-Susp^-flip n m $
+         Susp^-fmap n (∧Σ^-out Y X m) $
+         Σ^∧-out Y (⊙Susp^ m X) n $
+         ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s ⟩
+    (coe (Susp^-comm n m ∙ Susp^-+ m n {Y ∧ X} ∙ ap (λ k → Susp^ k (Y ∧ X)) (+-comm m n)) $
+     odd-odd-Susp^-flip n m $
+     Susp^-fmap n (∧Σ^-out Y X m) $
+     Σ^∧-out Y (⊙Susp^ m X) n $
+     ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s)
       =⟨ app= (ap coe (=ₛ-out p)) $
-         odd-odd-Susp^-flip n m (Susp^-fmap n (∧Σ^-out Y X m)
-           (Σ^∧-out Y (⊙Susp^ m X) n (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s))) ⟩
-    coe (Susp^-+ n m {Y ∧ X}) (odd-odd-Susp^-flip n m
-      (Susp^-fmap n (∧Σ^-out Y X m) (Σ^∧-out Y (⊙Susp^ m X) n (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s))))
+         odd-odd-Susp^-flip n m $
+         Susp^-fmap n (∧Σ^-out Y X m) $
+         Σ^∧-out Y (⊙Susp^ m X) n $
+         ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s ⟩
+    (coe (Susp^-+ n m {Y ∧ X}) $
+     odd-odd-Susp^-flip n m $
+     Susp^-fmap n (∧Σ^-out Y X m) $
+     Σ^∧-out Y (⊙Susp^ m X) n $
+     ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s)
       =⟨ maybe-Susp^-flip-+ n m (and (odd n) (odd m)) (ap (λ k → and (odd k) (odd m))) $
-         Susp^-fmap n (∧Σ^-out Y X m) (Σ^∧-out Y (⊙Susp^ m X) n (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s)) ⟩
-    maybe-Susp^-flip (n + m) (and (odd n) (odd m))
-      (Σ^∧Σ^-out Y X n m (∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s)) =∎
+         Susp^-fmap n (∧Σ^-out Y X m) $
+         Σ^∧-out Y (⊙Susp^ m X) n $
+         ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s ⟩
+    (maybe-Susp^-flip (n + m) (and (odd n) (odd m)) $
+     Σ^∧Σ^-out Y X n m $
+     ∧-swap (⊙Susp^ m X) (⊙Susp^ n Y) s) =∎
     where
     p : Susp^-comm n m ◃∙ Susp^-+ m n {Y ∧ X} ◃∙ ap (λ k → Susp^ k (Y ∧ X)) (+-comm m n) ◃∎
         =ₛ Susp^-+ n m {Y ∧ X} ◃∎
