@@ -224,11 +224,12 @@ module SpectrumModel where
 
     abstract
       C-additive-is-equiv : is-equiv (GroupHom.f (Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = X})))
-      C-additive-is-equiv = transport is-equiv
-        (λ= $ Trunc-elim
-          (λ _ → idp))
-        ((ac (uCEl n ∘ X)) ∘ise (is-eq into out into-out out-into))
-
+      C-additive-is-equiv =
+        transport is-equiv
+          {x = unchoose ∘ into}
+          {y = GroupHom.f (Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = X}))}
+          (λ= $ Trunc-elim (λ _ → idp))
+          (ac (uCEl n ∘ X) ∘ise (is-eq into out into-out out-into))
 
 open SpectrumModel
 

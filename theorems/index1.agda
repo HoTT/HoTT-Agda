@@ -48,7 +48,7 @@ import homotopy.SpaceFromGroups
 -- import homotopy.JoinAssoc3x3 -- commented out because this does not run on travis.
 
 {- covering spaces -}
-import homotopy.GroupSetsRepresentCovers
+-- import homotopy.GroupSetsRepresentCovers -- FIXME (broken by Agda 2.5.3 to 2.5.4 update)
 import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInitalCover
 import homotopy.CircleCover

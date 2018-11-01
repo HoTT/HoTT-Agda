@@ -24,7 +24,7 @@ module groups.KernelImage {i j k}
   ker/im-rel' h₁ h₂ = Trunc -1 (hfiber φ.f (H.diff h₁ h₂))
 
   ker/im-rel : Rel Kerψ.El (lmax i j)
-  ker/im-rel (h₁ , _) (h₂ , _) = Trunc -1 (hfiber φ.f (H.diff h₁ h₂))
+  ker/im-rel ker₁ ker₂ = Trunc -1 (hfiber φ.f (H.diff (fst ker₁) (fst ker₂)))
 
   private
     ker/im-El : Type (lmax (lmax i j) k)

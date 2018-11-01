@@ -35,7 +35,7 @@ private
   module BouquetToBigWedgeSusp =
     BigWedgeRec {A = cells} {X = Bouquet-family cells (S n)}
     cfbase SphereToBigWedgeSusp.f (λ _ → idp)
-  
+
   module BigWedgeSuspEquivQuotient = PushoutLSplit (uncurry attaching) (λ _ → unit) fst
 
 Bouquet-to-Xₙ/Xₙ₋₁ : Bouquet cells (S n) → Xₙ/Xₙ₋₁
@@ -50,10 +50,10 @@ abstract
     ∙ ap (ap BigWedgeSuspEquivQuotient.split) (SphereToBigWedgeSusp.merid-β a x)
     ∙ BigWedgeSuspEquivQuotient.split-glue-β (a , x)
 
-private  
+private
   Bouquet-to-BigWedgeSusp-is-equiv : is-equiv BouquetToBigWedgeSusp.f
   Bouquet-to-BigWedgeSusp-is-equiv = is-eq to from to-from from-to
-    where 
+    where
     to = BouquetToBigWedgeSusp.f
 
     module From = AttachedRec {A = ⊤}
@@ -70,7 +70,7 @@ private
             ( ap-∘ from (SphereToBigWedgeSusp.f a) (merid s)
             ∙ ap (ap from) (SphereToBigWedgeSusp.merid-β a s)
             ∙ From.spoke-β a s)
-            ∙v⊡ (tl-square (bwglue a) ⊡h vid-square)))
+            ∙v⊡ tl-square (bwglue a) ⊡h vid-square))
         (λ a → ↓-∘=idf-from-square from to $
           ap (ap from) (BouquetToBigWedgeSusp.glue-β a) ∙v⊡ br-square (bwglue a))
 
@@ -83,7 +83,7 @@ private
           ∙ ap2 _∙_ (BouquetToBigWedgeSusp.glue-β a)
                     ( ∘-ap to (bwin a) (merid s)
                     ∙ SphereToBigWedgeSusp.merid-β a s))
-  
+
   Bouquet-equiv-BigWedgeSusp : Bouquet cells (S n) ≃ BigWedgeSusp
   Bouquet-equiv-BigWedgeSusp = BouquetToBigWedgeSusp.f , Bouquet-to-BigWedgeSusp-is-equiv
 
