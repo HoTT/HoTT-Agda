@@ -23,7 +23,6 @@ open import lib.types.GroupSet public
 open import lib.types.Groupoid public
 open import lib.types.HList public
 open import lib.types.Int public
-open import lib.types.IteratedSuspension public
 open import lib.types.Join public
 open import lib.types.Lift public
 open import lib.types.List public

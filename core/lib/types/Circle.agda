@@ -9,7 +9,6 @@ open import lib.types.Truncation
 open import lib.types.Unit
 open import lib.types.Bool
 open import lib.types.Suspension
-open import lib.types.IteratedSuspension
 
 module lib.types.Circle where
 
