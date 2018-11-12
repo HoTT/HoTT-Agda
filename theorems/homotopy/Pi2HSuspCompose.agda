@@ -2,7 +2,8 @@
 
 open import HoTT
 open import homotopy.HSpace renaming (HSpaceStructure to HSS)
-import homotopy.WedgeExtension as WedgeExt
+open import homotopy.Pi2HSusp
+open import homotopy.WedgeExtension
 open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.FundamentalCategory
 
@@ -16,7 +17,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
     A = de⊙ X
     e = pt X
 
-  open import homotopy.Pi2HSusp H-X public
+  open Pi2HSusp H-X public
 
   infixr 80 _∙₁_
   _∙₁_ : {x y z : Susp A} → Trunc 1 (x == y) → Trunc 1 (y == z) → Trunc 1 (x == z)
@@ -92,7 +93,7 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   comp-r₁ : (a : A) → [ η (μ a e) ]₁ == [ η e ∙ η a ]₁
   comp-r₁ = ap [_]₁ ∘ comp-r
 
-  comp-args : WedgeExt.args {i} {i} {A} {e} {A} {e}
+  comp-args : args {i} {i} {A} {e} {A} {e}
   comp-args =
     record {
       m = -1; n = -1;
@@ -105,14 +106,16 @@ module homotopy.Pi2HSuspCompose {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
     Q : A → A → Type i
     Q a a' = [ η (μ a a' ) ]₁ == [ η a' ∙ η a ]₁
 
+  module Comp = WedgeExt {i} {i} {A} {e} {A} {e} comp-args
+
   comp : (a a' : A) → [ η (μ a a') ]₁ == [ η a' ]₁ ∙₁ [ η a ]₁
-  comp = WedgeExt.ext comp-args
+  comp = Comp.ext
 
   comp-unit-l : (a' : A) → comp e a' == comp-l₁ a'
-  comp-unit-l a' = WedgeExt.β-r {r = comp-args} a'
+  comp-unit-l a' = Comp.β-r a'
 
   comp-unit-r : (a : A) → comp a e == comp-r₁ a
-  comp-unit-r a = WedgeExt.β-l {r = comp-args} a
+  comp-unit-r a = Comp.β-l a
 
   module CoherenceProof (a' : A) where
 

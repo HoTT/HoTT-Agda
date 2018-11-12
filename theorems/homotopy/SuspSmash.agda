@@ -637,7 +637,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         (λ y → cube-to-↓-square (Σ∧-∧Σ-swap-smgluer-merid y))
 
   swap-∧Σ-out : Susp-fmap (∧-swap X Y) ∘ ∧Σ-out X Y
-             ∼ Σ∧-out Y X ∘ ∧-swap X (⊙Susp (de⊙ Y))
+              ∼ Σ∧-out Y X ∘ ∧-swap X (⊙Susp (de⊙ Y))
   swap-∧Σ-out =
     Smash-elim
       Σ∧-∧Σ-swap-smin.f
@@ -650,22 +650,41 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         Σ∧-∧Σ-swap-smgluer sy ⊡v∙
         ! (Σ∧-out-∧-swap-smgluer sy))
 
+  ⊙swap-∧Σ-out : ⊙Susp-fmap (∧-swap X Y) ◃⊙∘ ⊙∧Σ-out X Y ◃⊙idf
+                 =⊙∘
+                 ⊙Σ∧-out Y X ◃⊙∘ ⊙∧-swap X (⊙Susp (de⊙ Y)) ◃⊙idf
+  ⊙swap-∧Σ-out = =⊙∘-in (⊙λ=' swap-∧Σ-out idp)
+
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
+
+  ⊙swap-Σ∧-out : ⊙Susp-fmap (∧-swap X Y) ◃⊙∘ ⊙Σ∧-out X Y ◃⊙idf
+                 =⊙∘
+                 ⊙∧Σ-out Y X ◃⊙∘ ⊙∧-swap (⊙Susp (de⊙ X)) Y ◃⊙idf
+  ⊙swap-Σ∧-out =
+    ⊙Susp-fmap (∧-swap X Y) ◃⊙∘ ⊙Σ∧-out X Y ◃⊙idf
+      =⊙∘⟨ 2 & 0 & !⊙∘ $ ⊙∧-swap-inv (⊙Susp (de⊙ X)) Y ⟩
+    ⊙Susp-fmap (∧-swap X Y) ◃⊙∘
+    ⊙Σ∧-out X Y ◃⊙∘
+    ⊙∧-swap Y (⊙Susp (de⊙ X)) ◃⊙∘
+    ⊙∧-swap (⊙Susp (de⊙ X)) Y ◃⊙idf
+      =⊙∘⟨ 1 & 2 & !⊙∘ (⊙swap-∧Σ-out Y X) ⟩
+    ⊙Susp-fmap (∧-swap X Y) ◃⊙∘
+    ⊙Susp-fmap (∧-swap Y X) ◃⊙∘
+    ⊙∧Σ-out Y X ◃⊙∘
+    ⊙∧-swap (⊙Susp (de⊙ X)) Y ◃⊙idf
+      =⊙∘⟨ 0 & 2 & !⊙∘ $ =⊙∘-in {fs = ⊙Susp-fmap (∧-swap X Y ∘ ∧-swap Y X) ◃⊙idf} $
+                   ⊙Susp-fmap-∘ (∧-swap X Y) (∧-swap Y X) ⟩
+    ⊙Susp-fmap (∧-swap X Y ∘ ∧-swap Y X) ◃⊙∘
+    ⊙∧Σ-out Y X ◃⊙∘
+    ⊙∧-swap (⊙Susp (de⊙ X)) Y ◃⊙idf
+      =⊙∘₁⟨ 0 & 1 & ap ⊙Susp-fmap (λ= (∧-swap-inv Y X)) ⟩
+    ⊙Susp-fmap (idf _) ◃⊙∘
+    ⊙∧Σ-out Y X ◃⊙∘
+    ⊙∧-swap (⊙Susp (de⊙ X)) Y ◃⊙idf
+      =⊙∘⟨ 0 & 1 & ⊙Susp-fmap-idf (Y ∧ X) ⟩
+    ⊙∧Σ-out Y X ◃⊙∘
+    ⊙∧-swap (⊙Susp (de⊙ X)) Y ◃⊙idf ∎⊙∘
 
   swap-Σ∧-out : Susp-fmap (∧-swap X Y) ∘ Σ∧-out X Y
               ∼ ∧Σ-out Y X ∘ ∧-swap (⊙Susp (de⊙ X)) Y
-  swap-Σ∧-out s =
-    Susp-fmap (∧-swap X Y) (Σ∧-out X Y s)
-      =⟨ ap (Susp-fmap (∧-swap X Y) ∘ Σ∧-out X Y) $ ! $
-         ∧-swap-inv (⊙Susp (de⊙ X)) Y s ⟩
-    Susp-fmap (∧-swap X Y) (Σ∧-out X Y (∧-swap Y (⊙Susp (de⊙ X)) (∧-swap (⊙Susp (de⊙ X)) Y s)))
-      =⟨ ap (Susp-fmap (∧-swap X Y)) $ ! $
-         swap-∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s) ⟩
-    Susp-fmap (∧-swap X Y) (Susp-fmap (∧-swap Y X) (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s)))
-      =⟨ ! $ Susp-fmap-∘ (∧-swap X Y) (∧-swap Y X) (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s)) ⟩
-    Susp-fmap (∧-swap X Y ∘ ∧-swap Y X) (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s))
-      =⟨ ap (λ f → Susp-fmap f (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s)))
-            (λ= (∧-swap-inv Y X)) ⟩
-    Susp-fmap (idf _) (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s))
-      =⟨ Susp-fmap-idf _ (∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s)) ⟩
-    ∧Σ-out Y X (∧-swap (⊙Susp (de⊙ X)) Y s) =∎
+  swap-Σ∧-out = app= (ap fst (=⊙∘-out ⊙swap-Σ∧-out))

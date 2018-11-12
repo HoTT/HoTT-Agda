@@ -3,24 +3,24 @@
 open import HoTT
 open import homotopy.PtdAdjoint
 
-module homotopy.SuspAdjointLoop {i} where
+module homotopy.SuspAdjointLoop where
 
 private
-  SuspFunctor : PtdFunctor i i
+  SuspFunctor : ∀ {i} → PtdFunctor i i
   SuspFunctor = record {
     obj = ⊙Susp ∘ de⊙;
     arr = ⊙Susp-fmap ∘ fst;
-    id = ⊙Susp-fmap-idf ∘ de⊙;
+    id = =⊙∘-out ∘ ⊙Susp-fmap-idf ∘ de⊙;
     comp = λ f g → ⊙Susp-fmap-∘ (fst f) (fst g)}
 
-  LoopFunctor : PtdFunctor i i
+  LoopFunctor : ∀ {i} → PtdFunctor i i
   LoopFunctor = record {
     obj = ⊙Ω;
     arr = ⊙Ω-fmap;
     id = λ _ → ⊙Ω-fmap-idf;
     comp = ⊙Ω-fmap-∘}
 
-  module _ (X : Ptd i) where
+  module _ {i} (X : Ptd i) where
 
     η : de⊙ X → Ω (⊙Susp (de⊙ X))
     η x = σloop X x
@@ -36,7 +36,7 @@ private
     ⊙ε : ⊙Susp (Ω X) ⊙→ X
     ⊙ε = (ε , idp)
 
-  η-natural : {X Y : Ptd i} (f : X ⊙→ Y)
+  η-natural : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
     → ⊙η Y ⊙∘ f == ⊙Ω-fmap (⊙Susp-fmap (fst f)) ⊙∘ ⊙η X
   η-natural {X = X} (f , idp) = ⊙λ='
     (λ x → ! $
@@ -52,7 +52,7 @@ private
         [ _== idp ↓ ! (ap-∙ f p (! p) ∙ α ∙2 (ap-! f p ∙ ap ! α)) ]
     pt-lemma f idp idp = idp
 
-  ε-natural : {X Y : Ptd i} (f : X ⊙→ Y)
+  ε-natural : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
     → ⊙ε Y ⊙∘ ⊙Susp-fmap (Ω-fmap f) == f ⊙∘ ⊙ε X
   ε-natural (f , idp) = ⊙λ='
     (SuspElim.f idp idp
@@ -64,7 +64,7 @@ private
         ∙ ∘-ap f (ε _) (merid p)))
     idp
 
-  εΣ-Ση : (X : Ptd i) → ⊙ε (⊙Susp (de⊙ X)) ⊙∘ ⊙Susp-fmap (η X) == ⊙idf _
+  εΣ-Ση : ∀ {i} (X : Ptd i) → ⊙ε (⊙Susp (de⊙ X)) ⊙∘ ⊙Susp-fmap (η X) == ⊙idf _
   εΣ-Ση X = ⊙λ='
     (SuspElim.f
       idp
@@ -82,7 +82,7 @@ private
       → Square idp (p ∙ ! q) p q
     square-lemma idp idp = ids
 
-  Ωε-ηΩ : (X : Ptd i) → ⊙Ω-fmap (⊙ε X) ⊙∘ ⊙η (⊙Ω X) == ⊙idf _
+  Ωε-ηΩ : ∀ {i} (X : Ptd i) → ⊙Ω-fmap (⊙ε X) ⊙∘ ⊙η (⊙Ω X) == ⊙idf _
   Ωε-ηΩ X = ⊙λ='
     (λ p → ap-∙ (ε X) (merid p) (! (merid idp))
          ∙ (E.merid-β X p ∙2 (ap-! (ε X) (merid idp) ∙ ap ! (E.merid-β X idp)))
@@ -97,18 +97,21 @@ private
 
 module Eta = E
 
-adj : CounitUnitAdjoint SuspFunctor LoopFunctor
-adj = record {
-  η = ⊙η;
-  ε = ⊙ε;
+module _ {i} where
 
-  η-natural = η-natural;
-  ε-natural = ε-natural;
+  adj : CounitUnitAdjoint (SuspFunctor {i}) LoopFunctor
+  adj = record {
+    η = ⊙η;
+    ε = ⊙ε;
 
-  εF-Fη = εΣ-Ση;
-  Gε-ηG = Ωε-ηΩ}
+    η-natural = η-natural;
+    ε-natural = ε-natural;
 
-hadj = counit-unit-to-hom adj
+    εF-Fη = εΣ-Ση;
+    Gε-ηG = Ωε-ηΩ}
 
-open CounitUnitAdjoint adj public
-open HomAdjoint hadj public
+  hadj : HomAdjoint (SuspFunctor {i}) LoopFunctor
+  hadj = counit-unit-to-hom adj
+
+  open CounitUnitAdjoint adj public
+  open HomAdjoint hadj public

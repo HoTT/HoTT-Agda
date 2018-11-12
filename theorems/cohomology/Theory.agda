@@ -112,10 +112,10 @@ record CohomologyTheory i : Type (lsucc i) where
   CEl-emap n ⊙eq = equiv (CEl-fmap n (⊙–> ⊙eq)) (CEl-fmap n (⊙<– ⊙eq)) to-from from-to where
     abstract
       to-from = λ x → ! (CEl-fmap-∘ n (⊙<– ⊙eq) (⊙–> ⊙eq) x)
-                    ∙ ap (λ f → CEl-fmap n f x) (⊙λ= (⊙<–-inv-l ⊙eq))
+                    ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-l ⊙eq)
                     ∙ CEl-fmap-idf n x
       from-to = λ x → ! (CEl-fmap-∘ n (⊙–> ⊙eq) (⊙<– ⊙eq) x)
-                    ∙ ap (λ f → CEl-fmap n f x) (⊙λ= (⊙<–-inv-r ⊙eq))
+                    ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-r ⊙eq)
                     ∙ CEl-fmap-idf n x
 
   abstract

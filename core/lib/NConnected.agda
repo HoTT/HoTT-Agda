@@ -3,9 +3,11 @@
 open import lib.Basics
 open import lib.NType2
 open import lib.Equivalence2
+open import lib.path-seq.Rotations
 open import lib.types.Unit
 open import lib.types.Nat
 open import lib.types.Pi
+open import lib.types.Pointed
 open import lib.types.Sigma
 open import lib.types.Paths
 open import lib.types.TLevel
@@ -34,61 +36,137 @@ is-connected-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
 is-connected-is-prop = is-contr-is-prop
 
 {- "induction principle" for n-connected maps (where codomain is n-type) -}
-abstract
-  pre∘-conn-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}
-    → {h : A → B} → has-conn-fibers n h
-    → (∀ {k} (P : B → n -Type k) → is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h))
-  pre∘-conn-is-equiv {A = A} {B = B} {n = n} {h = h} c P = is-eq f g f-g g-f
-    where f : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
-          f k a = k (h a)
-
-          helper : Π A (fst ∘ P ∘ h)
-            → (b : B) → Trunc n (Σ A (λ a → h a == b)) → (fst (P b))
-          helper t b r =
-            Trunc-rec {{snd (P b)}}
-              (λ x → transport (λ y → fst (P y)) (snd x) (t (fst x)))
-              r
-
-          g : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-          g t b = helper t b (contr-center (c b))
-
-          f-g : ∀ t → f (g t) == t
-          f-g t = λ= $ λ a → transport
-            (λ r →  Trunc-rec {{snd (P (h a))}} _ r == t a)
-            (! (contr-path(c (h a)) [ (a , idp) ]))
-            idp
-
-          g-f : ∀ k → g (f k) == k
-          g-f k = λ= $ λ (b : B) →
-            Trunc-elim {{λ r → =-preserves-level {x = helper (k ∘ h) b r} (snd (P b))}}
-                       (λ x → lemma (fst x) b (snd x)) (contr-center (c b))
-            where
-            lemma : ∀ xl → ∀ b → (p : h xl == b) →
-              helper (k ∘ h) b [ (xl , p) ] == k b
-            lemma xl ._ idp = idp
-
 module ConnExtend {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
                   {h : A → B} (c : has-conn-fibers n h)
-                  (P : B → n -Type k) (f : Π A (fst ∘ P ∘ h)) where
+                  (P : B → n -Type k) where
 
-  ext : Π B (fst ∘ P)
-  ext = is-equiv.g (pre∘-conn-is-equiv c P) f
+  private
+    helper : Π A (fst ∘ P ∘ h)
+      → (b : B) → Trunc n (Σ A (λ a → h a == b)) → (fst (P b))
+    helper t b r =
+      Trunc-rec {{snd (P b)}}
+        (λ x → transport (λ y → fst (P y)) (snd x) (t (fst x)))
+        r
 
-  ext-β : ∀ a → ext (h a) == f a
-  ext-β = app= (is-equiv.f-g (pre∘-conn-is-equiv c P) f)
+  restr : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
+  restr t = t ∘ h
 
-open ConnExtend renaming (ext to conn-extend; ext-β to conn-extend-β) public
+  abstract
+    ext : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
+    ext f b = helper f b (contr-center (c b))
+
+  private
+    abstract
+      ext-β' : (f : Π A (fst ∘ P ∘ h)) (a : A) → restr (ext f) a == f a
+      ext-β' f a =
+        transport
+          (λ r →  Trunc-rec {{snd (P (h a))}} _ r == f a)
+          (! (contr-path(c (h a)) [ (a , idp) ]))
+          idp
+
+  abstract
+    restr-β : (t : Π B (fst ∘ P)) (b : B) → ext (restr t) b == t b
+    restr-β t b =
+      Trunc-elim
+        {{λ r → =-preserves-level {x = helper (t ∘ h) b r} (snd (P b))}}
+        (λ x → lemma (fst x) b (snd x))
+        (contr-center (c b))
+      where
+      lemma : ∀ xl → ∀ b → (p : h xl == b) →
+        helper (t ∘ h) b [ (xl , p) ] == t b
+      lemma xl ._ idp = idp
+
+  restr-is-equiv : is-equiv restr
+  restr-is-equiv = is-eq restr ext (λ= ∘ ext-β') (λ= ∘ restr-β)
+
+  restr-equiv : Π B (fst ∘ P) ≃ Π A (fst ∘ P ∘ h)
+  restr-equiv = restr , restr-is-equiv
+
+  ext-β : (f : Π A (fst ∘ P ∘ h)) (a : A) → restr (ext f) a == f a
+  ext-β f = app= (is-equiv.f-g restr-is-equiv f)
+
+  abstract
+    restr-β-ext-β-adj : (t : Π B (fst ∘ P)) (a : A)
+      → ext-β (restr t) a == restr-β t (h a)
+    restr-β-ext-β-adj t a =
+      ext-β (restr t) a
+        =⟨ ! (ap (λ s → app= s a) (is-equiv.adj restr-is-equiv t)) ⟩
+      app= (ap restr (λ= (restr-β t))) a
+        =⟨ ∘-ap (_$ a) restr (λ= (restr-β t)) ⟩
+      app= (λ= (restr-β t)) (h a)
+        =⟨ app=-β (restr-β t) (h a) ⟩
+      restr-β t (h a) =∎
+
+open ConnExtend using () renaming
+  (ext to conn-extend;
+   ext-β to conn-extend-β;
+   restr-is-equiv to pre∘-conn-is-equiv) public
 
 module ⊙ConnExtend {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {n : ℕ₋₂}
                    (h : X ⊙→ Y) (c : has-conn-fibers n (fst h))
-                   (Z-level : has-level n (de⊙ Z)) (f : X ⊙→ Z) where
+                   (Z-level : has-level n (de⊙ Z)) where
 
-  open ConnExtend c (λ _ → de⊙ Z , Z-level) (fst f) public
+  open ConnExtend c (λ _ → de⊙ Z , Z-level) public
 
-  ⊙ext : Y ⊙→ Z
-  ⊙ext = ext , ap ext (! (snd h)) ∙ ext-β (pt X) ∙ snd f
+  ⊙restr : Y ⊙→ Z → X ⊙→ Z
+  ⊙restr = _⊙∘ h
 
-open ⊙ConnExtend using () renaming (⊙ext to ⊙conn-extend) public
+  ext-pt-seq : (f : X ⊙→ Z) → ext (fst f) (pt Y) =-= pt Z
+  ext-pt-seq f =
+    ext (fst f) (pt Y)
+      =⟪ ! (ap (ext (fst f)) (snd h)) ⟫
+    ext (fst f) (fst h (pt X))
+      =⟪ ext-β (fst f) (pt X) ⟫
+    fst f (pt X)
+      =⟪ snd f ⟫
+    pt Z ∎∎
+
+  ext-pt : (f : X ⊙→ Z) → ext (fst f) (pt Y) == pt Z
+  ext-pt f = ↯ (ext-pt-seq f)
+
+  ⊙ext : X ⊙→ Z → Y ⊙→ Z
+  ⊙ext f = ext (fst f) , ext-pt f
+
+  abstract
+    ⊙ext-β : (f : X ⊙→ Z) → ⊙restr (⊙ext f) == f
+    ⊙ext-β f =
+      ⊙λ=' (ext-β (fst f)) $
+      ↓-idf=cst-in $ =ₛ-out $
+      ap (fst (⊙ext f)) (snd h) ◃∙ ext-pt-seq f
+        =ₛ⟨ 0 & 2 & seq-!-inv-r (ap (fst (⊙ext f)) (snd h) ◃∎) ⟩
+      ext-β (fst f) (pt X) ◃∙ snd f ◃∎ ∎ₛ
+
+    ⊙restr-β : (t : Y ⊙→ Z) → ⊙ext (⊙restr t) == t
+    ⊙restr-β t =
+      ⊙λ=' (restr-β (fst t)) $
+      ↓-idf=cst-in $ =ₛ-out $
+      ext-pt-seq (⊙restr t)
+        =ₛ₁⟨ 1 & 1 & restr-β-ext-β-adj (fst t) (pt X) ⟩
+      ! (ap (ext (fst (⊙restr t))) (snd h)) ◃∙
+      restr-β (fst t) (fst h (pt X)) ◃∙
+      snd (⊙restr t) ◃∎
+        =ₛ⟨ 2 & 1 & expand (ap (fst t) (snd h) ◃∙ snd t ◃∎) ⟩
+      ! (ap (ext (fst (⊙restr t))) (snd h)) ◃∙
+      restr-β (fst t) (fst h (pt X)) ◃∙
+      ap (fst t) (snd h) ◃∙
+      snd t ◃∎
+        =ₛ⟨ 0 & 3 & !ₛ $ pre-rotate-in $
+            homotopy-naturality
+              (ext (fst (⊙restr t)))
+              (fst t)
+              (restr-β (fst t))
+              (snd h) ⟩
+      restr-β (fst t) (pt Y) ◃∙ snd t ◃∎ ∎ₛ
+
+  ⊙restr-is-equiv : is-equiv ⊙restr
+  ⊙restr-is-equiv = is-eq ⊙restr ⊙ext ⊙ext-β ⊙restr-β
+
+  ⊙restr-equiv : (Y ⊙→ Z) ≃ (X ⊙→ Z)
+  ⊙restr-equiv = ⊙restr , ⊙restr-is-equiv
+
+open ⊙ConnExtend using () renaming
+  (⊙ext to ⊙conn-extend;
+   ⊙restr-is-equiv to pre⊙∘-conn-is-equiv) public
 
 {- generalized "almost induction principle" for maps into ≥n-types
    TODO: rearrange this to use ≤T?                                 -}

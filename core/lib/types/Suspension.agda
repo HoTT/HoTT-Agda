@@ -3,6 +3,8 @@
 open import lib.Basics
 open import lib.NConnected
 open import lib.NType2
+open import lib.types.Bool
+open import lib.types.FunctionSeq
 open import lib.types.Span
 open import lib.types.Pointed
 open import lib.types.Pushout
@@ -245,8 +247,61 @@ module SuspFlip {i} {A : Type i} = SuspRec
 Susp-flip : ∀ {i} {A : Type i} → Susp A → Susp A
 Susp-flip = SuspFlip.f
 
+Susp-flip-σloop-seq : ∀ {i} (X : Ptd i) (x : de⊙ X)
+  → ap Susp-flip (σloop X x) =-= ! (merid x) ∙ ! (! (merid (pt X)))
+Susp-flip-σloop-seq X x =
+  ap Susp-flip (merid x ∙ ! (merid (pt X)))
+    =⟪ ap-∙ Susp-flip (merid x) (! (merid (pt X))) ⟫
+  ap Susp-flip (merid x) ∙ ap Susp-flip (! (merid (pt X)))
+    =⟪ ap2 _∙_
+           (SuspFlip.merid-β x)
+           (ap-! Susp-flip (merid (pt X)) ∙ ap ! (SuspFlip.merid-β (pt X))) ⟫
+  ! (merid x) ∙ ! (! (merid (pt X))) ∎∎
+
+Susp-flip-σloop : ∀ {i} (X : Ptd i) (x : de⊙ X)
+  → ap Susp-flip (σloop X x) == ! (merid x) ∙ ! (! (merid (pt X)))
+Susp-flip-σloop X x = ↯ (Susp-flip-σloop-seq X x)
+
+Susp-flip-σloop-pt : ∀ {i} (X : Ptd i)
+  → Susp-flip-σloop X (pt X) ◃∎
+    =ₛ
+    ap (ap Susp-flip) (!-inv-r (merid (pt X))) ◃∙
+    ! (!-inv-r (! (merid (pt X)))) ◃∎
+Susp-flip-σloop-pt X =
+  Susp-flip-σloop X (pt X) ◃∎
+    =ₛ⟨ expand (Susp-flip-σloop-seq X (pt X)) ⟩
+  Susp-flip-σloop-seq X (pt X)
+    =ₛ⟨ coh Susp-flip (merid (pt X))
+            (! (merid (pt X))) (SuspFlip.merid-β (pt X)) ⟩
+  ap (ap Susp-flip) (!-inv-r (merid (pt X))) ◃∙
+  ! (!-inv-r (! (merid (pt X)))) ◃∎ ∎ₛ
+  where
+  coh : ∀ {j k} {A : Type j} {B : Type k} (f : A → B)
+    {a₀ a₁ : A} (p : a₀ == a₁)
+    (q : f a₀ == f a₁)
+    (r : ap f p == q)
+    → ap-∙ f p (! p) ◃∙
+      ap2 _∙_ r (ap-! f p ∙ ap ! r) ◃∎
+      =ₛ
+      ap (ap f) (!-inv-r p) ◃∙
+      ! (!-inv-r q) ◃∎
+  coh f p@idp q@.idp r@idp = =ₛ-in idp
+
+maybe-Susp-flip : ∀ {i} {A : Type i} → Bool → Susp A → Susp A
+maybe-Susp-flip true = Susp-flip
+maybe-Susp-flip false = idf _
+
 ⊙Susp-flip : ∀ {i} (X : Ptd i) → ⊙Susp (de⊙ X) ⊙→ ⊙Susp (de⊙ X)
 ⊙Susp-flip X = (Susp-flip , ! (merid (pt X)))
+
+⊙maybe-Susp-flip : ∀ {i} (X : Ptd i) → Bool → ⊙Susp (de⊙ X) ⊙→ ⊙Susp (de⊙ X)
+⊙maybe-Susp-flip X true  = ⊙Susp-flip X
+⊙maybe-Susp-flip X false = ⊙idf (⊙Susp (de⊙ X))
+
+de⊙-⊙maybe-Susp-flip : ∀ {i} (X : Ptd i) (b : Bool)
+  → fst (⊙maybe-Susp-flip X b) == maybe-Susp-flip b
+de⊙-⊙maybe-Susp-flip X true  = idp
+de⊙-⊙maybe-Susp-flip X false = idp
 
 Susp-flip-flip : ∀ {i} {A : Type i} (sa : Susp A)
   → Susp-flip (Susp-flip sa) == sa
@@ -267,6 +322,35 @@ Susp-flip-flip =
   ap Susp-flip (ap Susp-flip (merid a))
     =⟨ ∘-ap Susp-flip Susp-flip (merid a) ⟩
   ap (Susp-flip ∘ Susp-flip) (merid a) =∎
+
+⊙Susp-flip-flip : ∀ {i} {X : Ptd i}
+  → ⊙Susp-flip X ◃⊙∘ ⊙Susp-flip X ◃⊙idf =⊙∘ ⊙idf-seq
+⊙Susp-flip-flip {_} {X} =
+  ⊙seq-λ= Susp-flip-flip $
+  ap Susp-flip (! (merid (pt X))) ◃∙
+  ! (merid (pt X)) ◃∎
+    =ₛ₁⟨ 0 & 1 & ap-! Susp-flip (merid (pt X)) ⟩
+  ! (ap Susp-flip (merid (pt X))) ◃∙
+  ! (merid (pt X)) ◃∎
+    =ₛ₁⟨ 0 & 1 & ap ! (SuspFlip.merid-β (pt X)) ⟩
+  ! (! (merid (pt X))) ◃∙
+  ! (merid (pt X)) ◃∎
+    =ₛ₁⟨ !-inv-l (! (merid (pt X))) ⟩
+  idp ◃∎ ∎ₛ
+
+⊙maybe-Susp-flip-flip : ∀ {i} (X : Ptd i) (b c : Bool)
+  → ⊙maybe-Susp-flip X b ◃⊙∘ ⊙maybe-Susp-flip X c ◃⊙idf
+    =⊙∘
+    ⊙maybe-Susp-flip X (xor b c) ◃⊙idf
+⊙maybe-Susp-flip-flip X true  true  =
+  ⊙Susp-flip X ◃⊙∘ ⊙Susp-flip X ◃⊙idf
+    =⊙∘⟨ ⊙Susp-flip-flip ⟩
+  ⊙idf-seq
+    =⊙∘⟨ ⊙contract ⟩
+  ⊙idf _ ◃⊙idf ∎⊙∘
+⊙maybe-Susp-flip-flip X true  false = =⊙∘-in idp
+⊙maybe-Susp-flip-flip X false true  = =⊙∘-in (⊙λ= (⊙∘-unit-l (⊙Susp-flip X)))
+⊙maybe-Susp-flip-flip X false false = =⊙∘-in idp
 
 Susp-flip-equiv : ∀ {i} {A : Type i} → Susp A ≃ Susp A
 Susp-flip-equiv {A = A} =
@@ -291,12 +375,16 @@ module _ {i} (A : Type i) where
   Susp-fmap-idf = Susp-elim idp idp $ λ a →
     ↓-='-in' (ap-idf (merid a) ∙ ! (SuspFmap.merid-β (idf A) a))
 
-  ⊙Susp-fmap-idf : ⊙Susp-fmap (idf A) == ⊙idf (⊙Susp A)
-  ⊙Susp-fmap-idf = ⊙λ=' Susp-fmap-idf idp
+  ⊙Susp-fmap-idf : ⊙Susp-fmap (idf A) ◃⊙idf =⊙∘ ⊙idf-seq
+  ⊙Susp-fmap-idf = =⊙∘-in (⊙λ=' Susp-fmap-idf idp)
 
-Susp-fmap-coe : ∀ {i} {A B : Type i} (p : A == B)
-  → ∀ sa → Susp-fmap (coe p) sa == transport Susp p sa
-Susp-fmap-coe {i} {A} {.A} p@idp = Susp-fmap-idf A
+transport-Susp : ∀ {i} {A B : Type i} (p : A == B)
+  → transport Susp p ∼ Susp-fmap (coe p)
+transport-Susp {i} {A} {.A} p@idp sa = ! (Susp-fmap-idf A sa)
+
+⊙transport-⊙Susp : ∀ {i} {A B : Type i} (p : A == B)
+  → ⊙transport ⊙Susp p == ⊙Susp-fmap (coe p)
+⊙transport-⊙Susp {i} {A} {.A} p@idp = ! (=⊙∘-out (⊙Susp-fmap-idf A))
 
 module _ {i} {A : Type i} where
 
@@ -319,6 +407,31 @@ module _ {i} {A : Type i} where
     ∙ ! (SuspFlip.merid-β (f y))
     ∙ ! (ap (ap Susp-flip) (SuspFmap.merid-β f y))
     ∙ ∘-ap Susp-flip (Susp-fmap f) (merid y)
+
+⊙Susp-flip-natural : ∀ {i} {j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
+  → ⊙Susp-flip Y ⊙∘ ⊙Susp-fmap (fst f) == ⊙Susp-fmap (fst f) ⊙∘ ⊙Susp-flip X
+⊙Susp-flip-natural {_} {_} {X} {Y} f =
+  pair= (λ= (Susp-flip-natural (fst f))) $
+  ↓-app=cst-in $ ! $ =ₛ-out {t = ! (merid (pt Y)) ◃∎} $
+  app= (λ= (Susp-flip-natural (fst f))) north ◃∙
+  ap (Susp-fmap (fst f)) (! (merid (pt X))) ◃∙
+  idp ◃∎
+    =ₛ⟨ 2 & 1 & expand [] ⟩
+  app= (λ= (Susp-flip-natural (fst f))) north ◃∙
+  ap (Susp-fmap (fst f)) (! (merid (pt X))) ◃∎
+    =ₛ₁⟨ 0 & 1 & app=-β (Susp-flip-natural (fst f)) north ⟩
+  idp ◃∙
+  ap (Susp-fmap (fst f)) (! (merid (pt X))) ◃∎
+    =ₛ⟨ 0 & 1 & expand [] ⟩
+  ap (Susp-fmap (fst f)) (! (merid (pt X))) ◃∎
+    =ₛ₁⟨ ap-! (Susp-fmap (fst f)) (merid (pt X)) ⟩
+  ! (ap (Susp-fmap (fst f)) (merid (pt X))) ◃∎
+    =ₛ₁⟨ ap ! (SuspFmap.merid-β (fst f) (pt X)) ⟩
+  ! (merid (fst f (pt X))) ◃∎
+    =ₛ₁⟨ ap (! ∘ merid) (snd f) ⟩
+  ! (merid (pt Y)) ◃∎ ∎ₛ
+
+module _ {i} {A : Type i} where
 
   Susp-fmap-flip : (x : Susp (Susp A))
     → Susp-fmap Susp-flip x == Susp-flip x
@@ -387,24 +500,71 @@ module _ {i} {A : Type i} where
       coh-helper {merid₁ = idp} {merid₂ = .idp} idp =
         =ₛ-in idp
 
-module _ {i j k} where
+  ⊙Susp-fmap-Susp-flip : ⊙Susp-fmap Susp-flip == ⊙Susp-flip (⊙Susp A)
+  ⊙Susp-fmap-Susp-flip =
+    pair= (λ= (Susp-fmap-flip)) $
+    ↓-app=cst-in $ ! $ =ₛ-out {t = []} $
+      app= (λ= Susp-fmap-flip) north ◃∙
+      ! (merid north) ◃∎
+        =ₛ₁⟨ 0 & 1 & app=-β Susp-fmap-flip north ⟩
+      merid north ◃∙
+      ! (merid north) ◃∎
+        =ₛ⟨ seq-!-inv-r (merid north ◃∎) ⟩
+      [] ∎ₛ
 
-  Susp-fmap-∘ : {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
-    (σ : Susp A) → Susp-fmap (g ∘ f) σ == Susp-fmap g (Susp-fmap f σ)
-  Susp-fmap-∘ g f = Susp-elim
-    idp
-    idp
-    (λ a → ↓-='-in' $
-      ap-∘ (Susp-fmap g) (Susp-fmap f) (merid a)
-      ∙ ap (ap (Susp-fmap g)) (SuspFmap.merid-β f a)
-      ∙ SuspFmap.merid-β g (f a)
-      ∙ ! (SuspFmap.merid-β (g ∘ f) a))
+  ⊙Susp-fmap-maybe-Susp-flip : ∀ (b : Bool)
+    → ⊙Susp-fmap (maybe-Susp-flip b) == ⊙maybe-Susp-flip (⊙Susp A) b
+  ⊙Susp-fmap-maybe-Susp-flip true  = ⊙Susp-fmap-Susp-flip
+  ⊙Susp-fmap-maybe-Susp-flip false = =⊙∘-out (⊙Susp-fmap-idf _)
 
-  ⊙Susp-fmap-∘ : {A : Type i} {B : Type j} {C : Type k}
-    (g : B → C) (f : A → B)
-    → ⊙Susp-fmap (g ∘ f) == ⊙Susp-fmap g ⊙∘ ⊙Susp-fmap f
-  ⊙Susp-fmap-∘ g f = ⊙λ=' (Susp-fmap-∘ g f) idp
+Susp-fmap-∘ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
+  (σ : Susp A) → Susp-fmap (g ∘ f) σ == Susp-fmap g (Susp-fmap f σ)
+Susp-fmap-∘ g f = Susp-elim
+  idp
+  idp
+  (λ a → ↓-='-in' $
+    ap-∘ (Susp-fmap g) (Susp-fmap f) (merid a)
+    ∙ ap (ap (Susp-fmap g)) (SuspFmap.merid-β f a)
+    ∙ SuspFmap.merid-β g (f a)
+    ∙ ! (SuspFmap.merid-β (g ∘ f) a))
 
+⊙Susp-fmap-∘ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  (g : B → C) (f : A → B)
+  → ⊙Susp-fmap (g ∘ f) == ⊙Susp-fmap g ⊙∘ ⊙Susp-fmap f
+⊙Susp-fmap-∘ g f = ⊙λ=' (Susp-fmap-∘ g f) idp
+
+⊙Susp-fmap-seq : ∀ {i} {A B : Type i} → (A –→ B) → ⊙Susp A ⊙–→ ⊙Susp B
+⊙Susp-fmap-seq idf-seq = ⊙idf-seq
+⊙Susp-fmap-seq (f ◃∘ fs) = ⊙Susp-fmap f ◃⊙∘ ⊙Susp-fmap-seq fs
+
+abstract
+  ⊙Susp-fmap-seq-∘ : ∀ {i} {A B : Type i} (fs : A –→ B)
+    → ⊙Susp-fmap (compose fs) ◃⊙idf =⊙∘ ⊙Susp-fmap-seq fs
+  ⊙Susp-fmap-seq-∘ idf-seq = ⊙Susp-fmap-idf _
+  ⊙Susp-fmap-seq-∘ (f ◃∘ fs) = =⊙∘-in $
+    ⊙Susp-fmap (f ∘ compose fs)
+      =⟨ ⊙Susp-fmap-∘ f (compose fs) ⟩
+    ⊙Susp-fmap f ⊙∘ ⊙Susp-fmap (compose fs)
+      =⟨ ap (⊙Susp-fmap f ⊙∘_) (=⊙∘-out (⊙Susp-fmap-seq-∘ fs)) ⟩
+    ⊙Susp-fmap f ⊙∘ ⊙compose (⊙Susp-fmap-seq fs) =∎
+
+  ⊙Susp-fmap-seq-=⊙∘ : ∀ {i} {A B : Type i} {fs gs : A –→ B}
+    → fs =∘ gs
+    → ⊙Susp-fmap-seq fs =⊙∘ ⊙Susp-fmap-seq gs
+  ⊙Susp-fmap-seq-=⊙∘ {fs = fs} {gs = gs} p =
+    ⊙Susp-fmap-seq fs
+      =⊙∘⟨ !⊙∘ (⊙Susp-fmap-seq-∘ fs) ⟩
+    ⊙Susp-fmap (compose fs) ◃⊙idf
+      =⊙∘₁⟨ ap ⊙Susp-fmap (=∘-out p) ⟩
+    ⊙Susp-fmap (compose gs) ◃⊙idf
+      =⊙∘⟨ ⊙Susp-fmap-seq-∘ gs ⟩
+    ⊙Susp-fmap-seq gs ∎⊙∘
+
+⊙maybe-Susp-flip-natural : ∀ {i} {j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y) (b : Bool)
+  → ⊙Susp-fmap (fst f) ⊙∘ ⊙maybe-Susp-flip X b ==
+    ⊙maybe-Susp-flip Y b ⊙∘ ⊙Susp-fmap (fst f)
+⊙maybe-Susp-flip-natural f true  = ! (⊙Susp-flip-natural f)
+⊙maybe-Susp-flip-natural f false = ⊙λ= (⊙∘-unit-l (⊙Susp-fmap (fst f)))
 
 {- Extract the 'glue component' of a pushout -}
 module _ {i j k} {s : Span {i} {j} {k}} where
@@ -562,6 +722,38 @@ abstract
 ⊙Susp-Trunc-swap : ∀ {i} (A : Type i) (m : ℕ₋₂)
   → ⊙Susp (Trunc m A) ⊙→ ⊙Trunc (S m) (⊙Susp A)
 ⊙Susp-Trunc-swap A m = Susp-Trunc-swap A m , idp
+
+abstract
+  ⊙Susp-Trunc-swap-⊙Susp-flip : ∀ {i} {X : Ptd i} (m : ℕ₋₂)
+    → ⊙Susp-Trunc-swap (de⊙ X) m ◃⊙∘
+      ⊙Susp-flip (⊙Trunc m X) ◃⊙idf
+      =⊙∘
+      ⊙Trunc-fmap (⊙Susp-flip X) ◃⊙∘
+      ⊙Susp-Trunc-swap (de⊙ X) m ◃⊙idf
+  ⊙Susp-Trunc-swap-⊙Susp-flip {X = X} m =
+    ⊙seq-λ= (Susp-Trunc-swap-Susp-flip (de⊙ X) m) $ !ₛ $
+    idp ◃∙
+    idp ◃∙
+    ap [_] (! (merid (pt X))) ◃∎
+      =ₛ⟨ 0 & 1 & expand [] ⟩
+    idp ◃∙
+    ap [_] (! (merid (pt X))) ◃∎
+      =ₛ⟨ 0 & 1 & expand [] ⟩
+    ap [_] (! (merid (pt X))) ◃∎
+      =ₛ₁⟨ ap-! [_] (merid (pt X)) ⟩
+    ! (ap [_] (merid (pt X))) ◃∎
+      =ₛ₁⟨ ! $ ap ! $ SuspTruncSwap.merid-β (de⊙ X) m [ pt X ] ⟩
+    ! (ap (Susp-Trunc-swap (de⊙ X) m) (merid [ pt X ])) ◃∎
+      =ₛ₁⟨ !-ap (Susp-Trunc-swap (de⊙ X) m) (merid [ pt X ]) ⟩
+    ap (Susp-Trunc-swap (de⊙ X) m) (! (merid [ pt X ])) ◃∎
+      =ₛ⟨ 1 & 0 & contract ⟩
+    ap (Susp-Trunc-swap (de⊙ X) m) (! (merid [ pt X ])) ◃∙
+    idp ◃∎ ∎ₛ
+
+  ⊙Susp-Trunc-swap-natural : ∀ {i} {j} {A : Type i} {B : Type j} (f : A → B) (m : ℕ₋₂)
+    → ⊙Susp-Trunc-swap B m ⊙∘ ⊙Susp-fmap (Trunc-fmap f) ==
+      ⊙Trunc-fmap (⊙Susp-fmap f) ⊙∘ ⊙Susp-Trunc-swap A m
+  ⊙Susp-Trunc-swap-natural f m = ⊙λ=' (Susp-Trunc-swap-natural f m) idp
 
 {- Suspension of an n-connected space is n+1-connected -}
 abstract

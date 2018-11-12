@@ -7,7 +7,7 @@ open import groups.ToOmega
 
 module groups.SuspAdjointLoop {i} where
 
-  import homotopy.SuspAdjointLoop {i} as A
+  import homotopy.SuspAdjointLoop as A
 
   module _ (X Y : Ptd i) where
 
@@ -23,8 +23,8 @@ module groups.SuspAdjointLoop {i} where
         ∙ ap (_⊙∘ ⊙fanout (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂))
              arr2-lemma
         where
-        module A× = RightAdjoint× A.hadj
-        module B = RightAdjointBinary A.hadj
+        module A× = RightAdjoint× (A.hadj {i})
+        module B = RightAdjointBinary (A.hadj {i})
 
         ap2-lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
           (f : A × B → C) {r s : A × B} (p : r == s)
@@ -36,7 +36,7 @@ module groups.SuspAdjointLoop {i} where
           → ⊙Ω-fmap f == ⊙Ω-fmap2 f ⊙∘ ⊙fanout (⊙Ω-fmap ⊙fst) (⊙Ω-fmap ⊙snd)
         ⊙ap2-lemma (f , idp) = ⊙λ=' (ap2-lemma f) idp
 
-        arr2-lemma : B.arr2 ⊙Ω-∙ == ⊙Ω-∙
+        arr2-lemma : B.arr2 (⊙Ω-∙ {X = Y}) == ⊙Ω-∙
         arr2-lemma =
           ⊙Ω-fmap ⊙Ω-∙ ⊙∘ A×.⊙out _ _
             =⟨ ⊙ap2-lemma ⊙Ω-∙ |in-ctx _⊙∘ A×.⊙out _ _ ⟩

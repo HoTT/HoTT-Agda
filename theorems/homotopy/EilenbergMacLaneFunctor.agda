@@ -107,14 +107,75 @@ module _ {i j} (G : Group i) (H : Group j) where
   ⊙EM₁-fmap-cst-hom : ⊙EM₁-fmap (cst-hom {G = G} {H = H}) ⊙∼ ⊙cst
   ⊙EM₁-fmap-cst-hom = EM₁-fmap-cst-hom , idp
 
-module _ {i j} (G : AbGroup i) (H : AbGroup j) (φ : AbGroup.grp G →ᴳ AbGroup.grp H) where
+module _ {i j} (G : AbGroup i) (H : AbGroup j) (φ : G →ᴬᴳ H) where
 
   ⊙EM-fmap : ∀ n → ⊙EM G n ⊙→ ⊙EM H n
-  ⊙EM-fmap O = ⊙Ω-fmap (⊙EM₁-fmap φ)
-  ⊙EM-fmap (S n) = ⊙Trunc-fmap (⊙Susp^-fmap n (⊙EM₁-fmap φ))
+  ⊙EM-fmap = EMImplicitMap.⊙EM-fmap (⊙EM₁-fmap φ) (EM₁HSpace.H-⊙EM₁ G) (EM₁HSpace.H-⊙EM₁ H)
 
   EM-fmap : ∀ n → EM G n → EM H n
   EM-fmap n = fst (⊙EM-fmap n)
+
+module _ {i} (G H : AbGroup i) (φ : AbGroup.grp G →ᴳ AbGroup.grp H) where
+
+  private
+    module SN = SpectrumNatural
+      {X = ⊙EM₁ (AbGroup.grp G)} {Y = ⊙EM₁ (AbGroup.grp H)}
+      (⊙EM₁-fmap φ)
+      {{EM₁-conn}} {{EM₁-conn}}
+      {{EM₁-level₁ (AbGroup.grp G)}} {{EM₁-level₁ (AbGroup.grp H)}}
+      (EM₁HSpace.H-⊙EM₁ G) (EM₁HSpace.H-⊙EM₁ H)
+
+  abstract
+    {-
+      checking this definition is very slow for some
+      mysterious reason (unification maybe?)
+    -}
+    ⊙–>-spectrum-natural : ∀ (n : ℕ)
+      → ⊙–> (spectrum H n) ◃⊙∘
+        ⊙Ω-fmap (⊙EM-fmap G H φ (S n)) ◃⊙idf
+        =⊙∘
+        ⊙EM-fmap G H φ n ◃⊙∘
+        ⊙–> (spectrum G n) ◃⊙idf
+    ⊙–>-spectrum-natural n =
+      ⊙–> (spectrum H n) ◃⊙∘
+      ⊙Ω-fmap (⊙EM-fmap G H φ (S n)) ◃⊙idf
+        =⊙∘₁⟨ 0 & 1 & ap ⊙–> (spectrum-def H n) ⟩
+      ⊙–> (Spectrum.spectrum H n) ◃⊙∘
+      ⊙Ω-fmap (⊙EM-fmap G H φ (S n)) ◃⊙idf
+        =⊙∘⟨ SN.⊙–>-spectrum-natural n ⟩
+      ⊙EM-fmap G H φ n ◃⊙∘
+      ⊙–> (Spectrum.spectrum G n) ◃⊙idf
+        =⊙∘₁⟨ 1 & 1 & ap ⊙–> (! (spectrum-def G n)) ⟩
+      ⊙EM-fmap G H φ n ◃⊙∘
+      ⊙–> (spectrum G n) ◃⊙idf ∎⊙∘
+
+    {-
+      derived from `⊙–>-spectrum-natural` instead of from
+      `SN.⊙<–-spectrum-natural n` since that circumvents
+      the slowness issue for this definition.
+    -}
+    ⊙<–-spectrum-natural : ∀ (n : ℕ)
+      → ⊙<– (spectrum H n) ◃⊙∘
+        ⊙EM-fmap G H φ n ◃⊙idf
+        =⊙∘
+        ⊙Ω-fmap (⊙EM-fmap G H φ (S n)) ◃⊙∘
+        ⊙<– (spectrum G n) ◃⊙idf
+    ⊙<–-spectrum-natural n =
+      ⊙<– (spectrum H n) ◃⊙∘
+      ⊙EM-fmap G H φ n ◃⊙idf
+        =⊙∘⟨ 2 & 0 & !⊙∘ $ ⊙<–-inv-r-=⊙∘ (spectrum G n) ⟩
+      ⊙<– (spectrum H n) ◃⊙∘
+      ⊙EM-fmap G H φ n ◃⊙∘
+      ⊙–> (spectrum G n) ◃⊙∘
+      ⊙<– (spectrum G n) ◃⊙idf
+        =⊙∘⟨ 1 & 2 & !⊙∘ $ ⊙–>-spectrum-natural n ⟩
+      ⊙<– (spectrum H n) ◃⊙∘
+      ⊙–> (spectrum H n) ◃⊙∘
+      ⊙Ω-fmap (⊙EM-fmap G H φ (S n)) ◃⊙∘
+      ⊙<– (spectrum G n) ◃⊙idf
+        =⊙∘⟨ 0 & 2 & ⊙<–-inv-l-=⊙∘ (spectrum H n) ⟩
+      ⊙Ω-fmap (⊙EM-fmap G H φ (S n)) ◃⊙∘
+      ⊙<– (spectrum G n) ◃⊙idf ∎⊙∘
 
 module _ {i j k} (G : AbGroup i) (H : AbGroup j) (K : AbGroup k) (ψ : H →ᴬᴳ K) (φ : G →ᴬᴳ H) where
 
@@ -136,7 +197,7 @@ module _ {i j k} (G : AbGroup i) (H : AbGroup j) (K : AbGroup k) (ψ : H →ᴬ�
     ⊙Trunc-fmap (⊙Susp^-fmap n (⊙EM₁-fmap ψ ⊙∘ ⊙EM₁-fmap φ))
       =⟨ ap ⊙Trunc-fmap (⊙Susp^-fmap-∘ n (⊙EM₁-fmap ψ) (⊙EM₁-fmap φ)) ⟩
     ⊙Trunc-fmap (⊙Susp^-fmap n (⊙EM₁-fmap ψ) ⊙∘ ⊙Susp^-fmap n (⊙EM₁-fmap φ))
-      =⟨ ! (⊙λ= (⊙Trunc-fmap-∘ (⊙Susp^-fmap n (⊙EM₁-fmap ψ)) (⊙Susp^-fmap n (⊙EM₁-fmap φ)))) ⟩
+      =⟨ ! (⊙λ= (⊙Trunc-fmap-⊙∘ (⊙Susp^-fmap n (⊙EM₁-fmap ψ)) (⊙Susp^-fmap n (⊙EM₁-fmap φ)))) ⟩
     ⊙Trunc-fmap (⊙Susp^-fmap n (⊙EM₁-fmap ψ)) ⊙∘ ⊙Trunc-fmap (⊙Susp^-fmap n (⊙EM₁-fmap φ)) =∎
 
   EM-fmap-∘ : ∀ n → EM-fmap G K (ψ ∘ᴳ φ) n == EM-fmap H K ψ n ∘ EM-fmap G H φ n
@@ -150,6 +211,9 @@ module _ {i} (G : AbGroup i) where
 
   EM₁-neg : EM₁ G.grp → EM₁ G.grp
   EM₁-neg = EM₁-fmap (inv-hom G)
+
+  ⊙EM₁-neg : ⊙EM₁ G.grp ⊙→ ⊙EM₁ G.grp
+  ⊙EM₁-neg = ⊙EM₁-fmap (inv-hom G)
 
   abstract
     EM₁-neg-emloop-β : ∀ g → ap EM₁-neg (emloop g) == ! (emloop g)
@@ -166,6 +230,10 @@ module _ {i} (G : AbGroup i) where
       transport (λ q → ap EM₁-neg q == ! q)
                 (<–-inv-r (emloop-equiv G.grp) p) $
       EM₁-neg-emloop-β (<– (emloop-equiv G.grp) p)
+
+    ⊙Ω-fmap-⊙EM₁-neg : ⊙Ω-fmap ⊙EM₁-neg == ⊙Ω-!
+    ⊙Ω-fmap-⊙EM₁-neg = ⊙λ=' EM₁-neg-! $ prop-has-all-paths-↓
+      {{has-level-apply (has-level-apply (EM₁-level₁ G.grp {n = -2}) _ _) _ _}}
 
     EM₁-neg-inv-l : ∀ (x : EM₁ G.grp)
       → mult (EM₁-neg x) x == embase
@@ -237,10 +305,13 @@ module _ {i} (G : AbGroup i) where
   EM-neg : ∀ (n : ℕ) → EM G n → EM G n
   EM-neg n = EM-fmap G G (inv-hom G) n
 
+  ⊙EM-neg : ∀ (n : ℕ) → ⊙EM G n ⊙→ ⊙EM G n
+  ⊙EM-neg n = ⊙EM-fmap G G (inv-hom G) n
+
   private
     -- superseded by Susp-flip-EM-neg
-    Susp-flip-EM₁-neg : EM-neg 2 ∼ Trunc-fmap Susp-flip
-    Susp-flip-EM₁-neg =
+    EM-neg-2=Trunc-fmap-Susp-flip : EM-neg 2 ∼ Trunc-fmap Susp-flip
+    EM-neg-2=Trunc-fmap-Susp-flip =
       Trunc-elim {{λ t → =-preserves-level (EM-level G 2)}} $
       Susp-elim
         {P = λ s → EM-neg 2 [ s ]₂ == Trunc-fmap Susp-flip [ s ]₂}
@@ -296,192 +367,175 @@ module _ {i} (G : AbGroup i) where
         (p : x == y) (q : y == x) → p ∙ q == idp → ! p == q
       cancels-inverse p@idp q@.idp idp = idp
 
-    to-alt-EM : ∀ n → EM G (S (S n)) ≃ Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ n (EM G 2))
-    to-alt-EM n =
-      (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) ⁻¹ ∘e
-      coe-equiv (ap (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1))) ∘e
-      coe-equiv (ap (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n)) ∘e
-      coe-equiv (ap (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂))
+    ⊙EM-neg-2=⊙Trunc-fmap-⊙Susp-flip : ⊙EM-neg 2 == ⊙Trunc-fmap (⊙Susp-flip (⊙EM₁ G.grp))
+    ⊙EM-neg-2=⊙Trunc-fmap-⊙Susp-flip =
+      ⊙λ=' {X = ⊙EM G 2} {Y = ⊙EM G 2} EM-neg-2=Trunc-fmap-Susp-flip $
+      ↓-idf=cst-in $
+      =ₛ-out $ !ₛ $
+      ap [_]₂ (merid embase) ◃∙
+      ap [_]₂ (! (merid embase)) ◃∎
+        =ₛ⟨ ap-seq-=ₛ [_]₂ (seq-!-inv-r (merid (embase' G.grp) ◃∎)) ⟩
+      [] ∎ₛ
 
-  Susp-flip-EM-neg : ∀ n → EM-neg (S (S n)) ∼ Trunc-fmap Susp-flip
-  Susp-flip-EM-neg n x =
-    –>-is-inj (to-alt-EM n) (EM-neg (S (S n)) x) (Trunc-fmap Susp-flip x) $
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1)) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) $
-     EM-neg (S (S n)) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         ap (transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1))) $
-         ap (transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n)) $
-         app= (! (transp-naturality (λ {k} → Trunc-fmap {n = k} (Susp^-fmap (S n) EM₁-neg))
-                                    (+2+-comm 2 ⟨ n ⟩₋₂))) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1)) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     Trunc-fmap (Susp^-fmap (S n) EM₁-neg) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         ap (transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1))) $
-         app= (! (transp-naturality (λ {l} → Trunc-fmap (Susp^-fmap l EM₁-neg))
-                                    (+-comm 1 n))) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1)) $
-     Trunc-fmap (Susp^-fmap (n + 1) EM₁-neg) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         app= (! (Trunc-fmap-coe (! (Susp^-+ n 1)))) $
-         Trunc-fmap (Susp^-fmap (n + 1) EM₁-neg) $
-         transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (coe (! (Susp^-+ n 1))) $
-     Trunc-fmap (Susp^-fmap (n + 1) EM₁-neg) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         Trunc-fmap-∘ (coe (! (Susp^-+ n 1))) (Susp^-fmap (n + 1) EM₁-neg) $
-         transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (coe (! (Susp^-+ n 1)) ∘ Susp^-fmap (n + 1) EM₁-neg) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         app= (ap Trunc-fmap (! (λ= (Susp^-+-natural' n 1 EM₁-neg)))) $
-         transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (Susp^-fmap n (Susp-fmap EM₁-neg) ∘ coe (! (Susp^-+ n 1))) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         ! $ Trunc-fmap-∘ (Susp^-fmap n (Susp-fmap EM₁-neg)) (coe (! (Susp^-+ n 1))) $
-         transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (Susp^-fmap n (Susp-fmap EM₁-neg)) $
-     Trunc-fmap (coe (! (Susp^-+ n 1))) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ Susp^-Trunc-equiv-natural' (Susp-fmap EM₁-neg) 2 n $
-         Trunc-fmap (coe (! (Susp^-+ n 1))) $
-         transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (Trunc-fmap (Susp^-fmap n (EM-neg 2)) $
-     <– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (coe (! (Susp^-+ n 1))) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ app= (ap (Trunc-fmap ∘ Susp^-fmap n) (λ= Susp-flip-EM₁-neg)) $
-         <– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-         Trunc-fmap (coe (! (Susp^-+ n 1))) $
-         transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (Trunc-fmap (Susp^-fmap n (Trunc-fmap Susp-flip)) $
-     <– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (coe (! (Susp^-+ n 1))) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ! $ Susp^-Trunc-equiv-natural' Susp-flip 2 n $
-         Trunc-fmap (coe (! (Susp^-+ n 1))) $
-         transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (Susp^-fmap n Susp-flip) $
-     Trunc-fmap (coe (! (Susp^-+ n 1))) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         Trunc-fmap-∘ (Susp^-fmap n Susp-flip) (coe (! (Susp^-+ n 1))) $
-         transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (Susp^-fmap n Susp-flip ∘ coe (! (Susp^-+ n 1))) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         ap (Trunc-fmap (Susp^-fmap n Susp-flip ∘ coe (! (Susp^-+ n 1)))) $
-         app= (ap coe (ap-∘ (Trunc (⟨ n ⟩₋₂ +2+ 2)) (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n))) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (Susp^-fmap n Susp-flip ∘ coe (! (Susp^-+ n 1))) $
-     transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (ap (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n)) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         ap (Trunc-fmap (Susp^-fmap n Susp-flip ∘ coe (! (Susp^-+ n 1)))) $
-         ! $ app= (Trunc-fmap-coe (ap (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n))) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (Susp^-fmap n Susp-flip ∘ coe (! (Susp^-+ n 1))) $
-     Trunc-fmap (coe (ap (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n))) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         Trunc-fmap-∘ (Susp^-fmap n Susp-flip ∘ coe (! (Susp^-+ n 1)))
-                      (coe (ap (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n))) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (Susp^-fmap n Susp-flip ∘
-                 coe (! (Susp^-+ n 1)) ∘
-                 coe (ap (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n))) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         app= (ap Trunc-fmap $ λ= $ λ y →
-           (Susp^-fmap n Susp-flip $
-            coe (! (Susp^-+ n 1)) $
-            coe (ap (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n)) y)
-             =⟨ ap (Susp^-fmap n Susp-flip) $
-                ! $ coe-∙ (ap (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n)) (! (Susp^-+ n 1)) y ⟩
-           (Susp^-fmap n Susp-flip $
-            coe (Susp^-comm 1 n) y)
-             =⟨ Susp^-comm-flip 0 n (EM₁ G.grp) y ⟩
-           (coe (Susp^-comm 1 n) $
-            Susp-flip y) =∎) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (coe (Susp^-comm 1 n) ∘ Susp-flip) $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         ! $ Trunc-fmap-∘ (coe (Susp^-comm 1 n)) (Susp-flip) $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     Trunc-fmap (coe (Susp^-comm 1 n)) $
-     Trunc-fmap Susp-flip $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         app= (Trunc-fmap-coe (Susp^-comm 1 n)) $
-         Trunc-fmap Susp-flip $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (Susp^-comm 1 n) $
-     Trunc-fmap Susp-flip $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         transp-∙ {B = Trunc (⟨ n ⟩₋₂ +2+ 2)} (ap (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n)) (! (Susp^-+ n 1)) $
-         Trunc-fmap Susp-flip $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1)) $
-     transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (ap (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n)) $
-     Trunc-fmap Susp-flip $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         ap (transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1))) $
-         app= (ap coe (∘-ap (Trunc (⟨ n ⟩₋₂ +2+ 2)) (λ l → Susp^ l (EM₁ G.grp)) (+-comm 1 n))) $
-         Trunc-fmap Susp-flip $
-         transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x ⟩
-    (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n) $
-     transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1)) $
-     transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n) $
-     Trunc-fmap Susp-flip $
-     transport (λ k → Trunc k (Susp^ (S n) (EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) x)
-      =⟨ ap (<– (Susp^-Trunc-equiv (Susp (EM₁ G.grp)) 2 n)) $
-         ap (transport (Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (Susp^-+ n 1))) $
-         ap (transport (λ l → Trunc (⟨ n ⟩₋₂ +2+ 2) (Susp^ l (EM₁ G.grp))) (+-comm 1 n)) $
-         app= (transp-naturality (λ {k} → Trunc-fmap {n = k} Susp-flip) (+2+-comm 2 ⟨ n ⟩₋₂)) x ⟩
-    –> (to-alt-EM n) (Trunc-fmap Susp-flip x) =∎
+    ⊙to-alt-EM : ∀ n → ⊙EM G (S (S n)) ⊙≃ ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ n (⊙EM G 2))
+    ⊙to-alt-EM n =
+      (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ⊙⁻¹ ⊙∘e
+      ⊙coe-equiv (ap (⊙Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (⊙Susp^-+ n 1))) ⊙∘e
+      ⊙coe-equiv (ap (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n)) ⊙∘e
+      ⊙coe-equiv (ap (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂))
+
+    ⊙–>-⊙to-alt-EM : ∀ n →
+      ⊙–> (⊙to-alt-EM n) ◃⊙idf
+      =⊙∘
+      ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+      ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+      ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+      ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf
+    ⊙–>-⊙to-alt-EM n =
+      ⊙–> (⊙to-alt-EM n) ◃⊙idf
+        =⊙∘⟨ =⊙∘-in idp ⟩
+      ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+      ⊙coe (ap (⊙Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (⊙Susp^-+ n 1))) ◃⊙∘
+      ⊙coe (ap (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n)) ◃⊙∘
+      ⊙coe (ap (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂)) ◃⊙idf
+        =⊙∘₁⟨ 1 & 1 & ! (⊙transport-⊙coe (⊙Trunc (⟨ n ⟩₋₂ +2+ 2)) (! (⊙Susp^-+ n 1))) ∙
+                      ⊙transport-⊙Trunc (! (⊙Susp^-+ n 1)) ⟩
+      ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+      ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+      ⊙coe (ap (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n)) ◃⊙∘
+      ⊙coe (ap (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂)) ◃⊙idf
+        =⊙∘₁⟨ 2 & 1 & ! $ ⊙transport-⊙coe (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ⟩
+      ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+      ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+      ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+      ⊙coe (ap (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂)) ◃⊙idf
+        =⊙∘₁⟨ 3 & 1 & ! $ ⊙transport-⊙coe (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ⟩
+      ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+      ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+      ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+      ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf ∎⊙∘
+
+  ⊙EM-neg=⊙Trunc-fmap-⊙Susp-flip : ∀ (n : ℕ)
+    → ⊙EM-neg (S (S n)) == ⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ n (⊙EM₁ G.grp)))
+  ⊙EM-neg=⊙Trunc-fmap-⊙Susp-flip n =
+    equiv-is-inj
+      (post⊙∘-is-equiv (⊙to-alt-EM n))
+      (⊙EM-neg (S (S n)))
+      (⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ n (⊙EM₁ G.grp)))) $
+    =⊙∘-out {fs = ⊙–> (⊙to-alt-EM n) ◃⊙∘ ⊙EM-neg (S (S n)) ◃⊙idf}
+            {gs = ⊙–> (⊙to-alt-EM n) ◃⊙∘ ⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ n (⊙EM₁ G.grp))) ◃⊙idf} $
+    ⊙–> (⊙to-alt-EM n) ◃⊙∘
+    ⊙EM-neg (S (S n)) ◃⊙idf
+      =⊙∘⟨ 0 & 1 & ⊙–>-⊙to-alt-EM n ⟩
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙∘
+    ⊙EM-neg (S (S n)) ◃⊙idf
+      =⊙∘⟨ 3 & 2 & !⊙∘ $ ⊙transport-natural-=⊙∘
+             (+2+-comm 2 ⟨ n ⟩₋₂)
+             (λ k → ⊙Trunc-fmap {n = k} (⊙Susp^-fmap (S n) ⊙EM₁-neg)) ⟩
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+    ⊙Trunc-fmap (⊙Susp^-fmap (S n) ⊙EM₁-neg) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf
+      =⊙∘⟨ 2 & 2 & !⊙∘ $ ⊙transport-natural-=⊙∘
+             (+-comm 1 n)
+             (λ l → ⊙Trunc-fmap (⊙Susp^-fmap l ⊙EM₁-neg)) ⟩
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙Trunc-fmap (⊙Susp^-fmap (n + 1) ⊙EM₁-neg) ◃⊙∘
+    ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf
+      =⊙∘⟨ 1 & 2 & ⊙Trunc-fmap-seq-=⊙∘ $
+           =⊙∘-in {fs = ⊙coe (! (⊙Susp^-+ n 1)) ◃⊙∘ ⊙Susp^-fmap (n + 1) ⊙EM₁-neg ◃⊙idf}
+                  {gs = ⊙Susp^-fmap n (⊙Susp-fmap EM₁-neg) ◃⊙∘ ⊙coe (! (⊙Susp^-+ n 1)) ◃⊙idf} $
+           ! $ ⊙Susp^-+-natural' n 1 ⊙EM₁-neg ⟩
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap (⊙Susp^-fmap n (⊙Susp-fmap EM₁-neg)) ◃⊙∘
+    ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf
+      =⊙∘⟨ 0 & 2 & ⊙Susp^-⊙Trunc-equiv-natural' (⊙Susp-fmap EM₁-neg) 2 n ⟩
+    ⊙Trunc-fmap (⊙Susp^-fmap n (⊙EM-neg 2)) ◃⊙∘
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf
+      =⊙∘₁⟨ 0 & 1 & ap (⊙Trunc-fmap ∘ ⊙Susp^-fmap n) $
+                    ⊙EM-neg-2=⊙Trunc-fmap-⊙Susp-flip ⟩
+    ⊙Trunc-fmap (⊙Susp^-fmap n (⊙Trunc-fmap (⊙Susp-flip (⊙EM₁ G.grp)))) ◃⊙∘
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf
+      =⊙∘⟨ 0 & 2 & !⊙∘ $ ⊙Susp^-⊙Trunc-equiv-natural' (⊙Susp-flip _) 2 n ⟩
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap (⊙Susp^-fmap n (⊙Susp-flip (⊙EM₁ G.grp))) ◃⊙∘
+    ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf
+      =⊙∘₁⟨ 3 & 1 & p ⟩
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap (⊙Susp^-fmap n (⊙Susp-flip (⊙EM₁ G.grp))) ◃⊙∘
+    ⊙Trunc-fmap {n = ⟨ n ⟩₋₂ +2+ 2} (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙Trunc-fmap (⊙coe (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n))) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf
+      =⊙∘⟨ 1 & 3 & ⊙Trunc-fmap-seq-=⊙∘ $
+           ⊙Susp^-fmap n (⊙Susp-flip (⊙EM₁ G.grp)) ◃⊙∘
+           ⊙coe (! (⊙Susp^-+ n 1)) ◃⊙∘
+           ⊙coe (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n)) ◃⊙idf
+             =⊙∘⟨ 3 & 0 & ⊙contract ⟩
+           ⊙Susp^-fmap n (⊙Susp-flip (⊙EM₁ G.grp)) ◃⊙∘
+           ⊙coe (! (⊙Susp^-+ n 1)) ◃⊙∘
+           ⊙coe (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n)) ◃⊙∘
+           ⊙coe (⊙Susp^-+ 1 n {⊙EM₁ G.grp}) ◃⊙idf
+             =⊙∘⟨ 1 & 3 & !⊙∘ $ ⊙coe-seq-∙ (⊙Susp^-comm-seq 1 n) ⟩
+           ⊙Susp^-fmap n (⊙Susp-flip (⊙EM₁ G.grp)) ◃⊙∘
+           ⊙coe (⊙Susp^-comm 1 n) ◃⊙idf
+             =⊙∘⟨ ⊙Susp^-comm-flip 0 n (⊙EM₁ G.grp) ⟩
+           ⊙coe (⊙Susp^-comm 1 n) ◃⊙∘
+           ⊙Susp-flip (⊙Susp^ 0 (⊙Susp^ n (⊙EM₁ G.grp))) ◃⊙idf
+             =⊙∘⟨ 0 & 1 & ⊙coe-seq-∙ (⊙Susp^-comm-seq 1 n) ⟩
+           ⊙coe (! (⊙Susp^-+ n 1)) ◃⊙∘
+           ⊙coe (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n)) ◃⊙∘
+           ⊙coe (⊙Susp^-+ 1 n {⊙EM₁ G.grp}) ◃⊙∘
+           ⊙Susp-flip (⊙Susp^ 0 (⊙Susp^ n (⊙EM₁ G.grp))) ◃⊙idf
+             =⊙∘⟨ 2 & 1 & ⊙expand ⊙idf-seq ⟩
+           ⊙coe (! (⊙Susp^-+ n 1)) ◃⊙∘
+           ⊙coe (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n)) ◃⊙∘
+           ⊙Susp-flip (⊙Susp^ 0 (⊙Susp^ n (⊙EM₁ G.grp))) ◃⊙idf ∎⊙∘ ⟩
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙Trunc-fmap (⊙coe (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n))) ◃⊙∘
+    ⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ n (⊙EM₁ G.grp))) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙idf
+      =⊙∘⟨ 3 & 2 & ⊙transport-natural-=⊙∘
+                     (+2+-comm 2 ⟨ n ⟩₋₂)
+                     (λ k → ⊙Trunc-fmap {n = k} (⊙Susp-flip (⊙Susp^ n (⊙EM₁ G.grp)))) ⟩
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙Trunc-fmap (⊙coe (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n))) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙∘
+    ⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ n (⊙EM₁ G.grp))) ◃⊙idf
+      =⊙∘₁⟨ 2 & 1 & ! p ⟩
+    ⊙<– (⊙Susp^-⊙Trunc-equiv (⊙Susp (EM₁ G.grp)) 2 n) ◃⊙∘
+    ⊙Trunc-fmap (⊙coe (! (⊙Susp^-+ n 1))) ◃⊙∘
+    ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ◃⊙∘
+    ⊙transport (λ k → ⊙Trunc k (⊙Susp^ (S n) (⊙EM₁ G.grp))) (+2+-comm 2 ⟨ n ⟩₋₂) ◃⊙∘
+    ⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ n (⊙EM₁ G.grp))) ◃⊙idf
+      =⊙∘⟨ 0 & 4 & !⊙∘ $ ⊙–>-⊙to-alt-EM n ⟩
+    ⊙–> (⊙to-alt-EM n) ◃⊙∘
+    ⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ n (⊙EM₁ G.grp))) ◃⊙idf ∎⊙∘
+    where
+    p : ⊙transport (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ==
+        ⊙Trunc-fmap (⊙coe (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n)))
+    p =
+      ⊙transport-⊙coe (λ l → ⊙Trunc (⟨ n ⟩₋₂ +2+ 2) (⊙Susp^ l (⊙EM₁ G.grp))) (+-comm 1 n) ∙
+      ap ⊙coe (ap-∘ (⊙Trunc (⟨ n ⟩₋₂ +2+ 2)) (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n)) ∙
+      ! (⊙transport-⊙coe (⊙Trunc (⟨ n ⟩₋₂ +2+ 2)) (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n))) ∙
+      ⊙transport-⊙Trunc (ap (λ l → ⊙Susp^ l (⊙EM₁ G.grp)) (+-comm 1 n))
 
 module _ {i} (G : AbGroup i) where
 
@@ -500,9 +554,9 @@ module _ {i} (G : AbGroup i) where
     ⊙Trunc-fmap (⊙Susp^-fmap n (⊙EM₁-fmap (idhom G.grp)))
       =⟨ ap (⊙Trunc-fmap ∘ ⊙Susp^-fmap n) (⊙λ= (⊙EM₁-fmap-idhom G.grp)) ⟩
     ⊙Trunc-fmap (⊙Susp^-fmap n (⊙idf (⊙EM₁ G.grp)))
-      =⟨ ap ⊙Trunc-fmap (⊙Susp^-fmap-idf n (⊙EM₁ G.grp)) ⟩
+      =⟨ ap ⊙Trunc-fmap (=⊙∘-out (⊙Susp^-fmap-idf n (⊙EM₁ G.grp))) ⟩
     ⊙Trunc-fmap (⊙idf (⊙Susp^ n (⊙EM₁ G.grp)))
-      =⟨ ⊙λ= ⊙Trunc-fmap-idf ⟩
+      =⟨ ⊙λ= ⊙Trunc-fmap-⊙idf ⟩
     ⊙idf _ =∎
 
   EM-fmap-idhom : ∀ (n : ℕ)
@@ -551,3 +605,23 @@ transport-EM-uaᴬᴳ G H iso n =
   EM-fmap G H (coeᴬᴳ (uaᴬᴳ G H iso)) n
     =⟨ ap (λ p → EM-fmap G H p n) (coeᴬᴳ-β G H iso) ⟩
   EM-fmap G H (–>ᴳ iso) n =∎
+
+⊙transport-⊙EM : ∀ {i} {G H : AbGroup i}
+  (p : G == H) (n : ℕ)
+  → ⊙transport (λ K → ⊙EM K n) p == ⊙EM-fmap G H (coeᴬᴳ p) n
+⊙transport-⊙EM {G = G} p@idp n = ! $
+  ⊙EM-fmap G G (coeᴳ idp) n
+    =⟨ ap (λ φ → ⊙EM-fmap G G φ n) (coeᴳ-idp (AbGroup.grp G)) ⟩
+  ⊙EM-fmap G G (idhom (AbGroup.grp G)) n
+    =⟨ ⊙EM-fmap-idhom G n ⟩
+  ⊙idf (⊙EM G n) =∎
+
+⊙transport-⊙EM-uaᴬᴳ : ∀ {i} (G H : AbGroup i)
+  (iso : G ≃ᴬᴳ H) (n : ℕ)
+  → ⊙transport (λ K → ⊙EM K n) (uaᴬᴳ G H iso) == ⊙EM-fmap G H (–>ᴳ iso) n
+⊙transport-⊙EM-uaᴬᴳ G H iso n =
+  ⊙transport (λ K → ⊙EM K n) (uaᴬᴳ G H iso)
+    =⟨ ⊙transport-⊙EM (uaᴬᴳ G H iso) n ⟩
+  ⊙EM-fmap G H (coeᴬᴳ (uaᴬᴳ G H iso)) n
+    =⟨ ap (λ p → ⊙EM-fmap G H p n) (coeᴬᴳ-β G H iso) ⟩
+  ⊙EM-fmap G H (–>ᴳ iso) n =∎

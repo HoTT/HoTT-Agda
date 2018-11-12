@@ -1248,3 +1248,28 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   ∧Σ-Σ∧-out : Susp-fmap (∧Σ-out X Y) ∘ Σ∧-out X (⊙Susp (de⊙ Y))
             ∼ Susp-flip ∘ Susp-fmap (Σ∧-out X Y) ∘ ∧Σ-out (⊙Susp (de⊙ X)) Y
   ∧Σ-Σ∧-out = ∧Σ-Σ∧-Out.f
+
+  ⊙∧Σ-Σ∧-out : ⊙Susp-fmap (∧Σ-out X Y) ◃⊙∘
+               ⊙Σ∧-out X (⊙Susp (de⊙ Y)) ◃⊙idf
+               =⊙∘
+               ⊙Susp-flip (⊙Susp (X ∧ Y)) ◃⊙∘
+               ⊙Susp-fmap (Σ∧-out X Y) ◃⊙∘
+               ⊙∧Σ-out (⊙Susp (de⊙ X)) Y ◃⊙idf
+  ⊙∧Σ-Σ∧-out =
+    ⊙seq-λ= ∧Σ-Σ∧-out $ !ₛ $
+    merid north ◃∙
+    idp ◃∙
+    idp ◃∙
+    ! (merid north) ◃∎
+      =ₛ⟨ 1 & 1 & expand [] ⟩
+    merid north ◃∙
+    idp ◃∙
+    ! (merid north) ◃∎
+      =ₛ⟨ 1 & 1 & expand [] ⟩
+    merid north ◃∙
+    ! (merid north) ◃∎
+      =ₛ₁⟨ !-inv-r (merid north) ⟩
+    idp ◃∎
+      =ₛ⟨ 0 & 0 & contract ⟩
+    idp ◃∙
+    idp ◃∎ ∎ₛ

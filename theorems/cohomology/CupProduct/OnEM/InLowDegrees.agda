@@ -30,11 +30,14 @@ private
 ⊙∧-cp₀₀' : G.⊙El ⊙∧ H.⊙El ⊙→ G⊗H.⊙El
 ⊙∧-cp₀₀' = ∧-cp₀₀' , G⊗H.⊗-ident-l H.ident
 
+⊙∧-cp₀₀-seq : (⊙EM G 0 ⊙∧ ⊙EM H 0) ⊙–→ ⊙EM G⊗H.abgroup 0
+⊙∧-cp₀₀-seq =
+  ⊙–> (⊙emloop-equiv G⊗H.grp) ◃⊙∘
+  ⊙∧-cp₀₀' ◃⊙∘
+  ⊙∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) ◃⊙idf
+
 ⊙∧-cp₀₀ : ⊙EM G 0 ⊙∧ ⊙EM H 0 ⊙→ ⊙EM G⊗H.abgroup 0
-⊙∧-cp₀₀ =
-  ⊙–> (⊙emloop-equiv G⊗H.grp) ⊙∘
-  ⊙∧-cp₀₀' ⊙∘
-  ⊙∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp))
+⊙∧-cp₀₀ = ⊙compose ⊙∧-cp₀₀-seq
 
 ∧-cp₀₀ : ⊙EM G 0 ∧ ⊙EM H 0 → EM G⊗H.abgroup 0
 ∧-cp₀₀ = fst ⊙∧-cp₀₀
@@ -194,7 +197,7 @@ comp-functor =
   ; pres-comp-coh = comp-coh
   }
   -- this is *exactly* the same as
-  --   `EM₁HSpaceAssoc.comp-functor TP.abgroup`
+  --   `EM₁HSpaceAssoc.comp-functor G⊗H.abgroup`
   -- inlined but Agda chokes on this shorter definition
 
 module _ where

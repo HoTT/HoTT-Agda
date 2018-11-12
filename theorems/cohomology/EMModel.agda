@@ -2,6 +2,7 @@
 
 open import HoTT
 open import homotopy.EilenbergMacLane
+open import homotopy.EilenbergMacLaneFunctor
 open import groups.ToOmega
 open import cohomology.Theory
 open import cohomology.SpectrumModel
@@ -12,24 +13,25 @@ module _ {i} (G : AbGroup i) where
 
   open EMExplicit G using (⊙EM; EM-level; EM-conn; spectrum)
 
-  private
-    E : (n : ℤ) → Ptd i
-    E (pos m) = ⊙EM m
-    E (negsucc m) = ⊙Lift ⊙Unit
+  EM-E : (n : ℤ) → Ptd i
+  EM-E (pos m) = ⊙EM m
+  EM-E (negsucc m) = ⊙Lift ⊙Unit
 
-    E-spectrum : (n : ℤ) → ⊙Ω (E (succ n)) ⊙≃ E n
+  private
+
+    E-spectrum : (n : ℤ) → ⊙Ω (EM-E (succ n)) ⊙≃ EM-E n
     E-spectrum (pos n) = spectrum n
-    E-spectrum (negsucc O) = ≃-to-⊙≃ {X = ⊙Ω (E 0)}
+    E-spectrum (negsucc O) = ≃-to-⊙≃ {X = ⊙Ω (EM-E 0)}
       (equiv (λ _ → _) (λ _ → idp)
              (λ _ → idp) (prop-has-all-paths {{has-level-apply (EM-level 0) _ _}} _))
       idp
-    E-spectrum (negsucc (S n)) = ≃-to-⊙≃ {X = ⊙Ω (E (negsucc n))}
+    E-spectrum (negsucc (S n)) = ≃-to-⊙≃ {X = ⊙Ω (EM-E (negsucc n))}
       (equiv (λ _ → _) (λ _ → idp)
              (λ _ → idp) (prop-has-all-paths {{=-preserves-level ⟨⟩}} _))
       idp
 
   EM-Cohomology : CohomologyTheory i
-  EM-Cohomology = spectrum-cohomology E E-spectrum
+  EM-Cohomology = spectrum-cohomology EM-E E-spectrum
 
   open CohomologyTheory EM-Cohomology
 
@@ -57,3 +59,17 @@ module _ {i} (G : AbGroup i) where
 
   EM-Ordinary : OrdinaryTheory i
   EM-Ordinary = ordinary-theory EM-Cohomology EM-dimension
+
+module _ {i} (G : AbGroup i) (H : AbGroup i) (φ : G →ᴬᴳ H) where
+
+  private
+    module M {k} (A : AbGroup k) = CohomologyTheory (EM-Cohomology A)
+    open M
+
+  private
+    EM-E-fmap : ∀ (n : ℤ) → EM-E G n ⊙→ EM-E H n
+    EM-E-fmap (pos m) = ⊙EM-fmap G H φ m
+    EM-E-fmap (negsucc m) = ⊙idf _
+
+  EM-coeff-fmap : ∀ (X : Ptd i) (n : ℤ) → CEl G n X → CEl H n X
+  EM-coeff-fmap X n = Trunc-fmap (⊙Ω-fmap (EM-E-fmap (succ n)) ⊙∘_)

@@ -28,6 +28,9 @@ module _ {i} {X : Ptd i} where
   Ω-! : Ω X → Ω X
   Ω-! = !
 
+  ⊙Ω-! : ⊙Ω X ⊙→ ⊙Ω X
+  ⊙Ω-! = Ω-! , idp
+
   Ω-∙ : Ω X → Ω X → Ω X
   Ω-∙ = _∙_
 
@@ -47,6 +50,14 @@ module _ {i} {X : Ptd i} where
 Ω-fmap-β : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) (p : Ω X)
   → Ω-fmap F p == ! (snd F) ∙ ap (fst F) p ∙' snd F
 Ω-fmap-β (_ , idp) _ = idp
+
+Ω-fmap-pt : ∀ {i} {j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
+  → snd (⊙Ω-fmap f) ◃∎
+    =ₛ
+    Ω-fmap-β f idp ◃∙
+    ap (! (snd f) ∙_) (∙'-unit-l (snd f)) ◃∙
+    !-inv-l (snd f) ◃∎
+Ω-fmap-pt (f' , idp) = =ₛ-in idp
 
 Ω-isemap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   (F : X ⊙→ Y) → is-equiv (fst F) → is-equiv (Ω-fmap F)
@@ -103,6 +114,10 @@ module _ {i} {X : Ptd i} where
 
 ⊙Ω-fmap-idf : ∀ {i} {X : Ptd i} → ⊙Ω-fmap (⊙idf X) == ⊙idf _
 ⊙Ω-fmap-idf = ⊙λ=' ap-idf idp
+
+⊙transport-⊙Ω : ∀ {i} {X Y : Ptd i} (p : X == Y)
+  → ⊙transport ⊙Ω p == ⊙Ω-fmap (⊙coe p)
+⊙transport-⊙Ω p@idp = ! ⊙Ω-fmap-idf
 
 ⊙Ω-fmap-cst : ∀ {i} {j} {X : Ptd i} {Y : Ptd j} → ⊙Ω-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst
 ⊙Ω-fmap-cst {Y = Y} = ⊙λ=' (ap-cst (pt Y)) idp
@@ -475,6 +490,28 @@ module _ {i} {X : Ptd i} where
 
       ⋆'2=Ω^S-∙ : (α β : Ω^ 2  X) → α ⋆'2 β == Ω^S-∙ 1 β α
       ⋆'2=Ω^S-∙ α β = ap (λ π → β ∙ π) (∙-unit-r α)
+
+⊙Ω-⊙Trunc-comm : ∀ {i} (m : ℕ₋₂) (X : Ptd i)
+  → ⊙Ω (⊙Trunc (S m) X) ⊙≃ ⊙Trunc m (⊙Ω X)
+⊙Ω-⊙Trunc-comm m X = ≃-to-⊙≃ (=ₜ-equiv [ pt X ] [ pt X ]) idp
+
+⊙–>-⊙Ω-⊙Trunc-comm-natural : ∀ {i j} (m : ℕ₋₂)
+  {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
+  → ⊙–> (⊙Ω-⊙Trunc-comm m Y) ⊙∘ ⊙Ω-fmap (⊙Trunc-fmap f) ==
+    ⊙Trunc-fmap (⊙Ω-fmap f) ⊙∘ ⊙–> (⊙Ω-⊙Trunc-comm m X)
+⊙–>-⊙Ω-⊙Trunc-comm-natural m {X} {Y} (f' , idp) =
+  ⊙λ=' {X = ⊙Ω (⊙Trunc (S m) X)} {Y = ⊙Trunc m (⊙Ω Y)}
+       (=ₜ-equiv-nat {n = m} f' [ pt X ] [ pt X ])
+       idp
+
+⊙–>-⊙Ω-⊙Trunc-comm-natural-=⊙∘ : ∀ {i} (m : ℕ₋₂)
+  {X Y : Ptd i} (f : X ⊙→ Y)
+  → ⊙–> (⊙Ω-⊙Trunc-comm m Y) ◃⊙∘
+    ⊙Ω-fmap (⊙Trunc-fmap f) ◃⊙idf
+    =⊙∘
+    ⊙Trunc-fmap (⊙Ω-fmap f) ◃⊙∘
+    ⊙–> (⊙Ω-⊙Trunc-comm m X) ◃⊙idf
+⊙–>-⊙Ω-⊙Trunc-comm-natural-=⊙∘ m f = =⊙∘-in (⊙–>-⊙Ω-⊙Trunc-comm-natural m f)
 
 {- NOT USED and DUPLICATE of [Ω^S-Trunc-preiso] in lib.groups.HomotopyGroup.
    XXX Should be an equivalence.

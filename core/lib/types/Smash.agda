@@ -3,7 +3,9 @@
 open import lib.Basics
 open import lib.types.Bool
 open import lib.types.Coproduct
+open import lib.types.FunctionSeq
 open import lib.types.Paths
+open import lib.types.Pointed
 open import lib.types.Span
 open import lib.types.Pushout
 open import lib.types.Sigma
@@ -579,6 +581,9 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   ∧-swap-inv : ∀ xy → ∧-swap Y X (∧-swap X Y xy) == xy
   ∧-swap-inv = SmashSwapInvolutive.f
 
+  ⊙∧-swap-inv : ⊙∧-swap Y X ◃⊙∘ ⊙∧-swap X Y ◃⊙idf =⊙∘ ⊙idf-seq
+  ⊙∧-swap-inv = =⊙∘-in (⊙λ=' ∧-swap-inv idp)
+
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   ∧-swap-is-equiv : is-equiv (∧-swap X Y)
@@ -704,6 +709,21 @@ module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
           =ₛ₁⟨ 0 & 1 & ∘-ap (∧-fmap g f) (∧-swap X Y) (smgluer y) ⟩
         ap (∧-fmap g f ∘ ∧-swap X Y) (smgluer y) ◃∙
         ap2 smin (snd g) (snd f) ◃∎ ∎ₛ)
+
+  ⊙∧-swap-naturality : ⊙∧-fmap g f ⊙∘ ⊙∧-swap X Y ==
+                       ⊙∧-swap X' Y' ⊙∘ ⊙∧-fmap f g
+  ⊙∧-swap-naturality =
+    ⊙λ=' ∧-swap-naturality $ =ₛ-out $
+    ap2 smin (snd g) (snd f) ◃∎
+      =ₛ⟨ ap2-out smin (snd g) (snd f) ⟩
+    ap (λ u → smin u (fst f (pt X))) (snd g) ◃∙
+    ap (smin (pt Y')) (snd f) ◃∎
+      =ₛ⟨ !ₛ $ ap2-out' (λ x y → smin y x) (snd f) (snd g) ⟩
+    ap2 (λ x y → smin y x) (snd f) (snd g) ◃∎
+      =ₛ₁⟨ ! $ ap-ap2 (∧-swap X' Y') smin (snd f) (snd g) ⟩
+    ap (∧-swap X' Y') (ap2 smin (snd f) (snd g)) ◃∎
+      =ₛ⟨ 1 & 0 & contract ⟩
+    ap (∧-swap X' Y') (ap2 smin (snd f) (snd g)) ◃∙ idp ◃∎ ∎ₛ
 
   ∧-swap-fmap : ∀ xy →
     ∧-swap Y' X' (∧-fmap g f (∧-swap X Y xy)) == ∧-fmap f g xy

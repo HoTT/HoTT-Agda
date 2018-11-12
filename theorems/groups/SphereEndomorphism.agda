@@ -78,7 +78,7 @@ module groups.SphereEndomorphism where
   Trunc-⊙SphereS-endo-Susp-fmap-⊙iso :
     ∀ n → Trunc-⊙SphereS-endo-⊙group n ⊙≃ᴳ Trunc-⊙SphereS-endo-⊙group (S n)
   Trunc-⊙SphereS-endo-Susp-fmap-⊙iso n =
-    Trunc-⊙SphereS-endo-Susp-fmap-iso n , ap [_] (⊙Susp-fmap-idf (Sphere (S n)))
+    Trunc-⊙SphereS-endo-Susp-fmap-iso n , ap [_] (=⊙∘-out (⊙Susp-fmap-idf (Sphere (S n))))
 
   Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic : ∀ n → is-infinite-cyclic (Trunc-⊙SphereS-endo-⊙group n)
   Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic O = Trunc-⊙S¹-endo-⊙group-is-infinite-cyclic

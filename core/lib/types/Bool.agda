@@ -41,6 +41,10 @@ xor : Bool → Bool → Bool
 xor true = negate
 xor false = idf Bool
 
+xor-diag : ∀ (b : Bool) → xor b b == false
+xor-diag true  = idp
+xor-diag false = idp
+
 and-false-r : ∀ b → and b false == false
 and-false-r true = idp
 and-false-r false = idp

@@ -181,58 +181,50 @@ private
       (λ x → ↓-='-from-square (∧-cp₁₁-comm-smgluel x))
       (λ y → ↓-='-from-square (∧-cp₁₁-comm-smgluer y))
 
+  ⊙∧-cp₁₁-comm' : GH.⊙∧-cp₁₁ ◃⊙idf
+                  =⊙∘
+                  GHc.⊙− ◃⊙∘
+                  HG.⊙∧-cp₁₁ ◃⊙∘
+                  ⊙∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) ◃⊙idf
+  ⊙∧-cp₁₁-comm' = =⊙∘-in (⊙λ=' ∧-cp₁₁-comm' idp)
 
-∧-cp₁₁-comm : EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2 ∘ GH.∧-cp₁₁
-            ∼ EM-neg H⊗G.abgroup 2 ∘ HG.∧-cp₁₁ ∘ ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp)
-∧-cp₁₁-comm s =
-  (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2 $
-   GH.∧-cp₁₁ s)
-    =⟨ ap (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2) $
-       ∧-cp₁₁-comm' s ⟩
-  (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2 $
-   GHc.− $
-   HG.∧-cp₁₁ $
-   ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s)
-    =⟨ ap (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2) $
-       app= minus $
-       HG.∧-cp₁₁ $
-       ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s ⟩
-  (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2 $
-   EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap 2 $
-   EM-neg H⊗G.abgroup 2 $
-   HG.∧-cp₁₁ $
-   ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s)
-    =⟨ ! $ app= (EM-fmap-∘ H⊗G.abgroup G⊗H.abgroup H⊗G.abgroup G⊗H.swap H⊗G.swap 2) $
-       EM-neg H⊗G.abgroup 2 $
-       HG.∧-cp₁₁ $
-       ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s ⟩
-  (EM-fmap H⊗G.abgroup H⊗G.abgroup (G⊗H.swap ∘ᴳ H⊗G.swap) 2 $
-   EM-neg H⊗G.abgroup 2 $
-   HG.∧-cp₁₁ $
-   ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s)
-    =⟨ app= (ap (λ f → EM-fmap H⊗G.abgroup H⊗G.abgroup f 2) H⊗G.swap-swap-idhom) $
-       EM-neg H⊗G.abgroup 2 $
-       HG.∧-cp₁₁ $
-       ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s ⟩
-  (EM-fmap H⊗G.abgroup H⊗G.abgroup (idhom H⊗G.grp) 2 $
-   EM-neg H⊗G.abgroup 2 $
-   HG.∧-cp₁₁ $
-   ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s)
-    =⟨ app= (EM-fmap-idhom H⊗G.abgroup 2) $
-       EM-neg H⊗G.abgroup 2 $
-       HG.∧-cp₁₁ $
-       ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s ⟩
-  (EM-neg H⊗G.abgroup 2 $
-   HG.∧-cp₁₁ $
-   ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s) =∎
+⊙∧-cp₁₁-comm : ⊙EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2 ◃⊙∘
+               GH.⊙∧-cp₁₁ ◃⊙idf
+               =⊙∘
+               ⊙EM-neg H⊗G.abgroup 2 ◃⊙∘
+               HG.⊙∧-cp₁₁ ◃⊙∘
+               ⊙∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) ◃⊙idf
+⊙∧-cp₁₁-comm =
+  ⊙EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2 ◃⊙∘
+  GH.⊙∧-cp₁₁ ◃⊙idf
+    =⊙∘⟨ 1 & 1 & ⊙∧-cp₁₁-comm' ⟩
+  ⊙EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2 ◃⊙∘
+  GHc.⊙− ◃⊙∘
+  HG.⊙∧-cp₁₁ ◃⊙∘
+  ⊙∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) ◃⊙idf
+    =⊙∘⟨ 1 & 1 & minus ⟩
+  ⊙EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 2 ◃⊙∘
+  ⊙EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap 2 ◃⊙∘
+  ⊙EM-neg H⊗G.abgroup 2 ◃⊙∘
+  HG.⊙∧-cp₁₁ ◃⊙∘ ⊙∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) ◃⊙idf
+    =⊙∘⟨ 0 & 2 & =⊙∘-in {gs = ⊙idf-seq} $
+         ! (⊙EM-fmap-∘ H⊗G.abgroup G⊗H.abgroup H⊗G.abgroup G⊗H.swap H⊗G.swap 2) ∙
+         ap (λ φ → ⊙EM-fmap H⊗G.abgroup H⊗G.abgroup φ 2) H⊗G.swap-swap-idhom ∙
+         ⊙EM-fmap-idhom H⊗G.abgroup 2 ⟩
+  ⊙EM-neg H⊗G.abgroup 2 ◃⊙∘
+  HG.⊙∧-cp₁₁ ◃⊙∘ ⊙∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) ◃⊙idf ∎⊙∘
   where
-  minus : GHc.− == EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap 2 ∘ EM-neg H⊗G.abgroup 2
-  minus =
-    Trunc-fmap (Susp-fmap (EM₁-fmap (inv-hom G⊗H.abgroup) ∘ EM₁-fmap H⊗G.swap))
-      =⟨ ap (Trunc-fmap ∘ Susp-fmap) (! (λ= (EM₁-fmap-∘ (inv-hom G⊗H.abgroup) H⊗G.swap))) ⟩
-    EM-fmap H⊗G.abgroup G⊗H.abgroup (inv-hom G⊗H.abgroup ∘ᴳ H⊗G.swap) 2
-      =⟨ ap (λ φ → EM-fmap H⊗G.abgroup G⊗H.abgroup φ 2)
-            (! (inv-hom-natural H⊗G.abgroup G⊗H.abgroup H⊗G.swap))  ⟩
-    EM-fmap H⊗G.abgroup G⊗H.abgroup (H⊗G.swap ∘ᴳ inv-hom H⊗G.abgroup) 2
-      =⟨ EM-fmap-∘ H⊗G.abgroup H⊗G.abgroup G⊗H.abgroup (H⊗G.swap) (inv-hom H⊗G.abgroup) 2 ⟩
-    EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap 2 ∘ EM-neg H⊗G.abgroup 2 =∎
+  minus : GHc.⊙− ◃⊙idf
+          =⊙∘
+          ⊙EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap 2 ◃⊙∘
+          ⊙EM-neg H⊗G.abgroup 2 ◃⊙idf
+  minus = =⊙∘-in $
+    ⊙Trunc-fmap (⊙Susp-fmap (EM₁-fmap (inv-hom G⊗H.abgroup) ∘ EM₁-fmap H⊗G.swap))
+      =⟨ ap (⊙Trunc-fmap ∘ ⊙Susp-fmap) $ ! $
+         λ= (EM₁-fmap-∘ (inv-hom G⊗H.abgroup) H⊗G.swap) ⟩
+    ⊙EM-fmap H⊗G.abgroup G⊗H.abgroup (inv-hom G⊗H.abgroup ∘ᴳ H⊗G.swap) 2
+      =⟨ ap (λ φ → ⊙EM-fmap H⊗G.abgroup G⊗H.abgroup φ 2) $
+         ! $ inv-hom-natural H⊗G.abgroup G⊗H.abgroup H⊗G.swap ⟩
+    ⊙EM-fmap H⊗G.abgroup G⊗H.abgroup (H⊗G.swap ∘ᴳ inv-hom H⊗G.abgroup) 2
+      =⟨ ⊙EM-fmap-∘ H⊗G.abgroup H⊗G.abgroup G⊗H.abgroup (H⊗G.swap) (inv-hom H⊗G.abgroup) 2 ⟩
+    ⊙EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap 2 ⊙∘ ⊙EM-neg H⊗G.abgroup 2 =∎

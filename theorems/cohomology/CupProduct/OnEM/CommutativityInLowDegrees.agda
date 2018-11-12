@@ -62,6 +62,16 @@ module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     (HG.∧-cp₀₀ $
      ∧-swap (⊙EM G 0) (⊙EM H 0) s) =∎
 
+  ⊙∧-cp₀₀-comm :
+    ⊙EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 ◃⊙∘
+    GH.⊙∧-cp₀₀ ◃⊙idf
+    =⊙∘
+    HG.⊙∧-cp₀₀ ◃⊙∘
+    ⊙∧-swap (⊙EM G 0) (⊙EM H 0) ◃⊙idf
+  ⊙∧-cp₀₀-comm =
+    =⊙∘-in $ ⊙λ=' ∧-cp₀₀-comm $
+    prop-has-all-paths-↓ {{has-level-apply (has-level-apply (EM₁-level₁ H⊗G.grp) _ _) _ _}}
+
 module CP₀₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
   private
@@ -122,6 +132,9 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
   − : EMExplicit.EM H⊗G.abgroup 2 → EMExplicit.EM G⊗H.abgroup 2
   − = Trunc-fmap (Susp-fmap −₁)
+
+  ⊙− : EMExplicit.⊙EM H⊗G.abgroup 2 ⊙→ EMExplicit.⊙EM G⊗H.abgroup 2
+  ⊙− = ⊙Trunc-fmap (⊙Susp-fmap −₁)
 
   comm-embase-emloop-seq : ∀ h →
     ap (λ y → embase G∪H y) (emloop h) =-=
