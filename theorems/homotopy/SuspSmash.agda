@@ -13,26 +13,19 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     x₀ = pt X
     y₀ = pt Y
 
-  module Σ∧-out-smin (y : de⊙ Y) =
-    SuspRec
-      {C = Susp (X ∧ Y)}
-      north
-      south
-      (λ x → merid (smin x y))
-
   Σ∧-out-smgluel-merid : ∀ (x : de⊙ X) →
     Square idp
-           (ap (Σ∧-out-smin.f y₀) (merid x))
+           (ap (Susp-fmap (λ x' → smin x' y₀)) (merid x))
            (ap (λ sx → north) (merid x))
            (! (merid (smin x₀ y₀)))
   Σ∧-out-smgluel-merid x =
-    ((Σ∧-out-smin.merid-β y₀ x ∙ ap merid (∧-norm-l x)) ∙v⊡
+    ((SuspFmap.merid-β (λ x' → smin x' y₀) x ∙ ap merid (∧-norm-l x)) ∙v⊡
      tr-square (merid (smin x₀ y₀))) ⊡v∙
     ! (ap-cst north (merid x))
 
   module Σ∧OutSmgluel =
     SuspPathElim
-      (Σ∧-out-smin.f y₀)
+      (Susp-fmap (λ x' → smin x' y₀))
       (λ sx → north)
       idp
       (! (merid (smin x₀ y₀)))
@@ -41,7 +34,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   module Σ∧Out =
     SmashRec {X = ⊙Susp (de⊙ X)} {Y = Y}
       {C = Susp (X ∧ Y)}
-      (λ sx y → Σ∧-out-smin.f y sx)
+      (λ sx y → Susp-fmap (λ x → smin x y) sx)
       north
       north
       Σ∧OutSmgluel.f
@@ -57,26 +50,19 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     ap Σ∧-out (∧-norm-r y) == idp
   Σ∧-out-∧-norm-r y = Σ∧Out.∧-norm-r-β y
 
-  module ∧Σ-out-smin (x : de⊙ X) =
-    SuspRec
-      {C = Susp (X ∧ Y)}
-      north
-      south
-      (λ y → merid (smin x y))
-
   ∧Σ-out-smgluer-merid : ∀ (y : de⊙ Y) →
     Square idp
-           (ap (λ sy → ∧Σ-out-smin.f x₀ sy) (merid y))
+           (ap (λ sy → Susp-fmap (smin x₀) sy) (merid y))
            (ap (λ sy → north) (merid y))
            (! (merid (smin x₀ y₀)))
   ∧Σ-out-smgluer-merid y =
-    ((∧Σ-out-smin.merid-β x₀ y ∙ ap merid (∧-norm-r y)) ∙v⊡
+    ((SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)) ∙v⊡
      tr-square (merid (smin x₀ y₀))) ⊡v∙
     ! (ap-cst north (merid y))
 
   module ∧ΣOutSmgluer =
     SuspPathElim
-      (λ sy → ∧Σ-out-smin.f x₀ sy)
+      (λ sy → Susp-fmap (smin x₀) sy)
       (λ sy → north)
       idp
       (! (merid (smin x₀ y₀)))
@@ -85,7 +71,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   module ∧ΣOut =
     SmashRec {X = X} {Y = ⊙Susp (de⊙ Y)}
       {C = Susp (X ∧ Y)}
-      (λ x sy → ∧Σ-out-smin.f x sy)
+      (λ x sy → Susp-fmap (smin x) sy)
       north
       north
       (λ x → idp)
@@ -156,24 +142,24 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     y₀ = pt Y
 
     ∧-swap-∧Σ-out-merid : ∀ (x : de⊙ X) (y : de⊙ Y) →
-      ap (Susp-fmap (∧-swap X Y) ∘ ∧Σ-out-smin.f X Y x) (merid y) =-=
+      ap (Susp-fmap (∧-swap X Y) ∘ Susp-fmap (smin x)) (merid y) =-=
       merid (smin y x)
     ∧-swap-∧Σ-out-merid x y =
-      ap (Susp-fmap (∧-swap X Y) ∘ ∧Σ-out-smin.f X Y x) (merid y)
-        =⟪ ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x) (merid y) ⟫
-      ap (Susp-fmap (∧-swap X Y)) (ap (∧Σ-out-smin.f X Y x) (merid y))
-        =⟪ ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x y) ⟫
+      ap (Susp-fmap (∧-swap X Y) ∘ Susp-fmap (smin x)) (merid y)
+        =⟪ ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x)) (merid y) ⟫
+      ap (Susp-fmap (∧-swap X Y)) (ap (Susp-fmap (smin x)) (merid y))
+        =⟪ ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x) y) ⟫
       ap (Susp-fmap (∧-swap X Y)) (merid (smin x y))
         =⟪ SuspFmap.merid-β (∧-swap X Y) (smin x y) ⟫
       merid (smin y x) ∎∎
 
     module Σ∧-∧Σ-swap-smin (x : de⊙ X) =
       SuspPathElim
-        (Susp-fmap (∧-swap X Y) ∘ ∧Σ-out-smin.f X Y x)
-        (Σ∧-out-smin.f Y X x)
+        (Susp-fmap (∧-swap X Y) ∘ Susp-fmap (smin x))
+        (Susp-fmap (λ y → smin y x))
         idp
         idp
-        (λ y → ↯ (∧-swap-∧Σ-out-merid x y) ∙v⊡ vid-square ⊡v∙ ! (Σ∧-out-smin.merid-β Y X x y))
+        (λ y → ↯ (∧-swap-∧Σ-out-merid x y) ∙v⊡ vid-square ⊡v∙ ! (SuspFmap.merid-β (λ y' → smin y' x) y))
 
     ∧-swap-∧Σ-out-smgluel : ∀ x →
       ap (Susp-fmap (∧-swap X Y) ∘ ∧Σ-out X Y) (smgluel x) == idp
@@ -236,7 +222,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         (ap-cst north (merid y)) $
       cube-shift-top (! top-path) $
       custom-cube-⊡v∙
-        (! (Σ∧-out-smin.merid-β Y X x₀ y))
+        (! (SuspFmap.merid-β (λ y' → smin y' x₀) y))
         (ap-cst north (merid y)) $
       cube-shift-front (! front-path) $
       cube-shift-bot (! bot-path) $
@@ -317,7 +303,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                         ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $
              natural-square-ap (Susp-fmap (∧-swap X Y)) (∧ΣOutSmgluer.f X Y) (merid y) ⟩
         (! (↯ (∧-swap-∧Σ-out-merid x₀ y)) ∙v⊡
-         (ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ∙v⊡
+         (ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ∙v⊡
           ap-square (Susp-fmap (∧-swap X Y)) (natural-square (∧ΣOutSmgluer.f X Y) (merid y)) ⊡v∙
           ∘-ap (Susp-fmap (∧-swap X Y)) (λ _ → north) (merid y)) ⊡v∙
          ap-cst north (merid y)) ⊡h∙
@@ -328,19 +314,19 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                        (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
                         ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $
              ∙v⊡-⊡v∙-comm
-               (ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y))
+               (ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y))
                (ap-square (Susp-fmap (∧-swap X Y)) (natural-square (∧ΣOutSmgluer.f X Y) (merid y)) ⊡v∙
                 ∘-ap (Susp-fmap (∧-swap X Y)) (λ _ → north) (merid y))
                (ap-cst north (merid y)) ⟩
         (! (↯ (∧-swap-∧Σ-out-merid x₀ y)) ∙v⊡
-         ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ∙v⊡
+         ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ∙v⊡
          ap-square (Susp-fmap (∧-swap X Y)) (natural-square (∧ΣOutSmgluer.f X Y) (merid y)) ⊡v∙
          ∘-ap (Susp-fmap (∧-swap X Y)) (λ _ → north) (merid y) ⊡v∙
          ap-cst north (merid y)) ⊡h∙
         (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
          ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))
           =⟨ ap (λ u → (! (↯ (∧-swap-∧Σ-out-merid x₀ y)) ∙v⊡
-                        ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ∙v⊡
+                        ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ∙v⊡
                         u) ⊡h∙
                        (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
                         ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $
@@ -349,20 +335,20 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                (∘-ap (Susp-fmap (∧-swap X Y)) (λ _ → north) (merid y))
                (ap-cst north (merid y)) ⟩
         (! (↯ (∧-swap-∧Σ-out-merid x₀ y)) ∙v⊡
-         ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ∙v⊡
+         ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ∙v⊡
          ap-square (Susp-fmap (∧-swap X Y)) (natural-square (∧ΣOutSmgluer.f X Y) (merid y)) ⊡v∙
          (∘-ap (Susp-fmap (∧-swap X Y)) (λ _ → north) (merid y) ∙ ap-cst north (merid y))) ⊡h∙
         (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
          ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))
           =⟨ ap (λ u → (! (↯ (∧-swap-∧Σ-out-merid x₀ y)) ∙v⊡
-                        ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ∙v⊡
+                        ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ∙v⊡
                         ap-square (Susp-fmap (∧-swap X Y)) (natural-square (∧ΣOutSmgluer.f X Y) (merid y)) ⊡v∙
                         u) ⊡h∙
                        (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
                         ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $
              =ₛ-out $ ap-∘-cst-coh (Susp-fmap (∧-swap X Y)) north (merid y) ⟩
         (! (↯ (∧-swap-∧Σ-out-merid x₀ y)) ∙v⊡
-         ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ∙v⊡
+         ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ∙v⊡
          ap-square (Susp-fmap (∧-swap X Y)) (natural-square (∧ΣOutSmgluer.f X Y) (merid y)) ⊡v∙
          ap (ap (Susp-fmap (∧-swap X Y))) (ap-cst north (merid y))) ⊡h∙
         (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
@@ -372,11 +358,11 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                         ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $ ! $
              ∙v⊡-assoc
                (! (↯ (∧-swap-∧Σ-out-merid x₀ y)))
-               (ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y))
+               (ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y))
                (ap-square (Susp-fmap (∧-swap X Y)) (natural-square (∧ΣOutSmgluer.f X Y) (merid y)) ⊡v∙
                 ap (ap (Susp-fmap (∧-swap X Y))) (ap-cst north (merid y))) ⟩
         ((! (↯ (∧-swap-∧Σ-out-merid x₀ y)) ∙
-          ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y)) ∙v⊡
+          ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y)) ∙v⊡
          ap-square (Susp-fmap (∧-swap X Y)) (natural-square (∧ΣOutSmgluer.f X Y) (merid y)) ⊡v∙
          ap (ap (Susp-fmap (∧-swap X Y))) (ap-cst north (merid y))) ⊡h∙
         (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
@@ -387,14 +373,14 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                        (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
                         ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $ =ₛ-out $
              ! (↯ (∧-swap-∧Σ-out-merid x₀ y)) ◃∙
-             ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ◃∎
+             ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ◃∎
                =ₛ⟨ 0 & 1 & !-∙-seq $
-                   ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ◃∙
+                   ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ◃∙
                    ↯ (tail (∧-swap-∧Σ-out-merid x₀ y)) ◃∎ ⟩
              ! (↯ (tail (∧-swap-∧Σ-out-merid x₀ y))) ◃∙
-             ! (ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y)) ◃∙
-             ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ◃∎
-               =ₛ⟨ 1 & 2 & seq-!-inv-l (ap-∘ (Susp-fmap (∧-swap X Y)) (∧Σ-out-smin.f X Y x₀) (merid y) ◃∎) ⟩
+             ! (ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y)) ◃∙
+             ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ◃∎
+               =ₛ⟨ 1 & 2 & seq-!-inv-l (ap-∘ (Susp-fmap (∧-swap X Y)) (Susp-fmap (smin x₀)) (merid y) ◃∎) ⟩
              ! (↯ (tail (∧-swap-∧Σ-out-merid x₀ y))) ◃∎ ∎ₛ ⟩
         (! (↯ (tail (∧-swap-∧Σ-out-merid x₀ y))) ∙v⊡
          ap-square (Susp-fmap (∧-swap X Y)) (natural-square (∧ΣOutSmgluer.f X Y) (merid y)) ⊡v∙
@@ -431,20 +417,20 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                         ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $
              ∧Σ-out-smgluer-merid X Y y ⊡v∙ ap-cst north (merid y)
                =⟨ ⊡v∙-assoc
-                    ((∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y)) ∙v⊡ tr-square (merid (smin x₀ y₀)))
+                    ((SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)) ∙v⊡ tr-square (merid (smin x₀ y₀)))
                     (! (ap-cst north (merid y)))
                     (ap-cst north (merid y)) ⟩
-             ((∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y)) ∙v⊡
+             ((SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)) ∙v⊡
               tr-square (merid (smin x₀ y₀))) ⊡v∙
              (! (ap-cst north (merid y)) ∙ ap-cst north (merid y))
-               =⟨ ap (((∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y)) ∙v⊡
+               =⟨ ap (((SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                        tr-square (merid (smin x₀ y₀))) ⊡v∙_) $
                   !-inv-l (ap-cst north (merid y)) ⟩
-             (∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y)) ∙v⊡
+             (SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)) ∙v⊡
              tr-square (merid (smin x₀ y₀)) =∎ ⟩
         (! (↯ (tail (∧-swap-∧Σ-out-merid x₀ y))) ∙v⊡
          ap-square (Susp-fmap (∧-swap X Y))
-                   ((∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                   ((SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                     tr-square (merid (smin x₀ y₀)))) ⊡h∙
         (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
          ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))
@@ -454,10 +440,10 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                         ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $ ! $
              ap-square-∙v⊡
                (Susp-fmap (∧-swap X Y))
-               (∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y))
+               (SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y))
                (tr-square (merid (smin x₀ y₀))) ⟩
         (! (↯ (tail (∧-swap-∧Σ-out-merid x₀ y))) ∙v⊡
-         ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y)) ∙v⊡
+         ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)) ∙v⊡
          ap-square (Susp-fmap (∧-swap X Y)) (tr-square (merid (smin x₀ y₀)))) ⊡h∙
         (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
          ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))
@@ -465,10 +451,10 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                        ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $ ! $
              ∙v⊡-assoc
                (! (↯ (tail (∧-swap-∧Σ-out-merid x₀ y))))
-               (ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y)))
+               (ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)))
                (ap-square (Susp-fmap (∧-swap X Y)) (tr-square (merid (smin x₀ y₀)))) ⟩
         ((! (↯ (tail (∧-swap-∧Σ-out-merid x₀ y))) ∙
-          ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y))) ∙v⊡
+          ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y))) ∙v⊡
          ap-square (Susp-fmap (∧-swap X Y)) (tr-square (merid (smin x₀ y₀)))) ⊡h∙
         (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
          ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))
@@ -477,19 +463,19 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                        (ap-! (Susp-fmap (∧-swap X Y)) (merid (smin x₀ y₀)) ∙
                         ap ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y₀)))) $ =ₛ-out $
              ! (↯ (tail (∧-swap-∧Σ-out-merid x₀ y))) ◃∙
-             ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y)) ◃∎
+             ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)) ◃∎
                =ₛ⟨ 0 & 1 & !-∙-seq (tail (∧-swap-∧Σ-out-merid x₀ y)) ⟩
              ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y)) ◃∙
-             ! (ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x₀ y)) ◃∙
-             ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x₀ y ∙ ap merid (∧-norm-r y)) ◃∎
+             ! (ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x₀) y)) ◃∙
+             ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x₀) y ∙ ap merid (∧-norm-r y)) ◃∎
                =ₛ⟨ 2 & 1 &
                    ap-seq-∙ (ap (Susp-fmap (∧-swap X Y))) $
-                            (∧Σ-out-smin.merid-β X Y x₀ y ◃∙ ap merid (∧-norm-r y) ◃∎) ⟩
+                            (SuspFmap.merid-β (smin x₀) y ◃∙ ap merid (∧-norm-r y) ◃∎) ⟩
              ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y)) ◃∙
-             ! (ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x₀ y)) ◃∙
-             ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x₀ y) ◃∙
+             ! (ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x₀) y)) ◃∙
+             ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x₀) y) ◃∙
              ap (ap (Susp-fmap (∧-swap X Y))) (ap merid (∧-norm-r y)) ◃∎
-               =ₛ⟨ 1 & 2 & seq-!-inv-l (ap (ap (Susp-fmap (∧-swap X Y))) (∧Σ-out-smin.merid-β X Y x₀ y) ◃∎) ⟩
+               =ₛ⟨ 1 & 2 & seq-!-inv-l (ap (ap (Susp-fmap (∧-swap X Y))) (SuspFmap.merid-β (smin x₀) y) ◃∎) ⟩
              ! (SuspFmap.merid-β (∧-swap X Y) (smin x₀ y)) ◃∙
              ap (ap (Susp-fmap (∧-swap X Y))) (ap merid (∧-norm-r y)) ◃∎
                =ₛ₁⟨ 1 & 1 & ∘-ap (ap (Susp-fmap (∧-swap X Y))) merid (∧-norm-r y) ⟩
@@ -575,51 +561,51 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
           =⟨ ap disc-to-square (ap-cst idp (merid y)) ⟩
         ids =∎
       bot-path :
-        ! (Σ∧-out-smin.merid-β Y X x₀ y) ∙v⊡
+        ! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ∙v⊡
         natural-square (Σ∧OutSmgluel.f Y X) (merid y) ⊡v∙
         ap-cst north (merid y)
         ==
         ap merid (∧-norm-l y) ∙v⊡ tr-square (merid (smin y₀ x₀))
       bot-path =
-        ! (Σ∧-out-smin.merid-β Y X x₀ y) ∙v⊡
+        ! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ∙v⊡
         natural-square (Σ∧OutSmgluel.f Y X) (merid y) ⊡v∙
         ap-cst north (merid y)
-          =⟨ ap (λ u → ! (Σ∧-out-smin.merid-β Y X x₀ y) ∙v⊡ u ⊡v∙ ap-cst north (merid y)) $
+          =⟨ ap (λ u → ! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ∙v⊡ u ⊡v∙ ap-cst north (merid y)) $
              Σ∧OutSmgluel.merid-square-β Y X y ⟩
-        ! (Σ∧-out-smin.merid-β Y X x₀ y) ∙v⊡
+        ! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ∙v⊡
         Σ∧-out-smgluel-merid Y X y ⊡v∙
         ap-cst north (merid y)
-          =⟨ ap (! (Σ∧-out-smin.merid-β Y X x₀ y) ∙v⊡_) $
+          =⟨ ap (! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ∙v⊡_) $
              ⊡v∙-assoc
-               ((Σ∧-out-smin.merid-β Y X x₀ y ∙ ap merid (∧-norm-l y)) ∙v⊡
+               ((SuspFmap.merid-β (λ y' → smin y' x₀) y ∙ ap merid (∧-norm-l y)) ∙v⊡
                 tr-square (merid (smin y₀ x₀)))
                (! (ap-cst north (merid y)))
                (ap-cst north (merid y)) ⟩
-        ! (Σ∧-out-smin.merid-β Y X x₀ y) ∙v⊡
-        ((Σ∧-out-smin.merid-β Y X x₀ y ∙ ap merid (∧-norm-l y)) ∙v⊡
+        ! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ∙v⊡
+        ((SuspFmap.merid-β (λ y' → smin y' x₀) y ∙ ap merid (∧-norm-l y)) ∙v⊡
          tr-square (merid (smin y₀ x₀))) ⊡v∙
         (! (ap-cst north (merid y)) ∙ ap-cst north (merid y))
-          =⟨ ap (λ u → ! (Σ∧-out-smin.merid-β Y X x₀ y) ∙v⊡
-                       ((Σ∧-out-smin.merid-β Y X x₀ y ∙ ap merid (∧-norm-l y)) ∙v⊡
+          =⟨ ap (λ u → ! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ∙v⊡
+                       ((SuspFmap.merid-β (λ y' → smin y' x₀) y ∙ ap merid (∧-norm-l y)) ∙v⊡
                         tr-square (merid (smin y₀ x₀))) ⊡v∙
                        u) $
              !-inv-l (ap-cst north (merid y)) ⟩
-        ! (Σ∧-out-smin.merid-β Y X x₀ y) ∙v⊡
-        ((Σ∧-out-smin.merid-β Y X x₀ y ∙ ap merid (∧-norm-l y)) ∙v⊡
+        ! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ∙v⊡
+        ((SuspFmap.merid-β (λ y' → smin y' x₀) y ∙ ap merid (∧-norm-l y)) ∙v⊡
          tr-square (merid (smin y₀ x₀)))
           =⟨ ! $ ∙v⊡-assoc
-               (! (Σ∧-out-smin.merid-β Y X x₀ y))
-               (Σ∧-out-smin.merid-β Y X x₀ y ∙ ap merid (∧-norm-l y))
+               (! (SuspFmap.merid-β (λ y' → smin y' x₀) y))
+               (SuspFmap.merid-β (λ y' → smin y' x₀) y ∙ ap merid (∧-norm-l y))
                (tr-square (merid (smin y₀ x₀))) ⟩
-        (! (Σ∧-out-smin.merid-β Y X x₀ y) ∙
-         Σ∧-out-smin.merid-β Y X x₀ y ∙
+        (! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ∙
+         SuspFmap.merid-β (λ y' → smin y' x₀) y ∙
          ap merid (∧-norm-l y)) ∙v⊡
         tr-square (merid (smin y₀ x₀))
           =⟨ ap (_∙v⊡ tr-square (merid (smin y₀ x₀))) $ =ₛ-out $
-             ! (Σ∧-out-smin.merid-β Y X x₀ y) ◃∙
-             Σ∧-out-smin.merid-β Y X x₀ y ◃∙
+             ! (SuspFmap.merid-β (λ y' → smin y' x₀) y) ◃∙
+             SuspFmap.merid-β (λ y' → smin y' x₀) y ◃∙
              ap merid (∧-norm-l y) ◃∎
-               =ₛ⟨ 0 & 2 & seq-!-inv-l (Σ∧-out-smin.merid-β Y X x₀ y ◃∎) ⟩
+               =ₛ⟨ 0 & 2 & seq-!-inv-l (SuspFmap.merid-β (λ y' → smin y' x₀) y ◃∎) ⟩
              ap merid (∧-norm-l y) ◃∎ ∎ₛ ⟩
         ap merid (∧-norm-l y) ∙v⊡ tr-square (merid (smin y₀ x₀)) =∎
 
@@ -684,7 +670,3 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
       =⊙∘⟨ 0 & 1 & ⊙Susp-fmap-idf (Y ∧ X) ⟩
     ⊙∧Σ-out Y X ◃⊙∘
     ⊙∧-swap (⊙Susp (de⊙ X)) Y ◃⊙idf ∎⊙∘
-
-  swap-Σ∧-out : Susp-fmap (∧-swap X Y) ∘ Σ∧-out X Y
-              ∼ ∧Σ-out Y X ∘ ∧-swap (⊙Susp (de⊙ X)) Y
-  swap-Σ∧-out = app= (ap fst (=⊙∘-out ⊙swap-Σ∧-out))

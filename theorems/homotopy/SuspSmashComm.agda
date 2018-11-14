@@ -95,34 +95,34 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     f-merid-x : ∀ x sy →
       ap (λ sx → f (smin sx sy)) (merid x)
       =-=
-      merid (∧Σ-out-smin.f X Y x sy)
+      merid (Susp-fmap (smin x) sy)
     f-merid-x x sy =
-      ap (Susp-fmap (∧Σ-out X Y) ∘ Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) sy) (merid x)
-        =⟪ ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) sy) (merid x) ⟫
-      ap (Susp-fmap (∧Σ-out X Y)) (ap (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) sy) (merid x))
+      ap (Susp-fmap (∧Σ-out X Y) ∘ Susp-fmap (λ x' → smin x' sy)) (merid x)
+        =⟪ ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' sy)) (merid x) ⟫
+      ap (Susp-fmap (∧Σ-out X Y)) (ap (Susp-fmap (λ x' → smin x' sy)) (merid x))
         =⟪ ap (ap (Susp-fmap (∧Σ-out X Y)))
-              (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) sy x) ⟫
+              (SuspFmap.merid-β (λ x' → smin x' sy) x) ⟫
       ap (Susp-fmap (∧Σ-out X Y)) (merid (smin x sy))
         =⟪ SuspFmap.merid-β (∧Σ-out X Y) (smin x sy) ⟫
-      merid (∧Σ-out-smin.f X Y x sy) ∎∎
+      merid (Susp-fmap (smin x) sy) ∎∎
 
     g-merid-y : ∀ sx y →
       ap (g ∘ smin sx) (merid y)
       =-=
-      ! (merid (Σ∧-out-smin.f X Y y sx))
+      ! (merid (Susp-fmap (λ x' → smin x' y) sx))
     g-merid-y sx y =
-      ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y) ∘ ∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y sx) (merid y)
-        =⟪ ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y sx) (merid y) ⟫
-      ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (ap (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y sx) (merid y))
+      ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y) ∘ Susp-fmap (smin sx)) (merid y)
+        =⟪ ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin sx)) (merid y) ⟫
+      ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (ap (Susp-fmap (smin sx)) (merid y))
         =⟪ ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-              (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y sx y) ⟫
+              (SuspFmap.merid-β (smin sx) y) ⟫
       ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (merid (smin sx y))
         =⟪ ap-∘ Susp-flip (Susp-fmap (Σ∧-out X Y)) (merid (smin sx y)) ⟫
       ap Susp-flip (ap (Susp-fmap (Σ∧-out X Y)) (merid (smin sx y)))
         =⟪ ap (ap Susp-flip) (SuspFmap.merid-β (Σ∧-out X Y) (smin sx y)) ⟫
-      ap Susp-flip (merid (Σ∧-out-smin.f X Y y sx))
-        =⟪ SuspFlip.merid-β (Σ∧-out-smin.f X Y y sx) ⟫
-      ! (merid (Σ∧-out-smin.f X Y y sx)) ∎∎
+      ap Susp-flip (merid (Susp-fmap (λ x' → smin x' y) sx))
+        =⟪ SuspFlip.merid-β (Susp-fmap (λ x' → smin x' y) sx) ⟫
+      ! (merid (Susp-fmap (λ x' → smin x' y) sx)) ∎∎
 
     n-n : f (smin north north) == g (smin north north)
     n-n = merid north
@@ -244,22 +244,22 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         ap-cst south (merid y)
           =⟨ ap (λ u → ! (ap-cst north (merid y)) ∙v⊡ u ⊡v∙ ap-cst south (merid y)) $
              natural-square-path
-               (λ sy → merid (∧Σ-out-smin.f X Y x sy))
+               (λ sy → merid (Susp-fmap (smin x) sy))
                (λ sy → ap (λ sx → f (smin sx sy)) (merid x))
                (λ sy → ↯ (f-merid-x x sy))
                (merid y) ⟩
         ! (ap-cst north (merid y)) ∙v⊡
-        natural-square (λ sy → merid (∧Σ-out-smin.f X Y x sy)) (merid y) ⊡v∙
+        natural-square (λ sy → merid (Susp-fmap (smin x) sy)) (merid y) ⊡v∙
         ap-cst south (merid y)
           =⟨ natural-square-cst
                north
                south
-               (λ sy → merid (∧Σ-out-smin.f X Y x sy))
+               (λ sy → merid (Susp-fmap (smin x) sy))
                (merid y) ⟩
-        horiz-degen-square (ap (merid ∘ ∧Σ-out-smin.f X Y x) (merid y))
-          =⟨ ap horiz-degen-square (ap-∘ merid (∧Σ-out-smin.f X Y x) (merid y)) ⟩
-        horiz-degen-square (ap merid (ap (∧Σ-out-smin.f X Y x) (merid y)))
-          =⟨ ap (horiz-degen-square ∘ ap merid) (∧Σ-out-smin.merid-β X Y x y) ⟩
+        horiz-degen-square (ap (merid ∘ Susp-fmap (smin x)) (merid y))
+          =⟨ ap horiz-degen-square (ap-∘ merid (Susp-fmap (smin x)) (merid y)) ⟩
+        horiz-degen-square (ap merid (ap (Susp-fmap (smin x)) (merid y)))
+          =⟨ ap (horiz-degen-square ∘ ap merid) (SuspFmap.merid-β (smin x) y) ⟩
         horiz-degen-square (ap merid (merid (smin x y))) =∎
       bot-path :
         square-symmetry
@@ -298,29 +298,29 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
           =⟨ ap (λ u → square-symmetry
                          (! (ap-cst south (merid x)) ∙v⊡ u ⊡v∙ ap-cst north (merid x))) $
              natural-square-path
-               (λ sx → ! (merid (Σ∧-out-smin.f X Y y sx)))
+               (λ sx → ! (merid (Susp-fmap (λ x' → smin x' y) sx)))
                (λ sx → ap (g ∘ smin sx) (merid y))
                (λ sx → ↯ (g-merid-y sx y))
                (merid x) ⟩
         square-symmetry
          (! (ap-cst south (merid x)) ∙v⊡
-          natural-square (λ sx → ! (merid (Σ∧-out-smin.f X Y y sx))) (merid x) ⊡v∙
+          natural-square (λ sx → ! (merid (Susp-fmap (λ x' → smin x' y) sx))) (merid x) ⊡v∙
           ap-cst north (merid x))
           =⟨ ap square-symmetry $
              natural-square-cst
                south
                north
-               (λ sx → ! (merid (Σ∧-out-smin.f X Y y sx)))
+               (λ sx → ! (merid (Susp-fmap (λ x' → smin x' y) sx)))
                (merid x) ⟩
         square-symmetry
           (horiz-degen-square
-            (ap (λ sx → ! (merid (Σ∧-out-smin.f X Y y sx))) (merid x)))
+            (ap (λ sx → ! (merid (Susp-fmap (λ x' → smin x' y) sx))) (merid x)))
           =⟨ horiz-degen-square-symmetry
-               (ap (λ sx → ! (merid (Σ∧-out-smin.f X Y y sx))) (merid x)) ⟩
-        vert-degen-square (ap (! ∘ merid ∘ Σ∧-out-smin.f X Y y) (merid x))
-          =⟨ ap vert-degen-square (ap-∘ (! ∘ merid) (Σ∧-out-smin.f X Y y) (merid x)) ⟩
-        vert-degen-square (ap (! ∘ merid) (ap (Σ∧-out-smin.f X Y y) (merid x)))
-          =⟨ ap (vert-degen-square ∘ ap (! ∘ merid)) (Σ∧-out-smin.merid-β X Y y x) ⟩
+               (ap (λ sx → ! (merid (Susp-fmap (λ x' → smin x' y) sx))) (merid x)) ⟩
+        vert-degen-square (ap (! ∘ merid ∘ Susp-fmap (λ x' → smin x' y)) (merid x))
+          =⟨ ap vert-degen-square (ap-∘ (! ∘ merid) (Susp-fmap (λ x' → smin x' y)) (merid x)) ⟩
+        vert-degen-square (ap (! ∘ merid) (ap (Susp-fmap (λ x' → smin x' y)) (merid x)))
+          =⟨ ap (vert-degen-square ∘ ap (! ∘ merid)) (SuspFmap.merid-β (λ x' → smin x' y) x) ⟩
         vert-degen-square (ap (! ∘ merid) (merid (smin x y)))
           =⟨ ap vert-degen-square (ap-∘ ! merid (merid (smin x y))) ⟩
         vert-degen-square (ap ! (ap merid (merid (smin x y)))) =∎
@@ -402,7 +402,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
       custom-cube-∙v⊡
         f-smgluel-north
         (f-smgluel south) (↯ (tail f-smgluel-south))
-        (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x))
+        (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x))
         (↯ (tail (f-merid-x x north)))
         (ap-cst north (merid x)) $
       cube-shift-top (! (top-path x)) $
@@ -444,7 +444,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
       custom-cube p@idp = idc
       top-path : ∀ x →
         (! (↯ (tail (f-merid-x x north))) ∙v⊡
-         (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ∙v⊡
+         (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ∙v⊡
           (! f-smgluel-north ∙h⊡
            natural-square (λ sx → ap f (smgluel sx)) (merid x) ⊡h∙
            f-smgluel south)) ⊡v∙
@@ -454,14 +454,14 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         tr-square (merid north)
       top-path x =
         (! (↯ (tail (f-merid-x x north))) ∙v⊡
-         (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ∙v⊡
+         (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ∙v⊡
           (! f-smgluel-north ∙h⊡
            natural-square (λ sx → ap f (smgluel sx)) (merid x) ⊡h∙
            f-smgluel south)) ⊡v∙
          ap-cst north (merid x)) ⊡h∙
         ↯ (tail f-smgluel-south)
           =⟨ ap (λ u → (! (↯ (tail (f-merid-x x north))) ∙v⊡
-                        (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ∙v⊡
+                        (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ∙v⊡
                          u) ⊡v∙
                         ap-cst north (merid x)) ⊡h∙
                        ↯ (tail f-smgluel-south)) $
@@ -471,7 +471,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                f-smgluel
                (merid x) ⟩
         (! (↯ (tail (f-merid-x x north))) ∙v⊡
-         (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ∙v⊡
+         (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ∙v⊡
           natural-square (ap (Susp-fmap (∧Σ-out X Y)) ∘ Σ∧OutSmgluel.f X (⊙Susp (de⊙ Y))) (merid x)) ⊡v∙
          ap-cst north (merid x)) ⊡h∙
         ↯ (tail f-smgluel-south)
@@ -479,26 +479,26 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                         v ⊡v∙
                         ap-cst north (merid x)) ⊡h∙
                        ↯ (tail f-smgluel-south)) $
-             ! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ∙v⊡
+             ! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ∙v⊡
              natural-square (ap (Susp-fmap (∧Σ-out X Y)) ∘ Σ∧OutSmgluel.f X (⊙Susp (de⊙ Y))) (merid x)
-               =⟨ ap (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ∙v⊡_) $
+               =⟨ ap (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ∙v⊡_) $
                   natural-square-ap (Susp-fmap (∧Σ-out X Y)) (Σ∧OutSmgluel.f X (⊙Susp (de⊙ Y))) (merid x) ⟩
-             ! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ∙v⊡
-             ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x) ∙v⊡
+             ! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ∙v⊡
+             ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x) ∙v⊡
              ap-square (Susp-fmap (∧Σ-out X Y)) (natural-square (Σ∧OutSmgluel.f X (⊙Susp (de⊙ Y))) (merid x)) ⊡v∙
              ∘-ap (Susp-fmap (∧Σ-out X Y)) (λ _ → north) (merid x)
                =⟨ ! $ ∙v⊡-assoc
-                    (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)))
-                    (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x))
+                    (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)))
+                    (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x))
                     (ap-square (Susp-fmap (∧Σ-out X Y)) (natural-square (Σ∧OutSmgluel.f X (⊙Susp (de⊙ Y))) (merid x)) ⊡v∙
                      ∘-ap (Susp-fmap (∧Σ-out X Y)) (λ _ → north) (merid x)) ⟩
-             (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ∙
-              ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ∙v⊡
+             (! (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ∙
+              ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ∙v⊡
              ap-square (Susp-fmap (∧Σ-out X Y)) (natural-square (Σ∧OutSmgluel.f X (⊙Susp (de⊙ Y))) (merid x)) ⊡v∙
              ∘-ap (Susp-fmap (∧Σ-out X Y)) (λ _ → north) (merid x)
                =⟨ ap (_∙v⊡ ap-square (Susp-fmap (∧Σ-out X Y)) (natural-square (Σ∧OutSmgluel.f X (⊙Susp (de⊙ Y))) (merid x)) ⊡v∙
                            ∘-ap (Susp-fmap (∧Σ-out X Y)) (λ _ → north) (merid x)) $
-                  !-inv-l (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Σ∧-out-smin.f X (⊙Susp (de⊙ Y)) north) (merid x)) ⟩
+                  !-inv-l (ap-∘ (Susp-fmap (∧Σ-out X Y)) (Susp-fmap (λ x' → smin x' north)) (merid x)) ⟩
              ap-square (Susp-fmap (∧Σ-out X Y)) (natural-square (Σ∧OutSmgluel.f X (⊙Susp (de⊙ Y))) (merid x)) ⊡v∙
              ∘-ap (Susp-fmap (∧Σ-out X Y)) (λ _ → north) (merid x) =∎ ⟩
         (! (↯ (tail (f-merid-x x north))) ∙v⊡
@@ -539,70 +539,70 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                (Σ∧-out-smgluel-merid X (⊙Susp (de⊙ Y)) x ⊡v∙ ap-cst north (merid x))
                =⟨ ap (ap-square (Susp-fmap (∧Σ-out X Y))) $
                   ⊡v∙-assoc
-                    ((Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x)) ∙v⊡
+                    ((SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x)) ∙v⊡
                      tr-square (merid (smin (pt X) north)))
                     (! (ap-cst north (merid x)))
                     (ap-cst north (merid x)) ⟩
              ap-square
                (Susp-fmap (∧Σ-out X Y))
-               (((Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x)) ∙v⊡
+               (((SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x)) ∙v⊡
                  tr-square (merid (smin (pt X) north))) ⊡v∙
                 (! (ap-cst north (merid x)) ∙ ap-cst north (merid x)))
                =⟨ ap (λ u → ap-square (Susp-fmap (∧Σ-out X Y)) $
-                            ((Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙
+                            ((SuspFmap.merid-β (λ x' → smin x' north) x ∙
                               ap merid (∧-norm-l x)) ∙v⊡
                              tr-square (merid (smin (pt X) north))) ⊡v∙
                             u) $
                   !-inv-l (ap-cst north (merid x)) ⟩
              ap-square
                (Susp-fmap (∧Σ-out X Y))
-               ((Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x)) ∙v⊡
+               ((SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x)) ∙v⊡
                 tr-square (merid (smin (pt X) north)))
                =⟨ ! $ ap-square-∙v⊡
                     (Susp-fmap (∧Σ-out X Y))
-                    (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x))
+                    (SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x))
                     (tr-square (merid (smin (pt X) north))) ⟩
              ap (ap (Susp-fmap (∧Σ-out X Y)))
-                (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x)) ∙v⊡
+                (SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x)) ∙v⊡
              ap-square (Susp-fmap (∧Σ-out X Y)) (tr-square (merid (smin (pt X) north))) =∎
            ⟩
         (! (↯ (tail (f-merid-x x north))) ∙v⊡
          ap (ap (Susp-fmap (∧Σ-out X Y)))
-            (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x)) ∙v⊡
+            (SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x)) ∙v⊡
          ap-square (Susp-fmap (∧Σ-out X Y)) (tr-square (merid (smin (pt X) north)))) ⊡h∙
         ↯ (tail f-smgluel-south)
           =⟨ ! $ ap (_⊡h∙ ↯ (tail f-smgluel-south)) $
              ∙v⊡-assoc (! (↯ (tail (f-merid-x x north))))
                        (ap (ap (Susp-fmap (∧Σ-out X Y)))
-                           (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x)))
+                           (SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x)))
                        (ap-square (Susp-fmap (∧Σ-out X Y)) (tr-square (merid (smin (pt X) north)))) ⟩
         ((! (↯ (tail (f-merid-x x north))) ∙
           ap (ap (Susp-fmap (∧Σ-out X Y)))
-             (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x))) ∙v⊡
+             (SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x))) ∙v⊡
          ap-square (Susp-fmap (∧Σ-out X Y)) (tr-square (merid (smin (pt X) north)))) ⊡h∙
         ↯ (tail f-smgluel-south)
           =⟨ ap (λ u → (u ∙v⊡ ap-square (Susp-fmap (∧Σ-out X Y)) (tr-square (merid (smin (pt X) north)))) ⊡h∙
                        ↯ (tail f-smgluel-south)) $ =ₛ-out $
              ! (↯ (tail (f-merid-x x north))) ◃∙
              ap (ap (Susp-fmap (∧Σ-out X Y)))
-                (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x)) ◃∎
+                (SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x)) ◃∎
                =ₛ⟨ 0 & 1 & !-∙-seq (tail (f-merid-x x north)) ⟩
              ! (SuspFmap.merid-β (∧Σ-out X Y) (smin x north)) ◃∙
-             ! (ap (ap (Susp-fmap (∧Σ-out X Y))) (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x)) ◃∙
+             ! (ap (ap (Susp-fmap (∧Σ-out X Y))) (SuspFmap.merid-β (λ x' → smin x' north) x)) ◃∙
              ap (ap (Susp-fmap (∧Σ-out X Y)))
-                (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ∙ ap merid (∧-norm-l x)) ◃∎
+                (SuspFmap.merid-β (λ x' → smin x' north) x ∙ ap merid (∧-norm-l x)) ◃∎
                =ₛ⟨ 2 & 1 &
                    ap-seq-∙
                      (ap (Susp-fmap (∧Σ-out X Y)))
-                     (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x ◃∙
+                     (SuspFmap.merid-β (λ x' → smin x' north) x ◃∙
                       ap merid (∧-norm-l x) ◃∎) ⟩
              ! (SuspFmap.merid-β (∧Σ-out X Y) (smin x north)) ◃∙
-             ! (ap (ap (Susp-fmap (∧Σ-out X Y))) (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x)) ◃∙
-             ap (ap (Susp-fmap (∧Σ-out X Y))) (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x) ◃∙
+             ! (ap (ap (Susp-fmap (∧Σ-out X Y))) (SuspFmap.merid-β (λ x' → smin x' north) x)) ◃∙
+             ap (ap (Susp-fmap (∧Σ-out X Y))) (SuspFmap.merid-β (λ x' → smin x' north) x) ◃∙
              ap (ap (Susp-fmap (∧Σ-out X Y))) (ap merid (∧-norm-l x)) ◃∎
                =ₛ⟨ 1 & 2 & seq-!-inv-l $
                    ap (ap (Susp-fmap (∧Σ-out X Y)))
-                      (Σ∧-out-smin.merid-β X (⊙Susp (de⊙ Y)) north x) ◃∎ ⟩
+                      (SuspFmap.merid-β (λ x' → smin x' north) x) ◃∎ ⟩
              ! (SuspFmap.merid-β (∧Σ-out X Y) (smin x north)) ◃∙
              ap (ap (Susp-fmap (∧Σ-out X Y))) (ap merid (∧-norm-l x)) ◃∎
                =ₛ₁⟨ 1 & 1 & ∘-ap (ap (Susp-fmap (∧Σ-out X Y))) merid (∧-norm-l x) ⟩
@@ -909,55 +909,55 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                     (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                     (∧ΣOutSmgluer.f (⊙Susp (de⊙ X)) Y)
                     (merid y) ⟩
-             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
               ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                         (natural-square (∧ΣOutSmgluer.f (⊙Susp (de⊙ X)) Y) (merid y)) ⊡v∙
               ∘-ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (λ _ → north) (merid y)) ⊡h∙
              ↯ (tail g-smgluer-south)
-               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
                              ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) u ⊡v∙
                              ∘-ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (λ _ → north) (merid y)) ⊡h∙
                             ↯ (tail g-smgluer-south)) $
                   ∧ΣOutSmgluer.merid-square-β (⊙Susp (de⊙ X)) Y y ⟩
-             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
               ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                         (∧Σ-out-smgluer-merid (⊙Susp (de⊙ X)) Y y) ⊡v∙
               ∘-ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (λ _ → north) (merid y)) ⊡h∙
              ↯ (tail g-smgluer-south)
-               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
                              u ⊡v∙
                              ∘-ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (λ _ → north) (merid y)) ⊡h∙
                             ↯ (tail g-smgluer-south)) $ ! $
                   ap-square-⊡v∙
                     (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
-                    ((∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                    ((SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                      tr-square (merid (smin north (pt Y))))
                     (! (ap-cst north (merid y))) ⟩
-             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
               ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
-                        ((∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                        ((SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                          tr-square (merid (smin north (pt Y)))) ⊡v∙
               ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (! (ap-cst north (merid y))) ⊡v∙
               ∘-ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (λ _ → north) (merid y)) ⊡h∙
              ↯ (tail g-smgluer-south)
-               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡ u) ⊡h∙
+               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡ u) ⊡h∙
                             ↯ (tail g-smgluer-south)) $
                   ⊡v∙-assoc
                     (ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
-                       ((∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                       ((SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                         tr-square (merid (smin north (pt Y)))))
                     (ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (! (ap-cst north (merid y))))
                     (∘-ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (λ _ → north) (merid y)) ⟩
-             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
               ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
-                        ((∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                        ((SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                          tr-square (merid (smin north (pt Y)))) ⊡v∙
               (ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (! (ap-cst north (merid y))) ∙
                ∘-ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (λ _ → north) (merid y))) ⊡h∙
              ↯ (tail g-smgluer-south)
-               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
                              ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
-                                       ((∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                                       ((SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                                         tr-square (merid (smin north (pt Y)))) ⊡v∙
                              u) ⊡h∙
                             ↯ (tail g-smgluer-south)) $ =ₛ-out $
@@ -972,60 +972,60 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                     =ₛ⟨ 0 & 2 & ap-seq-=ₛ (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) $
                                 seq-!-inv-l (ap-cst north (merid y) ◃∎) ⟩
                   ! (ap-cst south (merid y)) ◃∎ ∎ₛ ⟩
-             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
               ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
-                        ((∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                        ((SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                          tr-square (merid (smin north (pt Y)))) ⊡v∙
               ! (ap-cst south (merid y))) ⊡h∙
              ↯ (tail g-smgluer-south)
-               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡ u ⊡v∙
+               =⟨ ap (λ u → (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡ u ⊡v∙
                              (! (ap-cst south (merid y)))) ⊡h∙
                             ↯ (tail g-smgluer-south)) $ ! $
                   ap-square-∙v⊡
                     (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
-                    (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))
+                    (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))
                     (tr-square (merid (smin north (pt Y)))) ⟩
-             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
               (ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                  (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                  (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                          (tr-square (merid (smin north (pt Y))))) ⊡v∙
               ! (ap-cst south (merid y))) ⊡h∙
              ↯ (tail g-smgluer-south)
                =⟨ ! $ ap (_⊡h∙ ↯ (tail g-smgluer-south)) $
                   ∙v⊡-⊡v∙-comm
-                    (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y))
+                    (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y))
                     (ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                        (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                        (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ∙v⊡
                      ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                                (tr-square (merid (smin north (pt Y)))))
                     (! (ap-cst south (merid y))) ⟩
-             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙v⊡
+             (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙v⊡
               ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                 (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ∙v⊡
+                 (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ∙v⊡
               ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                         (tr-square (merid (smin north (pt Y))))) ⊡v∙
              ! (ap-cst south (merid y)) ⊡h∙
              ↯ (tail g-smgluer-south)
                =⟨ ! $ ap (λ u → u ⊡v∙ ! (ap-cst south (merid y)) ⊡h∙ ↯ (tail g-smgluer-south)) $
                   ∙v⊡-assoc
-                    (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y))
+                    (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y))
                     (ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                        (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)))
+                        (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)))
                     (ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                                (tr-square (merid (smin north (pt Y))))) ⟩
-             ((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+             ((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
                ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                  (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+                  (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
               ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                         (tr-square (merid (smin north (pt Y))))) ⊡v∙
              ! (ap-cst south (merid y)) ⊡h∙
              ↯ (tail g-smgluer-south) =∎
            ⟩
         ! (↯ (g-merid-y north y)) ∙v⊡
-        (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+        (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
            ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-              (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+              (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
           ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                     (tr-square (merid (smin north (pt Y))))) ⊡v∙
          ! (ap-cst south (merid y)) ⊡h∙
@@ -1033,18 +1033,18 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         ap-cst south (merid y)
           =⟨ ap (! (↯ (g-merid-y north y)) ∙v⊡_) $ ! $
              ⊡v∙-⊡h∙-comm
-               (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+               (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
                   ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                     (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+                     (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
                  ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                            (tr-square (merid (smin north (pt Y))))) ⊡v∙
                 ! (ap-cst south (merid y)))
                (ap-cst south (merid y))
                (↯ (tail g-smgluer-south)) ⟩
         ! (↯ (g-merid-y north y)) ∙v⊡
-        (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+        (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
            ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-              (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+              (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
           ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                     (tr-square (merid (smin north (pt Y))))) ⊡v∙
          ! (ap-cst south (merid y)) ⊡v∙
@@ -1052,65 +1052,65 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         ↯ (tail g-smgluer-south)
           =⟨ ap (λ u → ! (↯ (g-merid-y north y)) ∙v⊡ u ⊡h∙ ↯ (tail g-smgluer-south)) $
              ⊡v∙-assoc
-               ((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+               ((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
                  ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                    (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+                    (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
                 ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                           (tr-square (merid (smin north (pt Y)))))
                (! (ap-cst south (merid y)))
                (ap-cst south (merid y)) ⟩
         ! (↯ (g-merid-y north y)) ∙v⊡
-        (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+        (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
            ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-              (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+              (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
           ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                     (tr-square (merid (smin north (pt Y))))) ⊡v∙
          (! (ap-cst south (merid y)) ∙ ap-cst south (merid y))) ⊡h∙
         ↯ (tail g-smgluer-south)
           =⟨ ap (λ u → ! (↯ (g-merid-y north y)) ∙v⊡
-                       (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+                       (((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
                           ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                             (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+                             (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
                          ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                                    (tr-square (merid (smin north (pt Y))))) ⊡v∙
                         u) ⊡h∙
                        ↯ (tail g-smgluer-south)) $
              !-inv-l (ap-cst south (merid y)) ⟩
         ! (↯ (g-merid-y north y)) ∙v⊡
-        ((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+        ((ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
           ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-             (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+             (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
          ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                    (tr-square (merid (smin north (pt Y))))) ⊡h∙
         ↯ (tail g-smgluer-south)
           =⟨ ap (! (↯ (g-merid-y north y)) ∙v⊡_) $
              ∙v⊡-⊡h∙-comm
-               (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+               (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
                 ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                   (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)))
+                   (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)))
                (ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                           (tr-square (merid (smin north (pt Y)))))
                (↯ (tail g-smgluer-south)) ⟩
         ! (↯ (g-merid-y north y)) ∙v⊡
-        (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+        (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
          ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-            (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+            (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
         ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                   (tr-square (merid (smin north (pt Y)))) ⊡h∙
         ↯ (tail g-smgluer-south)
           =⟨ ! $
              ∙v⊡-assoc
                (! (↯ (g-merid-y north y)))
-               (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+               (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
                 ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                   (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)))
+                   (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)))
                (ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                           (tr-square (merid (smin north (pt Y)))) ⊡h∙
                 ↯ (tail g-smgluer-south)) ⟩
         (! (↯ (g-merid-y north y)) ∙
-         ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ∙
+         ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ∙
          ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-            (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y))) ∙v⊡
+            (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y))) ∙v⊡
         ap-square (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))
                   (tr-square (merid (smin north (pt Y)))) ⊡h∙
         ↯ (tail g-smgluer-south)
@@ -1118,28 +1118,28 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
                                 (tr-square (merid (smin north (pt Y)))) ⊡h∙
                       ↯ (tail g-smgluer-south)) $ =ₛ-out $
              ! (↯ (g-merid-y north y)) ◃∙
-             ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ◃∙
+             ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ◃∙
              ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)))
-                (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ∙ ap merid (∧-norm-r y)) ◃∎
+                (SuspFmap.merid-β (smin north) y ∙ ap merid (∧-norm-r y)) ◃∎
                =ₛ⟨ 2 & 1 & ap-seq-∙ (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) $
-                     (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y ◃∙
+                     (SuspFmap.merid-β (smin north) y ◃∙
                       ap merid (∧-norm-r y) ◃∎) ⟩
              ! (↯ (g-merid-y north y)) ◃∙
-             ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ◃∙
-             ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y) ◃∙
+             ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ◃∙
+             ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (SuspFmap.merid-β (smin north) y) ◃∙
              ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (ap merid (∧-norm-r y)) ◃∎
                =ₛ⟨ 0 & 1 & !-∙-seq (g-merid-y north y) ⟩
              ! (SuspFlip.merid-β north) ◃∙
              ! (ap (ap Susp-flip) (SuspFmap.merid-β (Σ∧-out X Y) (smin north y))) ◃∙
              ! (ap-∘ Susp-flip (Susp-fmap (Σ∧-out X Y)) (merid (smin north y))) ◃∙
-             ! (ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y)) ◃∙
-             ! (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y)) ◃∙
-             ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ◃∙
-             ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y) ◃∙
+             ! (ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (SuspFmap.merid-β (smin north) y)) ◃∙
+             ! (ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y)) ◃∙
+             ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ◃∙
+             ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (SuspFmap.merid-β (smin north) y) ◃∙
              ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (ap merid (∧-norm-r y)) ◃∎
                =ₛ⟨ 3 & 4 & seq-!-inv-l $
-                   ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (∧Σ-out-smin.f (⊙Susp (de⊙ X)) Y north) (merid y) ◃∙
-                   ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (∧Σ-out-smin.merid-β (⊙Susp (de⊙ X)) Y north y) ◃∎ ⟩
+                   ap-∘ (Susp-flip ∘ Susp-fmap (Σ∧-out X Y)) (Susp-fmap (smin north)) (merid y) ◃∙
+                   ap (ap (Susp-flip ∘ Susp-fmap (Σ∧-out X Y))) (SuspFmap.merid-β (smin north) y) ◃∎ ⟩
              ! (SuspFlip.merid-β north) ◃∙
              ! (ap (ap Susp-flip) (SuspFmap.merid-β (Σ∧-out X Y) (smin north y))) ◃∙
              ! (ap-∘ Susp-flip (Susp-fmap (Σ∧-out X Y)) (merid (smin north y))) ◃∙
