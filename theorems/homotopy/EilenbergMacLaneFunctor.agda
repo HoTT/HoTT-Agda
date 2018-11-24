@@ -339,9 +339,9 @@ module _ {i} (G : AbGroup i) where
              ap [_]₂ (η x ∙ η (EM₁-neg x))
                =⟨ ap (<– (=ₜ-equiv [ north ]₂ [ north ]₂)) $
                   [ η x ∙ η (EM₁-neg x) ]₁
-                    =⟨ ! (comp (EM₁-neg x) x) ⟩
-                  [ η (mult (EM₁-neg x) x) ]₁
-                    =⟨ ap ([_]₁ ∘ η) (EM₁-neg-inv-l x) ⟩
+                    =⟨ ! (comp x (EM₁-neg x)) ⟩
+                  [ η (mult x (EM₁-neg x)) ]₁
+                    =⟨ ap ([_]₁ ∘ η) (EM₁-neg-inv-r x) ⟩
                   [ η embase ]₁
                     =⟨ ap [_]₁ (!-inv-r (merid embase)) ⟩
                   [ idp ]₁ =∎ ⟩

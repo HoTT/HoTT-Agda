@@ -24,11 +24,6 @@ module _ {i} (A : AbGroup i) where
   ⊙cond-neg k b =
     ⊙transport (λ G → ⊙EM G k) {x = A} {y = A} (Bool-elim inv-path idp b)
 
-  cond-neg : ∀ (k : ℕ) → Bool
-    → EM A k → EM A k
-  cond-neg k b =
-    transport (λ G → EM G k) {x = A} {y = A} (Bool-elim inv-path idp b)
-
   ⊙cond-neg-∘ : ∀ (k : ℕ) (b c : Bool)
     → ⊙cond-neg k b ◃⊙∘ ⊙cond-neg k c ◃⊙idf
       =⊙∘
