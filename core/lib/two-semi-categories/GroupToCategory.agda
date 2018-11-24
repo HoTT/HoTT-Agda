@@ -5,7 +5,6 @@ open import lib.types.Group
 open import lib.groups.Homomorphism
 open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.Functor
-open import lib.two-semi-categories.DualCategory
 
 module lib.two-semi-categories.GroupToCategory where
 
@@ -39,16 +38,3 @@ homomorphism-to-functor {G = G} {H = H} φ =
     module G = Group G
     module H = Group H
     module φ = GroupHom φ
-
-ab-group-cat-to-dual : ∀ {i} (G : AbGroup i)
-  → TwoSemiFunctor
-      (group-to-cat (AbGroup.grp G))
-      (dual-cat (group-to-cat (AbGroup.grp G)))
-ab-group-cat-to-dual G =
-  record
-  { F₀ = λ _ → unit
-  ; F₁ = λ g → g
-  ; pres-comp = G.comm
-  ; pres-comp-coh = λ _ _ _ → =ₛ-in $ prop-path (has-level-apply G.El-level _ _) _ _
-  }
-  where module G = AbGroup G
