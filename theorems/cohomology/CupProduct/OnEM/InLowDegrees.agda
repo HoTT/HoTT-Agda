@@ -129,11 +129,11 @@ abstract
       =ₛ₁⟨ 0 & 1 & ! (ap-cst embase (G.assoc g₁ g₂ g₃)) ⟩
     ap (cst embase) (G.assoc g₁ g₂ g₃) ◃∙ idp ◃∙ idp ◃∎ ∎ₛ
 
-group-to-EM₁H→EM₁G⊗H :
+cp₀₁-functor :
   TwoSemiFunctor
     (group-to-cat G.grp)
     (fun-cat (EM₁ H.grp) EM₁-2-semi-category)
-group-to-EM₁H→EM₁G⊗H =
+cp₀₁-functor =
   record
   { F₀ = λ _ _ → unit
   ; F₁ = λ g x → cp₀₁ g x
@@ -212,19 +212,19 @@ module _ where
     T-comp' = T.comp {x = cst-north} {y = cst-north} {z = cst-north}
     T-assoc' = T.assoc {x = cst-north} {y = cst-north} {z = cst-north} {w = cst-north}
 
-  group-to-EM₁→EM₂-op : TwoSemiFunctor (group-to-cat G.grp) T
-  group-to-EM₁→EM₂-op =
-    group-to-EM₁H→EM₁G⊗H –F→
+  group-to-EM₁→EM₂ : TwoSemiFunctor (group-to-cat G.grp) T
+  group-to-EM₁→EM₂ =
+    cp₀₁-functor –F→
     fun-functor-map (EM₁ H.grp) comp-functor
 
   abstract
-    app=-group-to-EM₁→EM₂-op-pres-comp-embase : ∀ g₁ g₂ →
-      app= (TwoSemiFunctor.pres-comp group-to-EM₁→EM₂-op g₁ g₂) embase ==
+    app=-group-to-EM₁→EM₂-pres-comp-embase : ∀ g₁ g₂ →
+      app= (TwoSemiFunctor.pres-comp group-to-EM₁→EM₂ g₁ g₂) embase ==
       comp embase embase
-    app=-group-to-EM₁→EM₂-op-pres-comp-embase g₁ g₂ = =ₛ-out $
-      app= (TwoSemiFunctor.pres-comp group-to-EM₁→EM₂-op g₁ g₂) embase ◃∎
-        =ₛ⟨ ap-seq-=ₛ (λ f → f embase) (comp-functors-pres-comp-β G₀₁ G₁₂ g₁ g₂) ⟩
-      app= (ap (TwoSemiFunctor.F₁ G₁₂) (TwoSemiFunctor.pres-comp G₀₁ g₁ g₂)) embase ◃∙
+    app=-group-to-EM₁→EM₂-pres-comp-embase g₁ g₂ = =ₛ-out $
+      app= (TwoSemiFunctor.pres-comp group-to-EM₁→EM₂ g₁ g₂) embase ◃∎
+        =ₛ⟨ ap-seq-=ₛ (λ f → f embase) (comp-functors-pres-comp-β cp₀₁-functor G₁₂ g₁ g₂) ⟩
+      app= (ap (TwoSemiFunctor.F₁ G₁₂) (TwoSemiFunctor.pres-comp cp₀₁-functor g₁ g₂)) embase ◃∙
       app= (TwoSemiFunctor.pres-comp G₁₂ (cp₀₁ g₁) (cp₀₁ g₂)) embase ◃∎
         =ₛ⟨ 0 & 1 & =ₛ-in {t = []} $
             app= (ap (λ f x → [ η (f x) ]) (λ= (cp₀₁-distr-l g₁ g₂))) embase
@@ -237,7 +237,6 @@ module _ where
         =ₛ₁⟨ app=-β (λ y → comp (cp₀₁ g₁ y) (cp₀₁ g₂ y)) embase ⟩
       comp embase embase ◃∎ ∎ₛ
       where
-        G₀₁ = group-to-EM₁H→EM₁G⊗H
         G₁₂ = fun-functor-map (EM₁ H.grp) comp-functor
 
 module CP₁₁ where
@@ -268,7 +267,7 @@ module CP₁₁ where
     D₃ = 2-type-fundamental-cat (EM₁ H.grp → EM G⊗H.abgroup 2) {{C-level}}
 
     F₀₁ : TwoSemiFunctor D₀ D₁
-    F₀₁ = group-to-EM₁→EM₂-op
+    F₀₁ = group-to-EM₁→EM₂
 
     F₁₂' : TwoSemiFunctor D₁' D₂'
     F₁₂' = =ₜ-to-2-type-fundamental-cat (Susp (EM₁ G⊗H.grp))
@@ -334,8 +333,7 @@ module CP₁₁ where
              (F₀₁.pres-comp g₁ g₂)) embase
         == ap (ap [_]) (comp-l embase)
       step₂ =
-        app= (ap (λ α y → <– (=ₜ-equiv [ north ] [ north ]) (α y))
-                 (F₀₁.pres-comp g₁ g₂)) embase
+        app= (ap (λ α y → <– (=ₜ-equiv [ north ] [ north ]) (α y)) (F₀₁.pres-comp g₁ g₂)) embase
           =⟨ ∘-ap (λ f → f embase)
                   (λ α y → <– (=ₜ-equiv [ north ] [ north ]) (α y))
                   (F₀₁.pres-comp g₁ g₂) ⟩
@@ -347,7 +345,7 @@ module CP₁₁ where
         ap (<– (=ₜ-equiv [ north ] [ north ]))
            (app= (F₀₁.pres-comp g₁ g₂) embase)
           =⟨ ap (ap (<– (=ₜ-equiv [ north ] [ north ])))
-                (app=-group-to-EM₁→EM₂-op-pres-comp-embase g₁ g₂) ⟩
+                (app=-group-to-EM₁→EM₂-pres-comp-embase g₁ g₂) ⟩
         ap (<– (=ₜ-equiv [ north ] [ north ])) (comp embase embase)
           =⟨ ap (ap (<– (=ₜ-equiv [ north ] [ north ])))
                 (comp-unit-l embase) ⟩
@@ -412,6 +410,7 @@ module CP₁₁ where
         step₇' : comp-l embase ◃∙ ap2 _∙_ (!-inv-r (merid embase)) (!-inv-r (merid embase)) ◃∎
                 =ₛ !-inv-r (merid embase) ◃∎
         step₇' = helper (merid embase)
+
     app=-ap-cp₁₁-seq : ∀ g y → app= (ap cp₁₁ (emloop g)) y =-= ap [_] (η (cp₀₁ g y))
     app=-ap-cp₁₁-seq g y =
       app= (ap cp₁₁ (emloop g)) y
@@ -467,9 +466,9 @@ module CP₁₁ where
       ap2 _∙_ (app=-β (λ x → ap [_] (η (cp₀₁ g₁ x))) y) (app=-β (λ x → ap [_] (η (cp₀₁ g₂ x))) y) ◃∎
         =ₛ⟨ 2 & 2 & !ₛ $
             homotopy-naturality2 (λ a b → app= (a ∙ b) y)
-                                  (λ a b → app= a y ∙ app= b y)
-                                  (ap-∙ (λ f → f y))
-                                  (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ⟩
+                                 (λ a b → app= a y ∙ app= b y)
+                                 (ap-∙ (λ f → f y))
+                                 (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ⟩
       ap (λ u → app= (ap cp₁₁ u) y) (emloop-comp g₁ g₂) ◃∙
       ap (λ u → app= u y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
       ap2 (λ a b → app= (a ∙ b) y) (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ◃∙
