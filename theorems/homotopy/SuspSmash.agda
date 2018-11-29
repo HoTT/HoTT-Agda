@@ -105,7 +105,6 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     ap (λ sx → smin sx y₀) (merid x ∙ ! (merid x₀)) ∙ idp
       =⟪ ap (_∙ idp) $
          homotopy-to-cst-ap (λ sx → smin sx y₀)
-                            smbasel
                             smgluel
                             (merid x ∙ ! (merid x₀)) ⟫
     (smgluel north ∙ ! (smgluel north)) ∙ idp

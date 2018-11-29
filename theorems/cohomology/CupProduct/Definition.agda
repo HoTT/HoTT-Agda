@@ -59,9 +59,6 @@ module _ (G : AbGroup i) (H : AbGroup i) where
   _∪_  : ∀ {m n : ℕ} → CEl G (pos m) X → CEl H (pos n) X → CEl G⊗H.abgroup (pos (m + n)) X
   _∪_ {m} {n} s t = Trunc-rec (λ s' → Trunc-rec (λ t' → [ ⊙Ω∧-cp m n ⊙∘ smin-map s' t' ]) t) s
 
-  -- ∪-hom : ∀ {m n : ℕ} → TensorProduct.grp (C-abgroup G (pos m) X) (C-abgroup H (pos n) X) →ᴳ C G⊗H.abgroup (pos (m + n)) X
-  -- ∪-hom = {!!}
-
 module _ (G : AbGroup i) (H : AbGroup i) where
 
   private
