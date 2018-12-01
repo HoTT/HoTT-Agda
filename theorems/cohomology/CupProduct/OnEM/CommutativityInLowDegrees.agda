@@ -509,7 +509,10 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
       h₁-path : ∀ y → h₁ y == ! (ap [_]₂ (GH.η (GH.cp₀₁ g y)))
       h₁-path y =
         transport (λ x → ∀ y → x G∪H y == [ north ]₂) (emloop g) h₀ y
-          =⟨ app= (Π-transp (emloop g) h₀) y ⟩
+          =⟨ app= (transp-naturality {B = λ x → ∀ y → x G∪H y == [ north ]₂}
+                                     {C = λ x → x G∪H y == [ north ]₂}
+                                     (λ k → k y)
+                                     (emloop g)) h₀ ⟩
         transport (λ x → x G∪H y == [ north ]₂) (emloop g) (h₀ y)
           =⟨ to-transp {B = λ x → x G∪H y == [ north ]₂} {p = emloop g} $
              ↓-app=cst-in {f = _G∪H y}
@@ -522,7 +525,10 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
       h₁'-path : ∀ x → h₁' x == ! (ap [_]₂ (GH.η (−₁ (HG.cp₀₁ h x))))
       h₁'-path x =
         transport (λ y → ∀ x → − (y H∪G x) == [ north ]₂) (emloop h) h₀' x
-          =⟨ app= (Π-transp (emloop h) h₀') x ⟩
+          =⟨ app= (transp-naturality {B = λ y → ∀ x → − (y H∪G x) == [ north ]₂}
+                                     {C = λ y → − (y H∪G x) == [ north ]₂}
+                                     (λ k → k x)
+                                     (emloop h)) h₀' ⟩
         transport (λ y → − (y H∪G x) == [ north ]₂) (emloop h) (h₀' x)
           =⟨ to-transp {B = λ y → − (y H∪G x) == [ north ]₂} {p = emloop h} $
              ↓-app=cst-in {f = λ y → − (y H∪G x)}
