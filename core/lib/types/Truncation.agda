@@ -116,7 +116,7 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
   =ₜ-equiv a b = to a b , to-is-equiv a b where
 
     to : (a b : Trunc (S n) A) → (a == b → a =ₜ b)
-    to a .a idp = =ₜ-refl a
+    to a b p = transport (λ c → a =ₜ c) p (=ₜ-refl a)
 
     from-aux : (a b : A) → a == b → [ a ] == [ b ] :> Trunc (S n) A
     from-aux _ _ = ap [_]

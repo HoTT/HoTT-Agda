@@ -316,7 +316,7 @@ module _ {i} (G : AbGroup i) where
       Susp-elim
         {P = λ s → EM-neg 2 [ s ]₂ == Trunc-fmap Susp-flip [ s ]₂}
         (ap [_]₂ (merid embase))
-        (! (ap [_]₂ (merid embase))) $
+        (ap [_]₂ (! (merid embase))) $
       λ x → ↓-='-in-=ₛ $
       ap [_]₂ (merid embase) ◃∙
       ap (Trunc-fmap Susp-flip ∘ [_]₂) (merid x) ◃∎
@@ -338,13 +338,11 @@ module _ {i} (G : AbGroup i) where
                =⟨ ∙-ap [_]₂ (η x) (η (EM₁-neg x)) ⟩
              ap [_]₂ (η x ∙ η (EM₁-neg x))
                =⟨ ap (<– (=ₜ-equiv [ north ]₂ [ north ]₂)) $
-                  [ η x ∙ η (EM₁-neg x) ]₁
-                    =⟨ ! (comp x (EM₁-neg x)) ⟩
-                  [ η (mult x (EM₁-neg x)) ]₁
-                    =⟨ ap ([_]₁ ∘ η) (EM₁-neg-inv-r x) ⟩
-                  [ η embase ]₁
-                    =⟨ ap [_]₁ (!-inv-r (merid embase)) ⟩
-                  [ idp ]₁ =∎ ⟩
+                  ! $ comp x (EM₁-neg x) ⟩
+             ap [_]₂ (η (mult x (EM₁-neg x)))
+               =⟨ ap (ap [_]₂ ∘ η) (EM₁-neg-inv-r x) ⟩
+             ap [_]₂ (η embase)
+               =⟨ ap (ap [_]₂) (!-inv-r (merid embase)) ⟩
              idp =∎ ⟩
       ap [_]₂ (η (EM₁-neg x)) ◃∎
         =ₛ⟨ ap-seq-∙ [_]₂ (merid (EM₁-neg x) ◃∙ ! (merid embase) ◃∎) ⟩
@@ -355,10 +353,7 @@ module _ {i} (G : AbGroup i) where
       ap [_]₂ (! (merid embase)) ◃∎
         =ₛ₁⟨ 0 & 1 & ∘-ap [_]₂ (Susp-fmap EM₁-neg) (merid x) ⟩
       ap (EM-neg 2 ∘ [_]₂) (merid x) ◃∙
-      ap [_]₂ (! (merid embase)) ◃∎
-        =ₛ₁⟨ 1 & 1 & ap-! [_]₂ (merid embase) ⟩
-      ap (EM-neg 2 ∘ [_]₂) (merid x) ◃∙
-      ! (ap [_]₂ (merid embase)) ◃∎ ∎ₛ
+      ap [_]₂ (! (merid embase)) ◃∎ ∎ₛ
       where
       open EM₁HSpaceAssoc G using (η; H-⊙EM₁; H-⊙EM₁-assoc; H-EM₁-assoc-coh-unit-l-r-pentagon)
       open import homotopy.Pi2HSuspCompose H-⊙EM₁ H-⊙EM₁-assoc H-EM₁-assoc-coh-unit-l-r-pentagon

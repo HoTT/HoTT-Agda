@@ -624,16 +624,16 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   swap-∧Σ-out : Susp-fmap (∧-swap X Y) ∘ ∧Σ-out X Y
               ∼ Σ∧-out Y X ∘ ∧-swap X (⊙Susp (de⊙ Y))
   swap-∧Σ-out =
-    Smash-elim
+    Smash-Path-elim
+      (Susp-fmap (∧-swap X Y) ∘ ∧Σ-out X Y)
+      (Σ∧-out Y X ∘ ∧-swap X (⊙Susp (de⊙ Y)))
       Σ∧-∧Σ-swap-smin.f
       idp
       idp
-      (λ x → ↓-='-from-square $
-        ∧-swap-∧Σ-out-smgluel x ∙v⊡ ids ⊡v∙ ! (Σ∧-out-∧-swap-smgluel x))
-      (λ sy → ↓-='-from-square $
-        ∧-swap-∧Σ-out-smgluer sy ∙v⊡
-        Σ∧-∧Σ-swap-smgluer sy ⊡v∙
-        ! (Σ∧-out-∧-swap-smgluer sy))
+      (λ x → ∧-swap-∧Σ-out-smgluel x ∙v⊡ ids ⊡v∙ ! (Σ∧-out-∧-swap-smgluel x))
+      (λ sy → ∧-swap-∧Σ-out-smgluer sy ∙v⊡
+              Σ∧-∧Σ-swap-smgluer sy ⊡v∙
+              ! (Σ∧-out-∧-swap-smgluer sy))
 
   ⊙swap-∧Σ-out : ⊙Susp-fmap (∧-swap X Y) ◃⊙∘ ⊙∧Σ-out X Y ◃⊙idf
                  =⊙∘

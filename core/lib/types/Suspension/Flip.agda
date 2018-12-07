@@ -130,13 +130,21 @@ Susp-flip-equiv {A = A} =
 Susp-flip-natural : ∀ {i} {j} {A : Type i} {B : Type j} (f : A → B)
   → ∀ σ → Susp-flip (Susp-fmap f σ) == Susp-fmap f (Susp-flip σ)
 Susp-flip-natural f = Susp-elim idp idp $ λ y → ↓-='-in' $
-  ap-∘ (Susp-fmap f) Susp-flip (merid y)
-  ∙ ap (ap (Susp-fmap f)) (SuspFlip.merid-β y)
-  ∙ ap-! (Susp-fmap f) (merid y)
-  ∙ ap ! (SuspFmap.merid-β f y)
-  ∙ ! (SuspFlip.merid-β (f y))
-  ∙ ! (ap (ap Susp-flip) (SuspFmap.merid-β f y))
-  ∙ ∘-ap Susp-flip (Susp-fmap f) (merid y)
+  ap (Susp-fmap f ∘ Susp-flip) (merid y)
+    =⟨ ap-∘ (Susp-fmap f) Susp-flip (merid y) ⟩
+  ap (Susp-fmap f) (ap Susp-flip (merid y))
+    =⟨ ap (ap (Susp-fmap f)) (SuspFlip.merid-β y) ⟩
+  ap (Susp-fmap f) (! (merid y))
+    =⟨ ap-! (Susp-fmap f) (merid y) ⟩
+  ! (ap (Susp-fmap f) (merid y))
+    =⟨ ap ! (SuspFmap.merid-β f y) ⟩
+  ! (merid (f y))
+    =⟨ ! (SuspFlip.merid-β (f y)) ⟩
+  ap Susp-flip (merid (f y))
+    =⟨ ! (ap (ap Susp-flip) (SuspFmap.merid-β f y)) ⟩
+  ap Susp-flip (ap (Susp-fmap f) (merid y))
+    =⟨ ∘-ap Susp-flip (Susp-fmap f) (merid y) ⟩
+  ap (Susp-flip ∘ Susp-fmap f) (merid y) =∎
 
 ⊙Susp-flip-natural : ∀ {i} {j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
   → ⊙Susp-flip Y ⊙∘ ⊙Susp-fmap (fst f) == ⊙Susp-fmap (fst f) ⊙∘ ⊙Susp-flip X
@@ -205,12 +213,12 @@ module _ {i} {A : Type i} where
                !-inv-r (merid north) ◃∙
                ! (!-inv-r (merid south)) ◃∙
                ap (_∙ ! (merid south)) (! (ap merid (merid a))) ◃∎
-                 =ₛ⟨ pre-rotate-out $ coh-helper (ap merid (merid a)) ⟩
+                 =ₛ⟨ coh-helper (ap merid (merid a)) ⟩
                ap (λ q → merid north ∙ ! q) (ap merid (merid a)) ◃∎
                  =ₛ₁⟨ ∘-ap (λ q → merid north ∙ ! q) merid (merid a) ⟩
                ap (λ z → merid north ∙ ! (merid z)) (merid a) ◃∎
                  =ₛ⟨ 1 & 0 & contract ⟩
-               ap (λ z → merid north ∙ ! (merid z)) (merid a) ◃∙ idp ◃∎ ∎ₛ )
+               ap (λ z → merid north ∙ ! (merid z)) (merid a) ◃∙ idp ◃∎ ∎ₛ)
              y ⟩
     merid (Susp-flip y) ◃∙
     ! (merid south) ◃∎
@@ -222,25 +230,17 @@ module _ {i} {A : Type i} where
         {b-north b-south : B}
         {merid₁ merid₂ : b-north == b-south}
         (p : merid₁ == merid₂)
-        → ! (!-inv-r merid₂) ◃∙
+        → !-inv-r merid₁ ◃∙
+          ! (!-inv-r merid₂) ◃∙
           ap (_∙ ! merid₂) (! p) ◃∎
           =ₛ
-          ! (!-inv-r merid₁) ◃∙
           ap (λ q → merid₁ ∙ ! q) p ◃∎
       coh-helper {merid₁ = idp} {merid₂ = .idp} idp =
         =ₛ-in idp
 
   ⊙Susp-fmap-Susp-flip : ⊙Susp-fmap Susp-flip == ⊙Susp-flip (⊙Susp A)
   ⊙Susp-fmap-Susp-flip =
-    pair= (λ= (Susp-fmap-flip)) $
-    ↓-app=cst-in $ ! $ =ₛ-out {t = []} $
-      app= (λ= Susp-fmap-flip) north ◃∙
-      ! (merid north) ◃∎
-        =ₛ₁⟨ 0 & 1 & app=-β Susp-fmap-flip north ⟩
-      merid north ◃∙
-      ! (merid north) ◃∎
-        =ₛ⟨ seq-!-inv-r (merid north ◃∎) ⟩
-      [] ∎ₛ
+    ⊙λ=' Susp-fmap-flip (↓-idf=cst-in (! (!-inv-r (merid north))))
 
   ⊙Susp-fmap-maybe-Susp-flip : ∀ (b : Bool)
     → ⊙Susp-fmap (maybe-Susp-flip b) == ⊙maybe-Susp-flip (⊙Susp A) b

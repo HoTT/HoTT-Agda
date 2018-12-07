@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.cubical.Square
 open import lib.types.Bool
 open import lib.types.Coproduct
 open import lib.types.FunctionSeq
@@ -207,6 +208,31 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
         (λ y → ↓-=-in (smgluer* y))
 
   Smash-PathOver-elim = SmashPathOverElim.f
+
+  module SmashPathElim {k} {C : Type k}
+    (g₁ g₂ : Smash X Y → C)
+    (smin* : (x : de⊙ X) (y : de⊙ Y) → g₁ (smin x y) == g₂ (smin x y))
+    (smbasel* : g₁ smbasel == g₂ smbasel)
+    (smbaser* : g₁ smbaser == g₂ smbaser)
+    (smgluel* : (x : de⊙ X) →
+      Square (smin* x (pt Y)) (ap g₁ (smgluel x))
+             (ap g₂ (smgluel x)) smbasel*)
+    (smgluer* : (y : de⊙ Y) →
+      Square (smin* (pt X) y) (ap g₁ (smgluer y))
+             (ap g₂ (smgluer y)) smbaser*)
+    where
+
+    f : g₁ ∼ g₂
+    f =
+      Smash-elim
+        {P = λ xy → g₁ xy == g₂ xy}
+        smin*
+        smbasel*
+        smbaser*
+        (λ x → ↓-='-from-square (smgluel* x))
+        (λ y → ↓-='-from-square (smgluer* y))
+
+  Smash-Path-elim = SmashPathElim.f
 
   module _ {k l} {X' : Ptd k} {Y' : Ptd l} (f : X ⊙→ X') (g : Y ⊙→ Y') where
 
