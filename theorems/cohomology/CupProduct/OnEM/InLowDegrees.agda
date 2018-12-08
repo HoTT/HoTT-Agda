@@ -18,29 +18,20 @@ private
   open G⊗H using (_⊗_)
   open EMExplicit
 
-∧-cp₀₀' : G.⊙El ∧ H.⊙El → G⊗H.El
-∧-cp₀₀' =
-  Smash-rec
-    G⊗H._⊗_
-    G⊗H.ident
-    G⊗H.ident
-    G⊗H.⊗-ident-r
-    G⊗H.⊗-ident-l
+⊙×-cp₀₀' : G.⊙El ⊙× H.⊙El ⊙→ G⊗H.⊙El
+⊙×-cp₀₀' = uncurry G⊗H._⊗_ , G⊗H.⊗-ident-l H.ident
 
-⊙∧-cp₀₀' : G.⊙El ⊙∧ H.⊙El ⊙→ G⊗H.⊙El
-⊙∧-cp₀₀' = ∧-cp₀₀' , G⊗H.⊗-ident-l H.ident
-
-⊙∧-cp₀₀-seq : (⊙EM G 0 ⊙∧ ⊙EM H 0) ⊙–→ ⊙EM G⊗H.abgroup 0
-⊙∧-cp₀₀-seq =
+⊙×-cp₀₀-seq : (⊙EM G 0 ⊙× ⊙EM H 0) ⊙–→ ⊙EM G⊗H.abgroup 0
+⊙×-cp₀₀-seq =
   ⊙–> (⊙emloop-equiv G⊗H.grp) ◃⊙∘
-  ⊙∧-cp₀₀' ◃⊙∘
-  ⊙∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) ◃⊙idf
+  ⊙×-cp₀₀' ◃⊙∘
+  ⊙×-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) ◃⊙idf
 
-⊙∧-cp₀₀ : ⊙EM G 0 ⊙∧ ⊙EM H 0 ⊙→ ⊙EM G⊗H.abgroup 0
-⊙∧-cp₀₀ = ⊙compose ⊙∧-cp₀₀-seq
+⊙×-cp₀₀ : ⊙EM G 0 ⊙× ⊙EM H 0 ⊙→ ⊙EM G⊗H.abgroup 0
+⊙×-cp₀₀ = ⊙compose ⊙×-cp₀₀-seq
 
-∧-cp₀₀ : ⊙EM G 0 ∧ ⊙EM H 0 → EM G⊗H.abgroup 0
-∧-cp₀₀ = fst ⊙∧-cp₀₀
+×-cp₀₀ : EM G 0 × EM H 0 → EM G⊗H.abgroup 0
+×-cp₀₀ = fst ⊙×-cp₀₀
 
 open EM₁HSpaceAssoc G⊗H.abgroup hiding (comp-functor) renaming (mult to EM₁-mult) public
 

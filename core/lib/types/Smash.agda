@@ -234,149 +234,149 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
   Smash-Path-elim = SmashPathElim.f
 
-  module _ {k l} {X' : Ptd k} {Y' : Ptd l} (f : X ⊙→ X') (g : Y ⊙→ Y') where
+module _ {i j k l} {X : Ptd i} {Y : Ptd j} {X' : Ptd k} {Y' : Ptd l} (f : X ⊙→ X') (g : Y ⊙→ Y') where
 
-    private
-      module M = SmashRec
-        {C = X' ∧ Y'}
-        (λ x y → smin (fst f x) (fst g y))
-        (smin (pt X') (pt Y'))
-        (smin (pt X') (pt Y'))
-        (λ x → ap (λ y' → smin (fst f x) y') (snd g) ∙ ∧-norm-l (fst f x))
-        (λ y → ap (λ x' → smin x' (fst g y)) (snd f) ∙ ∧-norm-r (fst g y))
+  private
+    module M = SmashRec
+      {C = X' ∧ Y'}
+      (λ x y → smin (fst f x) (fst g y))
+      (smin (pt X') (pt Y'))
+      (smin (pt X') (pt Y'))
+      (λ x → ap (λ y' → smin (fst f x) y') (snd g) ∙ ∧-norm-l (fst f x))
+      (λ y → ap (λ x' → smin x' (fst g y)) (snd f) ∙ ∧-norm-r (fst g y))
 
-    abstract
-      ∧-fmap : X ∧ Y → X' ∧ Y'
-      ∧-fmap = M.f
+  abstract
+    ∧-fmap : X ∧ Y → X' ∧ Y'
+    ∧-fmap = M.f
 
-      ∧-fmap-smin-β : ∀ x y → ∧-fmap (smin x y) ↦ smin (fst f x) (fst g y)
-      ∧-fmap-smin-β = M.smin-β
-      {-# REWRITE ∧-fmap-smin-β #-}
+    ∧-fmap-smin-β : ∀ x y → ∧-fmap (smin x y) ↦ smin (fst f x) (fst g y)
+    ∧-fmap-smin-β = M.smin-β
+    {-# REWRITE ∧-fmap-smin-β #-}
 
-      ∧-fmap-smbasel-β : ∧-fmap smbasel ↦ smin (pt X') (pt Y')
-      ∧-fmap-smbasel-β = M.smbasel-β
-      {-# REWRITE ∧-fmap-smbasel-β #-}
+    ∧-fmap-smbasel-β : ∧-fmap smbasel ↦ smin (pt X') (pt Y')
+    ∧-fmap-smbasel-β = M.smbasel-β
+    {-# REWRITE ∧-fmap-smbasel-β #-}
 
-      ∧-fmap-smbaser-β : ∧-fmap smbaser ↦ smin (pt X') (pt Y')
-      ∧-fmap-smbaser-β = M.smbaser-β
-      {-# REWRITE ∧-fmap-smbaser-β #-}
+    ∧-fmap-smbaser-β : ∧-fmap smbaser ↦ smin (pt X') (pt Y')
+    ∧-fmap-smbaser-β = M.smbaser-β
+    {-# REWRITE ∧-fmap-smbaser-β #-}
 
-      ∧-fmap-smgluel-β' : ∀ x →
-        ap ∧-fmap (smgluel x)
-        ==
-        ap (λ y' → smin (fst f x) y') (snd g) ∙
-        ∧-norm-l (fst f x)
-      ∧-fmap-smgluel-β' x = M.smgluel-β x
+    ∧-fmap-smgluel-β' : ∀ x →
+      ap ∧-fmap (smgluel x)
+      ==
+      ap (λ y' → smin (fst f x) y') (snd g) ∙
+      ∧-norm-l (fst f x)
+    ∧-fmap-smgluel-β' x = M.smgluel-β x
 
-      ∧-fmap-smgluer-β' : ∀ y →
-        ap ∧-fmap (smgluer y)
-        ==
-        ap (λ x' → smin x' (fst g y)) (snd f) ∙
-        ∧-norm-r (fst g y)
-      ∧-fmap-smgluer-β' = M.smgluer-β
+    ∧-fmap-smgluer-β' : ∀ y →
+      ap ∧-fmap (smgluer y)
+      ==
+      ap (λ x' → smin x' (fst g y)) (snd f) ∙
+      ∧-norm-r (fst g y)
+    ∧-fmap-smgluer-β' = M.smgluer-β
 
-    ∧-fmap-smgluel-β : ∀ x →
-      ap ∧-fmap (smgluel x) ◃∎
-      =ₛ
-      ap (λ y' → smin (fst f x) y') (snd g) ◃∙
-      ∧-norm-l (fst f x) ◃∎
-    ∧-fmap-smgluel-β x = =ₛ-in (∧-fmap-smgluel-β' x)
+  ∧-fmap-smgluel-β : ∀ x →
+    ap ∧-fmap (smgluel x) ◃∎
+    =ₛ
+    ap (λ y' → smin (fst f x) y') (snd g) ◃∙
+    ∧-norm-l (fst f x) ◃∎
+  ∧-fmap-smgluel-β x = =ₛ-in (∧-fmap-smgluel-β' x)
 
-    ∧-fmap-smgluer-β : ∀ y →
-      ap ∧-fmap (smgluer y) ◃∎
-      =ₛ
-      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
-      ∧-norm-r (fst g y) ◃∎
-    ∧-fmap-smgluer-β y = =ₛ-in (∧-fmap-smgluer-β' y)
+  ∧-fmap-smgluer-β : ∀ y →
+    ap ∧-fmap (smgluer y) ◃∎
+    =ₛ
+    ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+    ∧-norm-r (fst g y) ◃∎
+  ∧-fmap-smgluer-β y = =ₛ-in (∧-fmap-smgluer-β' y)
 
-    ⊙∧-fmap : X ⊙∧ Y ⊙→ X' ⊙∧ Y'
-    ⊙∧-fmap = ∧-fmap , ap2 smin (snd f) (snd g)
+  ⊙∧-fmap : X ⊙∧ Y ⊙→ X' ⊙∧ Y'
+  ⊙∧-fmap = ∧-fmap , ap2 smin (snd f) (snd g)
 
-    ∧-fmap-norm-l : ∀ x →
-      ap ∧-fmap (∧-norm-l x) ◃∎
-      =ₛ
-      ap (λ y' → smin (fst f x) y') (snd g) ◃∙
-      smgluel (fst f x) ◃∙
-      ! (smgluel (fst f (pt X))) ◃∙
-      ! (ap (smin (fst f (pt X))) (snd g)) ◃∎
-    ∧-fmap-norm-l x =
-      ap ∧-fmap (∧-norm-l x) ◃∎
-        =ₛ⟨ ap-seq-∙ ∧-fmap (∧-norm-l-seq x) ⟩
-      ap ∧-fmap (smgluel x) ◃∙
-      ap ∧-fmap (! (smgluel (pt X))) ◃∎
-        =ₛ₁⟨ 1 & 1 & ap-! ∧-fmap (smgluel (pt X)) ⟩
-      ap ∧-fmap (smgluel x) ◃∙
-      ! (ap ∧-fmap (smgluel (pt X))) ◃∎
-        =ₛ⟨ 0 & 1 & ∧-fmap-smgluel-β x ⟩
-      ap (smin (fst f x)) (snd g) ◃∙
-      ∧-norm-l (fst f x) ◃∙
-      ! (ap ∧-fmap (smgluel (pt X))) ◃∎
-        =ₛ⟨ 2 & 1 & !-=ₛ (∧-fmap-smgluel-β (pt X)) ⟩
-      ap (smin (fst f x)) (snd g) ◃∙
-      ∧-norm-l (fst f x) ◃∙
-      ! (∧-norm-l (fst f (pt X))) ◃∙
-      ! (ap (smin (fst f (pt X))) (snd g)) ◃∎
-        =ₛ⟨ 2 & 1 & !-=ₛ (expand (∧-norm-l-seq (fst f (pt X)))) ⟩
-      ap (smin (fst f x)) (snd g) ◃∙
-      ∧-norm-l (fst f x) ◃∙
-      ! (! (smgluel (pt X'))) ◃∙
-      ! (smgluel (fst f (pt X))) ◃∙
-      ! (ap (smin (fst f (pt X))) (snd g)) ◃∎
-        =ₛ⟨ 1 & 1 & expand (∧-norm-l-seq (fst f x)) ⟩
-      ap (smin (fst f x)) (snd g) ◃∙
-      smgluel (fst f x) ◃∙
-      ! (smgluel (pt X')) ◃∙
-      ! (! (smgluel (pt X'))) ◃∙
-      ! (smgluel (fst f (pt X))) ◃∙
-      ! (ap (smin (fst f (pt X))) (snd g)) ◃∎
-        =ₛ⟨ 2 & 2 & seq-!-inv-r (! (smgluel (pt X')) ◃∎) ⟩
-      ap (smin (fst f x)) (snd g) ◃∙
-      smgluel (fst f x) ◃∙
-      ! (smgluel (fst f (pt X))) ◃∙
-      ! (ap (smin (fst f (pt X))) (snd g)) ◃∎ ∎ₛ
+  ∧-fmap-norm-l : ∀ x →
+    ap ∧-fmap (∧-norm-l x) ◃∎
+    =ₛ
+    ap (λ y' → smin (fst f x) y') (snd g) ◃∙
+    smgluel (fst f x) ◃∙
+    ! (smgluel (fst f (pt X))) ◃∙
+    ! (ap (smin (fst f (pt X))) (snd g)) ◃∎
+  ∧-fmap-norm-l x =
+    ap ∧-fmap (∧-norm-l x) ◃∎
+      =ₛ⟨ ap-seq-∙ ∧-fmap (∧-norm-l-seq x) ⟩
+    ap ∧-fmap (smgluel x) ◃∙
+    ap ∧-fmap (! (smgluel (pt X))) ◃∎
+      =ₛ₁⟨ 1 & 1 & ap-! ∧-fmap (smgluel (pt X)) ⟩
+    ap ∧-fmap (smgluel x) ◃∙
+    ! (ap ∧-fmap (smgluel (pt X))) ◃∎
+      =ₛ⟨ 0 & 1 & ∧-fmap-smgluel-β x ⟩
+    ap (smin (fst f x)) (snd g) ◃∙
+    ∧-norm-l (fst f x) ◃∙
+    ! (ap ∧-fmap (smgluel (pt X))) ◃∎
+      =ₛ⟨ 2 & 1 & !-=ₛ (∧-fmap-smgluel-β (pt X)) ⟩
+    ap (smin (fst f x)) (snd g) ◃∙
+    ∧-norm-l (fst f x) ◃∙
+    ! (∧-norm-l (fst f (pt X))) ◃∙
+    ! (ap (smin (fst f (pt X))) (snd g)) ◃∎
+      =ₛ⟨ 2 & 1 & !-=ₛ (expand (∧-norm-l-seq (fst f (pt X)))) ⟩
+    ap (smin (fst f x)) (snd g) ◃∙
+    ∧-norm-l (fst f x) ◃∙
+    ! (! (smgluel (pt X'))) ◃∙
+    ! (smgluel (fst f (pt X))) ◃∙
+    ! (ap (smin (fst f (pt X))) (snd g)) ◃∎
+      =ₛ⟨ 1 & 1 & expand (∧-norm-l-seq (fst f x)) ⟩
+    ap (smin (fst f x)) (snd g) ◃∙
+    smgluel (fst f x) ◃∙
+    ! (smgluel (pt X')) ◃∙
+    ! (! (smgluel (pt X'))) ◃∙
+    ! (smgluel (fst f (pt X))) ◃∙
+    ! (ap (smin (fst f (pt X))) (snd g)) ◃∎
+      =ₛ⟨ 2 & 2 & seq-!-inv-r (! (smgluel (pt X')) ◃∎) ⟩
+    ap (smin (fst f x)) (snd g) ◃∙
+    smgluel (fst f x) ◃∙
+    ! (smgluel (fst f (pt X))) ◃∙
+    ! (ap (smin (fst f (pt X))) (snd g)) ◃∎ ∎ₛ
 
-    ∧-fmap-norm-r : ∀ y →
-      ap ∧-fmap (∧-norm-r y) ◃∎
-      =ₛ
-      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
-      smgluer (fst g y) ◃∙
-      ! (smgluer (fst g (pt Y))) ◃∙
-      ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎
-    ∧-fmap-norm-r y =
-      ap ∧-fmap (∧-norm-r y) ◃∎
-        =ₛ⟨ ap-seq-∙ ∧-fmap (∧-norm-r-seq y) ⟩
-      ap ∧-fmap (smgluer y) ◃∙
-      ap ∧-fmap (! (smgluer (pt Y))) ◃∎
-        =ₛ₁⟨ 1 & 1 & ap-! ∧-fmap (smgluer (pt Y)) ⟩
-      ap ∧-fmap (smgluer y) ◃∙
-      ! (ap ∧-fmap (smgluer (pt Y))) ◃∎
-        =ₛ⟨ 0 & 1 & ∧-fmap-smgluer-β y ⟩
-      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
-      ∧-norm-r (fst g y) ◃∙
-      ! (ap ∧-fmap (smgluer (pt Y))) ◃∎
-        =ₛ⟨ 2 & 1 & !-=ₛ (∧-fmap-smgluer-β (pt Y)) ⟩
-      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
-      ∧-norm-r (fst g y) ◃∙
-      ! (∧-norm-r (fst g (pt Y))) ◃∙
-      ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎
-        =ₛ⟨ 2 & 1 & !-=ₛ (expand (∧-norm-r-seq (fst g (pt Y)))) ⟩
-      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
-      ∧-norm-r (fst g y) ◃∙
-      ! (! (smgluer (pt Y'))) ◃∙
-      ! (smgluer (fst g (pt Y))) ◃∙
-      ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎
-        =ₛ⟨ 1 & 1 & expand (∧-norm-r-seq (fst g y)) ⟩
-      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
-      smgluer (fst g y) ◃∙
-      ! (smgluer (pt Y')) ◃∙
-      ! (! (smgluer (pt Y'))) ◃∙
-      ! (smgluer (fst g (pt Y))) ◃∙
-      ! (ap (λ x → smin x (fst g (pt Y))) (snd f)) ◃∎
-        =ₛ⟨ 2 & 2 & seq-!-inv-r (! (smgluer (pt Y')) ◃∎) ⟩
-      ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
-      smgluer (fst g y) ◃∙
-      ! (smgluer (fst g (pt Y))) ◃∙
-      ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎ ∎ₛ
+  ∧-fmap-norm-r : ∀ y →
+    ap ∧-fmap (∧-norm-r y) ◃∎
+    =ₛ
+    ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+    smgluer (fst g y) ◃∙
+    ! (smgluer (fst g (pt Y))) ◃∙
+    ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎
+  ∧-fmap-norm-r y =
+    ap ∧-fmap (∧-norm-r y) ◃∎
+      =ₛ⟨ ap-seq-∙ ∧-fmap (∧-norm-r-seq y) ⟩
+    ap ∧-fmap (smgluer y) ◃∙
+    ap ∧-fmap (! (smgluer (pt Y))) ◃∎
+      =ₛ₁⟨ 1 & 1 & ap-! ∧-fmap (smgluer (pt Y)) ⟩
+    ap ∧-fmap (smgluer y) ◃∙
+    ! (ap ∧-fmap (smgluer (pt Y))) ◃∎
+      =ₛ⟨ 0 & 1 & ∧-fmap-smgluer-β y ⟩
+    ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+    ∧-norm-r (fst g y) ◃∙
+    ! (ap ∧-fmap (smgluer (pt Y))) ◃∎
+      =ₛ⟨ 2 & 1 & !-=ₛ (∧-fmap-smgluer-β (pt Y)) ⟩
+    ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+    ∧-norm-r (fst g y) ◃∙
+    ! (∧-norm-r (fst g (pt Y))) ◃∙
+    ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎
+      =ₛ⟨ 2 & 1 & !-=ₛ (expand (∧-norm-r-seq (fst g (pt Y)))) ⟩
+    ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+    ∧-norm-r (fst g y) ◃∙
+    ! (! (smgluer (pt Y'))) ◃∙
+    ! (smgluer (fst g (pt Y))) ◃∙
+    ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎
+      =ₛ⟨ 1 & 1 & expand (∧-norm-r-seq (fst g y)) ⟩
+    ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+    smgluer (fst g y) ◃∙
+    ! (smgluer (pt Y')) ◃∙
+    ! (! (smgluer (pt Y'))) ◃∙
+    ! (smgluer (fst g (pt Y))) ◃∙
+    ! (ap (λ x → smin x (fst g (pt Y))) (snd f)) ◃∎
+      =ₛ⟨ 2 & 2 & seq-!-inv-r (! (smgluer (pt Y')) ◃∎) ⟩
+    ap (λ x' → smin x' (fst g y)) (snd f) ◃∙
+    smgluer (fst g y) ◃∙
+    ! (smgluer (fst g (pt Y))) ◃∙
+    ! (ap (λ x' → smin x' (fst g (pt Y))) (snd f)) ◃∎ ∎ₛ
 
 module _ {i i' i'' j j' j''}
          {X : Ptd i} {X' : Ptd i'} {X'' : Ptd i''} (f : X ⊙→ X') (f' : X' ⊙→ X'')
@@ -520,6 +520,14 @@ module _ {i i' i'' j j' j''}
         ap (∧-fmap (f' ⊙∘ f) (g' ⊙∘ g)) (smgluer y) ◃∙
         ! (ap2 smin (snd f') (snd g')) ◃∎ ∎ₛ)
 
+module _ {i j} {X : Ptd i} {Y : Ptd j} where
+
+  ×-to-∧ : de⊙ X × de⊙ Y → X ∧ Y
+  ×-to-∧ (x , y) = smin x y
+
+  ×-⊙to-∧ : X ⊙× Y ⊙→ X ⊙∧ Y
+  ×-⊙to-∧ = ×-to-∧ , idp
+
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   module SmashSwap =
@@ -558,6 +566,16 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
     ∧-norm-l y ∙ idp
       =⟨ ∙-unit-r (∧-norm-l y) ⟩
     ∧-norm-l y =∎
+
+  ×-to-∧-swap : ∧-swap ∘ ×-to-∧ ∼ ×-to-∧ ∘ ×-swap
+  ×-to-∧-swap (x , y) = idp
+
+  ×-⊙to-∧-swap :
+    ⊙∧-swap ◃⊙∘ ×-⊙to-∧ ◃⊙idf
+    =⊙∘
+    ×-⊙to-∧ ◃⊙∘ ⊙×-swap ◃⊙idf
+  ×-⊙to-∧-swap = =⊙∘-in $
+    ⊙λ=' ×-to-∧-swap idp
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 

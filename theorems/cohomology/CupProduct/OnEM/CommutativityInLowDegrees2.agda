@@ -173,13 +173,14 @@ private
 private
   ∧-cp₁₁-comm' : GH.∧-cp₁₁ ∼ GHc.− ∘ HG.∧-cp₁₁ ∘ ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp)
   ∧-cp₁₁-comm' =
-    Smash-elim
-      {P = λ s → GH.∧-cp₁₁ s == GHc.− (HG.∧-cp₁₁ (∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp) s))}
+    Smash-Path-elim
+      GH.∧-cp₁₁
+      (GHc.− ∘ HG.∧-cp₁₁ ∘ ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp))
       GHc.CP₁₁Comm.f
       idp
       idp
-      (λ x → ↓-='-from-square (∧-cp₁₁-comm-smgluel x))
-      (λ y → ↓-='-from-square (∧-cp₁₁-comm-smgluer y))
+      ∧-cp₁₁-comm-smgluel
+      ∧-cp₁₁-comm-smgluer
 
   ⊙∧-cp₁₁-comm' : GH.⊙∧-cp₁₁ ◃⊙idf
                   =⊙∘

@@ -19,58 +19,30 @@ module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
   import cohomology.CupProduct.OnEM.InLowDegrees H G as HG
   open EMExplicit
 
-  ∧-cp₀₀'-comm : GroupHom.f G⊗H.swap ∘ GH.∧-cp₀₀'
-               ∼ HG.∧-cp₀₀' ∘ ∧-swap G.⊙El H.⊙El
-  ∧-cp₀₀'-comm =
-    Smash-elim
-      G⊗H.swap-β
-      p
-      p
-      (λ g → contr-center (↓-level (has-level-apply H⊗G.El-level _ _)))
-      (λ h → contr-center (↓-level (has-level-apply H⊗G.El-level _ _)))
-    where
-    p : GroupHom.f G⊗H.swap G⊗H.ident == H.ident H⊗G.⊗ G.ident
-    p =
-      GroupHom.f G⊗H.swap G⊗H.ident
-        =⟨ GroupHom.pres-ident G⊗H.swap ⟩
-      H⊗G.ident
-        =⟨ ! (H⊗G.⊗-ident-l G.ident) ⟩
-      H.ident H⊗G.⊗ G.ident =∎
-
-  ∧-cp₀₀-comm : EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 ∘ GH.∧-cp₀₀
-              ∼ HG.∧-cp₀₀ ∘ ∧-swap (⊙EM G 0) (⊙EM H 0)
-  ∧-cp₀₀-comm s =
+  ×-cp₀₀-comm : EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 ∘ GH.×-cp₀₀
+              ∼ HG.×-cp₀₀ ∘ ×-swap
+  ×-cp₀₀-comm (g' , h') =
     (EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 $
-     GH.∧-cp₀₀ s)
+     emloop $
+     (<– (emloop-equiv G.grp) g') G⊗H.⊗ (<– (emloop-equiv H.grp) h'))
       =⟨ EM₁-fmap-emloop-β G⊗H.swap $
-         GH.∧-cp₀₀' $
-         ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s ⟩
-    (–> (emloop-equiv H⊗G.grp) $
+         (<– (emloop-equiv G.grp) g') G⊗H.⊗ (<– (emloop-equiv H.grp) h') ⟩
+    (emloop $
      GroupHom.f G⊗H.swap $
-     GH.∧-cp₀₀' $
-     ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s)
-      =⟨ ap (–> (emloop-equiv H⊗G.grp)) $
-         ∧-cp₀₀'-comm $
-         ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s ⟩
-    (–> (emloop-equiv H⊗G.grp) $
-     HG.∧-cp₀₀' $
-     ∧-swap G.⊙El H.⊙El $
-     ∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s)
-      =⟨ ap (–> (emloop-equiv H⊗G.grp)) $
-         ap (HG.∧-cp₀₀') $
-         ! $ ∧-swap-naturality (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) s ⟩
-    (HG.∧-cp₀₀ $
-     ∧-swap (⊙EM G 0) (⊙EM H 0) s) =∎
+     (<– (emloop-equiv G.grp) g') G⊗H.⊗ (<– (emloop-equiv H.grp) h'))
+      =⟨ ap emloop $ G⊗H.swap-β (<– (emloop-equiv G.grp) g') (<– (emloop-equiv H.grp) h') ⟩
+    (emloop $
+     (<– (emloop-equiv H.grp) h') H⊗G.⊗ (<– (emloop-equiv G.grp) g')) =∎
 
-  ⊙∧-cp₀₀-comm :
+  ⊙×-cp₀₀-comm :
     ⊙EM-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap 0 ◃⊙∘
-    GH.⊙∧-cp₀₀ ◃⊙idf
+    GH.⊙×-cp₀₀ ◃⊙idf
     =⊙∘
-    HG.⊙∧-cp₀₀ ◃⊙∘
-    ⊙∧-swap (⊙EM G 0) (⊙EM H 0) ◃⊙idf
-  ⊙∧-cp₀₀-comm =
-    =⊙∘-in $ ⊙λ=' ∧-cp₀₀-comm $
-    prop-has-all-paths-↓ {{has-level-apply (has-level-apply (EM₁-level₁ H⊗G.grp) _ _) _ _}}
+    HG.⊙×-cp₀₀ ◃⊙∘
+    ⊙×-swap ◃⊙idf
+  ⊙×-cp₀₀-comm =
+    ⊙seq-λ= ×-cp₀₀-comm $
+    contr-center $ =ₛ-level {n = -2} $ EM-level H⊗G.abgroup 0
 
 module CP₀₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
 

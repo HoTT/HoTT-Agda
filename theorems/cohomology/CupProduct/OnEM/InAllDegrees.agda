@@ -140,6 +140,14 @@ module _ {i} (A : AbGroup i) where
     → ⊙Susp^ (m + n) (⊙EM A 2) ⊙→ ⊙EM A (S m + S n)
   ⊙cpₕₕ'' m n = ⊙compose (⊙cpₕₕ''-seq m n)
 
+module _ {i j} {X : Ptd i} {Y : Ptd j} where
+
+  →-⊙→-uncurry : ∀ {k} {Z : Ptd k}
+    → (de⊙ X → Y ⊙→ Z)
+    → X ⊙× Y ⊙→ Z
+  →-⊙→-uncurry f =
+    uncurry (λ x y → fst (f x) y) , snd (f (pt X))
+
 module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
   private
@@ -236,65 +244,78 @@ module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     → EM G⊗H.abgroup (S m + S n)
   ∧-cpₕₕ m n = fst (⊙∧-cpₕₕ m n)
 
-  ∧-cp₀ₕ' : ∀ (n : ℕ)
-    → G.⊙El ∧ ⊙EM H (S n) → EM G⊗H.abgroup (S n)
-  ∧-cp₀ₕ' n =
-    Smash-rec
-      (λ g → Trunc-fmap (Susp^-fmap n (cp₀₁ G H g)))
-      (pt (⊙EM G⊗H.abgroup (S n)))
-      (pt (⊙EM G⊗H.abgroup (S n)))
-      (λ g → snd (⊙EM-fmap H G⊗H.abgroup (G⊗H.ins-r-hom g) (S n)))
-      (λ y →
-        EM-fmap H G⊗H.abgroup (G⊗H.ins-r-hom G.ident) (S n) y
-          =⟨ ap (λ φ → EM-fmap H G⊗H.abgroup φ (S n) y) $
-             group-hom= {φ = G⊗H.ins-r-hom G.ident} {ψ = cst-hom} $
-             λ= G⊗H.⊗-ident-l ⟩
-        EM-fmap H G⊗H.abgroup cst-hom (S n) y
-          =⟨ app= (EM-fmap-cst-hom H G⊗H.abgroup (S n)) y ⟩
-        pt (⊙EM G⊗H.abgroup (S n)) =∎)
+  ⊙×-cpₕₕ-seq : ∀ (m n : ℕ)
+    → ⊙EM G (S m) ⊙× ⊙EM H (S n) ⊙–→ ⊙EM G⊗H.abgroup (S m + S n)
+  ⊙×-cpₕₕ-seq m n = ⊙∧-cpₕₕ m n ◃⊙∘ ×-⊙to-∧ ◃⊙idf
 
-  ⊙∧-cp₀ₕ' : ∀ (n : ℕ)
-    → G.⊙El ⊙∧ ⊙EM H (S n) ⊙→ ⊙EM G⊗H.abgroup (S n)
-  ⊙∧-cp₀ₕ' n = ∧-cp₀ₕ' n , snd (⊙Trunc-fmap (⊙Susp^-fmap n (cp₀₁ G H G.ident , idp)))
+  ⊙×-cpₕₕ : ∀ (m n : ℕ)
+    → ⊙EM G (S m) ⊙× ⊙EM H (S n) ⊙→ ⊙EM G⊗H.abgroup (S m + S n)
+  ⊙×-cpₕₕ m n = ⊙compose (⊙×-cpₕₕ-seq m n)
 
-  ⊙∧-cp₀ₕ : ∀ (n : ℕ)
-    → ⊙EM G 0 ⊙∧ ⊙EM H (S n) ⊙→ ⊙EM G⊗H.abgroup (S n)
-  ⊙∧-cp₀ₕ n =
-    ⊙∧-cp₀ₕ' n ⊙∘
-    ⊙∧-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙idf (⊙EM H (S n)))
+  {-
+  cp₀ₕ' : ∀ (n : ℕ) → G.El → EM H (S n) → EM G⊗H.abgroup (S n)
+  cp₀ₕ' n g y = EM-fmap H G⊗H.abgroup (G⊗H.ins-r-hom g) (S n) y
 
-  ∧-cp₀ₕ : ∀ (n : ℕ)
-    → ⊙EM G 0 ∧ ⊙EM H (S n) → EM G⊗H.abgroup (S n)
-  ∧-cp₀ₕ n = fst (⊙∧-cp₀ₕ n)
+  ×-cp₀ₕ' : ∀ (n : ℕ)
+    → G.El × EM H (S n) → EM G⊗H.abgroup (S n)
+  ×-cp₀ₕ' n = uncurry (cp₀ₕ' n)
+  -}
 
-module _ {i} {j} (G : AbGroup i) (H : AbGroup j) where
+  ⊙×-cp₀ₕ' : ∀ (n : ℕ)
+    → G.⊙El ⊙× ⊙EM H (S n) ⊙→ ⊙EM G⊗H.abgroup (S n)
+  ⊙×-cp₀ₕ' n =
+    →-⊙→-uncurry (λ g → ⊙EM-fmap H G⊗H.abgroup (G⊗H.ins-r-hom g) (S n))
+    -- ×-cp₀ₕ' n , snd (⊙EM-fmap H G⊗H.abgroup (G⊗H.ins-r-hom G.ident) (S n))
 
-  private
-    module G⊗H = TensorProduct G H
-    module H⊗G = TensorProduct H G
-  open EMExplicit
+  ⊙×-cp₀ₕ-seq : ∀ (n : ℕ)
+    → ⊙EM G 0 ⊙× ⊙EM H (S n) ⊙–→ ⊙EM G⊗H.abgroup (S n)
+  ⊙×-cp₀ₕ-seq n =
+    ⊙×-cp₀ₕ' n ◃⊙∘
+    ⊙×-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙idf (⊙EM H (S n))) ◃⊙idf
 
-  ⊙∧-cpₕ₀-seq : ∀ (m : ℕ)
-    → (⊙EM G (S m) ⊙∧ ⊙EM H 0) ⊙–→ ⊙EM G⊗H.abgroup (S m + 0)
-  ⊙∧-cpₕ₀-seq m =
-    ⊙transport (⊙EM G⊗H.abgroup) (+-comm 0 (S m)) ◃⊙∘
-    ⊙EM-fmap H⊗G.abgroup G⊗H.abgroup H⊗G.swap (S m) ◃⊙∘
-    ⊙∧-cp₀ₕ H G m ◃⊙∘
-    ⊙∧-swap (⊙EM G (S m)) (⊙EM H 0) ◃⊙idf
+  ⊙×-cp₀ₕ : ∀ (n : ℕ)
+    → ⊙EM G 0 ⊙× ⊙EM H (S n) ⊙→ ⊙EM G⊗H.abgroup (S n)
+  ⊙×-cp₀ₕ n = ⊙compose (⊙×-cp₀ₕ-seq n)
 
-  ⊙∧-cpₕ₀ : ∀ (m : ℕ)
-    → ⊙EM G (S m) ⊙∧ ⊙EM H 0 ⊙→ ⊙EM G⊗H.abgroup (S m + 0)
-  ⊙∧-cpₕ₀ m = ⊙compose (⊙∧-cpₕ₀-seq m)
+  ×-cp₀ₕ : ∀ (n : ℕ)
+    → EM G 0 × EM H (S n) → EM G⊗H.abgroup (S n)
+  ×-cp₀ₕ n = fst (⊙×-cp₀ₕ n)
 
-  ⊙∧-cp : ∀ (m n : ℕ)
-    → ⊙EM G m ⊙∧ ⊙EM H n
+  {-
+  cpₕ₀' : ∀ (m : ℕ) → EM G (S m) → H.El → EM G⊗H.abgroup (S m)
+  cpₕ₀' m x h = EM-fmap G G⊗H.abgroup (G⊗H.ins-l-hom h) (S m) x
+
+  ×-cpₕ₀' : ∀ (m : ℕ)
+    → EM G (S m) × H.El → EM G⊗H.abgroup (S m)
+  ×-cpₕ₀' m = uncurry (cpₕ₀' m)
+  -}
+
+  ⊙×-cpₕ₀' : ∀ (m : ℕ)
+    → ⊙EM G (S m) ⊙× H.⊙El ⊙→ ⊙EM G⊗H.abgroup (S m)
+  ⊙×-cpₕ₀' m =
+    →-⊙→-uncurry (λ h → ⊙EM-fmap G G⊗H.abgroup (G⊗H.ins-l-hom h) (S m)) ⊙∘
+    ⊙×-swap
+    -- ×-cpₕ₀' m , snd (⊙EM-fmap G G⊗H.abgroup (G⊗H.ins-l-hom H.ident) (S m))
+
+  ⊙×-cpₕ₀-seq : ∀ (m : ℕ)
+    → ⊙EM G (S m) ⊙× ⊙EM H 0 ⊙–→ ⊙EM G⊗H.abgroup (S m + 0)
+  ⊙×-cpₕ₀-seq m =
+    ⊙transport (⊙EM G⊗H.abgroup) (! (+-unit-r (S m))) ◃⊙∘
+    ⊙×-cpₕ₀' m ◃⊙∘
+    ⊙×-fmap (⊙idf (⊙EM G (S m))) (⊙<– (⊙emloop-equiv H.grp)) ◃⊙idf
+
+  ⊙×-cpₕ₀ : ∀ (m : ℕ)
+    → ⊙EM G (S m) ⊙× ⊙EM H 0 ⊙→ ⊙EM G⊗H.abgroup (S m + 0)
+  ⊙×-cpₕ₀ m = ⊙compose (⊙×-cpₕ₀-seq m)
+
+  ×-cpₕ₀ : ∀ (m : ℕ)
+    → EM G (S m) × EM H 0 → EM G⊗H.abgroup (S m + 0)
+  ×-cpₕ₀ m = fst (⊙×-cpₕ₀ m)
+
+  ⊙×-cp : ∀ (m n : ℕ)
+    → ⊙EM G m ⊙× ⊙EM H n
     ⊙→ ⊙EM G⊗H.abgroup (m + n)
-  ⊙∧-cp O O = ⊙∧-cp₀₀ G H
-  ⊙∧-cp O (S n) = ⊙∧-cp₀ₕ G H n
-  ⊙∧-cp (S m) O = ⊙∧-cpₕ₀ m
-  ⊙∧-cp (S m) (S n) = ⊙∧-cpₕₕ G H m n
-
-  ∧-cp : ∀ (m n : ℕ)
-    → ⊙EM G m ∧ ⊙EM H n
-    → EM G⊗H.abgroup (m + n)
-  ∧-cp m n = fst (⊙∧-cp m n)
+  ⊙×-cp 0 0 = ⊙×-cp₀₀ G H
+  ⊙×-cp 0 (S n) = ⊙×-cp₀ₕ n
+  ⊙×-cp (S m) 0 = ⊙×-cpₕ₀ m
+  ⊙×-cp (S m) (S n) = ⊙×-cpₕₕ m n
