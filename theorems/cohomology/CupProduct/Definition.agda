@@ -136,7 +136,7 @@ module _ (G : AbGroup i) (H : AbGroup i) where
     → CEl G⊗H.abgroup (pos (m + n)) X → CEl H⊗G.abgroup (pos (n + m)) X
   ∪-swap m n =
     transport (λ k → CEl H⊗G.abgroup (pos k) X) (+-comm m n) ∘
-    EM-coeff-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap X (pos (m + n))
+    EM-CEl-coeff-fmap G⊗H.abgroup H⊗G.abgroup G⊗H.swap (pos (m + n)) X
 
   maybe-inv : ∀ (n : ℤ) → Bool → CEl H⊗G.abgroup n X → CEl H⊗G.abgroup n X
   maybe-inv n = Bool-rec (Group.inv (C H⊗G.abgroup n X)) (idf _)

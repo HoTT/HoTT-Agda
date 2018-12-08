@@ -48,7 +48,7 @@ module groups.ToOmega where
 Trunc-⊙→Ω-group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
 Trunc-⊙→Ω-group X Y = Trunc-group (⊙→Ω-group-structure X Y)
 
-{- [Trunc-→Ω-group] is functorial in the first argument -}
+{- [Trunc-→Ω-group] is contravariantly functorial in the first argument -}
 
 ⊙→Ω-group-structure-fmap-dom : ∀ {i j k} {X : Ptd i} {Y : Ptd j}
   (f : X ⊙→ Y) (Z : Ptd k)
@@ -86,6 +86,8 @@ Trunc-⊙→Ω-group-fmap-dom-∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : P
 Trunc-⊙→Ω-group-fmap-dom-∘ g f W = group-hom= $ λ= $
   Trunc-elim (λ h → ap [_] (! (⊙λ= $ ⊙∘-assoc h g f)))
 
+{- [Trunc-→Ω-group] is covariantly functorial in the second argument -}
+
 ⊙→Ω-group-structure-fmap-codom : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
   → Y ⊙→ Z → (⊙→Ω-group-structure X Y →ᴳˢ ⊙→Ω-group-structure X Z)
 ⊙→Ω-group-structure-fmap-codom X {Y} {Z} F = group-structure-hom
@@ -117,6 +119,20 @@ Trunc-⊙→Ω-group-fmap-codom X = Trunc-group-fmap ∘ ⊙→Ω-group-structur
 Trunc-⊙→Ω-group-emap-codom : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
   → Y ⊙≃ Z → Trunc-⊙→Ω-group X Y ≃ᴳ Trunc-⊙→Ω-group X Z
 Trunc-⊙→Ω-group-emap-codom X = Trunc-group-emap ∘ ⊙→Ω-group-structure-emap-codom X
+
+Trunc-⊙→Ω-group-fmap-codom-idf : ∀ {i j} (X : Ptd i) (Y : Ptd j)
+  → Trunc-⊙→Ω-group-fmap-codom X (⊙idf Y) == idhom (Trunc-⊙→Ω-group X Y)
+Trunc-⊙→Ω-group-fmap-codom-idf X Y = group-hom= $ λ= $
+  Trunc-elim (λ h → ap [_]₀ (ap (_⊙∘ h) ⊙Ω-fmap-idf ∙ ⊙λ= (⊙∘-unit-l h)))
+
+Trunc-⊙→Ω-group-fmap-codom-∘ : ∀ {i j k l} (W : Ptd i)
+  {X : Ptd j} {Y : Ptd k} {Z : Ptd l}
+  (g : Y ⊙→ Z) (f : X ⊙→ Y)
+  → Trunc-⊙→Ω-group-fmap-codom W (g ⊙∘ f) ==
+    Trunc-⊙→Ω-group-fmap-codom W g ∘ᴳ Trunc-⊙→Ω-group-fmap-codom W f
+Trunc-⊙→Ω-group-fmap-codom-∘ W g f = group-hom= $ λ= $
+  Trunc-elim $ λ h →
+  ap [_]₀ (ap (_⊙∘ h) (⊙Ω-fmap-∘ g f) ∙ ⊙λ= (⊙∘-assoc (⊙Ω-fmap g) (⊙Ω-fmap f) h))
 
 -- TODO Check naming convensions.
 -- TODO Use [CommSquareᴳ].

@@ -17,21 +17,19 @@ module _ {i} (G : AbGroup i) where
   EM-E (pos m) = ⊙EM m
   EM-E (negsucc m) = ⊙Lift ⊙Unit
 
-  private
-
-    E-spectrum : (n : ℤ) → ⊙Ω (EM-E (succ n)) ⊙≃ EM-E n
-    E-spectrum (pos n) = spectrum n
-    E-spectrum (negsucc O) = ≃-to-⊙≃ {X = ⊙Ω (EM-E 0)}
-      (equiv (λ _ → _) (λ _ → idp)
-             (λ _ → idp) (prop-has-all-paths {{has-level-apply (EM-level 0) _ _}} _))
-      idp
-    E-spectrum (negsucc (S n)) = ≃-to-⊙≃ {X = ⊙Ω (EM-E (negsucc n))}
-      (equiv (λ _ → _) (λ _ → idp)
-             (λ _ → idp) (prop-has-all-paths {{=-preserves-level ⟨⟩}} _))
-      idp
+  EM-spectrum : (n : ℤ) → ⊙Ω (EM-E (succ n)) ⊙≃ EM-E n
+  EM-spectrum (pos n) = spectrum n
+  EM-spectrum (negsucc O) = ≃-to-⊙≃ {X = ⊙Ω (EM-E 0)}
+    (equiv (λ _ → _) (λ _ → idp)
+           (λ _ → idp) (prop-has-all-paths {{has-level-apply (EM-level 0) _ _}} _))
+    idp
+  EM-spectrum (negsucc (S n)) = ≃-to-⊙≃ {X = ⊙Ω (EM-E (negsucc n))}
+    (equiv (λ _ → _) (λ _ → idp)
+           (λ _ → idp) (prop-has-all-paths {{=-preserves-level ⟨⟩}} _))
+    idp
 
   EM-Cohomology : CohomologyTheory i
-  EM-Cohomology = spectrum-cohomology EM-E E-spectrum
+  EM-Cohomology = spectrum-cohomology EM-E EM-spectrum
 
   open CohomologyTheory EM-Cohomology
 
@@ -62,14 +60,53 @@ module _ {i} (G : AbGroup i) where
 
 module _ {i} (G : AbGroup i) (H : AbGroup i) (φ : G →ᴬᴳ H) where
 
-  private
-    module M {k} (A : AbGroup k) = CohomologyTheory (EM-Cohomology A)
-    open M
+  EM-E-fmap : ∀ (n : ℤ) → EM-E G n ⊙→ EM-E H n
+  EM-E-fmap (pos m) = ⊙EM-fmap G H φ m
+  EM-E-fmap (negsucc m) = ⊙idf _
+
+  open SpectrumModelMap (EM-E G) (EM-spectrum G) (EM-E H) (EM-spectrum H) EM-E-fmap
+    public renaming (C-coeff-fmap to EM-C-coeff-fmap;
+                     CEl-coeff-fmap to EM-CEl-coeff-fmap;
+                     ⊙CEl-coeff-fmap to EM-⊙CEl-coeff-fmap)
+
+module _ {i} (G : AbGroup i) where
 
   private
-    EM-E-fmap : ∀ (n : ℤ) → EM-E G n ⊙→ EM-E H n
-    EM-E-fmap (pos m) = ⊙EM-fmap G H φ m
-    EM-E-fmap (negsucc m) = ⊙idf _
+    EM-E-fmap-idhom : ∀ (n : ℤ)
+      → EM-E-fmap G G (idhom (AbGroup.grp G)) n == ⊙idf _
+    EM-E-fmap-idhom (pos n) = ⊙EM-fmap-idhom G n
+    EM-E-fmap-idhom (negsucc n) = idp
 
-  EM-coeff-fmap : ∀ (X : Ptd i) (n : ℤ) → CEl G n X → CEl H n X
-  EM-coeff-fmap X n = Trunc-fmap (⊙Ω-fmap (EM-E-fmap (succ n)) ⊙∘_)
+  private
+    module M = SpectrumModelMap (EM-E G) (EM-spectrum G) (EM-E G) (EM-spectrum G)
+
+  EM-C-coeff-fmap-idhom : (n : ℤ) (X : Ptd i)
+    → EM-C-coeff-fmap G G (idhom (AbGroup.grp G)) n X == idhom _
+  EM-C-coeff-fmap-idhom n X =
+    ap (λ map → M.C-coeff-fmap map n X) (λ= EM-E-fmap-idhom) ∙
+    C-coeff-fmap-idf (EM-E G) (EM-spectrum G) n X
+
+module _ {i} (G : AbGroup i) (H : AbGroup i) (K : AbGroup i)
+             (ψ : H →ᴬᴳ K) (φ : G →ᴬᴳ H) where
+
+  private
+    EM-E-fmap-∘ : ∀ (n : ℤ)
+      → EM-E-fmap G K (ψ ∘ᴳ φ) n == EM-E-fmap H K ψ n ⊙∘ EM-E-fmap G H φ n
+    EM-E-fmap-∘ (pos n) = ⊙EM-fmap-∘ G H K ψ φ n
+    EM-E-fmap-∘ (negsucc n) = idp
+
+  private
+    module M = SpectrumModelMap (EM-E G) (EM-spectrum G) (EM-E K) (EM-spectrum K)
+
+  EM-C-coeff-fmap-∘ : (n : ℤ) (X : Ptd i)
+    → EM-C-coeff-fmap G K (ψ ∘ᴳ φ) n X ==
+      EM-C-coeff-fmap H K ψ n X ∘ᴳ
+      EM-C-coeff-fmap G H φ n X
+  EM-C-coeff-fmap-∘ n X =
+    ap (λ map → M.C-coeff-fmap map n X) (λ= EM-E-fmap-∘) ∙
+    C-coeff-fmap-∘ (EM-E G) (EM-spectrum G)
+                   (EM-E H) (EM-spectrum H)
+                   (EM-E K) (EM-spectrum K)
+                   (EM-E-fmap H K ψ)
+                   (EM-E-fmap G H φ)
+                   n X
