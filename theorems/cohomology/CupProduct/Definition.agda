@@ -224,70 +224,8 @@ module _ (G : AbGroup i) (H : AbGroup i) where
       idf (Trunc 0 (X ⊙→ ⊙Ω (⊙EM H⊗G.abgroup (S k)))) =∎
     step₃ k true =
       Trunc-fmap (⊙Ω-fmap (⊙transport (λ A → ⊙EM A (S k)) (inv-path H⊗G.abgroup)) ⊙∘_)
-        =⟨ ap (λ g → Trunc-fmap (g ⊙∘_)) (=⊙∘-out (step₃' k)) ⟩
-      Trunc-fmap (⊙Ω-! ⊙∘_)
-        =⟨ ap Trunc-fmap {x = ⊙Ω-! ⊙∘_} {y = GroupStructure.inv (⊙→Ω-group-structure X (⊙EM H⊗G.abgroup (S k)))} $
-           λ= (λ f → ⊙λ=' (λ x → idp) (∙-unit-r (ap ! (snd f)))) ⟩
+        =⟨ ap (λ f → Trunc-fmap (⊙Ω-fmap f ⊙∘_)) $
+           ⊙transport-⊙EM-uaᴬᴳ H⊗G.abgroup H⊗G.abgroup (inv-iso H⊗G.abgroup) (S k) ⟩
+      Trunc-fmap (⊙Ω-fmap (⊙EM-fmap H⊗G.abgroup H⊗G.abgroup (inv-hom H⊗G.abgroup) (S k)) ⊙∘_)
+        =⟨ ap GroupHom.f (EM-C-coeff-fmap-inv-hom H⊗G.abgroup (pos k) X) ⟩
       Group.inv (C H⊗G.abgroup (pos k) X) =∎
-      where
-      step₃' : ∀ (k : ℕ)
-        → ⊙Ω-fmap (⊙transport (λ A → ⊙EM A (S k)) (inv-path H⊗G.abgroup)) ◃⊙idf
-          =⊙∘
-          ⊙Ω-! ◃⊙idf
-      step₃' 0 =
-        ⊙Ω-fmap (⊙transport (λ A → ⊙EM A 1) (inv-path H⊗G.abgroup)) ◃⊙idf
-          =⊙∘₁⟨ ap ⊙Ω-fmap (⊙transport-⊙EM-uaᴬᴳ H⊗G.abgroup H⊗G.abgroup (inv-iso H⊗G.abgroup) 1) ⟩
-        ⊙Ω-fmap (⊙Trunc-fmap (⊙EM₁-fmap (inv-hom H⊗G.abgroup))) ◃⊙idf
-          =⊙∘⟨ 0 & 0 & !⊙∘ $ ⊙<–-inv-l-=⊙∘ (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ⟩
-        ⊙<– (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ◃⊙∘
-        ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ◃⊙∘
-        ⊙Ω-fmap (⊙Trunc-fmap (⊙EM₁-fmap (inv-hom H⊗G.abgroup))) ◃⊙idf
-          =⊙∘⟨ 1 & 2 & ⊙–>-⊙Ω-⊙Trunc-comm-natural-=⊙∘ 0 (⊙EM₁-fmap (inv-hom H⊗G.abgroup)) ⟩
-        ⊙<– (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ◃⊙∘
-        ⊙Trunc-fmap (⊙Ω-fmap (⊙EM₁-fmap (inv-hom H⊗G.abgroup))) ◃⊙∘
-        ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ◃⊙idf
-          =⊙∘₁⟨ 1 & 1 & ap ⊙Trunc-fmap $ ⊙Ω-fmap-⊙EM₁-neg H⊗G.abgroup ⟩
-        ⊙<– (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ◃⊙∘
-        ⊙Trunc-fmap ⊙Ω-! ◃⊙∘
-        ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ◃⊙idf
-          =⊙∘⟨ 1 & 2 & =⊙∘-in
-               {gs = ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ◃⊙∘
-                     ⊙Ω-! ◃⊙idf} $
-               ! $ ⊙λ=' –>-=ₜ-equiv-pres-! idp ⟩
-        ⊙<– (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ◃⊙∘
-        ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ◃⊙∘
-        ⊙Ω-! ◃⊙idf
-          =⊙∘⟨ 0 & 2 & ⊙<–-inv-l-=⊙∘ (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ (AbGroup.grp H⊗G.abgroup))) ⟩
-        ⊙Ω-! ◃⊙idf ∎⊙∘
-      step₃' (S k) =
-        ⊙Ω-fmap (⊙transport (λ A → ⊙EM A (S (S k))) (inv-path H⊗G.abgroup)) ◃⊙idf
-          =⊙∘₁⟨ ap ⊙Ω-fmap (⊙transport-⊙EM-uaᴬᴳ H⊗G.abgroup H⊗G.abgroup (inv-iso H⊗G.abgroup) (S (S k))) ⟩
-        ⊙Ω-fmap (⊙EM-fmap H⊗G.abgroup H⊗G.abgroup (inv-hom H⊗G.abgroup) (S (S k))) ◃⊙idf
-          =⊙∘₁⟨ ap ⊙Ω-fmap (⊙EM-neg=⊙Trunc-fmap-⊙Susp-flip H⊗G.abgroup k) ⟩
-        ⊙Ω-fmap (⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ k (⊙EM₁ (AbGroup.grp H⊗G.abgroup))))) ◃⊙idf
-          =⊙∘⟨ 0 & 0 & !⊙∘ $
-               ⊙<–-inv-l-=⊙∘ (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ⟩
-        ⊙<– (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ◃⊙∘
-        ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ◃⊙∘
-        ⊙Ω-fmap (⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ k (⊙EM₁ (AbGroup.grp H⊗G.abgroup))))) ◃⊙idf
-          =⊙∘⟨ 1 & 2 & ⊙–>-⊙Ω-⊙Trunc-comm-natural-=⊙∘ ⟨ S k ⟩
-                 (⊙Susp-flip (⊙Susp^ k (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ⟩
-        ⊙<– (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ◃⊙∘
-        ⊙Trunc-fmap (⊙Ω-fmap (⊙Susp-flip (⊙Susp^ k (⊙EM₁ (AbGroup.grp H⊗G.abgroup))))) ◃⊙∘
-        ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ◃⊙idf
-          =⊙∘₁⟨ 1 & 1 & ! $ ⊙Ω-!-⊙Susp-flip
-                  (⊙Susp^ k (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))
-                  ⟨ S k ⟩
-                  (Spectrum.Trunc-fmap-σloop-is-equiv H⊗G.abgroup k) ⟩
-        ⊙<– (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ◃⊙∘
-        ⊙Trunc-fmap ⊙Ω-! ◃⊙∘
-        ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ◃⊙idf
-          =⊙∘⟨ 1 & 2 & =⊙∘-in
-               {gs = ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ◃⊙∘
-                     ⊙Ω-! ◃⊙idf} $
-               ! $ ⊙λ=' –>-=ₜ-equiv-pres-! idp ⟩
-        ⊙<– (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ◃⊙∘
-        ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ◃⊙∘
-        ⊙Ω-! ◃⊙idf
-          =⊙∘⟨ 0 & 2 & ⊙<–-inv-l-=⊙∘ (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ (AbGroup.grp H⊗G.abgroup)))) ⟩
-        ⊙Ω-! ◃⊙idf ∎⊙∘

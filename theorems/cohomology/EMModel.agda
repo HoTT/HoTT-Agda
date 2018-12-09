@@ -110,3 +110,82 @@ module _ {i} (G : AbGroup i) (H : AbGroup i) (K : AbGroup i)
                    (EM-E-fmap H K ψ)
                    (EM-E-fmap G H φ)
                    n X
+
+module _ {i} (G : AbGroup i) where
+
+  open CohomologyTheory (spectrum-cohomology (EM-E G) (EM-spectrum G))
+  open EMExplicit
+  open import homotopy.SuspensionLoopSpaceInverse
+  private
+    module G = AbGroup G
+
+  ⊙Ω-fmap-EM-E-fmap-inv-hom : ∀ (n : ℤ) → ⊙Ω-fmap (EM-E-fmap G G (inv-hom G) n) == ⊙Ω-!
+  ⊙Ω-fmap-EM-E-fmap-inv-hom (negsucc n) =
+    contr-center $ =-preserves-level $
+    ⊙→-level (⊙Ω (⊙Lift ⊙Unit)) (⊙Ω (⊙Lift ⊙Unit)) $
+    =-preserves-level $ Lift-level $ Unit-level
+  ⊙Ω-fmap-EM-E-fmap-inv-hom (pos O) =
+    prop-path
+      (⊙→-level (⊙Ω (⊙EM G 0)) (⊙Ω (⊙EM G 0)) $
+       has-level-apply (EM-level G 0) (pt (⊙EM G 0)) (pt (⊙EM G 0)))
+      _ _
+  ⊙Ω-fmap-EM-E-fmap-inv-hom (pos 1) = =⊙∘-out $
+    ⊙Ω-fmap (⊙Trunc-fmap (⊙EM₁-fmap (inv-hom G))) ◃⊙idf
+      =⊙∘⟨ 0 & 0 & !⊙∘ $ ⊙<–-inv-l-=⊙∘ (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ⟩
+    ⊙<– (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ◃⊙∘
+    ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ◃⊙∘
+    ⊙Ω-fmap (⊙Trunc-fmap (⊙EM₁-fmap (inv-hom G))) ◃⊙idf
+      =⊙∘⟨ 1 & 2 & ⊙–>-⊙Ω-⊙Trunc-comm-natural-=⊙∘ 0 (⊙EM₁-fmap (inv-hom G)) ⟩
+    ⊙<– (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ◃⊙∘
+    ⊙Trunc-fmap (⊙Ω-fmap (⊙EM₁-fmap (inv-hom G))) ◃⊙∘
+    ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ◃⊙idf
+      =⊙∘₁⟨ 1 & 1 & ap ⊙Trunc-fmap $ ⊙Ω-fmap-⊙EM₁-neg G ⟩
+    ⊙<– (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ◃⊙∘
+    ⊙Trunc-fmap ⊙Ω-! ◃⊙∘
+    ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ◃⊙idf
+      =⊙∘⟨ 1 & 2 & =⊙∘-in
+           {gs = ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ◃⊙∘ ⊙Ω-! ◃⊙idf} $
+           ! $ ⊙λ=' –>-=ₜ-equiv-pres-! idp ⟩
+    ⊙<– (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ◃⊙∘
+    ⊙–> (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ◃⊙∘
+    ⊙Ω-! ◃⊙idf
+      =⊙∘⟨ 0 & 2 & ⊙<–-inv-l-=⊙∘ (⊙Ω-⊙Trunc-comm 0 (⊙EM₁ G.grp)) ⟩
+    ⊙Ω-! ◃⊙idf ∎⊙∘
+  ⊙Ω-fmap-EM-E-fmap-inv-hom (pos (S (S k))) = =⊙∘-out $
+    ⊙Ω-fmap (⊙EM-fmap G G (inv-hom G) (S (S k))) ◃⊙idf
+      =⊙∘₁⟨ ap ⊙Ω-fmap (⊙EM-neg=⊙Trunc-fmap-⊙Susp-flip G k) ⟩
+    ⊙Ω-fmap (⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ k (⊙EM₁ G.grp)))) ◃⊙idf
+      =⊙∘⟨ 0 & 0 & !⊙∘ $
+           ⊙<–-inv-l-=⊙∘ (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ⟩
+    ⊙<– (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ◃⊙∘
+    ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ◃⊙∘
+    ⊙Ω-fmap (⊙Trunc-fmap (⊙Susp-flip (⊙Susp^ k (⊙EM₁ G.grp)))) ◃⊙idf
+      =⊙∘⟨ 1 & 2 & ⊙–>-⊙Ω-⊙Trunc-comm-natural-=⊙∘ ⟨ S k ⟩
+             (⊙Susp-flip (⊙Susp^ k (⊙EM₁ G.grp))) ⟩
+    ⊙<– (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ◃⊙∘
+    ⊙Trunc-fmap (⊙Ω-fmap (⊙Susp-flip (⊙Susp^ k (⊙EM₁ G.grp)))) ◃⊙∘
+    ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ◃⊙idf
+      =⊙∘₁⟨ 1 & 1 & ! $ ⊙Ω-!-⊙Susp-flip
+              (⊙Susp^ k (⊙EM₁ G.grp))
+              ⟨ S k ⟩
+              (Spectrum.Trunc-fmap-σloop-is-equiv G k) ⟩
+    ⊙<– (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ◃⊙∘
+    ⊙Trunc-fmap ⊙Ω-! ◃⊙∘
+    ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ◃⊙idf
+      =⊙∘⟨ 1 & 2 & =⊙∘-in
+           {gs = ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ◃⊙∘
+                 ⊙Ω-! ◃⊙idf} $
+           ! $ ⊙λ=' –>-=ₜ-equiv-pres-! idp ⟩
+    ⊙<– (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ◃⊙∘
+    ⊙–> (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ◃⊙∘
+    ⊙Ω-! ◃⊙idf
+      =⊙∘⟨ 0 & 2 & ⊙<–-inv-l-=⊙∘ (⊙Ω-⊙Trunc-comm ⟨ S k ⟩ (⊙Susp^ (S k) (⊙EM₁ G.grp))) ⟩
+    ⊙Ω-! ◃⊙idf ∎⊙∘
+
+  EM-C-coeff-fmap-inv-hom : ∀ (n : ℤ) (X : Ptd i)
+    → EM-C-coeff-fmap G G (inv-hom G) n X ==
+      inv-hom (C-abgroup n X)
+  EM-C-coeff-fmap-inv-hom n X =
+    group-hom= $ λ= $ Trunc-elim $ λ h → ap [_]₀ $
+    ap (_⊙∘ h) (⊙Ω-fmap-EM-E-fmap-inv-hom (succ n)) ∙
+    ⊙λ=' (λ _ → idp) (∙-unit-r (ap ! (snd h)))

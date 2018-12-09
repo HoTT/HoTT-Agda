@@ -41,6 +41,15 @@ open _=⊙∘_ public
 
 {- Pointed maps -}
 
+⊙→-level : ∀ {i j} (X : Ptd i) (Y : Ptd j)
+  {n : ℕ₋₂}
+  → has-level n (de⊙ Y)
+  → has-level n (X ⊙→ Y)
+⊙→-level X Y Y-level =
+  Σ-level
+    (Π-level (λ _ → Y-level))
+    (λ f' → =-preserves-level Y-level)
+
 ⊙app= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
   → f == g → f ⊙∼ g
 ⊙app= {X = X} {Y = Y} p =
