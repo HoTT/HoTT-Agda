@@ -8,7 +8,7 @@ module homotopy.SuspensionLoopSpaceInverse where
 private
   custom-path-alg : ∀ {l} {A : Type l}
     {n s : A} (p q : n == s)
-    → ! (p ∙ ! q) == ! (! q) ∙ (! p ∙ ! (! q)) ∙' ! q
+    → ! (p ∙ ! q) == ! (! q) ∙ (! p ∙ q) ∙' ! q
   custom-path-alg p q@idp = ap ! (∙-unit-r p) ∙ ! (∙-unit-r (! p))
 
   Ω-!-Susp-flip-seq : ∀ {i} (X : Ptd i) (x : de⊙ X)
@@ -18,7 +18,7 @@ private
   Ω-!-Susp-flip-seq X x =
     ! (merid x ∙ ! (merid (pt X)))
       =⟪ custom-path-alg (merid x) (merid (pt X)) ⟫
-    ! (! (merid (pt X))) ∙ (! (merid x) ∙ ! (! (merid (pt X)))) ∙' ! (merid (pt X))
+    ! (! (merid (pt X))) ∙ (! (merid x) ∙ merid (pt X)) ∙' ! (merid (pt X))
       =⟪ ap (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X)))
             (! (Susp-flip-σloop X x)) ⟫
     ! (! (merid (pt X))) ∙ ap Susp-flip (σloop X x) ∙' ! (merid (pt X))
@@ -58,17 +58,7 @@ private
        (!-inv-r (merid (pt X))) ◃∙
     ! (Ω-fmap-β (⊙Susp-flip X) idp) ◃∙
     snd (⊙Ω-fmap (⊙Susp-flip X)) ◃∎
-      =ₛ⟨ 4 & 1 & Ω-fmap-pt (⊙Susp-flip X) ⟩
-    custom-path-alg (merid (pt X)) (merid (pt X)) ◃∙
-    ap (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X)))
-       (! (Susp-flip-σloop X (pt X))) ◃∙
-    ap (λ p → ! (! (merid (pt X))) ∙ ap Susp-flip p ∙' ! (merid (pt X)))
-       (!-inv-r (merid (pt X))) ◃∙
-    ! (Ω-fmap-β (⊙Susp-flip X) idp) ◃∙
-    Ω-fmap-β (⊙Susp-flip X) idp ◃∙
-    ap (! (! (merid (pt X))) ∙_) (∙'-unit-l (snd (⊙Susp-flip X))) ◃∙
-    !-inv-l (snd (⊙Susp-flip X)) ◃∎
-      =ₛ⟨ 3 & 2 & seq-!-inv-l (Ω-fmap-β (⊙Susp-flip X) idp ◃∎) ⟩
+      =ₛ⟨ 3 & 2 & pre-rotate'-in $ Ω-fmap-pt (⊙Susp-flip X) ⟩
     custom-path-alg (merid (pt X)) (merid (pt X)) ◃∙
     ap (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X)))
        (! (Susp-flip-σloop X (pt X))) ◃∙
@@ -86,22 +76,11 @@ private
        (ap (ap Susp-flip) (!-inv-r (merid (pt X)))) ◃∙
     ap (! (! (merid (pt X))) ∙_) (∙'-unit-l (snd (⊙Susp-flip X))) ◃∙
     !-inv-l (snd (⊙Susp-flip X)) ◃∎
-      =ₛ⟨ 1 & 1 & ap-seq-=ₛ (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X))) $
-                  !-=ₛ $ Susp-flip-σloop-pt X ⟩
+      =ₛ⟨ 1 & 2 & ap-seq-=ₛ (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X))) $
+                  !ₛ $ post-rotate-out $ pre-rotate-in $ Susp-flip-σloop-pt X ⟩
     custom-path-alg (merid (pt X)) (merid (pt X)) ◃∙
     ap (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X)))
-       (! (! (!-inv-r (! (merid (pt X)))))) ◃∙
-    ap (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X)))
-       (! (ap (ap Susp-flip) (!-inv-r (merid (pt X))))) ◃∙
-    ap (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X)))
-       (ap (ap Susp-flip) (!-inv-r (merid (pt X)))) ◃∙
-    ap (! (! (merid (pt X))) ∙_) (∙'-unit-l (! (merid (pt X)))) ◃∙
-    !-inv-l (! (merid (pt X))) ◃∎
-      =ₛ⟨ 2 & 2 & ap-seq-=ₛ (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X))) $
-                  seq-!-inv-l (ap (ap Susp-flip) (!-inv-r (merid (pt X))) ◃∎) ⟩
-    custom-path-alg (merid (pt X)) (merid (pt X)) ◃∙
-    ap (λ q → ! (! (merid (pt X))) ∙ q ∙' ! (merid (pt X)))
-       (! (! (!-inv-r (! (merid (pt X)))))) ◃∙
+       (!-inv-l (merid (pt X))) ◃∙
     ap (! (! (merid (pt X))) ∙_) (∙'-unit-l (! (merid (pt X)))) ◃∙
     !-inv-l (! (merid (pt X))) ◃∎
       =ₛ⟨ custom-path-alg-coh (merid (pt X)) ⟩
@@ -113,7 +92,7 @@ private
     custom-path-alg-coh : ∀ {l} {A : Type l}
       {n s : A} (p : n == s)
       → custom-path-alg p p ◃∙
-        ap (λ q → ! (! p) ∙ q ∙' ! p) (! (! (!-inv-r (! p)))) ◃∙
+        ap (λ q → ! (! p) ∙ q ∙' ! p) (!-inv-l p) ◃∙
         ap (! (! p) ∙_) (∙'-unit-l (! p)) ◃∙
         !-inv-l (! p) ◃∎
         =ₛ

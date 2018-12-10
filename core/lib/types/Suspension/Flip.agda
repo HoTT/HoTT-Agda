@@ -19,43 +19,46 @@ Susp-flip : ∀ {i} {A : Type i} → Susp A → Susp A
 Susp-flip = SuspFlip.f
 
 Susp-flip-σloop-seq : ∀ {i} (X : Ptd i) (x : de⊙ X)
-  → ap Susp-flip (σloop X x) =-= ! (merid x) ∙ ! (! (merid (pt X)))
+  → ap Susp-flip (σloop X x) =-= ! (merid x) ∙ merid (pt X)
 Susp-flip-σloop-seq X x =
   ap Susp-flip (merid x ∙ ! (merid (pt X)))
     =⟪ ap-∙ Susp-flip (merid x) (! (merid (pt X))) ⟫
   ap Susp-flip (merid x) ∙ ap Susp-flip (! (merid (pt X)))
     =⟪ ap2 _∙_
-           (SuspFlip.merid-β x)
-           (ap-! Susp-flip (merid (pt X)) ∙ ap ! (SuspFlip.merid-β (pt X))) ⟫
-  ! (merid x) ∙ ! (! (merid (pt X))) ∎∎
+           (! (!-! (ap Susp-flip (merid x))) ∙ ap ! (r x))
+           (ap-! Susp-flip (merid (pt X)) ∙ r (pt X)) ⟫
+  ! (merid x) ∙ merid (pt X) ∎∎
+  where
+    r : (x : de⊙ X) → ! (ap Susp-flip (merid x)) == merid x
+    r x = ap ! (SuspFlip.merid-β x) ∙ !-! (merid x)
 
 Susp-flip-σloop : ∀ {i} (X : Ptd i) (x : de⊙ X)
-  → ap Susp-flip (σloop X x) == ! (merid x) ∙ ! (! (merid (pt X)))
+  → ap Susp-flip (σloop X x) == ! (merid x) ∙ merid (pt X)
 Susp-flip-σloop X x = ↯ (Susp-flip-σloop-seq X x)
 
 Susp-flip-σloop-pt : ∀ {i} (X : Ptd i)
   → Susp-flip-σloop X (pt X) ◃∎
     =ₛ
     ap (ap Susp-flip) (!-inv-r (merid (pt X))) ◃∙
-    ! (!-inv-r (! (merid (pt X)))) ◃∎
+    ! (!-inv-l (merid (pt X))) ◃∎
 Susp-flip-σloop-pt X =
   Susp-flip-σloop X (pt X) ◃∎
     =ₛ⟨ expand (Susp-flip-σloop-seq X (pt X)) ⟩
   Susp-flip-σloop-seq X (pt X)
-    =ₛ⟨ coh Susp-flip (merid (pt X))
-            (! (merid (pt X))) (SuspFlip.merid-β (pt X)) ⟩
+    =ₛ⟨ coh Susp-flip (merid (pt X)) (merid (pt X))
+            (ap ! (SuspFlip.merid-β (pt X)) ∙ !-! (merid (pt X))) ⟩
   ap (ap Susp-flip) (!-inv-r (merid (pt X))) ◃∙
-  ! (!-inv-r (! (merid (pt X)))) ◃∎ ∎ₛ
+  ! (!-inv-l (merid (pt X))) ◃∎ ∎ₛ
   where
   coh : ∀ {j k} {A : Type j} {B : Type k} (f : A → B)
     {a₀ a₁ : A} (p : a₀ == a₁)
-    (q : f a₀ == f a₁)
-    (r : ap f p == q)
+    (q : f a₁ == f a₀)
+    (r : ! (ap f p) == q)
     → ap-∙ f p (! p) ◃∙
-      ap2 _∙_ r (ap-! f p ∙ ap ! r) ◃∎
+      ap2 _∙_ (! (!-! (ap f p)) ∙ ap ! r) (ap-! f p ∙ r) ◃∎
       =ₛ
       ap (ap f) (!-inv-r p) ◃∙
-      ! (!-inv-r q) ◃∎
+      ! (!-inv-l q) ◃∎
   coh f p@idp q@.idp r@idp = =ₛ-in idp
 
 maybe-Susp-flip : ∀ {i} {A : Type i} → Bool → Susp A → Susp A
