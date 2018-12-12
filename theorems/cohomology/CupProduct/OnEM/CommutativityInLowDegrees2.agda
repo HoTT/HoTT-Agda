@@ -151,10 +151,8 @@ private
              idp
   ∧-cp₁₁-comm-smgluer y =
     GH.∧-cp₁₁-Rec.smgluer-β y ∙v⊡
-    ! (!-! (GHc.CP₁₁Comm.f embase y)) ∙h⊡
-    ap ! (cp₁₁-comm-sym y) ∙h⊡
-    bl-square (ap GHc.− (HG.cp₁₁-embase-r y)) ⊡v∙
-    ! bottom-path
+    lb-square (GHc.CP₁₁Comm.f embase y) ⊡v∙
+    (cp₁₁-comm-sym y ∙ ! bottom-path)
     where
     bottom-path : ap (GHc.− ∘ HG.∧-cp₁₁ ∘ ∧-swap (⊙EM₁ G.grp) (⊙EM₁ H.grp)) (smgluer y) == ap GHc.− (HG.cp₁₁-embase-r y)
     bottom-path =

@@ -152,6 +152,9 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
         =⟪ SuspFmap.merid-β (∧-swap X Y) (smin x y) ⟫
       merid (smin y x) ∎∎
 
+    {- This is the same as `! (Susp-fmap-∘ (∧-swap X Y) (smin x))`, except that
+       the merid case is easier to reason about, which we will do in
+       `Σ∧-∧Σ-swap-smgluer-merid`. -}
     module Σ∧-∧Σ-swap-smin (x : de⊙ X) =
       SuspPathElim
         (Susp-fmap (∧-swap X Y) ∘ Susp-fmap (smin x))
