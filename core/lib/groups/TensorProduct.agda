@@ -49,8 +49,8 @@ module TensorProduct₀ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     ⊗-lin-r : ∀ g h₁ h₂ → g ⊗ H.comp h₁ h₂ == comp (g ⊗ h₁) (g ⊗ h₂)
     ⊗-lin-r g h₁ h₂ = rel-holds (linear-r g h₁ h₂)
 
-    ⊗-ident-l : ∀ h → G.ident ⊗ h == ident
-    ⊗-ident-l h = cancel-l (G.ident ⊗ h) $
+    ⊗-unit-l : ∀ h → G.ident ⊗ h == ident
+    ⊗-unit-l h = cancel-l (G.ident ⊗ h) $
       comp (G.ident ⊗ h) (G.ident ⊗ h)
         =⟨ ! (⊗-lin-l G.ident G.ident h) ⟩
       G.comp G.ident G.ident ⊗ h
@@ -59,8 +59,8 @@ module TensorProduct₀ {i} {j} (G : AbGroup i) (H : AbGroup j) where
         =⟨ ! (unit-r (G.ident ⊗ h)) ⟩
       comp (G.ident ⊗ h) ident =∎
 
-    ⊗-ident-r : ∀ g → g ⊗ H.ident == ident
-    ⊗-ident-r g = cancel-r (g ⊗ H.ident) $
+    ⊗-unit-r : ∀ g → g ⊗ H.ident == ident
+    ⊗-unit-r g = cancel-r (g ⊗ H.ident) $
       comp (g ⊗ H.ident) (g ⊗ H.ident)
         =⟨ ! (⊗-lin-r g H.ident H.ident) ⟩
       g ⊗ H.comp H.ident H.ident

@@ -305,8 +305,8 @@ contr-is-trivialᴳ G g =
 abgroup= : ∀ {i} (G H : AbGroup i)
   → AbGroup.grp G == AbGroup.grp H
   → G == H
-abgroup= G H p =
-  pair= p (contr-center (↓-level (is-abelian-is-prop (AbGroup.grp H))))
+abgroup= {i} G H =
+  Subtype=-out (is-abelian , is-abelian-is-prop)
 
 {- group-structure= -}
 

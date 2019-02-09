@@ -18,9 +18,7 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
       → ap f (↯ s) == ↯ (ap-seq s)
     ap-seq-∙-= [] = idp
     ap-seq-∙-= (p ◃∙ []) = idp
-    ap-seq-∙-= (p ◃∙ s@(_ ◃∙ _)) =
-      ap-∙ f p (↯ s) ∙
-      ap (λ u → ap f p ∙ u) (ap-seq-∙-= s)
+    ap-seq-∙-= (idp ◃∙ s@(_ ◃∙ _)) = ap-seq-∙-= s
 
   ap-seq-∙ : {a a' : A} (s : a =-= a')
     → (ap f (↯ s) ◃∎) =ₛ ap-seq s

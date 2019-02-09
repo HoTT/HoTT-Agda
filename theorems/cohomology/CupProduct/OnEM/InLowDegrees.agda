@@ -19,7 +19,7 @@ private
   open EMExplicit
 
 ⊙×-cp₀₀' : G.⊙El ⊙× H.⊙El ⊙→ G⊗H.⊙El
-⊙×-cp₀₀' = uncurry G⊗H._⊗_ , G⊗H.⊗-ident-l H.ident
+⊙×-cp₀₀' = uncurry G⊗H._⊗_ , G⊗H.⊗-unit-l H.ident
 
 ⊙×-cp₀₀-seq : (⊙EM G 0 ⊙× ⊙EM H 0) ⊙–→ ⊙EM G⊗H.abgroup 0
 ⊙×-cp₀₀-seq =
