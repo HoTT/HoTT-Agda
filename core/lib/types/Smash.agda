@@ -78,11 +78,11 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
   ap-smin-l : {a b : de⊙ X} (p : a == b)
     → ap (λ x → smin x (pt Y)) p == smgluel a ∙ ! (smgluel b)
-  ap-smin-l = homotopy-to-cst-ap (λ x → smin x (pt Y)) smgluel
+  ap-smin-l = ap-null-homotopic (λ x → smin x (pt Y)) smgluel
 
   ap-smin-r : {a b : de⊙ Y} (p : a == b)
     → ap (smin (pt X)) p == smgluer a ∙ ! (smgluer b)
-  ap-smin-r = homotopy-to-cst-ap (λ y → smin (pt X) y) smgluer
+  ap-smin-r = ap-null-homotopic (λ y → smin (pt X) y) smgluer
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
@@ -435,7 +435,7 @@ module _ {i i' i'' j j' j''}
         ! (ap2 smin (snd f') (snd g')) ◃∎
           =ₛ⟨ 3 & 1 &
               =ₛ-in {t = smgluel (fst f' (pt X')) ◃∙ ! (smgluel (pt X'')) ◃∎} $
-              homotopy-to-cst-ap (λ x'' → smin x'' (pt Y'')) smgluel (snd f') ⟩
+              ap-null-homotopic (λ x'' → smin x'' (pt Y'')) smgluel (snd f') ⟩
         ap (smin (fst f' (fst f x))) (snd (g' ⊙∘ g)) ◃∙
         smgluel (fst (f' ⊙∘ f) x) ◃∙
         ! (smgluel (fst f' (pt X'))) ◃∙
@@ -500,7 +500,7 @@ module _ {i i' i'' j j' j''}
         ! (ap2 smin (snd f') (snd g')) ◃∎
           =ₛ⟨ 3 & 1 &
               =ₛ-in {t = smgluer (fst g' (pt Y')) ◃∙ ! (smgluer (pt Y'')) ◃∎} $
-              homotopy-to-cst-ap (smin (pt X'')) smgluer (snd g') ⟩
+              ap-null-homotopic (smin (pt X'')) smgluer (snd g') ⟩
         ap (λ x'' → smin x'' (fst (g' ⊙∘ g) y)) (snd (f' ⊙∘ f)) ◃∙
         smgluer (fst (g' ⊙∘ g) y) ◃∙
         ! (smgluer (fst g' (pt Y'))) ◃∙
@@ -673,7 +673,7 @@ module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
         ! (smgluer (fst f (pt X))) ◃∙
         smgluer (fst f (pt X)) ◃∙
         ! (smgluer (pt X')) ◃∎
-          =ₛ₁⟨ 3 & 2 & ! (homotopy-to-cst-ap (smin (pt Y')) smgluer (snd f)) ⟩
+          =ₛ₁⟨ 3 & 2 & ! (ap-null-homotopic (smin (pt Y')) smgluer (snd f)) ⟩
         ap (λ y' → smin y' (fst f x)) (snd g) ◃∙
         smgluer (fst f x) ◃∙
         ! (smgluer (fst f (pt X))) ◃∙
@@ -726,7 +726,7 @@ module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
         ! (smgluel (fst g (pt Y))) ◃∙
         smgluel (fst g (pt Y)) ◃∙
         ! (smgluel (pt Y')) ◃∎
-          =ₛ₁⟨ 3 & 2 & ! (homotopy-to-cst-ap (λ y' → smin y' (pt X')) smgluel (snd g)) ⟩
+          =ₛ₁⟨ 3 & 2 & ! (ap-null-homotopic (λ y' → smin y' (pt X')) smgluel (snd g)) ⟩
         ap (smin (fst g y)) (snd f) ◃∙
         smgluel (fst g y) ◃∙
         ! (smgluel (fst g (pt Y))) ◃∙

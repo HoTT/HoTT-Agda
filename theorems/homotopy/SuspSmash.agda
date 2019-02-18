@@ -104,9 +104,9 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
             (!-inv-r (smgluer y₀)) ⟫
     ap (λ sx → smin sx y₀) (merid x ∙ ! (merid x₀)) ∙ idp
       =⟪ ap (_∙ idp) $
-         homotopy-to-cst-ap (λ sx → smin sx y₀)
-                            smgluel
-                            (merid x ∙ ! (merid x₀)) ⟫
+         ap-null-homotopic (λ sx → smin sx y₀)
+                           smgluel
+                           (merid x ∙ ! (merid x₀)) ⟫
     (smgluel north ∙ ! (smgluel north)) ∙ idp
       =⟪ ap (_∙ idp) (!-inv-r (smgluel north)) ⟫
     idp ∎∎

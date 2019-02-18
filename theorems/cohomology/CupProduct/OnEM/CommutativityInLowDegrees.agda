@@ -383,7 +383,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (↯ h₁'-seq) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-          (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+          (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
         =ₛ⟨ 2 & 2 & ap-comm-=ₛ _∙_ (↯ (tail (comm-embase-emloop-seq h))) (GH.ap-cp₁₁-embase g) ⟩
       ap-comm _G∪H_ (emloop g) (emloop h) ◃∙
       ap (_∙ ap (_G∪H embase) (emloop g)) (ap-cst [ north ] (emloop h)) ◃∙
@@ -392,7 +392,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (↯ h₁'-seq) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-          (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+          (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
         =ₛ⟨ 3 & 2 & ap-comm-=ₛ _∙_ (↯ (tail (comm-embase-emloop-seq h))) (↯ h₁'-seq) ⟩
       ap-comm _G∪H_ (emloop g) (emloop h) ◃∙
       ap (_∙ ap (_G∪H embase) (emloop g)) (ap-cst [ north ] (emloop h)) ◃∙
@@ -401,7 +401,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
       ap (λ a → a ∙ idp) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-          (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+          (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
         =ₛ₁⟨ 3 & 1 & ap (ap (idp ∙_)) (! (=ₛ-out heart))⟩
       ap-comm _G∪H_ (emloop g) (emloop h) ◃∙
       ap (_∙ ap (_G∪H embase) (emloop g)) (ap-cst [ north ] (emloop h)) ◃∙
@@ -410,20 +410,20 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
       ap (λ a → a ∙ idp) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-          (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+          (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
         =ₛ⟨ 0 & 3 & top-part ⟩
       ap (ap (_G∪H embase) (emloop g) ∙_)
-         (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+         (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
       ap (_∙ idp) (GH.ap-cp₁₁-embase g) ◃∙
       ap (idp ∙_) (↯ h₁-seq) ◃∙
       ap (λ a → a ∙ idp) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
       ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-         (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+         (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
         =ₛ⟨ 4 & 3 & bottom-part ⟩
       ap (ap (_G∪H embase) (emloop g) ∙_)
-         (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+         (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
       ap (_∙ idp) (GH.ap-cp₁₁-embase g) ◃∙
       ap (idp ∙_) (↯ h₁-seq) ◃∙
@@ -432,7 +432,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
       ap-comm (λ x y → − (y H∪G x)) (emloop g) (emloop h) ◃∎
         =ₛ⟨ 2 & 2 & ap-comm-=ₛ _∙_ (GH.ap-cp₁₁-embase g) (↯ h₁-seq) ⟩
       ap (ap (_G∪H embase) (emloop g) ∙_)
-         (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+         (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (↯ h₁-seq) ◃∙
       ap (_∙ idp) (GH.ap-cp₁₁-embase g) ◃∙
@@ -441,7 +441,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
       ap-comm (λ x y → − (y H∪G x)) (emloop g) (emloop h) ◃∎
         =ₛ⟨ 3 & 2 & ap-comm-=ₛ _∙_ (GH.ap-cp₁₁-embase g) (↯ (tail (comm-embase-emloop-seq h))) ⟩
       ap (ap (_G∪H embase) (emloop g) ∙_)
-         (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+         (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (↯ h₁-seq) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
@@ -450,7 +450,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
       ap-comm (λ x y → − (y H∪G x)) (emloop g) (emloop h) ◃∎
         =ₛ⟨ 4 & 2 & ∙-ap-seq (_∙ ap (λ y → − (y H∪G embase)) (emloop h)) (comm-emloop-embase-seq g) ⟩
       ap (ap (_G∪H embase) (emloop g) ∙_)
-         (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+         (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (↯ h₁-seq) ◃∙
       ap (ap (_G∪H embase) (emloop g) ∙_) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
@@ -606,25 +606,18 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
         ap (idp ∙_) (GH.ap-cp₁₁-embase g) ◃∎
           =ₛ
         ap (ap (_G∪H embase) (emloop g) ∙_)
-           (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+           (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
         ap (_∙ idp) (GH.ap-cp₁₁-embase g) ◃∎
       top-part =
         ap-comm _G∪H_ (emloop g) (emloop h) ◃∙
-        ap (_∙ ap (_G∪H embase) (emloop g)) (ap-cst [ north ] (emloop h)) ◃∙
-        ap (idp ∙_) (GH.ap-cp₁₁-embase g) ◃∎
-          =ₛ₁⟨ 1 & 1 &
-               ap (ap (_∙ ap (_G∪H embase) (emloop g))) $ ! $
-               cst-homotopy-to-cst-ap {A = EM₁ H.grp} {B = EMExplicit.EM G⊗H.abgroup 2}
-                                              [ north ]₂ (emloop' H.grp h) ⟩
-        ap-comm _G∪H_ (emloop g) (emloop h) ◃∙
         ap (_∙ ap (_G∪H embase) (emloop g))
-           (homotopy-to-cst-ap (λ y → [ north ]₂) (λ y → idp) (emloop' H.grp h)) ◃∙
+           (ap-null-homotopic (λ y → [ north ]₂) (λ y → idp) (emloop' H.grp h)) ◃∙
         ap (idp ∙_) (GH.ap-cp₁₁-embase g) ◃∎
           =ₛ⟨ 0 & 2 & post-rotate-out {r = _ ◃∙ _ ◃∙ _ ◃∎} $
                       ap-comm-cst-coh _G∪H_ (emloop g) (emloop h) [ north ]₂ (λ y → idp) ⟩
         ap (ap (_G∪H embase) (emloop g) ∙_)
-           (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+           (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_)
            (app= (transp-naturality {B = λ x → ∀ y → x G∪H y == [ north ]₂} {C = λ x → x G∪H embase == x G∪H embase}
                                     (λ h → h embase ∙ ! (h embase)) (emloop g))
@@ -634,7 +627,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
           =ₛ⟨ 1 & 1 & ap-seq-=ₛ (ap (_G∪H embase) (emloop g) ∙_)
                                 (transp-nat-idp _G∪H_ (emloop g) embase [ north ]₂ (λ y → idp)) ⟩
         ap (ap (_G∪H embase) (emloop g) ∙_)
-           (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+           (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_)
             (! (transp-idp (_G∪H embase) (emloop g))) ◃∙
@@ -643,7 +636,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
         ap (idp ∙_) (GH.ap-cp₁₁-embase g) ◃∎
           =ₛ⟨ 3 & 1 & expand [] ⟩
         ap (ap (_G∪H embase) (emloop g) ∙_)
-           (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+           (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_)
            (! (transp-idp (_G∪H embase) (emloop g))) ◃∙
@@ -651,7 +644,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
         ap (idp ∙_) (GH.ap-cp₁₁-embase g) ◃∎
           =ₛ₁⟨ 2 & 1 & ap-! (ap (_G∪H embase) (emloop g) ∙_) (transp-idp (_G∪H embase) (emloop g)) ⟩
         ap (ap (_G∪H embase) (emloop g) ∙_)
-           (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+           (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
         ! (ap (ap (_G∪H embase) (emloop g) ∙_)
               (transp-idp (_G∪H embase) (emloop g))) ◃∙
@@ -660,26 +653,26 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
           =ₛ⟨ 2 & 2 & pre-rotate'-seq-in {p = _ ◃∙ _ ◃∎} {r = []} $
                       !ₛ $ ap-transp-idp (_G∪H embase) (emloop g) ⟩
         ap (ap (_G∪H embase) (emloop g) ∙_)
-           (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+           (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
         ∙-unit-r (ap (_G∪H embase) (emloop g)) ◃∙
         ap (idp ∙_) (GH.ap-cp₁₁-embase g) ◃∎
           =ₛ⟨ 2 & 2 & !ₛ $ homotopy-naturality (_∙ idp) (idp ∙_) ∙-unit-r (GH.ap-cp₁₁-embase g) ⟩
         ap (ap (_G∪H embase) (emloop g) ∙_)
-           (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+           (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
         ap (_∙ idp) (GH.ap-cp₁₁-embase g) ◃∙
         idp ◃∎
           =ₛ⟨ 3 & 1 & expand [] ⟩
         ap (ap (_G∪H embase) (emloop g) ∙_)
-           (homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
+           (ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h)) ◃∙
         ap (ap (_G∪H embase) (emloop g) ∙_) (!-inv-r (h₁ embase)) ◃∙
         ap (_∙ idp) (GH.ap-cp₁₁-embase g) ◃∎ ∎ₛ
       bottom-part :
         ap (_∙ idp) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-           (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+           (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
         =ₛ
         ap (idp ∙_) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
         ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h)) (! (ap-cst [ north ]₂ (emloop g))) ◃∙
@@ -688,19 +681,19 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
         ap (_∙ idp) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-           (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+           (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
           =ₛ⟨ 0 & 0 & contract ⟩
         idp ◃∙
         ap (_∙ idp) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-           (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+           (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
           =ₛ⟨ 0 & 2 & !ₛ (homotopy-naturality (idp ∙_) (_∙ idp) (! ∘ ∙-unit-r) (↯ (tail (comm-embase-emloop-seq h)))) ⟩
         ap (idp ∙_) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
         ! (∙-unit-r (ap (λ y → − (y H∪G embase)) (emloop h))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-           (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+           (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
           =ₛ⟨ 1 & 1 & !ₛ $ post-rotate-in {p = _ ◃∙ _ ◃∎} $
                       ap-transp-idp (λ y → − (y H∪G embase)) (emloop h) ⟩
         ap (idp ∙_) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
@@ -708,7 +701,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (transp-idp (λ y → − (y H∪G embase)) (emloop h)) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) (! (!-inv-r (h₁' embase))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-           (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+           (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
           =ₛ⟨ 2 & 2 & ap-seq-=ₛ (ap (λ y → − (y H∪G embase)) (emloop h) ∙_) $
               transp-idp (λ y → − (y H∪G embase)) (emloop h) ◃∙
               ! (!-inv-r (h₁' embase)) ◃∎
@@ -730,7 +723,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
                                         (λ h → h embase ∙ ! (h embase)) (emloop h))
                     (λ x → idp))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-           (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+           (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
           =ₛ₁⟨ 2 & 1 & ap-! (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
                             (app= (transp-naturality {B = λ y → ∀ x → − (y H∪G x) == [ north ]₂}
                                                       (λ h → h embase ∙ ! (h embase)) (emloop h))
@@ -742,9 +735,9 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
                                         (λ h → h embase ∙ ! (h embase)) (emloop h))
                     (λ x → idp))) ◃∙
         ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-           (! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+           (! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
           =ₛ₁⟨ 3 & 1 & ap-! (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-                            (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g)) ⟩
+                            (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g)) ⟩
         ap (idp ∙_) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
         ap-transp (λ y → − (y H∪G embase)) (λ y → − (y H∪G embase)) (emloop h) idp ◃∙
         ! (ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
@@ -752,7 +745,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
                                         (λ h → h embase ∙ ! (h embase)) (emloop h))
                     (λ x → idp))) ◃∙
         ! (ap (ap (λ y → − (y H∪G embase)) (emloop h) ∙_)
-              (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
+              (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g))) ◃∎
           =ₛ⟨ 1 & 3 & pre-rotate-out $
                       pre-rotate'-seq-in {p = _ ◃∙ _ ◃∎} $
                       post-rotate-in {p = []} $
@@ -760,24 +753,16 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
                                       (emloop h) (emloop g) [ north ]₂ (λ x → idp) ⟩
         ap (idp ∙_) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
         ! (ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h))
-              (homotopy-to-cst-ap (λ x → − (embase H∪G x)) (λ x → idp) (emloop g))) ◃∙
+              (ap-null-homotopic (λ x → − (embase H∪G x)) (λ x → idp) (emloop g))) ◃∙
         ! (ap-comm (λ y x → − (y H∪G x)) (emloop h) (emloop g)) ◃∎
           =ₛ₁⟨ 2 & 1 & ! (ap-comm-comm (λ x y → − (y H∪G x)) (emloop g) (emloop h)) ⟩
         ap (idp ∙_) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
         ! (ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h))
-              (homotopy-to-cst-ap (λ x → − (embase H∪G x)) (λ x → idp) (emloop g))) ◃∙
+              (ap-null-homotopic (λ x → − (embase H∪G x)) (λ x → idp) (emloop g))) ◃∙
         ap-comm (λ x y → − (y H∪G x)) (emloop g) (emloop h) ◃∎
           =ₛ₁⟨ 1 & 1 &
-                ! (ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h))
-                      (homotopy-to-cst-ap (λ x → − (embase H∪G x)) (λ x → idp) (emloop g)))
-                  =⟨ !-ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h))
-                          (homotopy-to-cst-ap (λ x → − (embase H∪G x)) (λ x → idp) (emloop g)) ⟩
-                ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h))
-                   (! (homotopy-to-cst-ap (λ x → − (embase H∪G x)) (λ x → idp) (emloop g)))
-                  =⟨ ap (ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h)) ∘ !) $
-                     cst-homotopy-to-cst-ap [ north ]₂ (emloop g) ⟩
-                ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h)) (! (ap-cst [ north ]₂ (emloop g))) =∎
-              ⟩
+               !-ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h))
+                    (ap-null-homotopic (λ x → − (embase H∪G x)) (λ x → idp) (emloop g)) ⟩
         ap (idp ∙_) (↯ (tail (comm-embase-emloop-seq h))) ◃∙
         ap (_∙ ap (λ y → − (y H∪G embase)) (emloop h)) (! (ap-cst [ north ]₂ (emloop g))) ◃∙
         ap-comm (λ x y → − (y H∪G x)) (emloop g) (emloop h) ◃∎ ∎ₛ
@@ -785,7 +770,7 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
                 =ₛ
                 ↯ h₁'-seq ◃∙
                 ! (!-inv-r (h₁' embase)) ◃∙
-                ! (homotopy-to-cst-ap (λ x → [ north ]₂) h₁' (emloop g)) ◃∎
+                ! (ap-null-homotopic (λ x → [ north ]₂) h₁' (emloop g)) ◃∎
       step₄' = pre-rotate'-in $ post-rotate-seq-in {p = []} $ !ₛ $
         ap-cst [ north ]₂ (emloop g) ◃∙
         ↯ h₁'-seq ◃∎
@@ -795,35 +780,35 @@ module CP₁₁-comm {i} {j} (G : AbGroup i) (H : AbGroup j) where
         ! (ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g)) ◃∙
         !-inv-r (h₁' embase) ◃∎
           =ₛ⟨ 0 & 2 & !ₛ $ post-rotate-in {p = _ ◃∙ _ ◃∎} $
-                      cst-homotopy-to-cst-ap' [ north ]₂ [ north ]₂ h₁' (emloop g) ⟩
-        homotopy-to-cst-ap (cst [ north ]₂) h₁' (emloop g) ◃∙
+                      ap-null-homotopic-cst [ north ]₂ [ north ]₂ h₁' (emloop g) ⟩
+        ap-null-homotopic (cst [ north ]₂) h₁' (emloop g) ◃∙
         ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g) ◃∙
         ! (ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g)) ◃∙
         !-inv-r (h₁' embase) ◃∎
           =ₛ⟨ 1 & 2 & seq-!-inv-r (ap (λ v → h₁' v ∙ ! (h₁' embase)) (emloop g) ◃∎) ⟩
-        homotopy-to-cst-ap (cst [ north ]₂) h₁' (emloop g) ◃∙
+        ap-null-homotopic (cst [ north ]₂) h₁' (emloop g) ◃∙
         !-inv-r (h₁' embase) ◃∎ ∎ₛ
       step₁₃' :
-        homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h) ◃∙
+        ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h) ◃∙
         !-inv-r (h₁ embase) ◃∙
         ↯ h₁-seq ◃∎
         =ₛ
         ap-cst [ north ]₂ (emloop h) ◃∎
       step₁₃' =
-        homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h) ◃∙
+        ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h) ◃∙
         !-inv-r (h₁ embase) ◃∙
         ↯ h₁-seq ◃∎
           =ₛ⟨ 2 & 1 & expand h₁-seq ⟩
-        homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h) ◃∙
+        ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h) ◃∙
         !-inv-r (h₁ embase) ◃∙
         ! (!-inv-r (h₁ embase)) ◃∙
         ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h) ◃∙
         !-inv-r (h₁ embase) ◃∎
           =ₛ⟨ 1 & 2 & seq-!-inv-r (!-inv-r (h₁ embase) ◃∎) ⟩
-        homotopy-to-cst-ap (λ y → [ north ]₂) h₁ (emloop h) ◃∙
+        ap-null-homotopic (λ y → [ north ]₂) h₁ (emloop h) ◃∙
         ap (λ v → h₁ v ∙ ! (h₁ embase)) (emloop h) ◃∙
         !-inv-r (h₁ embase) ◃∎
-          =ₛ⟨ cst-homotopy-to-cst-ap' [ north ]₂ [ north ]₂ h₁ (emloop h) ⟩
+          =ₛ⟨ ap-null-homotopic-cst [ north ]₂ [ north ]₂ h₁ (emloop h) ⟩
         ap-cst [ north ]₂ (emloop h) ◃∎ ∎ₛ
 
   comm-embase-emloop : ∀ h →
