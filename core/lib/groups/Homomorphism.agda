@@ -114,8 +114,11 @@ record GroupHom {i j} (G : Group i) (H : Group j) : Type (lmax i j) where
   open GroupStructureHom {GS = G.group-struct} {HS = H.group-struct}
     record {f = f ; pres-comp = pres-comp} hiding (f ; pres-comp) public
 
-infix 0 _→ᴳ_
+infix 0 _→ᴳ_ _→ᴬᴳ_
 _→ᴳ_ = GroupHom
+
+_→ᴬᴳ_ : ∀ {i} {j} (G : AbGroup i) (H : AbGroup j) → Type (lmax i j)
+_→ᴬᴳ_ G H = AbGroup.grp G →ᴳ AbGroup.grp H
 
 →ᴳˢ-to-→ᴳ : ∀ {i j} {G : Group i} {H : Group j}
   → (Group.group-struct G →ᴳˢ Group.group-struct H) → (G →ᴳ H)
@@ -397,6 +400,10 @@ module _ {i j} {G : Group i} {H : AbGroup j} where
     where abstract lemma = λ φ ψ → idp
 
   appᴳ = app-hom
+
+inv-hom-natural : ∀ {i} {j} (G : AbGroup i) (H : AbGroup j) (φ : G →ᴬᴳ H)
+  → φ ∘ᴳ inv-hom G == inv-hom H ∘ᴳ φ
+inv-hom-natural G H φ = group-hom= (λ= (GroupHom.pres-inv φ))
 
 pre∘ᴳ-hom : ∀ {i j k} {G : Group i} {H : Group j} (K : AbGroup k)
   → (G →ᴳ H) → (hom-group H K →ᴳ hom-group G K)

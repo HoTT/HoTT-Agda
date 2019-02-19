@@ -29,6 +29,32 @@ Bool-elim true* false* false = false*
 Bool-rec : ∀ {i} {A : Type i} → A → A → (Bool → A)
 Bool-rec {A = A} = Bool-elim {P = λ _ → A}
 
+negate : Bool → Bool
+negate true = false
+negate false = true
+
+and : Bool → Bool → Bool
+and true b = b
+and false _ = false
+
+xor : Bool → Bool → Bool
+xor true = negate
+xor false = idf Bool
+
+xor-diag : ∀ (b : Bool) → xor b b == false
+xor-diag true  = idp
+xor-diag false = idp
+
+and-false-r : ∀ b → and b false == false
+and-false-r true = idp
+and-false-r false = idp
+
+and-comm : ∀ b c → and b c == and c b
+and-comm false false = idp
+and-comm false true = idp
+and-comm true false = idp
+and-comm true true = idp
+
 private
   Bool-true≠false-type : Bool → Type₀
   Bool-true≠false-type true  = Unit

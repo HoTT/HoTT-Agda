@@ -33,6 +33,10 @@ S m +2+ n = S (m +2+ n)
 +2+0 : (n : ℕ₋₂) → n +2+ 0 == S (S n)
 +2+0 n = +2+-comm n 0
 
++-+2+ : ∀ (n m : ℕ) → ⟨ n + m ⟩₋₂ == ⟨ n ⟩₋₂ +2+ ⟨ m ⟩₋₂
++-+2+ O m = idp
++-+2+ (S n) m = ap S (+-+2+ n m)
+
 {- Inequalities -}
 infix 40 _<T_
 infix 40 _≤T_

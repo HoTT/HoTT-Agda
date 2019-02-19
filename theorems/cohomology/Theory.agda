@@ -40,29 +40,29 @@ record CohomologyTheory i : Type (lsucc i) where
       → ∀ x → CEl-fmap n (g ⊙∘ f) x == CEl-fmap n f (CEl-fmap n g x)
 
   field
-    C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
+    C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp (de⊙ X)) ≃ᴳ C n X
 
-  CEl-Susp : (n : ℤ) (X : Ptd i) → CEl (succ n) (⊙Susp X) ≃ CEl n X
+  CEl-Susp : (n : ℤ) (X : Ptd i) → CEl (succ n) (⊙Susp (de⊙ X)) ≃ CEl n X
   CEl-Susp n X = GroupIso.f-equiv (C-Susp n X)
 
   field
     -- This naming is stretching the convention
     C-Susp-fmap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
-      → CommSquareᴳ (C-fmap (succ n) (⊙Susp-fmap f)) (C-fmap n f)
+      → CommSquareᴳ (C-fmap (succ n) (⊙Susp-fmap (fst f))) (C-fmap n f)
           (GroupIso.f-hom (C-Susp n Y)) (GroupIso.f-hom (C-Susp n X))
 
   C-Susp-fmap-cse : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
-    → CommSquareEquivᴳ (C-fmap (succ n) (⊙Susp-fmap f)) (C-fmap n f)
+    → CommSquareEquivᴳ (C-fmap (succ n) (⊙Susp-fmap (fst f))) (C-fmap n f)
         (GroupIso.f-hom (C-Susp n Y)) (GroupIso.f-hom (C-Susp n X))
   C-Susp-fmap-cse n {X} {Y} f = C-Susp-fmap n f , GroupIso.f-is-equiv (C-Susp n Y) , GroupIso.f-is-equiv (C-Susp n X)
 
   C-Susp-fmap' : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
-    → CommSquareᴳ (C-fmap n f) (C-fmap (succ n) (⊙Susp-fmap f))
+    → CommSquareᴳ (C-fmap n f) (C-fmap (succ n) (⊙Susp-fmap (fst f)))
         (GroupIso.g-hom (C-Susp n Y)) (GroupIso.g-hom (C-Susp n X))
   C-Susp-fmap' n f = fst (CommSquareEquivᴳ-inverse-v (C-Susp-fmap-cse n f))
 
   CEl-Susp-fmap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
-    → CommSquare (CEl-fmap (succ n) (⊙Susp-fmap f)) (CEl-fmap n f)
+    → CommSquare (CEl-fmap (succ n) (⊙Susp-fmap (fst f))) (CEl-fmap n f)
         (GroupIso.f (C-Susp n Y)) (GroupIso.f (C-Susp n X))
   CEl-Susp-fmap n f = comm-sqr λ y' → C-Susp-fmap n f □$ᴳ y'
 
@@ -112,10 +112,10 @@ record CohomologyTheory i : Type (lsucc i) where
   CEl-emap n ⊙eq = equiv (CEl-fmap n (⊙–> ⊙eq)) (CEl-fmap n (⊙<– ⊙eq)) to-from from-to where
     abstract
       to-from = λ x → ! (CEl-fmap-∘ n (⊙<– ⊙eq) (⊙–> ⊙eq) x)
-                    ∙ ap (λ f → CEl-fmap n f x) (⊙λ= (⊙<–-inv-l ⊙eq))
+                    ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-l ⊙eq)
                     ∙ CEl-fmap-idf n x
       from-to = λ x → ! (CEl-fmap-∘ n (⊙–> ⊙eq) (⊙<– ⊙eq) x)
-                    ∙ ap (λ f → CEl-fmap n f x) (⊙λ= (⊙<–-inv-r ⊙eq))
+                    ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-r ⊙eq)
                     ∙ CEl-fmap-idf n x
 
   abstract

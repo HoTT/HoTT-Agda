@@ -47,8 +47,8 @@ MinusPoint-⊙head-has-choice = MinusPoint-has-choice ⊙head-is-separable (Fin-
 MinusPoint-⊙head-has-dec-eq : has-dec-eq (MinusPoint ⊙head)
 MinusPoint-⊙head-has-dec-eq = MinusPoint-has-dec-eq Fin-has-dec-eq
 
-⊙function₀ : ⊙FinBouquet I 1 ⊙→ ⊙Susp (⊙Bouquet (MinusPoint ⊙head) 0)
-⊙function₀ = ⊙Susp-fmap (⊙<– (Bouquet-⊙equiv-X ⊙head-is-separable))
+⊙function₀ : ⊙FinBouquet I 1 ⊙→ ⊙Susp (Bouquet (MinusPoint ⊙head) 0)
+⊙function₀ = ⊙Susp-fmap (<– (Bouquet-equiv-X ⊙head-is-separable))
           ⊙∘ ⊙cw-∂-head'-before-Susp
           ⊙∘ ⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel)
 
@@ -58,7 +58,7 @@ function₁ <I b x | inl _ = false
 function₁ <I b x | inr _ = true
 
 abstract
-  ⊙function₀' : ⊙FinBouquet I 1 ⊙→ ⊙Susp (⊙Bouquet (MinusPoint ⊙head) 0)
+  ⊙function₀' : ⊙FinBouquet I 1 ⊙→ ⊙Susp (Bouquet (MinusPoint ⊙head) 0)
   ⊙function₀' = ⊙function₀
 
   ⊙function₀'-β : ⊙function₀' == ⊙function₀
@@ -84,7 +84,7 @@ abstract
         =⟨ ap (λ b' → bwproj MinusPoint-⊙head-has-dec-eq b (bwin b' false)) $ ! $
             Subtype=-out (MinusPoint-prop ⊙head) b=end ⟩
       bwproj MinusPoint-⊙head-has-dec-eq b (bwin b false)
-        =⟨ bwproj-bwin-diag MinusPoint-⊙head-has-dec-eq b false ⟩ 
+        =⟨ bwproj-bwin-diag MinusPoint-⊙head-has-dec-eq b false ⟩
       false
         =∎
     mega-reduction-cases <I b x | inr _ | inr b≠end =
@@ -154,7 +154,7 @@ abstract
       =⟨ ! $ SuspFmap.merid-β (function₁ <I b) x ⟩
     ap (Susp-fmap (function₁ <I b)) (merid x)
       =∎
- 
+
   open DegreeAtOne skel dec
 
   degree-matches' : ∀ <I b
@@ -167,7 +167,7 @@ abstract
   degree-matches' <I b | inr _ with Fin-has-dec-eq (fst b) (endpoint <I true)
   degree-matches' <I b | inr _ | inl _ = ap (_∙ ! (merid false)) (! (!-! (merid true))) ∙ ∙-! (! (merid true)) (merid false)
   degree-matches' <I b | inr _ | inr _ = !-inv-r (merid true)
- 
+
   degree-matches : ∀ <I b
     →  ⊙SphereS-endo-degree 0 (Susp-fmap (function₁' <I b) , idp)
     == degree <I (fst b)

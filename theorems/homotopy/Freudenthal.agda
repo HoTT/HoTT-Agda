@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-import homotopy.WedgeExtension as WedgeExt
+open import homotopy.WedgeExtension
 import homotopy.SuspAdjointLoop as SAL
 
 module homotopy.Freudenthal where
@@ -19,33 +19,36 @@ module FreudenthalEquiv
   Q : Susp (de⊙ X) → Type i
   Q x = Trunc k (north == x)
 
-  ⊙up : X ⊙→ ⊙Ω (⊙Susp X)
+  ⊙up : X ⊙→ ⊙Ω (⊙Susp (de⊙ X))
   ⊙up = SAL.η _
 
   up = fst ⊙up
 
-  Codes-mer-args : WedgeExt.args {a₀ = pt X} {b₀ = [_] {n = k} (pt X)}
+  Codes-mer-args : args {a₀ = pt X} {b₀ = [_] {n = k} (pt X)}
   Codes-mer-args = record {n = S n; m = S n;
     P = λ _ _ → (Trunc k (de⊙ X) , raise-level-≤T kle Trunc-level);
     f = [_]; g = idf _; p = idp}
 
+  module CodesExt =
+    WedgeExt {a₀ = pt X} {b₀ = [_] {n = k} (pt X)} Codes-mer-args
+
   Codes-mer : de⊙ X → Trunc k (de⊙ X) → Trunc k (de⊙ X)
-  Codes-mer = WedgeExt.ext Codes-mer-args
+  Codes-mer = CodesExt.ext
 
   Codes-mer-β-l : (λ a → Codes-mer a [ pt X ]) == [_]
-  Codes-mer-β-l = λ= $ WedgeExt.β-l {r = Codes-mer-args}
+  Codes-mer-β-l = λ= CodesExt.β-l
 
   Codes-mer-β-r : (λ b → Codes-mer (pt X) b) == idf _
-  Codes-mer-β-r = λ= $ WedgeExt.β-r {r = Codes-mer-args}
+  Codes-mer-β-r = λ= $ CodesExt.β-r
 
   Codes-mer-coh : app= Codes-mer-β-l (pt X) == app= Codes-mer-β-r [ pt X ]
   Codes-mer-coh =
     app= Codes-mer-β-l (pt X)
-      =⟨ app=-β (WedgeExt.β-l {r = Codes-mer-args}) (pt X) ⟩
-    WedgeExt.β-l {r = Codes-mer-args} (pt X)
-      =⟨ ! (move1-left-on-left _ _ (WedgeExt.coh {r = Codes-mer-args})) ⟩
-    WedgeExt.β-r {r = Codes-mer-args} [ pt X ]
-      =⟨ ! (app=-β (WedgeExt.β-r {r = Codes-mer-args}) [ pt X ]) ⟩
+      =⟨ app=-β CodesExt.β-l (pt X) ⟩
+    CodesExt.β-l (pt X)
+      =⟨ ! (move1-left-on-left _ _ CodesExt.coh) ⟩
+    CodesExt.β-r [ pt X ]
+      =⟨ ! (app=-β CodesExt.β-r [ pt X ]) ⟩
     app= Codes-mer-β-r [ pt X ] ∎
 
   Codes-mer-is-equiv : (x : de⊙ X) → is-equiv (Codes-mer x)
@@ -69,8 +72,10 @@ module FreudenthalEquiv
             → is-equiv.g (transport is-equiv α e) == is-equiv.g e
           lemma idp e = idp
 
+  module CodesRec = SuspRec (Trunc k (de⊙ X)) (Trunc k (de⊙ X)) (ua ∘ Codes-mer-equiv)
+
   Codes : Susp (de⊙ X) → Type i
-  Codes = SuspRec.f (Trunc k (de⊙ X)) (Trunc k (de⊙ X)) (ua ∘ Codes-mer-equiv)
+  Codes = CodesRec.f
 
   Codes-has-level : (x : Susp (de⊙ X)) → has-level k (Codes x)
   Codes-has-level = Susp-elim Trunc-level Trunc-level
@@ -98,6 +103,12 @@ module FreudenthalEquiv
 
   encode : {x : Susp (de⊙ X)} → Trunc k (north == x) → Codes x
   encode {x} tα = Trunc-rec {{Codes-has-level x}} encode₀ tα
+
+  ⊙decodeN : ⊙Trunc k X ⊙→ ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X)))
+  ⊙decodeN = decodeN , ap [_] (!-inv-r (merid (pt X)))
+
+  ⊙encodeN : ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X))) ⊙→ ⊙Trunc k X
+  ⊙encodeN = encode , idp
 
   abstract
     encode-decodeN : (c : Codes north) → encode (decodeN c) == c
@@ -152,7 +163,7 @@ module FreudenthalEquiv
       f : (a : de⊙ X) → fst (P a (pt X))
       f a =
         transport Q (merid a) [ up (pt X) ]
-          =⟨ transport-Trunc (north ==_) (merid a) (up (pt X)) ⟩
+          =⟨ transport-Trunc' (north ==_) (merid a) (up (pt X)) ⟩
         [ transport (north ==_) (merid a) (up (pt X)) ]
           =⟨ ap [_] $ transp-cst=idf {A = Susp (de⊙ X)} (merid a) (up (pt X)) ⟩
         [ (merid (pt X) ∙ ! (merid (pt X))) ∙ merid a ]
@@ -171,7 +182,7 @@ module FreudenthalEquiv
       g : (b : de⊙ X) → fst (P (pt X) b)
       g b =
         transport Q (merid (pt X)) [ up b ]
-          =⟨ transport-Trunc (north ==_) (merid (pt X)) (up b) ⟩
+          =⟨ transport-Trunc' (north ==_) (merid (pt X)) (up b) ⟩
         [ transport (north ==_) (merid (pt X)) (up b) ]
           =⟨ ap [_] $ transp-cst=idf {A = Susp (de⊙ X)} (merid (pt X)) (up b)  ⟩
         [ (merid b ∙ ! (merid (pt X))) ∙ merid (pt X) ]
@@ -193,7 +204,7 @@ module FreudenthalEquiv
       p = ap2
         (λ p₁ p₂ →
           transport Q (merid (pt X)) [ up (pt X) ]
-            =⟨ transport-Trunc (north ==_) (merid (pt X)) (up (pt X)) ⟩
+            =⟨ transport-Trunc' (north ==_) (merid (pt X)) (up (pt X)) ⟩
           [ transport (north ==_) (merid (pt X)) (up (pt X)) ]
             =⟨ ap [_] $ transp-cst=idf {A = Susp (de⊙ X)} (merid (pt X)) (up (pt X)) ⟩
           [ (merid (pt X) ∙ ! (merid (pt X))) ∙ merid (pt X) ]
@@ -210,7 +221,7 @@ module FreudenthalEquiv
           Trunc-fmap merid (transport Codes (merid (pt X)) [ pt X ]) ∎)
         (coh (merid (pt X))) Codes-mer-coh
 
-      STS-args : WedgeExt.args {a₀ = pt X} {b₀ = pt X}
+      STS-args : args {a₀ = pt X} {b₀ = pt X}
       STS-args =
         record {n = S n; m = S n; P = P; f = f; g = g; p = p}
 
@@ -232,14 +243,180 @@ module FreudenthalEquiv
   eq : Trunc k (de⊙ X) ≃ Trunc k (north' (de⊙ X) == north)
   eq = equiv decodeN encode decode-encode encode-decodeN
 
-  ⊙eq : ⊙Trunc k X ⊙≃ ⊙Trunc k (⊙Ω (⊙Susp X))
-  ⊙eq = ≃-to-⊙≃ eq (ap [_] (!-inv-r (merid (pt X))))
+  ⊙eq : ⊙Trunc k X ⊙≃ ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X)))
+  ⊙eq = ≃-to-⊙≃ eq (snd ⊙decodeN)
+
+  abstract
+    ⊙decodeN-⊙encodeN : ⊙decodeN ⊙∘ ⊙encodeN == ⊙idf _
+    ⊙decodeN-⊙encodeN =
+      ⊙λ=' {X = ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X)))}
+           {Y = ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X)))}
+           decode-encode $
+      ↓-idf=cst-in $
+      ! (∙-unit-r (ap [_] (!-inv-r (merid (pt X)))))
+
+    ⊙<–-⊙eq : ⊙<– ⊙eq == ⊙encodeN
+    ⊙<–-⊙eq =
+      –>-is-inj (post⊙∘-equiv {Z = ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X)))} ⊙eq) (⊙<– ⊙eq) ⊙encodeN $
+      ⊙decodeN ⊙∘ ⊙<– ⊙eq
+        =⟨ ⊙<–-inv-r ⊙eq ⟩
+      ⊙idf _
+        =⟨ ! ⊙decodeN-⊙encodeN ⟩
+      ⊙decodeN ⊙∘ ⊙encodeN =∎
 
   path : Trunc k (de⊙ X) == Trunc k (north' (de⊙ X) == north)
   path = ua eq
 
-  ⊙path : ⊙Trunc k X == ⊙Trunc k (⊙Ω (⊙Susp X))
+  ⊙path : ⊙Trunc k X == ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X)))
   ⊙path = ⊙ua ⊙eq
+
+{- timjb: it is probably easier to show the naturality of ⊙decodeN
+   and deduce the naturality of ⊙encodeN from that than to show
+   the naturality of ⊙encodeN directly (as done below) -}
+module FreudenthalEquivNatural
+  {i} (n k : ℕ₋₂) (kle : k ≤T S n +2+ S n)
+  {X Y : Ptd i} (f : X ⊙→ Y)
+  {{cX : is-connected (S (S n)) (de⊙ X)}}
+  {{cY : is-connected (S (S n)) (de⊙ Y)}} where
+
+  private
+    module FX = FreudenthalEquiv n k kle X {{cX}}
+    module FY = FreudenthalEquiv n k kle Y {{cY}}
+
+  Codes-mer-map : ∀ (x : de⊙ X) (tx : Trunc k (de⊙ X))
+    → Trunc-fmap (fst f) (FX.Codes-mer x tx) ==
+      FY.Codes-mer (fst f x) (Trunc-fmap (fst f) tx)
+  Codes-mer-map =
+    WedgeExt.ext {A = de⊙ X} {a₀ = pt X} {B = Trunc k (de⊙ X)} {b₀ = [ pt X ]} $
+    record
+    { n = S n; m = S n
+    ; P = λ x tx → (P x tx , P-level x tx)
+    ; f = λ x → ↯ (f-seq x)
+    ; g = λ tx → ↯ (g-seq tx)
+    ; p = =ₛ-out p
+    }
+    where
+    P : de⊙ X → Trunc k (de⊙ X) → Type i
+    P x tx =
+      Trunc-fmap (fst f) (FX.Codes-mer x tx) ==
+      FY.Codes-mer (fst f x) (Trunc-fmap (fst f) tx)
+    P-level : ∀ x tx → has-level (S n +2+ S n) (P x tx)
+    P-level x tx = =-preserves-level (raise-level-≤T kle Trunc-level)
+    f-seq : ∀ x → Trunc-fmap (fst f) (FX.Codes-mer x [ pt X ]) =-=
+                  FY.Codes-mer (fst f x) (Trunc-fmap (fst f) [ pt X ])
+    f-seq x =
+      Trunc-fmap (fst f) (FX.Codes-mer x [ pt X ])
+        =⟪ ap (Trunc-fmap (fst f)) (FX.CodesExt.β-l x) ⟫
+      [ fst f x ]
+        =⟪ ! (FY.CodesExt.β-l (fst f x)) ⟫
+      FY.Codes-mer (fst f x) [ pt Y ]
+        =⟪ ap (FY.Codes-mer (fst f x) ∘ [_]) (! (snd f)) ⟫
+      FY.Codes-mer (fst f x) [ fst f (pt X) ] ∎∎
+    g-seq : ∀ tx → Trunc-fmap (fst f) (FX.Codes-mer (pt X) tx) =-=
+                   FY.Codes-mer (fst f (pt X)) (Trunc-fmap (fst f) tx)
+    g-seq tx =
+      Trunc-fmap (fst f) (FX.Codes-mer (pt X) tx)
+        =⟪ ap (Trunc-fmap (fst f)) (FX.CodesExt.β-r tx) ⟫
+      Trunc-fmap (fst f) tx
+        =⟪ ! (FY.CodesExt.β-r (Trunc-fmap (fst f) tx)) ⟫
+      FY.Codes-mer (pt Y) (Trunc-fmap (fst f) tx)
+        =⟪ ap (λ y → FY.Codes-mer y (Trunc-fmap (fst f) tx)) (! (snd f)) ⟫
+      FY.Codes-mer (fst f (pt X)) (Trunc-fmap (fst f) tx) ∎∎
+    p : f-seq (pt X) =ₛ g-seq [ pt X ]
+    p =
+      ap (Trunc-fmap (fst f)) (FX.CodesExt.β-l (pt X)) ◃∙
+      ! (FY.CodesExt.β-l (fst f (pt X))) ◃∙
+      ap (FY.Codes-mer (fst f (pt X)) ∘ [_]) (! (snd f)) ◃∎
+        =ₛ⟨ 0 & 1 & ap-seq-=ₛ (Trunc-fmap (fst f)) $
+                    pre-rotate-out {p = FX.CodesExt.β-l (pt X)} {q = []} {r = FX.CodesExt.β-r [ pt X ] ◃∎} $
+                    =ₛ-in $ ! $ FX.CodesExt.coh ⟩
+      ap (Trunc-fmap (fst f)) (FX.CodesExt.β-r [ pt X ]) ◃∙
+      ! (FY.CodesExt.β-l (fst f (pt X))) ◃∙
+      ap (FY.Codes-mer (fst f (pt X)) ∘ [_]) (! (snd f)) ◃∎
+        =ₛ⟨ 1 & 1 & pre-rotate-in $
+            homotopy-naturality
+              [_]
+              (λ y → FY.Codes-mer y [ pt Y ])
+              (! ∘ FY.CodesExt.β-l)
+              (! (snd f)) ⟩
+      ap (Trunc-fmap (fst f)) (FX.CodesExt.β-r [ pt X ]) ◃∙
+      ! (ap [_] (! (snd f))) ◃∙
+      ! (FY.CodesExt.β-l (pt Y)) ◃∙
+      ap (λ y → FY.Codes-mer y [ pt Y ]) (! (snd f)) ◃∙
+      ap (FY.Codes-mer (fst f (pt X)) ∘ [_]) (! (snd f)) ◃∎
+        =ₛ⟨ 3 & 2 & ap-comm-=ₛ (λ y y' → FY.Codes-mer y [ y' ]) (! (snd f)) (! (snd f)) ⟩
+      ap (Trunc-fmap (fst f)) (FX.CodesExt.β-r [ pt X ]) ◃∙
+      ! (ap [_] (! (snd f))) ◃∙
+      ! (FY.CodesExt.β-l (pt Y)) ◃∙
+      ap (λ y → FY.Codes-mer (pt Y) [ y ]) (! (snd f)) ◃∙
+      ap (λ y → FY.Codes-mer y [ fst f (pt X) ]) (! (snd f)) ◃∎
+        =ₛ⟨ 2 & 1 & !-=ₛ $
+            pre-rotate-out {p = FY.CodesExt.β-l (pt Y)} {q = []} {r = FY.CodesExt.β-r [ pt Y ] ◃∎} $
+            =ₛ-in $ ! $ FY.CodesExt.coh ⟩
+      ap (Trunc-fmap (fst f)) (FX.CodesExt.β-r [ pt X ]) ◃∙
+      ! (ap [_] (! (snd f))) ◃∙
+      ! (FY.CodesExt.β-r [ pt Y ]) ◃∙
+      ap (λ y → FY.Codes-mer (pt Y) [ y ]) (! (snd f)) ◃∙
+      ap (λ y → FY.Codes-mer y [ fst f (pt X) ]) (! (snd f)) ◃∎
+        =ₛ⟨ 1 & 3 & !ₛ $ pre-rotate-in $
+            homotopy-naturality
+              [_]
+              (FY.Codes-mer (pt Y) ∘ [_])
+              (! ∘ FY.CodesExt.β-r ∘ [_])
+              (! (snd f)) ⟩
+      ap (Trunc-fmap (fst f)) (FX.CodesExt.β-r [ pt X ]) ◃∙
+      ! (FY.CodesExt.β-r (Trunc-fmap (fst f) [ pt X ])) ◃∙
+      ap (λ y → FY.Codes-mer y [ fst f (pt X) ]) (! (snd f)) ◃∎ ∎ₛ
+
+  Codes-fmap : ∀ {x : Susp (de⊙ X)}
+    → FX.Codes x
+    → FY.Codes (Susp-fmap (fst f) x)
+  Codes-fmap {x} =
+    Susp-elim
+      {P = λ x → FX.Codes x → FY.Codes (Susp-fmap (fst f) x)}
+      (Trunc-fmap (fst f))
+      (Trunc-fmap (fst f))
+      (λ x → ↓-→-from-transp $ λ= $
+        Trunc-elim {{λ tx → =-preserves-level Trunc-level}} $ λ x' →
+        transport (FY.Codes ∘ Susp-fmap (fst f)) (merid x) [ fst f x' ]
+          =⟨ ap (λ q → coe q [ fst f x' ]) (ap-∘ FY.Codes (Susp-fmap (fst f)) (merid x)) ⟩
+        transport FY.Codes (ap (Susp-fmap (fst f)) (merid x)) [ fst f x' ]
+          =⟨ ap (λ p → transport FY.Codes p [ fst f x' ]) $
+             SuspFmap.merid-β (fst f) x ⟩
+        transport FY.Codes (merid (fst f x)) [ fst f x' ]
+          =⟨ ap (λ p → coe p [ fst f x' ]) (FY.CodesRec.merid-β (fst f x)) ⟩
+        coe (ua (FY.Codes-mer-equiv (fst f x))) [ fst f x' ]
+          =⟨ coe-β (FY.Codes-mer-equiv (fst f x)) [ fst f x' ] ⟩
+        FY.Codes-mer (fst f x) [ fst f x' ]
+          =⟨ ! (Codes-mer-map x [ x' ])  ⟩
+        Trunc-fmap (fst f) (FX.Codes-mer x [ x' ])
+          =⟨ ap (Trunc-fmap (fst f)) (! (coe-β (FX.Codes-mer-equiv x) [ x' ])) ⟩
+        Trunc-fmap (fst f) (coe (ua (FX.Codes-mer-equiv x)) [ x' ])
+          =⟨ ap (λ p → Trunc-fmap (fst f) (coe p [ x' ])) (! (FX.CodesRec.merid-β x)) ⟩
+        Trunc-fmap (fst f) (transport FX.Codes (merid x) [ x' ]) =∎)
+      x
+
+  encode-natural : ∀ {x : Susp (de⊙ X)}
+    (tα : Trunc k (north == x))
+    → FY.encode (Trunc-fmap (ap (Susp-fmap (fst f))) tα)
+      ==
+      Codes-fmap {x} (FX.encode tα)
+  encode-natural {x} =
+    Trunc-elim {{λ tα → =-preserves-level (FY.Codes-has-level (Susp-fmap (fst f) x))}} $
+    J (λ x p → FY.encode (Trunc-fmap (ap (Susp-fmap (fst f))) [ p ]) == Codes-fmap {x} (FX.encode [ p ])) $
+    ! (ap [_] (snd f))
+
+  ⊙encodeN-natural :
+    FY.⊙encodeN ◃⊙∘
+    ⊙Trunc-fmap (⊙Ω-fmap (⊙Susp-fmap (fst f))) ◃⊙idf
+    =⊙∘
+    ⊙Trunc-fmap f ◃⊙∘
+    FX.⊙encodeN ◃⊙idf
+  ⊙encodeN-natural =
+    =⊙∘-in $
+    ⊙λ=' {X = ⊙Trunc k (⊙Ω (⊙Susp (de⊙ X)))} {Y = ⊙Trunc k Y} (encode-natural {north}) $
+    ↓-idf=cst-in {p = ! (ap [_] (snd f))} $
+    ! $ !-inv-l (ap [_] (snd f))
 
 {- Used to prove stability in iterated suspensions -}
 module FreudenthalIso
@@ -249,9 +426,9 @@ module FreudenthalIso
   open FreudenthalEquiv n ⟨ S k ⟩ kle X public
 
   hom : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X)
-     →ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X)))
+     →ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp (de⊙ X))))
   hom = Ω^S-group-fmap k (decodeN , decodeN-pt)
 
   iso : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X)
-     ≃ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X)))
+     ≃ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp (de⊙ X))))
   iso = Ω^S-group-emap k ⊙eq

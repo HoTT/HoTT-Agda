@@ -43,11 +43,37 @@ module TensorProduct₀ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     _⊗_ : G.El → H.El → El
     _⊗_ g h = insert (g , h)
 
-    lin-l : ∀ g₁ g₂ h → G.comp g₁ g₂ ⊗ h == comp (g₁ ⊗ h) (g₂ ⊗ h)
-    lin-l g₁ g₂ h = rel-holds (linear-l g₁ g₂ h)
+    ⊗-lin-l : ∀ g₁ g₂ h → G.comp g₁ g₂ ⊗ h == comp (g₁ ⊗ h) (g₂ ⊗ h)
+    ⊗-lin-l g₁ g₂ h = rel-holds (linear-l g₁ g₂ h)
 
-    lin-r : ∀ g h₁ h₂ → g ⊗ H.comp h₁ h₂ == comp (g ⊗ h₁) (g ⊗ h₂)
-    lin-r g h₁ h₂ = rel-holds (linear-r g h₁ h₂)
+    ⊗-lin-r : ∀ g h₁ h₂ → g ⊗ H.comp h₁ h₂ == comp (g ⊗ h₁) (g ⊗ h₂)
+    ⊗-lin-r g h₁ h₂ = rel-holds (linear-r g h₁ h₂)
+
+    ⊗-unit-l : ∀ h → G.ident ⊗ h == ident
+    ⊗-unit-l h = cancel-l (G.ident ⊗ h) $
+      comp (G.ident ⊗ h) (G.ident ⊗ h)
+        =⟨ ! (⊗-lin-l G.ident G.ident h) ⟩
+      G.comp G.ident G.ident ⊗ h
+        =⟨ ap (_⊗ h) (G.unit-l G.ident) ⟩
+      G.ident ⊗ h
+        =⟨ ! (unit-r (G.ident ⊗ h)) ⟩
+      comp (G.ident ⊗ h) ident =∎
+
+    ⊗-unit-r : ∀ g → g ⊗ H.ident == ident
+    ⊗-unit-r g = cancel-r (g ⊗ H.ident) $
+      comp (g ⊗ H.ident) (g ⊗ H.ident)
+        =⟨ ! (⊗-lin-r g H.ident H.ident) ⟩
+      g ⊗ H.comp H.ident H.ident
+        =⟨ ap (g ⊗_) (H.unit-l H.ident) ⟩
+      g ⊗ H.ident
+        =⟨ ! (unit-r (g ⊗ H.ident)) ⟩
+      comp (g ⊗ H.ident) ident =∎
+
+  ins-l-hom : H.El → G.grp →ᴳ grp
+  ins-l-hom h = group-hom (_⊗ h) (λ g₁ g₂ → ⊗-lin-l g₁ g₂ h)
+
+  ins-r-hom : G.El → H.grp →ᴳ grp
+  ins-r-hom g = group-hom (g ⊗_) (⊗-lin-r g)
 
   module BilinearMaps {k} (L : AbGroup k) where
 
@@ -155,7 +181,6 @@ module TensorProduct₀ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
 module TensorProduct₁ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
-
   private
     module G⊗H = TensorProduct₀ G H
     module H⊗G = TensorProduct₀ H G
@@ -165,8 +190,8 @@ module TensorProduct₁ {i} {j} (G : AbGroup i) (H : AbGroup j) where
     b =
       record
       { bmap = λ g h → h H⊗G.⊗ g
-      ; linearity-l = λ g₁ g₂ h → H⊗G.lin-r h g₁ g₂
-      ; linearity-r = λ g h₁ h₂ → H⊗G.lin-l h₁ h₂ g
+      ; linearity-l = λ g₁ g₂ h → H⊗G.⊗-lin-r h g₁ g₂
+      ; linearity-r = λ g h₁ h₂ → H⊗G.⊗-lin-l h₁ h₂ g
       }
 
   swap : (G⊗H.grp →ᴳ H⊗G.grp)
@@ -178,33 +203,33 @@ module TensorProduct₁ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
   open G⊗H public
 
-module TensorProduct {i} {j} (G : AbGroup i) (H : AbGroup j) where
+module TensorProduct₂ {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
   private
     module G⊗H = TensorProduct₁ G H
     module H⊗G = TensorProduct₁ H G
 
+  swap-swap : ∀ s → GroupHom.f (H⊗G.swap ∘ᴳ G⊗H.swap) s == s
+  swap-swap s =
+    ap (λ ϕ → GroupHom.f ϕ s) $
+    G⊗H.UniversalProperty.hom= G⊗H.abgroup {ϕ = H⊗G.swap ∘ᴳ G⊗H.swap} {ψ = idhom _} $
+    λ g h → ap (GroupHom.f H⊗G.swap) (G⊗H.swap-β g h) ∙ H⊗G.swap-β h g
+
+  swap-swap-idhom : H⊗G.swap ∘ᴳ G⊗H.swap == idhom G⊗H.grp
+  swap-swap-idhom = group-hom= (λ= swap-swap)
+
+  open G⊗H public
+
+module TensorProduct {i} {j} (G : AbGroup i) (H : AbGroup j) where
+
+  private
+    module G⊗H = TensorProduct₂ G H
+    module H⊗G = TensorProduct₂ H G
+
+  swap-is-equiv : is-equiv (GroupHom.f G⊗H.swap)
+  swap-is-equiv = is-eq _ (GroupHom.f H⊗G.swap) H⊗G.swap-swap G⊗H.swap-swap
+
   commutative : G⊗H.grp ≃ᴳ H⊗G.grp
-  commutative =
-    to-hom , is-eq to from to-from from-to
-    where
-    to-hom : G⊗H.grp →ᴳ H⊗G.grp
-    to-hom = G⊗H.swap
-    to : G⊗H.El → H⊗G.El
-    to = GroupHom.f to-hom
-    from-hom : H⊗G.grp →ᴳ G⊗H.grp
-    from-hom = H⊗G.swap
-    from : H⊗G.El → G⊗H.El
-    from = GroupHom.f from-hom
-    to-from : ∀ s → to (from s) == s
-    to-from s =
-      ap (λ ϕ → GroupHom.f ϕ s) $
-      H⊗G.UniversalProperty.hom= H⊗G.abgroup {ϕ = to-hom ∘ᴳ from-hom} {ψ = idhom _} $
-      λ h g → ap to (H⊗G.swap-β h g) ∙ G⊗H.swap-β g h
-    from-to : ∀ t → from (to t) == t
-    from-to t =
-      ap (λ ϕ → GroupHom.f ϕ t) $
-      G⊗H.UniversalProperty.hom= G⊗H.abgroup {ϕ = from-hom ∘ᴳ to-hom} {ψ = idhom _} $
-      λ g h → ap from (G⊗H.swap-β g h) ∙ H⊗G.swap-β h g
+  commutative = G⊗H.swap , swap-is-equiv
 
   open G⊗H public

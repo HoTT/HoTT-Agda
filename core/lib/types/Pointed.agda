@@ -15,7 +15,40 @@ functional extensionality for pointed maps.
 
 module lib.types.Pointed where
 
+{- Sequences of pointed maps and paths between their compositions -}
+
+infixr 80 _◃⊙∘_
+data ⊙FunctionSeq {i} : Ptd i → Ptd i → Type (lsucc i) where
+  ⊙idf-seq : {X : Ptd i} → ⊙FunctionSeq X X
+  _◃⊙∘_ : {X Y Z : Ptd i} (g : Y ⊙→ Z) (fs : ⊙FunctionSeq X Y) → ⊙FunctionSeq X Z
+
+infix 30 _⊙–→_
+_⊙–→_ = ⊙FunctionSeq
+
+infix 90 _◃⊙idf
+_◃⊙idf : ∀ {i} {X Y : Ptd i} → (X ⊙→ Y) → X ⊙–→ Y
+_◃⊙idf fs = fs ◃⊙∘ ⊙idf-seq
+
+⊙compose : ∀ {i} {X Y : Ptd i} → (X ⊙–→ Y) → X ⊙→ Y
+⊙compose ⊙idf-seq = ⊙idf _
+⊙compose (g ◃⊙∘ fs) = g ⊙∘ ⊙compose fs
+
+record _=⊙∘_ {i} {X Y : Ptd i} (fs gs : X ⊙–→ Y) : Type i where
+  constructor =⊙∘-in
+  field
+    =⊙∘-out : ⊙compose fs == ⊙compose gs
+open _=⊙∘_ public
+
 {- Pointed maps -}
+
+⊙→-level : ∀ {i j} (X : Ptd i) (Y : Ptd j)
+  {n : ℕ₋₂}
+  → has-level n (de⊙ Y)
+  → has-level n (X ⊙→ Y)
+⊙→-level X Y Y-level =
+  Σ-level
+    (Π-level (λ _ → Y-level))
+    (λ f' → =-preserves-level Y-level)
 
 ⊙app= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
   → f == g → f ⊙∼ g
@@ -54,6 +87,68 @@ module lib.types.Pointed where
   → (f : Y ⊙→ Z) → f ⊙∘ (⊙cst :> (X ⊙→ Y)) ⊙∼ ⊙cst
 ⊙∘-cst-r {X = X} f = (λ _ → snd f) , ↓-idf=cst-in' idp
 
+private
+  ⊙coe-pt : ∀ {i} {X Y : Ptd i} (p : X == Y)
+    → coe (ap de⊙ p) (pt X) == pt Y
+  ⊙coe-pt idp = idp
+
+⊙coe : ∀ {i} {X Y : Ptd i}
+  → X == Y → X ⊙→ Y
+⊙coe p = coe (ap de⊙ p) , ⊙coe-pt p
+
+⊙coe-equiv : ∀ {i} {X Y : Ptd i}
+  → X == Y → X ⊙≃ Y
+⊙coe-equiv p = ⊙coe p , snd (coe-equiv (ap de⊙ p))
+
+transport-post⊙∘ : ∀ {i} {j} (X : Ptd i) {Y Z : Ptd j} (p : Y == Z)
+  (f : X ⊙→ Y)
+  → transport (X ⊙→_) p f == ⊙coe p ⊙∘ f
+transport-post⊙∘ X p@idp f = ! (⊙λ= (⊙∘-unit-l f))
+
+⊙coe-∙ : ∀ {i} {X Y Z : Ptd i} (p : X == Y) (q : Y == Z)
+  → ⊙coe (p ∙ q) ◃⊙idf =⊙∘ ⊙coe q ◃⊙∘ ⊙coe p ◃⊙idf
+⊙coe-∙ p@idp q = =⊙∘-in idp
+
+private
+  ⊙coe'-pt : ∀ {i} {X Y : Ptd i} (p : de⊙ X == de⊙ Y) (q : pt X == pt Y [ idf _ ↓ p ])
+    → coe p (pt X) == pt Y
+  ⊙coe'-pt p@idp q = q
+
+⊙coe' : ∀ {i} {X Y : Ptd i} (p : de⊙ X == de⊙ Y) (q : pt X == pt Y [ idf _ ↓ p ])
+  → X ⊙→ Y
+⊙coe' p q = coe p , ⊙coe'-pt p q
+
+private
+  ⊙transport-pt : ∀ {i j} {A : Type i} (B : A → Ptd j) {x y : A} (p : x == y)
+    → transport (de⊙ ∘ B) p (pt (B x)) == pt (B y)
+  ⊙transport-pt B idp = idp
+
+⊙transport : ∀ {i j} {A : Type i} (B : A → Ptd j) {x y : A} (p : x == y)
+  → (B x ⊙→ B y)
+⊙transport B p = transport (de⊙ ∘ B) p , ⊙transport-pt B p
+
+⊙transport-∙ : ∀ {i j} {A : Type i} (B : A → Ptd j)
+  {x y z : A} (p : x == y) (q : y == z)
+  → ⊙transport B (p ∙ q) ◃⊙idf =⊙∘ ⊙transport B q ◃⊙∘ ⊙transport B p ◃⊙idf
+⊙transport-∙ B p@idp q = =⊙∘-in idp
+
+⊙transport-⊙coe : ∀ {i j} {A : Type i} (B : A → Ptd j) {x y : A} (p : x == y)
+  → ⊙transport B p == ⊙coe (ap B p)
+⊙transport-⊙coe B p@idp = idp
+
+⊙transport-natural : ∀ {i j k} {A : Type i} {B : A → Ptd j} {C : A → Ptd k}
+  {x y : A} (p : x == y)
+  (h : ∀ a → B a ⊙→ C a)
+  → h y ⊙∘ ⊙transport B p == ⊙transport C p ⊙∘ h x
+⊙transport-natural p@idp h = ! (⊙λ= (⊙∘-unit-l (h _)))
+
+{- This requires that B and C have the same universe level -}
+⊙transport-natural-=⊙∘ : ∀ {i j} {A : Type i} {B C : A → Ptd j}
+  {x y : A} (p : x == y)
+  (h : ∀ a → B a ⊙→ C a)
+  → h y ◃⊙∘ ⊙transport B p ◃⊙idf =⊙∘ ⊙transport C p ◃⊙∘ h x ◃⊙idf
+⊙transport-natural-=⊙∘ p h = =⊙∘-in (⊙transport-natural p h)
+
 {- Pointed equivalences -}
 
 -- Extracting data from an pointed equivalence
@@ -78,19 +173,27 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
   _⊙⁻¹ : Y ⊙≃ X
   _⊙⁻¹ = ⊙<– , is-equiv-inverse (snd ⊙e)
 
-module _ {i j} {X : Ptd i} {Y : Ptd j} where 
+module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  ⊙<–-inv-l : (⊙e : X ⊙≃ Y) → ⊙<– ⊙e ⊙∘ ⊙–> ⊙e ⊙∼ ⊙idf _
-  ⊙<–-inv-l ⊙e = <–-inv-l (⊙≃-to-≃ ⊙e) , ↓-idf=cst-in' (lemma ⊙e) where
+  ⊙<–-inv-l : (⊙e : X ⊙≃ Y) → ⊙<– ⊙e ⊙∘ ⊙–> ⊙e == ⊙idf _
+  ⊙<–-inv-l ⊙e = ⊙λ= (<–-inv-l (⊙≃-to-≃ ⊙e) , ↓-idf=cst-in' (lemma ⊙e)) where
     lemma : {Y : Ptd j} (⊙e : X ⊙≃ Y)
       → snd (⊙<– ⊙e ⊙∘ ⊙–> ⊙e) == is-equiv.g-f (snd ⊙e) (pt X)
     lemma ((f , idp) , f-ise) = idp
 
-  ⊙<–-inv-r : (⊙e : X ⊙≃ Y) → ⊙–> ⊙e ⊙∘ ⊙<– ⊙e ⊙∼ ⊙idf _
-  ⊙<–-inv-r ⊙e = <–-inv-r (⊙≃-to-≃ ⊙e) , ↓-idf=cst-in' (lemma ⊙e) where
+  ⊙<–-inv-r : (⊙e : X ⊙≃ Y) → ⊙–> ⊙e ⊙∘ ⊙<– ⊙e == ⊙idf _
+  ⊙<–-inv-r ⊙e = ⊙λ= (<–-inv-r (⊙≃-to-≃ ⊙e) , ↓-idf=cst-in' (lemma ⊙e)) where
     lemma : {Y : Ptd j} (⊙e : X ⊙≃ Y)
       → snd (⊙–> ⊙e ⊙∘ ⊙<– ⊙e) == is-equiv.f-g (snd ⊙e) (pt Y)
     lemma ((f , idp) , f-ise) = ∙-unit-r _ ∙ is-equiv.adj f-ise (pt X)
+
+module _ {i} {X Y : Ptd i} where
+
+  ⊙<–-inv-l-=⊙∘ : (⊙e : X ⊙≃ Y) → ⊙<– ⊙e ◃⊙∘ ⊙–> ⊙e ◃⊙idf =⊙∘ ⊙idf-seq
+  ⊙<–-inv-l-=⊙∘ ⊙e = =⊙∘-in (⊙<–-inv-l ⊙e)
+
+  ⊙<–-inv-r-=⊙∘ : (⊙e : X ⊙≃ Y) → ⊙–> ⊙e ◃⊙∘ ⊙<– ⊙e ◃⊙idf =⊙∘ ⊙idf-seq
+  ⊙<–-inv-r-=⊙∘ ⊙e = =⊙∘-in (⊙<–-inv-r ⊙e)
 
 module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
 

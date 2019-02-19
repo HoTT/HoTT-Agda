@@ -463,10 +463,30 @@ pair×=-split-r : ∀ {i j} {A : Type i} {B : Type j} {a₁ a₂ : A} (p : a₁ 
   → pair×= p q == ap (λ b → (a₁ , b)) q ∙ ap (λ a → (a , b₂)) p
 pair×=-split-r idp idp = idp
 
+×-swap : ∀ {i j} {A : Type i} {B : Type j} → A × B → B × A
+×-swap (a , b) = (b , a)
+
+×-swap-natural : ∀ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  (f : A₀ → A₁)
+  (g : B₀ → B₁)
+  → ×-fmap g f ∘ ×-swap ∼ ×-swap ∘ ×-fmap f g
+×-swap-natural f g (a , b) = idp
+
+⊙×-swap : ∀ {i j} {X : Ptd i} {Y : Ptd j} → X ⊙× Y ⊙→ Y ⊙× X
+⊙×-swap = ×-swap , idp
+
+⊙×-swap-natural : ∀ {i₀ i₁ j₀ j₁} {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
+  (f : X₀ ⊙→ X₁)
+  (g : Y₀ ⊙→ Y₁)
+  → ⊙×-fmap g f ⊙∘ ⊙×-swap ⊙∼ ⊙×-swap ⊙∘ ⊙×-fmap f g
+⊙×-swap-natural (f' , idp) (g' , idp) =
+  ×-swap-natural f' g' , idp
+
 -- Commutativity of products and derivatives.
 module _ {i j} {A : Type i} {B : Type j} where
-  ×-comm : Σ A (λ _ → B) ≃ Σ B (λ _ → A)
-  ×-comm = equiv (λ {(a , b) → (b , a)}) (λ {(b , a) → (a , b)}) (λ _ → idp) (λ _ → idp)
+
+  ×-comm : A × B ≃ B × A
+  ×-comm = equiv ×-swap ×-swap (λ _ → idp) (λ _ → idp)
 
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
   Σ₂-×-comm : Σ (Σ A B) (λ ab → C (fst ab)) ≃ Σ (Σ A C) (λ ac → B (fst ac))

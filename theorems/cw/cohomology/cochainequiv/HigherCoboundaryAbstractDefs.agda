@@ -38,8 +38,8 @@ private
 open import cw.cohomology.WedgeOfCells OT
 open import cw.cohomology.reconstructed.HigherCoboundary OT ⊙skel
 
-⊙function₀ : ⊙FinBouquet I (S (S n)) ⊙→ ⊙Susp (⊙FinBouquet I₋₁ (S n))
-⊙function₀ = ⊙Susp-fmap (⊙<– (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel₋₁))
+⊙function₀ : ⊙FinBouquet I (S (S n)) ⊙→ ⊙Susp (FinBouquet I₋₁ (S n))
+⊙function₀ = ⊙Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁))
           ⊙∘ ⊙cw-∂-before-Susp
           ⊙∘ ⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel)
 
@@ -50,7 +50,7 @@ function₁ <I <I₋₁ = bwproj Fin-has-dec-eq <I₋₁
                   ∘ attaching-last skel <I
 
 abstract
-  ⊙function₀' : ⊙FinBouquet I (S (S n)) ⊙→ ⊙Susp (⊙FinBouquet I₋₁ (S n))
+  ⊙function₀' : ⊙FinBouquet I (S (S n)) ⊙→ ⊙Susp (FinBouquet I₋₁ (S n))
   ⊙function₀' = ⊙function₀
 
   ⊙function₀'-β : ⊙function₀' == ⊙function₀

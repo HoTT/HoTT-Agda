@@ -300,7 +300,7 @@ This directory contains proofs of interesting homotopy-theoretic theorems.
 - `SuspAdjointLoopLadder`: Proves naturality in the covariant argument of the adjunction between the iterated suspension and the iterated loop space when phrased in terms of Hom-types.
 - `SuspProduct`: Proves that `⊙Susp (X ⊙× Y) ⊙≃ ⊙Susp X ⊙∨ (⊙Susp Y ⊙∨ ⊙Susp (X ⊙∧ Y))`.
 - `SuspSectionDecomp`: Let `f : X → Y` be a pointed section of `g : Y → X`. Then there is an equivalence `Susp (de⊙ Y) ≃ ⊙Susp X ∨ ⊙Susp (⊙Cofiber ⊙f)` between the suspension of `Y` and the wedge sum of the suspensions of `X` and the cofiber of `f`. This can be interpreted as a splitting in the part ΣX → ΣY → Σcofib(f) of the cofiber sequence of `f`.
-- `SuspSmash`: Gives an equivalence `⊙Susp (⊙Smash X Y) ⊙≃ (X ⊙* Y)` between the suspension of the smash product and the join of two pointed types.
+- `SuspSmashJoin`: Gives an equivalence `⊙Susp (⊙Smash X Y) ⊙≃ (X ⊙* Y)` between the suspension of the smash product and the join of two pointed types.
 - `TruncationLoopLadder`: Proves the naturality of the equivalence of the 0-truncation of the m-fold loop space and the m-fold loop space of the m-truncation.
 - `VanKampen`: Proves the improved version of the *Seifert–van Kampen theorem* for calculating the fundamental groupoid of a pushout from [Favonia's thesis][favonia-thesis].
 - `vankampen/`: Contains definitions and lemmas for `VanKampen.agda`.

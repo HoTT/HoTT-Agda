@@ -76,28 +76,8 @@ module _ {i} (A : Type i) where
     (p : a == b) (q : b == c)
     → =ₜ-to-2-type-fundamental-cat.pres-comp {x = [ a ]} {y = [ b ]} {z = [ c ]} [ p ]₁ [ q ]₁
       == ap-∙ [_] p q
-  =ₜ-to-2-type-fundamental-cat-pres-comp-β {a} p@idp q@idp = =ₛ-out $
-    =ₜ-to-2-type-fundamental-cat.pres-comp {[ a ]} {[ b ]} {[ c ]} [ p ]₁ [ q ]₁ ◃∎
-      =ₛ⟨ FunctorInv.pres-comp-β {[ a ]} {[ b ]} {[ c ]} [ p ]₁ [ q ]₁ ⟩
-    idp ◃∙
-    idp ◃∙
-    ap-∙ [_] p q ◃∙
-    idp ◃∎
-      =ₛ⟨ 0 & 1 & expand [] ⟩
-    idp ◃∙
-    ap-∙ [_] p q ◃∙
-    idp ◃∎
-      =ₛ⟨ 0 & 1 & expand [] ⟩
-    ap-∙ [_] p q ◃∙
-    idp ◃∎
-      =ₛ⟨ 1 & 1 & expand [] ⟩
-    ap-∙ [_] p q ◃∎ ∎ₛ
-    where
-      b = a
-      c = a
-      module C = TwoSemiCategory (2-type-fundamental-cat (Trunc 2 A))
-      module D = TwoSemiCategory (=ₜ-fundamental-cat A)
-
+  =ₜ-to-2-type-fundamental-cat-pres-comp-β {a} p@idp q@idp =
+    =ₛ-out (FunctorInv.pres-comp-β {[ a ]} {[ a ]} {[ a ]} [ idp ]₁ [ idp ]₁)
 
 module _ {i} (C : Type i) (c₀ : C) {{C-level : has-level 1 C}} where
 

@@ -158,13 +158,13 @@ module homotopy.SphereEndomorphism where
     import homotopy.SuspAdjointLoop as SAL
     import homotopy.SuspAdjointLoopLadder as SALL
     import homotopy.CircleHSpace as CHS
-    import homotopy.Pi2HSusp as Pi2
+    open import homotopy.Pi2HSusp
 
     ⊙up : ∀ n → ⊙Sphere n ⊙→ ⊙Ω (⊙Sphere (S n))
     ⊙up n = SAL.η (⊙Sphere n)
 
     Ω^'S-Trunc-up-is-equiv : ∀ n → is-equiv (Ω^'-fmap (S n) (⊙Trunc-fmap {n = ⟨ S n ⟩} (⊙up (S n))))
-    Ω^'S-Trunc-up-is-equiv O = snd (Ω-emap (Pi2.⊙eq⁻¹ CHS.⊙S¹-hSpace))
+    Ω^'S-Trunc-up-is-equiv O = snd (Ω-emap (Pi2HSusp.⊙eq⁻¹ CHS.⊙S¹-hSpace))
     Ω^'S-Trunc-up-is-equiv (S n) = snd (Ω^'-emap (S (S n)) (F.⊙eq n))
 
     Trunc-Ω^'S-up-is-equiv : ∀ n → is-equiv (Trunc-fmap {n = 0} (Ω^'-fmap (S n) (⊙up (S n))))
@@ -184,14 +184,14 @@ module homotopy.SphereEndomorphism where
 
     final-fix : ∀ n →
       CommSquareEquiv
-        (⊙Susp-fmap :> (⊙Sphere-endo (S n) → _))
+        ((⊙Susp-fmap ∘ fst) :> (⊙Sphere-endo (S n) → _))
         (SAL.η _ ⊙∘_)
         (idf _)
         (–> (SAL.eq _ _))
     final-fix n = comm-sqr (λ f → ! (SAL.η-natural f)) , idf-is-equiv _ , snd (SAL.eq _ _)
 
   Trunc-⊙SphereS-endo-Susp-is-equiv : ∀ n →
-    is-equiv (Trunc-fmap ⊙Susp-fmap :> (Trunc-⊙Sphere-endo (S n) → _))
+    is-equiv (Trunc-fmap (⊙Susp-fmap ∘ fst) :> (Trunc-⊙Sphere-endo (S n) → _))
   Trunc-⊙SphereS-endo-Susp-is-equiv n =
     CommSquareEquiv-preserves'-equiv
       (Trunc-csemap (final-fix n))

@@ -283,15 +283,19 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
   emloop-equiv : G.El ≃ (embase' G == embase)
   emloop-equiv = equiv emloop encode decode-encode encode-emloop
 
-  instance
-    EM₁-level₁ : {n : ℕ₋₂} → has-level (S (S (S n))) (EM₁ G)
-    EM₁-level₁ {⟨-2⟩} = has-level-in pathspace-is-set
-      where
-      embase-loopspace-is-set : is-set (embase' G == embase)
-      embase-loopspace-is-set = transport is-set (ua emloop-equiv) ⟨⟩
-      pathspace-is-set : ∀ (x y : EM₁ G) → is-set (x == y)
-      pathspace-is-set = EM₁-prop-elim (EM₁-prop-elim embase-loopspace-is-set)
-    EM₁-level₁ {S n} = raise-level _ EM₁-level₁
+  ⊙emloop-equiv : G.⊙El ⊙≃ ⊙Ω (⊙EM₁ G)
+  ⊙emloop-equiv = ≃-to-⊙≃ emloop-equiv emloop-ident
+
+  abstract
+    instance
+      EM₁-level₁ : {n : ℕ₋₂} → has-level (S (S (S n))) (EM₁ G)
+      EM₁-level₁ {⟨-2⟩} = has-level-in pathspace-is-set
+        where
+        embase-loopspace-is-set : is-set (embase' G == embase)
+        embase-loopspace-is-set = transport is-set (ua emloop-equiv) ⟨⟩
+        pathspace-is-set : ∀ (x y : EM₁ G) → is-set (x == y)
+        pathspace-is-set = EM₁-prop-elim (EM₁-prop-elim embase-loopspace-is-set)
+      EM₁-level₁ {S n} = raise-level _ EM₁-level₁
 
   Ω¹-EM₁ : Ω^S-group 0 (⊙EM₁ G) ≃ᴳ G
   Ω¹-EM₁ = ≃-to-≃ᴳ (emloop-equiv ⁻¹)

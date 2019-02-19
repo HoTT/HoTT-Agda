@@ -218,7 +218,7 @@ abstract
   _-Type-level_ : (n : ℕ₋₂) (i : ULevel)
     → has-level (S n) (n -Type i)
   (n -Type-level i) = has-level-in (λ { (A , pA) (B , pB) → aux A B pA pB}) where
-    
+
     aux : (A B : Type i) (pA : has-level n A) (pB : has-level n B) → has-level n ((A , pA) == (B , pB))
     aux A B pA pB = equiv-preserves-level (nType=-econv (A , ⟨⟩) (B , ⟨⟩)) where instance _ = pA; _ = pB
 

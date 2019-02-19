@@ -67,19 +67,19 @@ abstract
     GroupIso.f (C-FinBouquet-diag 1 I)
       (CEl-fmap 1 (⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel))
         (CEl-fmap 1 ⊙cw-∂-head'-before-Susp
-          (CEl-fmap 1 (⊙Susp-fmap (⊙<– (Bouquet-⊙equiv-X ⊙head-is-separable)))
+          (CEl-fmap 1 (⊙Susp-fmap (<– (Bouquet-equiv-X ⊙head-is-separable)))
             (<– (CEl-Susp 0 (⊙Bouquet (MinusPoint ⊙head) 0))
               (GroupIso.g (C-SubFinBouquet-diag 0 MinusPoint-⊙head-has-choice ⊙head-separate)
                 g))))) <I
       =⟨ ap (λ g → GroupIso.f (C-FinBouquet-diag 1 I) g <I) $
             ∘-CEl-fmap 1 (⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel)) ⊙cw-∂-head'-before-Susp
-              (CEl-fmap 1 (⊙Susp-fmap (⊙<– (Bouquet-⊙equiv-X ⊙head-is-separable)))
+              (CEl-fmap 1 (⊙Susp-fmap (<– (Bouquet-equiv-X ⊙head-is-separable)))
                 (<– (CEl-Susp 0 (⊙Bouquet (MinusPoint ⊙head) 0))
                   (GroupIso.g (C-SubFinBouquet-diag 0 MinusPoint-⊙head-has-choice ⊙head-separate)
                     g)))
           ∙ ∘-CEl-fmap 1
               (⊙cw-∂-head'-before-Susp ⊙∘ ⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel))
-              (⊙Susp-fmap (⊙<– (Bouquet-⊙equiv-X ⊙head-is-separable)))
+              (⊙Susp-fmap (<– (Bouquet-equiv-X ⊙head-is-separable)))
               (<– (CEl-Susp 0 (⊙Bouquet (MinusPoint ⊙head) 0))
                 (GroupIso.g (C-SubFinBouquet-diag 0 MinusPoint-⊙head-has-choice ⊙head-separate)
                   g))
@@ -98,11 +98,11 @@ abstract
     Group.subsum-r (C2 0) ⊙head-separate
       (λ b → Group.exp (C2 0) (g b)
         (⊙SphereS-endo-degree 0
-          (⊙Susp-fmap (⊙bwproj MinusPoint-⊙head-has-dec-eq b) ⊙∘ ⊙function₀' ⊙∘ ⊙fwin <I)))
+          (⊙Susp-fmap (bwproj MinusPoint-⊙head-has-dec-eq b) ⊙∘ ⊙function₀' ⊙∘ ⊙fwin <I)))
       =⟨ ap (Group.subsum-r (C2 0) ⊙head-separate)
           (λ= λ b → ap (Group.exp (C2 0) (g b)) $
             ⊙SphereS-endo-degree-base-indep 0
-              {f = (  ⊙Susp-fmap (⊙bwproj MinusPoint-⊙head-has-dec-eq b)
+              {f = (  ⊙Susp-fmap (bwproj MinusPoint-⊙head-has-dec-eq b)
                    ⊙∘ ⊙function₀'
                    ⊙∘ ⊙fwin <I)}
               {g = (Susp-fmap (function₁' <I b) , idp)}

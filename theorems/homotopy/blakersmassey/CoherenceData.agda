@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT hiding (left; right)
-import homotopy.WedgeExtension as WedgeExt
+open import homotopy.WedgeExtension
 
 module homotopy.blakersmassey.CoherenceData {i j k}
   {A : Type i} {B : Type j} (Q : A → B → Type k)
@@ -74,39 +74,38 @@ module To {a₁ b₀} (q₁₀ : Q a₁ b₀) where
   p' = λ r shift → ap (template u₀ v₀ r shift q₁₀) (path-coherence q₁₀)
   p = λ= λ r → λ= λ shift → p' r shift
 
-  args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
-  args = record {
+  to-args : args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
+  to-args = record {
     n = n; m = m;
     cA = g-conn b₀;
     cB = f-conn a₁;
     P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → Trunc-level;
     f = f; g = g; p = p}
 
+  module Ext = WedgeExt to-args
+
   ext : ∀ u v → P u v
-  ext = WedgeExt.ext args
+  ext = Ext.ext
 
   β-l : ∀ u r shift → ext u v₀ r shift == f u r shift
-  β-l u r shift = app= (app= (WedgeExt.β-l u) r) shift
+  β-l u r shift = app= (app= (Ext.β-l u) r) shift
 
   β-r : ∀ v r shift → ext u₀ v r shift == g v r shift
-  β-r v r shift = app= (app= (WedgeExt.β-r v) r) shift
+  β-r v r shift = app= (app= (Ext.β-r v) r) shift
 
   abstract
     coh : ∀ r shift → ! (β-l u₀ r shift) ∙ β-r v₀ r shift == p' r shift
     coh r shift =
       ! (β-l u₀ r shift) ∙ β-r v₀ r shift
-        =⟨ ap (_∙ β-r v₀ r shift) (!-ap (_$ shift) (app= (WedgeExt.β-l u₀) r))
+        =⟨ ap (_∙ β-r v₀ r shift) (!-ap (_$ shift) (app= (Ext.β-l u₀) r))
          ∙ ∙-ap (_$ shift)
-             (! (app= (WedgeExt.β-l {r = args} u₀) r))
-             (app= (WedgeExt.β-r {r = args} v₀) r)
+             (! (app= (Ext.β-l u₀) r))
+             (app= (Ext.β-r v₀) r)
          ∙ ap (λ p → app= p shift)
-             ( ap (_∙ app= (WedgeExt.β-r {r = args} v₀) r)
-                (!-ap (_$ r) (WedgeExt.β-l {r = args} u₀))
-             ∙ ∙-ap (_$ r)
-                (! (WedgeExt.β-l {r = args} u₀))
-                (WedgeExt.β-r {r = args} v₀)) ⟩
-      app= (app= (! (WedgeExt.β-l {r = args} u₀) ∙ WedgeExt.β-r {r = args} v₀) r) shift
-        =⟨ ap (λ p → app= (app= p r) shift) (WedgeExt.coh {r = args}) ⟩
+             ( ap (_∙ app= (Ext.β-r v₀) r) (!-ap (_$ r) (Ext.β-l u₀)) ∙
+               ∙-ap (_$ r) (! (Ext.β-l u₀)) (Ext.β-r v₀)) ⟩
+      app= (app= (! (Ext.β-l u₀) ∙ Ext.β-r v₀) r) shift
+        =⟨ ap (λ p → app= (app= p r) shift) Ext.coh ⟩
       app= (app= (λ= λ r → λ= λ shift → p' r shift) r) shift
         =⟨ ap (λ p → app= p shift) (app=-β (λ r → λ= λ shift → p' r shift) r)
          ∙ app=-β (λ shift → p' r shift) shift ⟩
@@ -151,22 +150,24 @@ module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
   p' = λ r shift → ap (template u₀ v₀ r shift q₀₁) (path-coherence q₀₁)
   p = λ= λ r → λ= λ shift → p' r shift
 
-  args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
-  args = record {
+  from-args : args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
+  from-args = record {
     n = n; m = m;
     cA = g-conn b₁;
     cB = f-conn a₀;
     P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → Trunc-level;
     f = f; g = g; p = p}
 
+  module Ext = WedgeExt from-args
+
   ext : ∀ u v → P u v
-  ext = WedgeExt.ext args
+  ext = Ext.ext
 
   β-l : ∀ u r shift → ext u v₀ r shift == f u r shift
-  β-l u r shift = app= (app= (WedgeExt.β-l u) r) shift
+  β-l u r shift = app= (app= (Ext.β-l u) r) shift
 
   β-r : ∀ v r shift → ext u₀ v r shift == g v r shift
-  β-r v r shift = app= (app= (WedgeExt.β-r v) r) shift
+  β-r v r shift = app= (app= (Ext.β-r v) r) shift
 
   abstract
     coh : ∀ r shift → ! (β-l u₀ r shift) ∙ β-r v₀ r shift == p' r shift
@@ -178,14 +179,14 @@ module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
              ( ap (_∙ app= β-r' r) (!-ap (_$ r) β-l')
              ∙ ∙-ap (_$ r) (! β-l') β-r') ⟩
       app= (app= (! β-l' ∙ β-r') r) shift
-        =⟨ ap (λ p → app= (app= p r) shift) (WedgeExt.coh {r = args}) ⟩
+        =⟨ ap (λ p → app= (app= p r) shift) Ext.coh ⟩
       app= (app= (λ= λ r → λ= λ shift → p' r shift) r) shift
         =⟨ ap (λ p → app= p shift) (app=-β (λ r → λ= λ shift → p' r shift) r)
          ∙ app=-β (λ shift → p' r shift) shift ⟩
       p' r shift
         =∎
-      where β-l' = WedgeExt.β-l {r = args} u₀
-            β-r' = WedgeExt.β-r {r = args} v₀
+      where β-l' = Ext.β-l u₀
+            β-r' = Ext.β-r v₀
 
 from' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
   → (r : bmleft a₀ == bmright b₁)
@@ -327,8 +328,8 @@ module FromTo {a₁ b₀} (q₁₀ : Q a₁ b₀) where
     p : f u₀ == g v₀
     p = λ= λ r → λ= λ shift → ap (template u₀ v₀ r shift q₁₀) (βpair-glue q₁₀ r)
 
-  args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
-  args = record {
+  from-to-args : args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
+  from-to-args = record {
     n = n; m = m;
     cA = g-conn b₀;
     cB = f-conn a₁;
@@ -337,7 +338,7 @@ module FromTo {a₁ b₀} (q₁₀ : Q a₁ b₀) where
 
   abstract
     ext : ∀ u v → P u v
-    ext = WedgeExt.ext args
+    ext = WedgeExt.ext from-to-args
 
 abstract
   from-to' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r fiber
@@ -383,8 +384,8 @@ module ToFrom {a₀ b₁} (q₀₁ : Q a₀ b₁) where
     p : f u₀ == g v₀
     p = λ= λ r → λ= λ shift → ap (template u₀ v₀ r shift q₀₁) (βpair-glue q₀₁ r)
 
-  args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
-  args = record {
+  to-from-args : args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
+  to-from-args = record {
     n = n; m = m;
     cA = g-conn b₁;
     cB = f-conn a₀;
@@ -393,7 +394,7 @@ module ToFrom {a₀ b₁} (q₀₁ : Q a₀ b₁) where
 
   abstract
     ext : ∀ u v → P u v
-    ext = WedgeExt.ext args
+    ext = WedgeExt.ext to-from-args
 
 abstract
   to-from' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r fiber

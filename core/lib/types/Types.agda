@@ -17,13 +17,13 @@ open import lib.types.CRing public
 open import lib.types.EilenbergMacLane1 public
 open import lib.types.Empty public
 open import lib.types.Fin public
+open import lib.types.FunctionSeq public
 open import lib.types.NatColim public
 open import lib.types.Group public
 open import lib.types.GroupSet public
 open import lib.types.Groupoid public
 open import lib.types.HList public
 open import lib.types.Int public
-open import lib.types.IteratedSuspension public
 open import lib.types.Join public
 open import lib.types.Lift public
 open import lib.types.List public

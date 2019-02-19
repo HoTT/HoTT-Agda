@@ -8,10 +8,9 @@ open import cohomology.Theory
 {- A spectrum (family (Eₙ | n : ℤ) such that ΩEₙ₊₁ = Eₙ)
  - gives rise to a cohomology theory C with Cⁿ(S⁰) = π₁(Eₙ₊₁). -}
 
-module cohomology.SpectrumModel
-  {i} (E : ℤ → Ptd i) (spectrum : (n : ℤ) → ⊙Ω (E (succ n)) ⊙≃ E n) where
+module cohomology.SpectrumModel where
 
-module SpectrumModel where
+module SpectrumModel {i} (E : ℤ → Ptd i) (spectrum : (n : ℤ) → ⊙Ω (E (succ n)) ⊙≃ E n) where
 
   {- Definition of cohomology group C -}
   module _ (n : ℤ) (X : Ptd i) where
@@ -68,20 +67,20 @@ module SpectrumModel where
   {- Susp Axiom -}
   private
     C-Susp' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀) (X : Ptd i)
-      → Trunc-⊙→Ω-group (⊙Susp X) E₁ ≃ᴳ Trunc-⊙→Ω-group X E₀
+      → Trunc-⊙→Ω-group (⊙Susp (de⊙ X)) E₁ ≃ᴳ Trunc-⊙→Ω-group X E₀
     C-Susp' {E₁ = E₁} iso X = Trunc-⊙→Ω-group-emap-codom X iso
                           ∘eᴳ Trunc-⊙→Ω-iso-Trunc-⊙→Ω X E₁
 
     -- This can be further simplified
     C-Susp-fmap' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀) {X Y : Ptd i} (f : X ⊙→ Y)
       → CommSquareᴳ
-          (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁)
+          (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap (fst f)) E₁)
           (Trunc-⊙→Ω-group-fmap-dom f E₀)
           (fst (C-Susp' iso Y)) (fst (C-Susp' iso X))
     C-Susp-fmap' {E₁} {E₀} iso {X} {Y} f = comm-sqrᴳ λ x →
         GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
           (GroupIso.f (Trunc-⊙→Ω-iso-Trunc-⊙→Ω X E₁)
-            (GroupHom.f (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁) x))
+            (GroupHom.f (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap (fst f)) E₁) x))
           =⟨ Trunc-⊙→Ω-iso-Trunc-⊙→Ω-nat-dom f E₁
             |in-ctx (λ h → GroupHom.f h x)
             |in-ctx GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso)) ⟩
@@ -96,12 +95,12 @@ module SpectrumModel where
             (GroupIso.f (Trunc-⊙→Ω-iso-Trunc-⊙→Ω Y E₁) x))
           =∎
 
-  C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
+  C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp (de⊙ X)) ≃ᴳ C n X
   C-Susp n X = C-Susp' (spectrum (succ n)) X
 
   C-Susp-fmap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
     → CommSquareᴳ
-        (C-fmap (succ n) (⊙Susp-fmap f)) (C-fmap n f)
+        (C-fmap (succ n) (⊙Susp-fmap (fst f))) (C-fmap n f)
         (fst (C-Susp n Y)) (fst (C-Susp n X))
   C-Susp-fmap n f = C-Susp-fmap' (spectrum (succ n)) f
 
@@ -229,20 +228,64 @@ module SpectrumModel where
           (λ _ → idp))
         ((ac (uCEl n ∘ X)) ∘ise (is-eq into out into-out out-into))
 
+module _ {i} (E : ℤ → Ptd i) (spectrum : (n : ℤ) → ⊙Ω (E (succ n)) ⊙≃ E n) where
 
-open SpectrumModel
+  open SpectrumModel E spectrum
 
-spectrum-cohomology : CohomologyTheory i
-spectrum-cohomology = record {
-  C = C;
-  C-fmap = C-fmap;
-  C-fmap-idf = C-fmap-idf;
-  C-fmap-∘ = C-fmap-∘;
-  C-is-abelian = C-is-abelian;
-  C-Susp = C-Susp;
-  C-Susp-fmap = C-Susp-fmap;
-  C-exact = C-exact;
-  C-additive-is-equiv = C-additive-is-equiv}
+  spectrum-cohomology : CohomologyTheory i
+  spectrum-cohomology = record {
+    C = C;
+    C-fmap = C-fmap;
+    C-fmap-idf = C-fmap-idf;
+    C-fmap-∘ = C-fmap-∘;
+    C-is-abelian = C-is-abelian;
+    C-Susp = C-Susp;
+    C-Susp-fmap = C-Susp-fmap;
+    C-exact = C-exact;
+    C-additive-is-equiv = C-additive-is-equiv}
 
-spectrum-C-S⁰ : (n : ℤ) → C n (⊙Lift ⊙S⁰) ≃ᴳ πS 0 (E (succ n))
-spectrum-C-S⁰ n = Trunc-⊙Bool→Ω-iso-π₁ (E (succ n)) ∘eᴳ Trunc-⊙→Ω-group-emap-dom ⊙lift-equiv (E (succ n))
+  spectrum-C-S⁰ : (n : ℤ) → C n (⊙Lift ⊙S⁰) ≃ᴳ πS 0 (E (succ n))
+  spectrum-C-S⁰ n = Trunc-⊙Bool→Ω-iso-π₁ (E (succ n)) ∘eᴳ Trunc-⊙→Ω-group-emap-dom ⊙lift-equiv (E (succ n))
+
+module SpectrumModelMap {i}
+  (E₀ : ℤ → Ptd i) (spectrum₀ : (n : ℤ) → ⊙Ω (E₀ (succ n)) ⊙≃ E₀ n)
+  (E₁ : ℤ → Ptd i) (spectrum₁ : (n : ℤ) → ⊙Ω (E₁ (succ n)) ⊙≃ E₁ n)
+  (spectrum-map : (n : ℤ) → E₀ n ⊙→ E₁ n) where
+
+  private
+    module S₀ = SpectrumModel E₀ spectrum₀
+    module S₁ = SpectrumModel E₁ spectrum₁
+
+  C-coeff-fmap : ∀ (n : ℤ) (X : Ptd i) → S₀.C n X →ᴳ S₁.C n X
+  C-coeff-fmap n X = Trunc-⊙→Ω-group-fmap-codom X (spectrum-map (succ n))
+
+  CEl-coeff-fmap : ∀ (n : ℤ) (X : Ptd i) → S₀.CEl n X → S₁.CEl n X
+  CEl-coeff-fmap n X = GroupHom.f (C-coeff-fmap n X)
+
+  ⊙CEl-coeff-fmap : ∀ (n : ℤ) (X : Ptd i) → S₀.⊙CEl n X ⊙→ S₁.⊙CEl n X
+  ⊙CEl-coeff-fmap n X = GroupHom.⊙f (C-coeff-fmap n X)
+
+module _ {i} (E : ℤ → Ptd i) (spectrum : (n : ℤ) → ⊙Ω (E (succ n)) ⊙≃ E n) where
+
+  open SpectrumModel E spectrum
+  open SpectrumModelMap E spectrum E spectrum (λ n → ⊙idf (E n))
+
+  C-coeff-fmap-idf : ∀ (n : ℤ) (X : Ptd i) → C-coeff-fmap n X == idhom (C n X)
+  C-coeff-fmap-idf n X = Trunc-⊙→Ω-group-fmap-codom-idf X (E (succ n))
+
+module _ {i}
+  (E₀ : ℤ → Ptd i) (spectrum₀ : (n : ℤ) → ⊙Ω (E₀ (succ n)) ⊙≃ E₀ n)
+  (E₁ : ℤ → Ptd i) (spectrum₁ : (n : ℤ) → ⊙Ω (E₁ (succ n)) ⊙≃ E₁ n)
+  (E₂ : ℤ → Ptd i) (spectrum₂ : (n : ℤ) → ⊙Ω (E₂ (succ n)) ⊙≃ E₂ n)
+  (spectrum-map₁₂ : (n : ℤ) → E₁ n ⊙→ E₂ n)
+  (spectrum-map₀₁ : (n : ℤ) → E₀ n ⊙→ E₁ n) where
+
+  module SMap₀₁ = SpectrumModelMap E₀ spectrum₀ E₁ spectrum₁ spectrum-map₀₁
+  module SMap₁₂ = SpectrumModelMap E₁ spectrum₁ E₂ spectrum₂ spectrum-map₁₂
+  module SMap₀₂ = SpectrumModelMap E₀ spectrum₀ E₂ spectrum₂ (λ n → spectrum-map₁₂ n ⊙∘ spectrum-map₀₁ n)
+
+  C-coeff-fmap-∘ : ∀ (n : ℤ) (X : Ptd i)
+    → SMap₀₂.C-coeff-fmap n X ==
+      SMap₁₂.C-coeff-fmap n X ∘ᴳ SMap₀₁.C-coeff-fmap n X
+  C-coeff-fmap-∘ n X =
+    Trunc-⊙→Ω-group-fmap-codom-∘ X (spectrum-map₁₂ (succ n)) (spectrum-map₀₁ (succ n))

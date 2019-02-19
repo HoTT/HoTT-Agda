@@ -91,7 +91,7 @@ module EM₁HSpaceAssoc {i} (G : AbGroup i) where
   comp-functor :
     TwoSemiFunctor
       EM₁-2-semi-category
-      (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ G.grp))))
+      (=ₜ-fundamental-cat (Susp (EM₁ G.grp)))
   comp-functor =
     record
     { F₀ = λ _ → [ north ]

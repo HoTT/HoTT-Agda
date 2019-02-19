@@ -9,7 +9,7 @@ module homotopy.SuspAdjointLoopLadder where
 
   step : ∀ {i} {X Y Z : Ptd i} (f : Y ⊙→ Z)
     → CommSquareEquiv
-        ((f ⊙∘_) :> ((⊙Susp X ⊙→ Y) → (⊙Susp X ⊙→ Z)))
+        ((f ⊙∘_) :> ((⊙Susp (de⊙ X) ⊙→ Y) → (⊙Susp (de⊙ X) ⊙→ Z)))
         (⊙Ω-fmap f ⊙∘_)
         (–> (A.eq X Y))
         (–> (A.eq X Z))

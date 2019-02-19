@@ -1,9 +1,12 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Base
+open import lib.Equivalence
+open import lib.NType
 open import lib.PathFunctor
 open import lib.PathGroupoid
 open import lib.PathOver
+open import lib.Univalence
 
 module lib.cubical.Square where
 
@@ -52,6 +55,19 @@ disc-to-square-β : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
   → disc-to-square (square-to-disc sq) == sq
 disc-to-square-β ids = idp
 
+square-disc-equiv : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+  → (Square p₀₋ p₋₀ p₋₁ p₁₋) ≃ (p₀₋ ∙ p₋₁ == p₋₀ ∙ p₁₋)
+square-disc-equiv =
+  equiv square-to-disc disc-to-square square-to-disc-β disc-to-square-β
+
+Square-level : ∀ {n : ℕ₋₂} {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+  → has-level (S (S n)) A
+  → has-level n (Square p₀₋ p₋₀ p₋₁ p₁₋)
+Square-level {n} A-level =
+  transport (has-level n) (! (ua square-disc-equiv)) $
+  has-level-apply (has-level-apply A-level _ _) _ _
 
 ap-square : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
   {a₀₀ a₀₁ a₁₀ a₁₁ : A}
@@ -106,7 +122,6 @@ module _ {i} {A : Type i} where
   vert-degen-square-β {p = idp} sq =
     ap disc-to-square (!-! (square-to-disc sq)) ∙ disc-to-square-β sq
 
-
   horiz-degen-square-idp : {a a' : A} {p : a == a'}
     → horiz-degen-square (idp {a = p}) == hid-square
   horiz-degen-square-idp {p = idp} = idp
@@ -114,6 +129,16 @@ module _ {i} {A : Type i} where
   vert-degen-square-idp : {a a' : A} {p : a == a'}
     → vert-degen-square (idp {a = p}) == vid-square
   vert-degen-square-idp {p = idp} = idp
+
+ap-horiz-degen-square : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
+  {a a' : A} {p q : a == a'} (r : p == q)
+  → ap-square f (horiz-degen-square r) == horiz-degen-square (ap (ap f) r)
+ap-horiz-degen-square f {p = idp} r@idp = idp
+
+ap-vert-degen-square : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
+  {a a' : A} {p q : a == a'} (r : p == q)
+  → ap-square f (vert-degen-square r) == vert-degen-square (ap (ap f) r)
+ap-vert-degen-square f {p = idp} r@idp = idp
 
 {- Flipping squares -}
 module _ {i} {A : Type i} where
@@ -129,12 +154,41 @@ module _ {i} {A : Type i} where
     → square-symmetry (square-symmetry sq) == sq
   square-sym-inv ids = idp
 
+  !□h : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    → Square p₀₋ p₋₀ p₋₁ p₁₋
+    → Square p₁₋ (! p₋₀) (! p₋₁) p₀₋
+  !□h ids = ids
+
+  !□v : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    → Square p₀₋ p₋₀ p₋₁ p₁₋
+    → Square (! p₀₋) p₋₁ p₋₀ (! p₁₋)
+  !□v ids = ids
+
+  !□v-horiz-degen-square : {a a' : A} {p q : a == a'}
+    (r : p == q)
+    → !□v (horiz-degen-square r) == horiz-degen-square (ap ! r)
+  !□v-horiz-degen-square {p = idp} r@idp = idp
+
+  !□v-vert-degen-square : {a a' : A} {p q : a == a'}
+    (r : p == q)
+    → !□v (vert-degen-square r) == vert-degen-square (! r)
+  !□v-vert-degen-square {p = idp} r@idp = idp
+
 ap-square-symmetry : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
   {a₀₀ a₀₁ a₁₀ a₁₁ : A} {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
   {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
   (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
   → ap-square f (square-symmetry sq) == square-symmetry (ap-square f sq)
 ap-square-symmetry f ids = idp
+
+horiz-degen-square-symmetry : ∀ {i} {A : Type i}
+  {a a' : A} {p q : a == a'} (r : p == q)
+  → square-symmetry (horiz-degen-square r) == vert-degen-square r
+horiz-degen-square-symmetry {p = idp} α@idp = idp
 
 {- Alternate induction principles -}
 
@@ -227,36 +281,6 @@ module _ {i} {A : Type i} where
     → Σ (a₁₀ == a₁₁) (λ p₁₋ → Square p₀₋ p₋₀ p₋₁ p₁₋)
   fill-square-right p idp idp = (p , hid-square)
 
-
-module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
-
-  ↓-='-to-square : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
-    → u == v [ (λ z → f z == g z) ↓ p ]
-    → Square u (ap f p) (ap g p) v
-  ↓-='-to-square {p = idp} α = horiz-degen-square α
-
-  ↓-='-from-square : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
-    → Square u (ap f p) (ap g p) v
-    → u == v [ (λ z → f z == g z) ↓ p ]
-  ↓-='-from-square {p = idp} sq = horiz-degen-path sq
-
-  ↓-='-square-comp : {x y z : A} {p : x == y} {q : y == z}
-    {u : f x == g x} {v : f y == g y} {w : f z == g z}
-    → Square u (ap f p) (ap g p) v
-    → Square v (ap f q) (ap g q) w
-    → Square u (ap f (p ∙ q)) (ap g (p ∙ q)) w
-  ↓-='-square-comp {p = idp} {q = idp} sq₁ sq₂ =
-    horiz-degen-square (horiz-degen-path sq₁ ∙ horiz-degen-path sq₂)
-
-  ↓-='-from-square-comp : {x y z : A} {p : x == y} {q : y == z}
-    {u : f x == g x} {v : f y == g y} {w : f z == g z}
-    (sq₁ : Square u (ap f p) (ap g p) v)
-    (sq₂ : Square v (ap f q) (ap g q) w)
-    → ↓-='-from-square (↓-='-square-comp sq₁ sq₂) ==
-      ↓-='-from-square sq₁ ∙ᵈ ↓-='-from-square sq₂
-  ↓-='-from-square-comp {p = idp} {q = idp} sq₁ sq₂ =
-    horiz-degen-path-β _
-
 module _  {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
 
   ↓-cst=app-from-square : {x y : A} {p : x == y}
@@ -322,26 +346,6 @@ module _  {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
     → (u == v [ (λ z → g (f z) == z) ↓ p ])
     → Square u (ap g (ap f p)) p v
   ↓-∘=idf-to-square {p = idp} α = horiz-degen-square α
-
-module _ {i j} {A : Type i} {B : Type j} where
-
-  natural-square : {f₁ f₂ : A → B} (p : ∀ a → f₁ a == f₂ a)
-    {a₁ a₂ : A} (q : a₁ == a₂)
-    → Square (p a₁) (ap f₁ q) (ap f₂ q) (p a₂)
-  natural-square p idp = hid-square
-
-  natural-square-idp : {f₁ : A → B} {a₁ a₂ : A} (q : a₁ == a₂)
-    → natural-square {f₁ = f₁} (λ _ → idp) q == vid-square
-  natural-square-idp idp = idp
-
-  {- Used for getting square equivalents of glue-β terms -}
-  natural-square-β : {f₁ f₂ : A → B} (p : (a : A) → f₁ a == f₂ a)
-    {x y : A} (q : x == y)
-    {sq : Square (p x) (ap f₁ q) (ap f₂ q) (p y)}
-    → apd p q == ↓-='-from-square sq
-    → natural-square p q == sq
-  natural-square-β _ idp α =
-    ! horiz-degen-square-idp ∙ ap horiz-degen-square α ∙ horiz-degen-square-β _
 
 _⊡v_ : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ a₀₂ a₁₂ : A}
   {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
@@ -410,6 +414,242 @@ infixr 80 _⊡v_ _⊡v'_ _⊡h_ _⊡h'_
 infixr 80 _∙v⊡_ _∙h⊡_
 infixl 85 _⊡v∙_ _⊡h∙_
 
+∙h⊡-hid-square-⊡h∙ : ∀ {i} {A : Type i} {a₀₀ a₀₁ : A} {p p' : a₀₀ == a₀₁}
+  (q : p' == p)
+  → ! q ∙h⊡ hid-square ⊡h∙ q == hid-square
+∙h⊡-hid-square-⊡h∙ q@idp = idp
+
+∙v⊡-assoc : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ p₋₀' p₋₀'' : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+  {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+  (q : p₋₀ == p₋₀')
+  (r : p₋₀' == p₋₀'')
+  (sq : Square p₀₋ p₋₀'' p₋₁ p₁₋)
+  → (q ∙ r) ∙v⊡ sq == q ∙v⊡ (r ∙v⊡ sq)
+∙v⊡-assoc q@idp r sq = idp
+
+⊡v∙-assoc : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+  {p₋₁ p₋₁' p₋₁'' : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+  (q : p₋₁ == p₋₁')
+  (r : p₋₁' == p₋₁'')
+  → (sq ⊡v∙ q) ⊡v∙ r == sq ⊡v∙ (q ∙ r)
+⊡v∙-assoc sq q@idp r = idp
+
+⊡h∙-assoc : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+  {p₋₁ : a₀₁ == a₁₁} {p₁₋ p₁₋' p₁₋'' : a₁₀ == a₁₁}
+  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+  (q : p₁₋ == p₁₋')
+  (r : p₁₋' == p₁₋'')
+  → (sq ⊡h∙ q) ⊡h∙ r == sq ⊡h∙ (q ∙ r)
+⊡h∙-assoc sq q@idp r = idp
+
+∙v⊡-⊡h∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ p₋₀' : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+  {p₋₁ : a₀₁ == a₁₁} {p₁₋ p₁₋' : a₁₀ == a₁₁}
+  (q : p₋₀ == p₋₀')
+  (sq : Square p₀₋ p₋₀' p₋₁ p₁₋)
+  (r : p₁₋ == p₁₋')
+  → (q ∙v⊡ sq) ⊡h∙ r == q ∙v⊡ (sq ⊡h∙ r)
+∙v⊡-⊡h∙-comm q@idp sq r = idp
+
+⊡v∙-⊡h∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+  {p₋₁ p₋₁' : a₀₁ == a₁₁} {p₁₋ p₁₋' : a₁₀ == a₁₁}
+  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+  (q : p₋₁ == p₋₁')
+  (r : p₁₋ == p₁₋')
+  → (sq ⊡v∙ q) ⊡h∙ r == (sq ⊡h∙ r) ⊡v∙ q
+⊡v∙-⊡h∙-comm sq q@idp r = idp
+
+∙v⊡-⊡v∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ p₋₀' : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+  {p₋₁ p₋₁' : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+  (q : p₋₀ == p₋₀')
+  (sq : Square p₀₋ p₋₀' p₋₁ p₁₋)
+  (r : p₋₁ == p₋₁')
+  → (q ∙v⊡ sq) ⊡v∙ r == q ∙v⊡ (sq ⊡v∙ r)
+∙v⊡-⊡v∙-comm q@idp sq r = idp
+
+∙h⊡-⊡h∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₋₀ : a₀₀ == a₁₀} {p₀₋ p₀₋' : a₀₀ == a₀₁}
+  {p₋₁ : a₀₁ == a₁₁} {p₁₋ p₁₋' : a₁₀ == a₁₁}
+  (q : p₀₋ == p₀₋')
+  (sq : Square p₀₋' p₋₀ p₋₁ p₁₋)
+  (r : p₁₋ == p₁₋')
+  → (q ∙h⊡ sq) ⊡h∙ r == q ∙h⊡ (sq ⊡h∙ r)
+∙h⊡-⊡h∙-comm q@idp sq r = idp
+
+⊡h-⊡v∙-comm : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ a₂₀ a₂₁ : A}
+  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ p₋₁' : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+  {q₋₀ : a₁₀ == a₂₀} {q₋₁ q₋₁' : a₁₁ == a₂₁} {q₂₋ : a₂₀ == a₂₁}
+  (p-sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+  (q-sq : Square p₁₋ q₋₀ q₋₁ q₂₋)
+  (r : p₋₁ == p₋₁')
+  (s : q₋₁ == q₋₁')
+  → (p-sq ⊡h q-sq) ⊡v∙ (ap2 _∙_ r s) == (p-sq ⊡v∙ r) ⊡h (q-sq ⊡v∙ s)
+⊡h-⊡v∙-comm p-sq q-sq r@idp s@idp = idp
+
+module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
+
+  ap-square-∙v⊡ : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₋₀ p₋₀' : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    (q : p₋₀ == p₋₀')
+    (sq : Square p₀₋ p₋₀' p₋₁ p₁₋)
+    → ap (ap f) q ∙v⊡ ap-square f sq == ap-square f (q ∙v⊡ sq)
+  ap-square-∙v⊡ q@idp sq = idp
+
+  ap-square-⊡v∙ : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₋₀ : a₀₀ == a₁₀} {p₀₋ : a₀₀ == a₀₁}
+    {p₋₁ p₋₁' : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+    (q : p₋₁ == p₋₁')
+    → ap-square f sq ⊡v∙ ap (ap f) q == ap-square f (sq ⊡v∙ q)
+  ap-square-⊡v∙ sq q@idp = idp
+
+module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
+
+  ↓-='-to-square : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+    → u == v [ (λ z → f z == g z) ↓ p ]
+    → Square u (ap f p) (ap g p) v
+  ↓-='-to-square {p = idp} α = horiz-degen-square α
+
+  ↓-='-from-square : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+    → Square u (ap f p) (ap g p) v
+    → u == v [ (λ z → f z == g z) ↓ p ]
+  ↓-='-from-square {p = idp} sq = horiz-degen-path sq
+
+  ↓-='-square-comp : {x y z : A} {p : x == y} {q : y == z}
+    {u : f x == g x} {v : f y == g y} {w : f z == g z}
+    → Square u (ap f p) (ap g p) v
+    → Square v (ap f q) (ap g q) w
+    → Square u (ap f (p ∙ q)) (ap g (p ∙ q)) w
+  ↓-='-square-comp {p = idp} {q = idp} sq₁ sq₂ =
+    horiz-degen-square (horiz-degen-path sq₁ ∙ horiz-degen-path sq₂)
+
+  ↓-='-from-square-comp : {x y z : A} {p : x == y} {q : y == z}
+    {u : f x == g x} {v : f y == g y} {w : f z == g z}
+    (sq₁ : Square u (ap f p) (ap g p) v)
+    (sq₂ : Square v (ap f q) (ap g q) w)
+    → ↓-='-from-square (↓-='-square-comp sq₁ sq₂) ==
+      ↓-='-from-square sq₁ ∙ᵈ ↓-='-from-square sq₂
+  ↓-='-from-square-comp {p = idp} {q = idp} sq₁ sq₂ =
+    horiz-degen-path-β _
+
+  private
+    custom-square-over :
+      {x y z : A} {p : x == y} {q : y == z} {r : x == z}
+      (comp : r == p ∙ q)
+      {u : f x == g x} {v : f y == g y} {w : f z == g z}
+      (p-sq : Square u (ap f p) (ap g p) v)
+      (q-sq : Square v (ap f q) (ap g q) w)
+      (r-sq : Square u (ap f r) (ap g r) w)
+      → r-sq ⊡v∙ ap (ap g) comp ==
+        ap (ap f) comp ∙v⊡ ↓-='-square-comp p-sq q-sq
+      → r-sq == ↓-='-square-comp p-sq q-sq
+          [ (λ s → Square u (ap f s) (ap g s) w) ↓ comp ]
+    custom-square-over {p = idp} {q = idp} {r = .idp} idp p-sq q-sq r-sq e = e
+
+  ↓-='-from-square-comp-path :
+    {x y z : A} {p : x == y} {q : y == z} {r : x == z}
+    (comp : r == p ∙ q)
+    {u : f x == g x} {v : f y == g y} {w : f z == g z}
+    (p-sq : Square u (ap f p) (ap g p) v)
+    (q-sq : Square v (ap f q) (ap g q) w)
+    (r-sq : Square u (ap f r) (ap g r) w)
+    → r-sq ⊡v∙ ap (ap g) comp ==
+      ap (ap f) comp ∙v⊡ ↓-='-square-comp p-sq q-sq
+    → ↓-='-from-square r-sq == ↓-='-from-square p-sq ∙ᵈ ↓-='-from-square q-sq
+        [ (λ p → u == w [ (λ x → f x == g x) ↓ p ]) ↓ comp ]
+  ↓-='-from-square-comp-path comp p-sq q-sq r-sq e =
+    ap↓ ↓-='-from-square (custom-square-over comp p-sq q-sq r-sq e) ▹
+    ↓-='-from-square-comp p-sq q-sq
+
+↓-='-from-square-! : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
+  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+  (sq : Square u (ap f p) (ap g p) v)
+  → ap↓ ! (↓-='-from-square sq) == ↓-='-from-square (!□v sq)
+↓-='-from-square-! {p = idp} sq =
+  ap ! (horiz-degen-path sq)
+    =⟨ ! (horiz-degen-path-β (ap ! (horiz-degen-path sq))) ⟩
+  horiz-degen-path (horiz-degen-square (ap ! (horiz-degen-path sq)))
+    =⟨ ap horiz-degen-path (! (!□v-horiz-degen-square (horiz-degen-path sq))) ⟩
+  horiz-degen-path (!□v (horiz-degen-square (horiz-degen-path sq)))
+    =⟨ ap (horiz-degen-path ∘ !□v) (horiz-degen-square-β sq) ⟩
+  horiz-degen-path (!□v sq) =∎
+
+↓-='-from-square-post-∘ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  {f g : A → B} {h : B → C}
+  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+  → (sq : Square u (ap f p) (ap g p) v)
+  → ap↓ (ap h) (↓-='-from-square sq)
+    ==
+    ↓-='-from-square (ap-∘ h f p ∙v⊡ ap-square h sq ⊡v∙ ∘-ap h g p)
+↓-='-from-square-post-∘ {h = h} {p = idp} sq =
+  ap (ap h) (horiz-degen-path sq)
+    =⟨ ! (horiz-degen-path-β (ap (ap h) (horiz-degen-path sq))) ⟩
+  horiz-degen-path (horiz-degen-square (ap (ap h) (horiz-degen-path sq)))
+    =⟨ ap horiz-degen-path (! (ap-horiz-degen-square h (horiz-degen-path sq))) ⟩
+  horiz-degen-path (ap-square h (horiz-degen-square (horiz-degen-path sq)))
+    =⟨ ap (horiz-degen-path ∘ ap-square h) (horiz-degen-square-β sq) ⟩
+  horiz-degen-path (ap-square h sq) =∎
+
+module _ {i j} {A : Type i} {B : Type j} where
+
+  natural-square : {f₁ f₂ : A → B} (h : ∀ a → f₁ a == f₂ a)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → Square (h a₁) (ap f₁ q) (ap f₂ q) (h a₂)
+  natural-square h idp = hid-square
+
+  natural-square-path : {f₁ f₂ : A → B} (h h' : ∀ a → f₁ a == f₂ a)
+    (H : ∀ a → h' a == h a)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → ! (H a₁) ∙h⊡ natural-square h' q ⊡h∙ H a₂ == natural-square h q
+  natural-square-path h h' H {a₁} idp = ∙h⊡-hid-square-⊡h∙ (H a₁)
+
+  natural-square-idp : {f₁ : A → B} {a₁ a₂ : A} (q : a₁ == a₂)
+    → natural-square {f₁ = f₁} (λ _ → idp) q == vid-square
+  natural-square-idp idp = idp
+
+  natural-square-cst : ∀ (b₁ b₂ : B) (h : A → b₁ == b₂)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → ! (ap-cst b₁ q) ∙v⊡ natural-square {f₁ = λ a → b₁} {f₂ = λ a → b₂} h q ⊡v∙ ap-cst b₂ q
+      ==
+      horiz-degen-square (ap h q)
+  natural-square-cst b₁ b₂ h q@idp = ! horiz-degen-square-idp
+
+  {- Used for getting square equivalents of glue-β terms -}
+  natural-square-β : {f₁ f₂ : A → B} (h : (a : A) → f₁ a == f₂ a)
+    {x y : A} (q : x == y)
+    {sq : Square (h x) (ap f₁ q) (ap f₂ q) (h y)}
+    → apd h q == ↓-='-from-square sq
+    → natural-square h q == sq
+  natural-square-β _ idp α =
+    ! horiz-degen-square-idp ∙ ap horiz-degen-square α ∙ horiz-degen-square-β _
+
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k} where
+
+  natural-square-ap : (g : B → C)
+    {f₁ f₂ : A → B} (h : ∀ a → f₁ a == f₂ a)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → natural-square (ap g ∘ h) q
+      ==
+      ap-∘ g f₁ q ∙v⊡
+      ap-square g (natural-square h q) ⊡v∙
+      ∘-ap g f₂ q
+  natural-square-ap g h q@idp = ! ap-square-hid
+
+  natural-square-symmetry : (f : A → B → C)
+    {a₁ a₂ : A} (p : a₁ == a₂)
+    {b₁ b₂ : B} (q : b₁ == b₂)
+    → square-symmetry (natural-square (λ b → ap (λ a → f a b) p) q)
+      ==
+      natural-square (λ a → ap (f a) q) p
+  natural-square-symmetry f p@idp q@idp = idp
+
 module _ {i} {A : Type i} where
 
   horiz-degen-path-⊡h : {a a' : A} {p q r : a == a'}
@@ -444,7 +684,7 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
     → Square v (ap f q) (ap g q) w
     → Square u (ap f (p ∙ q)) (ap g (p ∙ q)) w
   ↓-='-square-comp' {p = p} {q = q} sq₁ sq₂ =
-    ap-∙ f p q ∙v⊡ (sq₁ ⊡h sq₂) ⊡v∙ ∙-ap g p q
+    ap-∙ f p q ∙v⊡ ((sq₁ ⊡h sq₂) ⊡v∙ ∙-ap g p q)
 
   ↓-='-square-comp'=↓-='-square-comp : {x y z : A} {p : x == y} {q : y == z}
     {u : f x == g x} {v : f y == g y} {w : f z == g z}
@@ -459,21 +699,6 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
     horiz-degen-square (horiz-degen-path (sq₁ ⊡h sq₂))
       =⟨ ap horiz-degen-square (horiz-degen-path-⊡h sq₁ sq₂) ⟩
     horiz-degen-square (horiz-degen-path sq₁ ∙ horiz-degen-path sq₂) =∎
-
-module _ {i} {A : Type i} where
-  !□h : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
-    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-    → Square p₀₋ p₋₀ p₋₁ p₁₋
-    → Square p₁₋ (! p₋₀) (! p₋₁) p₀₋
-  !□h ids = ids
-
-  !□v : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
-    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-    → Square p₀₋ p₋₀ p₋₁ p₁₋
-    → Square (! p₀₋) p₋₁ p₋₀ (! p₁₋)
-  !□v ids = ids
 
 module _ {i} {A : Type i} where
 
@@ -606,3 +831,17 @@ module _ {i} {A : Type i} where
   lt-square idp = ids
 
   tl-square = lt-square
+
+  tr-square-∙v⊡-⊡h∙ : {a₀ a₁ : A} {p p' : a₀ == a₁} (r : p == p')
+    → ! r ∙v⊡ tr-square p ⊡h∙ ap ! r == tr-square p'
+  tr-square-∙v⊡-⊡h∙ r@idp = idp
+
+  tr-square-! : {a₀ a₁ : A} (p : a₀ == a₁)
+    → tr-square (! p) ⊡h∙ !-! p == rt-square p
+  tr-square-! p@idp = idp
+
+module _ {i} {j} {A : Type i} {B : Type j} (f : A → B) where
+
+  ap-tr-square : {a₀ a₁ : A} (p : a₀ == a₁)
+    → ap-square f (tr-square p) ⊡h∙ ap-! f p == tr-square (ap f p)
+  ap-tr-square p@idp = idp

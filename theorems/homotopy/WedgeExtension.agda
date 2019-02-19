@@ -16,31 +16,28 @@ module homotopy.WedgeExtension
       g : (b : B) → fst (P a₀ b)
       p : f a₀ == g b₀
 
-  private
-    module _ (r : args) where
-      open args r
+  module WedgeExt (r : args) where
 
-      Q : A → n -Type (lmax i j)
-      Q a = ((Σ (∀ b → fst (P a b)) (λ k → (k ∘ cst b₀) == cst (f a)) ,
-                conn-extend-general (pointed-conn-out B b₀)
-                                    (P a) (cst (f a))))
+    private
+      module _ (r : args) where
+        open args r
 
-      l : Π A (fst ∘ Q)
-      l = conn-extend (pointed-conn-out A a₀)
-                      Q (λ (_ : Unit) → (g , ap cst (! p)))
+        Q : A → n -Type (lmax i j)
+        Q a = ((Σ (∀ b → fst (P a b)) (λ k → (k ∘ cst b₀) == cst (f a)) ,
+                  conn-extend-general (pointed-conn-out B b₀)
+                                      (P a) (cst (f a))))
 
+        l : Π A (fst ∘ Q)
+        l = conn-extend (pointed-conn-out A a₀)
+                        Q (λ (_ : Unit) → (g , ap cst (! p)))
 
-  module _ (r : args) where
     open args r
 
     ext : ∀ a → ∀ b → fst (P a b)
     ext a = fst (l r a)
 
-  module _ {r : args} where
-    open args r
-
     abstract
-      β-l : ∀ a → ext r a b₀ == f a
+      β-l : ∀ a → ext a b₀ == f a
       β-l a = ap (λ t → t unit) (snd (l r a))
 
     private
@@ -51,7 +48,7 @@ module homotopy.WedgeExtension
           (Q r) (λ (_ : Unit) → (g , ap cst (! p))) unit)
 
     abstract
-      β-r : ∀ b → ext r a₀ b == g b
+      β-r : ∀ b → ext a₀ b == g b
       β-r = app= β-r-aux
 
     abstract
@@ -79,4 +76,3 @@ module homotopy.WedgeExtension
         lemma₂ = ap (λ w → β-r b₀ ∙ w)
                     (! (ap-idf (! p)) ∙ ap-∘ (λ s → s unit) cst (! p))
                  ∙ (! (↓-app=cst-out lemma₁))
-

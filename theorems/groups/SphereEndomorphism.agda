@@ -78,7 +78,7 @@ module groups.SphereEndomorphism where
   Trunc-⊙SphereS-endo-Susp-fmap-⊙iso :
     ∀ n → Trunc-⊙SphereS-endo-⊙group n ⊙≃ᴳ Trunc-⊙SphereS-endo-⊙group (S n)
   Trunc-⊙SphereS-endo-Susp-fmap-⊙iso n =
-    Trunc-⊙SphereS-endo-Susp-fmap-iso n , ap [_] (⊙Susp-fmap-idf (⊙Sphere (S n)))
+    Trunc-⊙SphereS-endo-Susp-fmap-iso n , ap [_] (=⊙∘-out (⊙Susp-fmap-idf (Sphere (S n))))
 
   Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic : ∀ n → is-infinite-cyclic (Trunc-⊙SphereS-endo-⊙group n)
   Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic O = Trunc-⊙S¹-endo-⊙group-is-infinite-cyclic
@@ -112,7 +112,7 @@ module groups.SphereEndomorphism where
 
   abstract
     Trunc-⊙SphereS-endo-degree-Susp : ∀ n f
-      →  Trunc-⊙SphereS-endo-degree (S n) (Trunc-fmap ⊙Susp-fmap f)
+      →  Trunc-⊙SphereS-endo-degree (S n) (Trunc-fmap (⊙Susp-fmap ∘ fst) f)
       == Trunc-⊙SphereS-endo-degree n f
     Trunc-⊙SphereS-endo-degree-Susp n f =
       ap (Trunc-⊙SphereS-endo-degree n) (GroupIso.g-f (Trunc-⊙SphereS-endo-Susp-fmap-iso n) f)
@@ -122,22 +122,22 @@ module groups.SphereEndomorphism where
 
   abstract
     ⊙SphereS-endo-degree-Susp : ∀ n f
-      →  ⊙SphereS-endo-degree (S n) (⊙Susp-fmap f)
+      →  ⊙SphereS-endo-degree (S n) (⊙Susp-fmap (fst f))
       == ⊙SphereS-endo-degree n f
     ⊙SphereS-endo-degree-Susp n f = Trunc-⊙SphereS-endo-degree-Susp n [ f ]
 
     ⊙SphereS-endo-degree-Susp' : ∀ n f
-      →  ⊙SphereS-endo-degree (S n) (Susp-fmap f , idp)
+      →  ⊙SphereS-endo-degree (S n) (⊙Susp-fmap f)
       == Trunc-⊙SphereS-endo-degree n (Trunc-⊙SphereS-endo-in n [ f ])
     ⊙SphereS-endo-degree-Susp' n f =
-      ⊙SphereS-endo-degree (S n) (Susp-fmap f , idp)
+      ⊙SphereS-endo-degree (S n) (⊙Susp-fmap f)
         =⟨ ap
-            (Trunc-⊙SphereS-endo-degree (S n) ∘ Trunc-fmap (λ f → Susp-fmap f , idp))
+            (Trunc-⊙SphereS-endo-degree (S n) ∘ Trunc-fmap ⊙Susp-fmap)
             (! $ is-equiv.f-g (Trunc-⊙SphereS-endo-out-is-equiv n) [ f ]) ⟩
-      Trunc-⊙SphereS-endo-degree (S n) (Trunc-fmap (λ f → Susp-fmap f , idp) (Trunc-fmap fst (Trunc-⊙SphereS-endo-in n [ f ])))
+      Trunc-⊙SphereS-endo-degree (S n) (Trunc-fmap ⊙Susp-fmap (Trunc-fmap fst (Trunc-⊙SphereS-endo-in n [ f ])))
         =⟨ ap (Trunc-⊙SphereS-endo-degree (S n))
-            (Trunc-fmap-∘ (λ f → Susp-fmap f , idp) fst (Trunc-⊙SphereS-endo-in n [ f ])) ⟩
-      Trunc-⊙SphereS-endo-degree (S n) (Trunc-fmap ⊙Susp-fmap (Trunc-⊙SphereS-endo-in n [ f ]))
+              (Trunc-fmap-∘ ⊙Susp-fmap fst (Trunc-⊙SphereS-endo-in n [ f ])) ⟩
+      Trunc-⊙SphereS-endo-degree (S n) (Trunc-fmap (⊙Susp-fmap ∘ fst) (Trunc-⊙SphereS-endo-in n [ f ]))
         =⟨ Trunc-⊙SphereS-endo-degree-Susp n (Trunc-⊙SphereS-endo-in n [ f ]) ⟩
       Trunc-⊙SphereS-endo-degree n (Trunc-⊙SphereS-endo-in n [ f ])
         =∎

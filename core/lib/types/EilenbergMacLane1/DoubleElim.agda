@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.types.Group
+open import lib.types.Pi
 open import lib.NType2
 open import lib.types.EilenbergMacLane1.Core
 
@@ -107,3 +108,13 @@ module _ {i j} (G : Group i) (H : Group j) where
     abstract
       f : ∀ x y → P x y
       f x y = DoubleElim.f y x
+
+      embase-embase-β : f embase embase ↦ embase-embase*
+      embase-embase-β = Embase.embase-β
+      {-# REWRITE embase-embase-β #-}
+
+      embase-emloop-β : ∀ (h : H.El) → apd (λ y → f embase y) (emloop h) == embase-emloop* h
+      embase-emloop-β h = Embase.emloop-β h
+
+      emloop-embase-β : ∀ (g : G.El) → apd (λ x → f x embase) (emloop g) == emloop-embase* g
+      emloop-embase-β g = DoubleElim.emloop-β embase g

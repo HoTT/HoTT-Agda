@@ -23,13 +23,13 @@ module Susp^StableSucc {i} (k n : ℕ) (Skle : S k ≤ n *2)
     module F = FreudenthalIso
       ⟨ n ⟩₋₂ k Skle' X
 
-  stable : πS (S k) (⊙Susp X) ≃ᴳ πS k X
+  stable : πS (S k) (⊙Susp (de⊙ X)) ≃ᴳ πS k X
   stable =
-    πS (S k) (⊙Susp X)
-      ≃ᴳ⟨ πS-Ω-split-iso k (⊙Susp X) ⟩
-    πS k (⊙Ω (⊙Susp X))
-      ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso k (⊙Ω (⊙Susp X)) ⁻¹ᴳ ⟩
-    Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X)))
+    πS (S k) (⊙Susp (de⊙ X))
+      ≃ᴳ⟨ πS-Ω-split-iso k (⊙Susp (de⊙ X)) ⟩
+    πS k (⊙Ω (⊙Susp (de⊙ X)))
+      ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso k (⊙Ω (⊙Susp (de⊙ X))) ⁻¹ᴳ ⟩
+    Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp (de⊙ X))))
       ≃ᴳ⟨ F.iso ⁻¹ᴳ ⟩
     Ω^S-group k (⊙Trunc ⟨ S k ⟩ X)
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso k X ⟩

@@ -2,49 +2,45 @@
 
 open import HoTT
 open import homotopy.EilenbergMacLane
-open import homotopy.EilenbergMacLane1 using (EM₁-level₁)
+open import homotopy.EilenbergMacLane1
+open import homotopy.EilenbergMacLaneFunctor
 open import homotopy.EM1HSpaceAssoc
 open import lib.types.TwoSemiCategory
 open import lib.two-semi-categories.FunCategory
 open import lib.two-semi-categories.FundamentalCategory
 
-module cohomology.CupProduct.OnEM.Definition {i} {j} (G : AbGroup i) (H : AbGroup j) where
+module cohomology.CupProduct.OnEM.InLowDegrees {i} {j} (G : AbGroup i) (H : AbGroup j) where
 
 private
   module G = AbGroup G
   module H = AbGroup H
   module G⊗H = TensorProduct G H
   open G⊗H using (_⊗_)
+  open EMExplicit
+
+⊙×-cp₀₀' : G.⊙El ⊙× H.⊙El ⊙→ G⊗H.⊙El
+⊙×-cp₀₀' = uncurry G⊗H._⊗_ , G⊗H.⊗-unit-l H.ident
+
+⊙×-cp₀₀-seq : (⊙EM G 0 ⊙× ⊙EM H 0) ⊙–→ ⊙EM G⊗H.abgroup 0
+⊙×-cp₀₀-seq =
+  ⊙–> (⊙emloop-equiv G⊗H.grp) ◃⊙∘
+  ⊙×-cp₀₀' ◃⊙∘
+  ⊙×-fmap (⊙<– (⊙emloop-equiv G.grp)) (⊙<– (⊙emloop-equiv H.grp)) ◃⊙idf
+
+⊙×-cp₀₀ : ⊙EM G 0 ⊙× ⊙EM H 0 ⊙→ ⊙EM G⊗H.abgroup 0
+⊙×-cp₀₀ = ⊙compose ⊙×-cp₀₀-seq
+
+×-cp₀₀ : EM G 0 × EM H 0 → EM G⊗H.abgroup 0
+×-cp₀₀ = fst ⊙×-cp₀₀
 
 open EM₁HSpaceAssoc G⊗H.abgroup hiding (comp-functor) renaming (mult to EM₁-mult) public
 
-module _ (g : G.El) where
-  private
-    loop' : H.El → embase' G⊗H.grp == embase
-    loop' h = emloop (g ⊗ h)
+cp₀₁ : G.El → EM₁ H.grp → EM₁ G⊗H.grp
+cp₀₁ g = EM₁-fmap (G⊗H.ins-r-hom g)
 
-    comp' : (h₁ h₂ : H.El) → loop' (H.comp h₁ h₂) == loop' h₁ ∙ loop' h₂
-    comp' h₁ h₂ =
-      emloop (g ⊗ H.comp h₁ h₂)
-        =⟨ ap emloop (G⊗H.lin-r g h₁ h₂) ⟩
-      emloop (G⊗H.comp (g ⊗ h₁) (g ⊗ h₂))
-        =⟨ emloop-comp (g ⊗ h₁) (g ⊗ h₂) ⟩
-      emloop (g ⊗ h₁) ∙ emloop (g ⊗ h₂) =∎
-
-    module Rec = EM₁Level₁Rec {G = H.grp} {C = EM₁ G⊗H.grp} {{EM₁-level₁ G⊗H.grp}}
-                              embase
-                              (group-hom loop' comp')
-
-  abstract
-    cp₀₁ : EM₁ H.grp → EM₁ G⊗H.grp
-    cp₀₁ = Rec.f
-
-    cp₀₁-embase-β : cp₀₁ embase ↦ embase
-    cp₀₁-embase-β = Rec.embase-β
-    {-# REWRITE cp₀₁-embase-β #-}
-
-    cp₀₁-emloop-β : ∀ h → ap cp₀₁ (emloop h) == emloop (g ⊗ h)
-    cp₀₁-emloop-β = Rec.emloop-β
+abstract
+  cp₀₁-emloop-β : ∀ g h → ap (cp₀₁ g) (emloop h) == emloop (g ⊗ h)
+  cp₀₁-emloop-β g = EM₁-fmap-emloop-β (G⊗H.ins-r-hom g)
 
 cp₀₁-distr-l : (g₁ g₂ : G.El) (y : EM₁ H.grp)
   → cp₀₁ (G.comp g₁ g₂) y == EM₁-mult (cp₀₁ g₁ y) (cp₀₁ g₂ y)
@@ -72,7 +68,7 @@ cp₀₁-distr-l g₁ g₂ =
       emloop (g₁ ⊗ h) ∙ emloop (g₂ ⊗ h)
         =⟨ ! (emloop-comp (g₁ ⊗ h) (g₂ ⊗ h)) ⟩
       emloop (G⊗H.comp (g₁ ⊗ h) (g₂ ⊗ h))
-        =⟨ ap emloop (! (G⊗H.lin-l g₁ g₂ h)) ⟩
+        =⟨ ap emloop (! (G⊗H.⊗-lin-l g₁ g₂ h)) ⟩
       emloop (G.comp g₁ g₂ ⊗ h)
         =⟨ ! (cp₀₁-emloop-β (G.comp g₁ g₂) h) ⟩
       ap f (emloop h)
@@ -124,11 +120,11 @@ abstract
       =ₛ₁⟨ 0 & 1 & ! (ap-cst embase (G.assoc g₁ g₂ g₃)) ⟩
     ap (cst embase) (G.assoc g₁ g₂ g₃) ◃∙ idp ◃∙ idp ◃∎ ∎ₛ
 
-group-to-EM₁H→EM₁G⊗H :
+cp₀₁-functor :
   TwoSemiFunctor
     (group-to-cat G.grp)
     (fun-cat (EM₁ H.grp) EM₁-2-semi-category)
-group-to-EM₁H→EM₁G⊗H =
+cp₀₁-functor =
   record
   { F₀ = λ _ _ → unit
   ; F₁ = λ g x → cp₀₁ g x
@@ -183,7 +179,7 @@ group-to-EM₁H→EM₁G⊗H =
 comp-functor :
   TwoSemiFunctor
     EM₁-2-semi-category
-    (dual-cat (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp))))
+    (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp)))
 comp-functor =
   record
   { F₀ = λ _ → [ north ]
@@ -192,14 +188,14 @@ comp-functor =
   ; pres-comp-coh = comp-coh
   }
   -- this is *exactly* the same as
-  --   `EM₁HSpaceAssoc.comp-functor TP.abgroup`
+  --   `EM₁HSpaceAssoc.comp-functor G⊗H.abgroup`
   -- inlined but Agda chokes on this shorter definition
 
 module _ where
 
   private
     T : TwoSemiCategory (lmax i j) (lmax i j)
-    T = dual-cat (fun-cat (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp))))
+    T = fun-cat (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp)))
 
     module T = TwoSemiCategory T
     cst-north : T.El
@@ -207,21 +203,20 @@ module _ where
     T-comp' = T.comp {x = cst-north} {y = cst-north} {z = cst-north}
     T-assoc' = T.assoc {x = cst-north} {y = cst-north} {z = cst-north} {w = cst-north}
 
-  group-to-EM₁→EM₂-op : TwoSemiFunctor (group-to-cat G.grp) T
-  group-to-EM₁→EM₂-op =
-    group-to-EM₁H→EM₁G⊗H –F→
-    fun-functor-map (EM₁ H.grp) comp-functor –F→
-    swap-fun-dual-functor (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp)))
+  group-to-EM₁→EM₂ : TwoSemiFunctor (group-to-cat G.grp) T
+  group-to-EM₁→EM₂ =
+    cp₀₁-functor –F→
+    fun-functor-map (EM₁ H.grp) comp-functor
 
   abstract
-    app=-group-to-EM₁→EM₂-op-pres-comp-embase : ∀ g₁ g₂ →
-      app= (TwoSemiFunctor.pres-comp group-to-EM₁→EM₂-op g₁ g₂) embase ==
+    app=-group-to-EM₁→EM₂-pres-comp-embase : ∀ g₁ g₂ →
+      app= (TwoSemiFunctor.pres-comp group-to-EM₁→EM₂ g₁ g₂) embase ==
       comp embase embase
-    app=-group-to-EM₁→EM₂-op-pres-comp-embase g₁ g₂ = =ₛ-out $
-      app= (TwoSemiFunctor.pres-comp group-to-EM₁→EM₂-op g₁ g₂) embase ◃∎
-        =ₛ⟨ ap-seq-=ₛ (λ f → f embase) (comp-functors-pres-comp-β G₀₁ G₁₃ g₁ g₂) ⟩
-      app= (ap (TwoSemiFunctor.F₁ G₁₃) (TwoSemiFunctor.pres-comp G₀₁ g₁ g₂)) embase ◃∙
-      app= (TwoSemiFunctor.pres-comp G₁₃ (cp₀₁ g₁) (cp₀₁ g₂)) embase ◃∎
+    app=-group-to-EM₁→EM₂-pres-comp-embase g₁ g₂ = =ₛ-out $
+      app= (TwoSemiFunctor.pres-comp group-to-EM₁→EM₂ g₁ g₂) embase ◃∎
+        =ₛ⟨ ap-seq-=ₛ (λ f → f embase) (comp-functors-pres-comp-β cp₀₁-functor G₁₂ g₁ g₂) ⟩
+      app= (ap (TwoSemiFunctor.F₁ G₁₂) (TwoSemiFunctor.pres-comp cp₀₁-functor g₁ g₂)) embase ◃∙
+      app= (TwoSemiFunctor.pres-comp G₁₂ (cp₀₁ g₁) (cp₀₁ g₂)) embase ◃∎
         =ₛ⟨ 0 & 1 & =ₛ-in {t = []} $
             app= (ap (λ f x → [ η (f x) ]) (λ= (cp₀₁-distr-l g₁ g₂))) embase
               =⟨ ap (λ w → app= w embase) (λ=-ap (λ _ y → [ η y ]) (cp₀₁-distr-l g₁ g₂)) ⟩
@@ -229,104 +224,72 @@ module _ where
               =⟨ app=-β (λ a → ap (λ y → [ η y ]) (cp₀₁-distr-l g₁ g₂ a)) embase ⟩
             idp =∎
           ⟩
-      app= (TwoSemiFunctor.pres-comp G₁₃ (cp₀₁ g₁) (cp₀₁ g₂)) embase ◃∎
-        =ₛ⟨ ap-seq-=ₛ (λ f → f embase) (comp-functors-pres-comp-β G₁₂ G₂₃ (cp₀₁ g₁) (cp₀₁ g₂)) ⟩
-      app= (ap (λ f → f) (TwoSemiFunctor.pres-comp G₁₂ (cp₀₁ g₁) (cp₀₁ g₂))) embase ◃∙
-      idp ◃∎
-        =ₛ⟨ 1 & 1 & expand [] ⟩
-      app= (ap (λ f → f) (TwoSemiFunctor.pres-comp G₁₂ (cp₀₁ g₁) (cp₀₁ g₂))) embase ◃∎
-        =ₛ₁⟨ ∘-ap (λ f → f embase) (λ f → f) (TwoSemiFunctor.pres-comp G₁₂ (cp₀₁ g₁) (cp₀₁ g₂)) ⟩
-      app= (λ= (λ y → comp (cp₀₁ g₁ y) (cp₀₁ g₂ y))) embase ◃∎
+      app= (TwoSemiFunctor.pres-comp G₁₂ (cp₀₁ g₁) (cp₀₁ g₂)) embase ◃∎
         =ₛ₁⟨ app=-β (λ y → comp (cp₀₁ g₁ y) (cp₀₁ g₂ y)) embase ⟩
       comp embase embase ◃∎ ∎ₛ
       where
-        G₀₁ = group-to-EM₁H→EM₁G⊗H
         G₁₂ = fun-functor-map (EM₁ H.grp) comp-functor
-        G₂₃ = swap-fun-dual-functor (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp)))
-        G₁₃ = G₁₂ –F→ G₂₃
 
 module CP₁₁ where
 
-  open EMExplicit G⊗H.abgroup
-
   private
     C : Type (lmax i j)
-    C = EM₁ H.grp → EM 2
+    C = EM₁ H.grp → EM G⊗H.abgroup 2
 
     C-level : has-level 2 C
-    C-level = Π-level (λ _ → EM-level 2)
+    C-level = Π-level (λ _ → EM-level G⊗H.abgroup 2)
 
     D₀ : TwoSemiCategory lzero i
     D₀ = group-to-cat G.grp
 
-    D₁ : TwoSemiCategory lzero i
-    D₁ = dual-cat (group-to-cat G.grp)
+    D₁' : TwoSemiCategory (lmax i j) (lmax i j)
+    D₁' = =ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp))
+
+    D₁ : TwoSemiCategory (lmax i j) (lmax i j)
+    D₁ = fun-cat (EM₁ H.grp) D₁'
+
+    D₂' : TwoSemiCategory (lmax i j) (lmax i j)
+    D₂' = 2-type-fundamental-cat (EM G⊗H.abgroup 2)
 
     D₂ : TwoSemiCategory (lmax i j) (lmax i j)
-    D₂ = dual-cat (dual-cat (fun-cat (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp)))))
-
-    D₃' : TwoSemiCategory (lmax i j) (lmax i j)
-    D₃' = =ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp))
+    D₂ = fun-cat (EM₁ H.grp) D₂'
 
     D₃ : TwoSemiCategory (lmax i j) (lmax i j)
-    D₃ = fun-cat (EM₁ H.grp) D₃'
-
-    D₄' : TwoSemiCategory (lmax i j) (lmax i j)
-    D₄' = 2-type-fundamental-cat (EM 2)
-
-    D₄ : TwoSemiCategory (lmax i j) (lmax i j)
-    D₄ = fun-cat (EM₁ H.grp) D₄'
-
-    D₅ : TwoSemiCategory (lmax i j) (lmax i j)
-    D₅ = 2-type-fundamental-cat (EM₁ H.grp → EM 2) {{C-level}}
+    D₃ = 2-type-fundamental-cat (EM₁ H.grp → EM G⊗H.abgroup 2) {{C-level}}
 
     F₀₁ : TwoSemiFunctor D₀ D₁
-    F₀₁ = ab-group-cat-to-dual G
+    F₀₁ = group-to-EM₁→EM₂
+
+    F₁₂' : TwoSemiFunctor D₁' D₂'
+    F₁₂' = =ₜ-to-2-type-fundamental-cat (Susp (EM₁ G⊗H.grp))
 
     F₁₂ : TwoSemiFunctor D₁ D₂
-    F₁₂ = dual-functor-map group-to-EM₁→EM₂-op
+    F₁₂ = fun-functor-map (EM₁ H.grp) F₁₂'
 
-    F₂₃ : TwoSemiFunctor D₂ D₃
-    F₂₃ = from-double-dual (fun-cat (EM₁ H.grp) (=ₜ-fundamental-cat (Susp (EM₁ G⊗H.grp))))
+  F₀₂ : TwoSemiFunctor D₀ D₂
+  F₀₂ = F₀₁ –F→ F₁₂
 
-    F₃₄' : TwoSemiFunctor D₃' D₄'
-    F₃₄' = =ₜ-to-2-type-fundamental-cat (Susp (EM₁ G⊗H.grp))
+  module F₂₃-Funext = FunextFunctors (EM₁ H.grp) (EM G⊗H.abgroup 2) {{⟨⟩}}
+  F₂₃ : TwoSemiFunctor D₂ D₃
+  F₂₃ = F₂₃-Funext.λ=-functor
 
-    F₃₄ : TwoSemiFunctor D₃ D₄
-    F₃₄ = fun-functor-map (EM₁ H.grp) F₃₄'
-
-    F₂₄ : TwoSemiFunctor D₂ D₄
-    F₂₄ = F₂₃ –F→ F₃₄
-
-    F₁₄ : TwoSemiFunctor D₁ D₄
-    F₁₄ = F₁₂ –F→ F₂₄
-
-  F₀₄ : TwoSemiFunctor D₀ D₄
-  F₀₄ = F₀₁ –F→ F₁₄
-
-  module F₄₅-Funext = FunextFunctors (EM₁ H.grp) (EM 2) {{⟨⟩}}
-  F₄₅ : TwoSemiFunctor D₄ D₅
-  F₄₅ = F₄₅-Funext.λ=-functor
-
-  module F₀₄ = TwoSemiFunctor F₀₄
-  module F₄₅ = TwoSemiFunctor F₄₅
+  module F₀₂ = TwoSemiFunctor F₀₂
+  module F₂₃ = TwoSemiFunctor F₂₃
 
   private
-    module F₀₅-Comp = FunctorComposition F₀₄ F₄₅
-    F₀₅ : TwoSemiFunctor D₀ D₅
-    F₀₅ = F₀₅-Comp.composition
+    module F₀₃-Comp = FunctorComposition F₀₂ F₂₃
+    F₀₃ : TwoSemiFunctor D₀ D₃
+    F₀₃ = F₀₃-Comp.composition
 
+    module F₀₁  = TwoSemiFunctor F₀₁
     module F₁₂  = TwoSemiFunctor F₁₂
-    module F₃₄' = TwoSemiFunctor F₃₄'
-    module F₃₄  = TwoSemiFunctor F₃₄
-    module F₂₄  = TwoSemiFunctor F₂₄
-    module F₁₄  = TwoSemiFunctor F₁₄
-    module F₀₅  = TwoSemiFunctor F₀₅
+    module F₁₂' = TwoSemiFunctor F₁₂'
+    module F₀₃  = TwoSemiFunctor F₀₃
 
-    module CP₁₁-Rec = EM₁Rec {G = G.grp} {C = C} {{C-level}} F₀₅
+    module CP₁₁-Rec = EM₁Rec {G = G.grp} {C = C} {{C-level}} F₀₃
 
   abstract
-    cp₁₁ : EM₁ G.grp → EM₁ H.grp → EM 2
+    cp₁₁ : EM₁ G.grp → EM₁ H.grp → EM G⊗H.abgroup 2
     cp₁₁ = CP₁₁-Rec.f
 
     cp₁₁-embase-β : cp₁₁ embase ↦ (λ _ → [ north ])
@@ -336,68 +299,44 @@ module CP₁₁ where
     cp₁₁-emloop-β : ∀ g → ap cp₁₁ (emloop g) == λ= (λ y → ap [_] (η (cp₀₁ g y)))
     cp₁₁-emloop-β g = CP₁₁-Rec.emloop-β g
 
-    app=-F₀₄-pres-comp-embase-β : ∀ g₁ g₂ →
-      app= (F₀₄.pres-comp g₁ g₂) embase ◃∎
+    app=-F₀₂-pres-comp-embase-β : ∀ g₁ g₂ →
+      app= (F₀₂.pres-comp g₁ g₂) embase ◃∎
       =ₛ
       ap (ap [_]) (comp-l embase) ◃∙
       ap-∙ [_] (η embase) (η embase) ◃∎
-    app=-F₀₄-pres-comp-embase-β g₁ g₂ =
-      app= (F₀₄.pres-comp g₁ g₂) embase ◃∎
-        =ₛ⟨ ap-seq-=ₛ (λ f → f embase) (comp-functors-pres-comp-β F₀₁ F₁₄ g₁ g₂) ⟩
-      app= (ap (λ g y → ap [_] (η (cp₀₁ g y))) (G.comm g₁ g₂)) embase ◃∙
-      app= (F₁₄.pres-comp g₁ g₂) embase ◃∎
-        =ₛ⟨ 0 & 1 & =ₛ-in {t = []} $
-            app= (ap (λ g y → ap [_] (η (cp₀₁ g y))) (G.comm g₁ g₂)) embase
-              =⟨ ∘-ap (λ f → f embase) (λ g y → ap [_] (η (cp₀₁ g y))) (G.comm g₁ g₂) ⟩
-            ap (λ g → ap [_] (η (cp₀₁ g embase))) (G.comm g₁ g₂)
-              =⟨ ap-cst (ap [_] (η embase)) (G.comm g₁ g₂) ⟩
-            idp
-          ⟩
-      app= (F₁₄.pres-comp g₁ g₂) embase ◃∎
-        =ₛ⟨ ap-seq-=ₛ (λ f → f embase) (comp-functors-pres-comp-β F₁₂ F₂₄ g₁ g₂) ⟩
+    app=-F₀₂-pres-comp-embase-β g₁ g₂ =
+      app= (F₀₂.pres-comp g₁ g₂) embase ◃∎
+        =ₛ⟨ ap-seq-=ₛ (λ f → f embase) (comp-functors-pres-comp-β F₀₁ F₁₂ g₁ g₂) ⟩
       app= (ap (λ α y → <– (=ₜ-equiv [ north ] [ north ]) (α y))
-               (F₁₂.pres-comp g₁ g₂)) embase ◃∙
-      app= (F₂₄.pres-comp {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
-                          (λ y → [ η (cp₀₁ g₁ y) ]) (λ y → [ η (cp₀₁ g₂ y) ])) embase ◃∎
-        =ₛ₁⟨ 0 & 1 & step₄ ⟩
-      ap (ap [_]) (comp-l embase) ◃∙
-      app= (F₂₄.pres-comp {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
-                          (λ y → [ η (cp₀₁ g₁ y) ]) (λ y → [ η (cp₀₁ g₂ y) ])) embase ◃∎
-        =ₛ⟨ 1 & 1 & ap-seq-=ₛ (λ f → f embase) $
-                    comp-functors-pres-comp-β F₂₃ F₃₄
-                      {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
-                      (λ y → [ η (cp₀₁ g₁ y) ]₁) (λ y → [ η (cp₀₁ g₂ y) ]₁) ⟩
-      ap (ap [_]) (comp-l embase) ◃∙
-      idp ◃∙
-      app= (F₃₄.pres-comp {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
+               (F₀₁.pres-comp g₁ g₂)) embase ◃∙
+      app= (F₁₂.pres-comp {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
                           (λ y → [ η (cp₀₁ g₁ y) ]₁) (λ y → [ η (cp₀₁ g₂ y) ]₁)) embase ◃∎
-        =ₛ⟨ 1 & 1 & expand [] ⟩
+        =ₛ₁⟨ 0 & 1 & step₂ ⟩
       ap (ap [_]) (comp-l embase) ◃∙
-      app= (F₃₄.pres-comp {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
+      app= (F₁₂.pres-comp {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
                           (λ y → [ η (cp₀₁ g₁ y) ]₁) (λ y → [ η (cp₀₁ g₂ y) ]₁)) embase ◃∎
-        =ₛ₁⟨ 1 & 1 & step₇ ⟩
+        =ₛ₁⟨ 1 & 1 & step₃ ⟩
       ap (ap [_]) (comp-l embase) ◃∙
       ap-∙ [_] (η embase) (η embase) ◃∎ ∎ₛ
       where
-      step₄ :
+      step₂ :
         app= (ap (λ α y → <– (=ₜ-equiv [ north ] [ north ]) (α y))
-                 (F₁₂.pres-comp g₁ g₂)) embase
+             (F₀₁.pres-comp g₁ g₂)) embase
         == ap (ap [_]) (comp-l embase)
-      step₄ =
-        app= (ap (λ α y → <– (=ₜ-equiv [ north ] [ north ]) (α y))
-                 (F₁₂.pres-comp g₁ g₂)) embase
+      step₂ =
+        app= (ap (λ α y → <– (=ₜ-equiv [ north ] [ north ]) (α y)) (F₀₁.pres-comp g₁ g₂)) embase
           =⟨ ∘-ap (λ f → f embase)
                   (λ α y → <– (=ₜ-equiv [ north ] [ north ]) (α y))
-                  (F₁₂.pres-comp g₁ g₂) ⟩
+                  (F₀₁.pres-comp g₁ g₂) ⟩
         ap (λ α → <– (=ₜ-equiv [ north ] [ north ]) (α embase))
-           (F₁₂.pres-comp g₁ g₂)
+           (F₀₁.pres-comp g₁ g₂)
           =⟨ ap-∘ (<– (=ₜ-equiv [ north ] [ north ]))
                   (λ f → f embase)
-                  (F₁₂.pres-comp g₁ g₂) ⟩
+                  (F₀₁.pres-comp g₁ g₂) ⟩
         ap (<– (=ₜ-equiv [ north ] [ north ]))
-           (app= (F₁₂.pres-comp g₁ g₂) embase)
+           (app= (F₀₁.pres-comp g₁ g₂) embase)
           =⟨ ap (ap (<– (=ₜ-equiv [ north ] [ north ])))
-                (app=-group-to-EM₁→EM₂-op-pres-comp-embase g₂ g₁) ⟩
+                (app=-group-to-EM₁→EM₂-pres-comp-embase g₁ g₂) ⟩
         ap (<– (=ₜ-equiv [ north ] [ north ])) (comp embase embase)
           =⟨ ap (ap (<– (=ₜ-equiv [ north ] [ north ])))
                 (comp-unit-l embase) ⟩
@@ -405,30 +344,30 @@ module CP₁₁ where
            (comp-l₁ embase)
           =⟨ ∘-ap (<– (=ₜ-equiv [ north ] [ north ])) [_]₁ (comp-l embase) ⟩
         ap (ap [_]) (comp-l embase) =∎
-      step₇ :
-        app= (F₃₄.pres-comp {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
+      step₃ :
+        app= (F₁₂.pres-comp {x = λ _ → [ north ]₂} {y = λ _ → [ north ]₂} {z = λ _ → [ north ]₂}
                             (λ y → [ η (cp₀₁ g₁ y) ]₁) (λ y → [ η (cp₀₁ g₂ y) ]₁)) embase
         == ap-∙ [_] (η embase) (η embase)
-      step₇ =
-        app= (F₃₄.pres-comp {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
+      step₃ =
+        app= (F₁₂.pres-comp {x = λ _ → [ north ]} {y = λ _ → [ north ]} {z = λ _ → [ north ]}
                             (λ y → [ η (cp₀₁ g₁ y) ]₁) (λ y → [ η (cp₀₁ g₂ y) ]₁)) embase
-           =⟨ app=-β (λ y → F₃₄'.pres-comp {x = [ north ]} {y = [ north ]} {z = [ north ]}
+           =⟨ app=-β (λ y → F₁₂'.pres-comp {x = [ north ]} {y = [ north ]} {z = [ north ]}
                                            [ η (cp₀₁ g₁ y) ]₁ [ η (cp₀₁ g₂ y) ]₁) embase ⟩
-        F₃₄'.pres-comp {x = [ north ]} {y = [ north ]} {z = [ north ]} [ η embase ]₁ [ η embase ]₁
+        F₁₂'.pres-comp {x = [ north ]} {y = [ north ]} {z = [ north ]} [ η embase ]₁ [ η embase ]₁
           =⟨ =ₜ-to-2-type-fundamental-cat-pres-comp-β (Susp (EM₁ G⊗H.grp)) (η embase) (η embase) ⟩
         ap-∙ [_] (η embase) (η embase) =∎
 
-    app=-F₀₄-pres-comp-embase-coh : ∀ g₁ g₂ →
-      app= (F₀₄.pres-comp g₁ g₂) embase ◃∙
+    app=-F₀₂-pres-comp-embase-coh : ∀ g₁ g₂ →
+      app= (F₀₂.pres-comp g₁ g₂) embase ◃∙
       ap2 _∙_ (ap (ap [_]) (!-inv-r (merid embase)))
               (ap (ap [_]) (!-inv-r (merid embase))) ◃∎
       =ₛ
       ap (ap [_]) (!-inv-r (merid embase)) ◃∎
-    app=-F₀₄-pres-comp-embase-coh g₁ g₂ =
-      app= (F₀₄.pres-comp g₁ g₂) embase ◃∙
+    app=-F₀₂-pres-comp-embase-coh g₁ g₂ =
+      app= (F₀₂.pres-comp g₁ g₂) embase ◃∙
       ap2 _∙_ (ap (ap [_]) (!-inv-r (merid embase)))
               (ap (ap [_]) (!-inv-r (merid embase))) ◃∎
-        =ₛ⟨ 0 & 1 & app=-F₀₄-pres-comp-embase-β g₁ g₂ ⟩
+        =ₛ⟨ 0 & 1 & app=-F₀₂-pres-comp-embase-β g₁ g₂ ⟩
       ap (ap [_]) (comp-l embase) ◃∙
       ap-∙ [_] (η embase) (η embase) ◃∙
       ap2 _∙_ (ap (ap [_]) (!-inv-r (merid embase)))
@@ -456,7 +395,7 @@ module CP₁₁ where
       ap (ap [_]) (!-inv-r (merid embase)) ◃∎ ∎ₛ
       where
         helper : ∀ {i} {A : Type i} {a₀ a₁ : A} (p : a₀ == a₁)
-          → add-path-inverse-r (p ∙ ! p) p ◃∙ ap2 _∙_ (!-inv-r p) (!-inv-r p) ◃∎
+          → add-path-inverse-l (p ∙ ! p) p ◃∙ ap2 _∙_ (!-inv-r p) (!-inv-r p) ◃∎
             =ₛ !-inv-r p ◃∎
         helper idp = =ₛ-in idp
         step₇' : comp-l embase ◃∙ ap2 _∙_ (!-inv-r (merid embase)) (!-inv-r (merid embase)) ◃∎
@@ -493,7 +432,7 @@ module CP₁₁ where
     app= (ap cp₁₁ (emloop (G.comp g₁ g₂))) y
       =⟪ app=-ap-cp₁₁ (G.comp g₁ g₂) y ⟫
     ap [_] (η (cp₀₁ (G.comp g₁ g₂) y))
-      =⟪ app= (F₀₄.pres-comp g₁ g₂) y ⟫
+      =⟪ app= (F₀₂.pres-comp g₁ g₂) y ⟫
     ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y)) ∎∎
 
   abstract
@@ -518,9 +457,9 @@ module CP₁₁ where
       ap2 _∙_ (app=-β (λ x → ap [_] (η (cp₀₁ g₁ x))) y) (app=-β (λ x → ap [_] (η (cp₀₁ g₂ x))) y) ◃∎
         =ₛ⟨ 2 & 2 & !ₛ $
             homotopy-naturality2 (λ a b → app= (a ∙ b) y)
-                                  (λ a b → app= a y ∙ app= b y)
-                                  (ap-∙ (λ f → f y))
-                                  (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ⟩
+                                 (λ a b → app= a y ∙ app= b y)
+                                 (ap-∙ (λ f → f y))
+                                 (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ⟩
       ap (λ u → app= (ap cp₁₁ u) y) (emloop-comp g₁ g₂) ◃∙
       ap (λ u → app= u y) (ap-∙ cp₁₁ (emloop g₁) (emloop g₂)) ◃∙
       ap2 (λ a b → app= (a ∙ b) y) (cp₁₁-emloop-β g₁) (cp₁₁-emloop-β g₂) ◃∙
@@ -547,47 +486,47 @@ module CP₁₁ where
       app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
         =ₛ⟨ 0 & 3 & ap-seq-=ₛ (λ p → app= p y) (CP₁₁-Rec.emloop-comp-path g₁ g₂) ⟩
       ap (λ p → app= p y) (cp₁₁-emloop-β (G.comp g₁ g₂)) ◃∙
-      ap (λ p → app= p y) (F₀₅.pres-comp g₁ g₂) ◃∙
+      ap (λ p → app= p y) (F₀₃.pres-comp g₁ g₂) ◃∙
       ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∙
       app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
         =ₛ⟨ 1 & 2 & step₈ ⟩
       ap (λ p → app= p y) (cp₁₁-emloop-β (G.comp g₁ g₂)) ◃∙
-      ap (λ p → app= p y) (ap λ= (F₀₄.pres-comp g₁ g₂)) ◃∙
+      ap (λ p → app= p y) (ap λ= (F₀₂.pres-comp g₁ g₂)) ◃∙
       app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
-        =ₛ₁⟨ 1 & 1 & ∘-ap (λ p → app= p y) λ= (F₀₄.pres-comp g₁ g₂) ⟩
+        =ₛ₁⟨ 1 & 1 & ∘-ap (λ p → app= p y) λ= (F₀₂.pres-comp g₁ g₂) ⟩
       ap (λ p → app= p y) (cp₁₁-emloop-β (G.comp g₁ g₂)) ◃∙
-      ap (λ γ → app= (λ= γ) y) (F₀₄.pres-comp g₁ g₂) ◃∙
+      ap (λ γ → app= (λ= γ) y) (F₀₂.pres-comp g₁ g₂) ◃∙
       app=-β (λ x → ap [_] (η (cp₀₁ g₁ x)) ∙ ap [_] (η (cp₀₁ g₂ x))) y ◃∎
         =ₛ⟨ 1 & 2 &
             homotopy-naturality (λ γ → app= (λ= γ) y)
                                 (λ γ → γ y)
                                 (λ γ → app=-β γ y)
-                                (F₀₄.pres-comp g₁ g₂) ⟩
+                                (F₀₂.pres-comp g₁ g₂) ⟩
       ap (λ p → app= p y) (cp₁₁-emloop-β (G.comp g₁ g₂)) ◃∙
       app=-β (λ x → ap [_] (η (cp₀₁ (G.comp g₁ g₂) x))) y ◃∙
-      app= (F₀₄.pres-comp g₁ g₂) y ◃∎
+      app= (F₀₂.pres-comp g₁ g₂) y ◃∎
         =ₛ⟨ 0 & 2 & contract ⟩
       app=-ap-cp₁₁ (G.comp g₁ g₂) y ◃∙
-      app= (F₀₄.pres-comp g₁ g₂) y ◃∎ ∎ₛ
+      app= (F₀₂.pres-comp g₁ g₂) y ◃∎ ∎ₛ
       where
       step₈ :
-        ap (λ p → app= p y) (F₀₅.pres-comp g₁ g₂) ◃∙
+        ap (λ p → app= p y) (F₀₃.pres-comp g₁ g₂) ◃∙
         ap (λ p → app= p y) (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))))) ◃∎
         =ₛ
-        ap (λ p → app= p y) (ap λ= (F₀₄.pres-comp g₁ g₂)) ◃∎
+        ap (λ p → app= p y) (ap λ= (F₀₂.pres-comp g₁ g₂)) ◃∎
       step₈ = ap-seq-=ₛ (λ p → app= p y) $
-        F₀₅.pres-comp g₁ g₂ ◃∙
+        F₀₃.pres-comp g₁ g₂ ◃∙
         =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
-          =ₛ⟨ 0 & 1 & F₀₅-Comp.pres-comp-β g₁ g₂ ⟩
-        ap λ= (F₀₄.pres-comp g₁ g₂) ◃∙
-        F₄₅.pres-comp (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ◃∙
+          =ₛ⟨ 0 & 1 & F₀₃-Comp.pres-comp-β g₁ g₂ ⟩
+        ap λ= (F₀₂.pres-comp g₁ g₂) ◃∙
+        F₂₃.pres-comp (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ◃∙
         =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
-          =ₛ₁⟨ 1 & 1 & F₄₅-Funext.λ=-functor-pres-comp=λ=-∙ (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ⟩
-        ap λ= (F₀₄.pres-comp g₁ g₂) ◃∙
+          =ₛ₁⟨ 1 & 1 & F₂₃-Funext.λ=-functor-pres-comp=λ=-∙ (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x))) ⟩
+        ap λ= (F₀₂.pres-comp g₁ g₂) ◃∙
         =ₛ-out (λ=-∙ (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∙
         =ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎
           =ₛ⟨ 1 & 2 & seq-!-inv-l (=ₛ-out (∙-λ= (λ x → ap [_] (η (cp₀₁ g₁ x))) (λ x → ap [_] (η (cp₀₁ g₂ x)))) ◃∎) ⟩
-        ap λ= (F₀₄.pres-comp g₁ g₂) ◃∎ ∎ₛ
+        ap λ= (F₀₂.pres-comp g₁ g₂) ◃∎ ∎ₛ
 
     ap-cp₁₁-seq : ∀ g y → ap (λ x → cp₁₁ x y) (emloop g) =-= ap [_] (η (cp₀₁ g y))
     ap-cp₁₁-seq g y =
@@ -617,7 +556,7 @@ module CP₁₁ where
     ap (λ x → cp₁₁ x y) (emloop (G.comp g₁ g₂))
       =⟪ ap-cp₁₁ (G.comp g₁ g₂) y ⟫
     ap [_] (η (cp₀₁ (G.comp g₁ g₂) y))
-      =⟪ app= (F₀₄.pres-comp g₁ g₂) y ⟫
+      =⟪ app= (F₀₂.pres-comp g₁ g₂) y ⟫
     ap [_] (η (cp₀₁ g₁ y)) ∙ ap [_] (η (cp₀₁ g₂ y)) ∎∎
 
   abstract
@@ -649,10 +588,10 @@ module CP₁₁ where
         =ₛ⟨ 1 & 4 & app=-ap-cp₁₁-coh g₁ g₂ y ⟩
       ap-∘ (λ f → f y) cp₁₁ (emloop (G.comp g₁ g₂)) ◃∙
       app=-ap-cp₁₁ (G.comp g₁ g₂) y ◃∙
-      app= (F₀₄.pres-comp g₁ g₂) y ◃∎
+      app= (F₀₂.pres-comp g₁ g₂) y ◃∎
         =ₛ₁⟨ 0 & 2 & idp ⟩
       ap-cp₁₁ (G.comp g₁ g₂) y ◃∙
-      app= (F₀₄.pres-comp g₁ g₂) y ◃∎ ∎ₛ
+      app= (F₀₂.pres-comp g₁ g₂) y ◃∎ ∎ₛ
 
   ap-cp₁₁-embase-seq : ∀ g →
     ap (λ x → cp₁₁ x embase) (emloop g) =-= idp
@@ -689,9 +628,9 @@ module CP₁₁ where
       =ₛ⟨ expand (ap-cp₁₁-embase-seq (G.comp g₁ g₂)) ⟩
     ap-cp₁₁ (G.comp g₁ g₂) embase ◃∙
     ap (ap [_]) (!-inv-r (merid embase)) ◃∎
-      =ₛ⟨ 1 & 1 & !ₛ (app=-F₀₄-pres-comp-embase-coh g₁ g₂) ⟩
+      =ₛ⟨ 1 & 1 & !ₛ (app=-F₀₂-pres-comp-embase-coh g₁ g₂) ⟩
     ap-cp₁₁ (G.comp g₁ g₂) embase ◃∙
-    app= (F₀₄.pres-comp g₁ g₂) embase ◃∙
+    app= (F₀₂.pres-comp g₁ g₂) embase ◃∙
     ap2 _∙_ (ap (ap [_]) (!-inv-r (merid embase))) (ap (ap [_]) (!-inv-r (merid embase))) ◃∎
       =ₛ⟨ 0 & 2 & !ₛ (ap-cp₁₁-coh g₁ g₂ embase) ⟩
     ap (ap (λ x → cp₁₁ x embase)) (emloop-comp g₁ g₂) ◃∙

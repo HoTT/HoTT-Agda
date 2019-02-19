@@ -12,18 +12,21 @@ open import homotopy.WedgeCofiber
 module cohomology.InverseInSusp {i} (CT : CohomologyTheory i)
   (n : ℤ) {X : Ptd i} where
 
+private
+  ⊙ΣX = ⊙Susp (de⊙ X)
+
 open CohomologyTheory CT
 open import cohomology.Wedge CT n
 
 private
-  module Subtract = SuspRec {C = de⊙ (⊙Susp X ⊙∨ ⊙Susp X)}
+  module Subtract = SuspRec {C = ⊙ΣX ∨ ⊙ΣX}
     (winl south)
     (winr south)
     (λ x → ap winl (! (merid x)) ∙ wglue ∙ ap winr (merid x))
 
   subtract = Subtract.f
 
-  ⊙subtract : ⊙Susp X ⊙→ ⊙Susp X ⊙∨ ⊙Susp X
+  ⊙subtract : ⊙ΣX ⊙→ ⊙ΣX ⊙∨ ⊙ΣX
   ⊙subtract = (subtract , ! (ap winl (merid (pt X))))
 
   projl-subtract : ∀ σ → projl (subtract σ) == Susp-flip σ
@@ -66,19 +69,19 @@ private
   abstract
     cancel : ∀ x
       → GroupHom.f (×ᴳ-fanin (C-is-abelian n _) (C-fmap n (⊙Susp-flip X)) (idhom _)) (x , x)
-      == Cident n (⊙Susp X)
+      == Cident n ⊙ΣX
     cancel x =
-        ap2 (Group.comp (C n (⊙Susp X)))
+        ap2 (Group.comp (C n ⊙ΣX))
           (! (CEl-fmap-base-indep n projl-subtract x))
           (! (CEl-fmap-idf n x) ∙ ! (CEl-fmap-base-indep n projr-subtract x))
-      ∙ (C-Wedge-in-comm-sqr' (⊙Susp X) (⊙Susp X) ⊙subtract □$ᴳ (x , x))
+      ∙ (C-Wedge-in-comm-sqr' ⊙ΣX ⊙ΣX ⊙subtract □$ᴳ (x , x))
       ∙ ap (CEl-fmap n ⊙subtract)
-          ( ap (GroupIso.g (C-Wedge (⊙Susp X) (⊙Susp X)) ∘ diag) (! (CEl-fmap-idf n x))
-          ∙ (C-Wedge-rec-comm-sqr' (⊙Susp X) (⊙Susp X) (⊙idf _) (⊙idf _) □$ᴳ x))
+          ( ap (GroupIso.g (C-Wedge ⊙ΣX ⊙ΣX) ∘ diag) (! (CEl-fmap-idf n x))
+          ∙ (C-Wedge-rec-comm-sqr' ⊙ΣX ⊙ΣX (⊙idf _) (⊙idf _) □$ᴳ x))
       ∙ ∘-CEl-fmap n ⊙subtract ⊙fold x
       ∙ CEl-fmap-base-indep n (λ σ → fold-subtract σ ∙ ! (merid (pt X))) x
       ∙ CEl-fmap-cst n x
 
 abstract
-  C-Susp-flip-is-inv : ∀ x → CEl-fmap n (⊙Susp-flip X) x == Group.inv (C n (⊙Susp X)) x
-  C-Susp-flip-is-inv x = ! (Group.inv-unique-l (C n (⊙Susp X)) _ x (cancel x))
+  C-Susp-flip-is-inv : ∀ x → CEl-fmap n (⊙Susp-flip X) x == Group.inv (C n ⊙ΣX) x
+  C-Susp-flip-is-inv x = ! (Group.inv-unique-l (C n ⊙ΣX) _ x (cancel x))

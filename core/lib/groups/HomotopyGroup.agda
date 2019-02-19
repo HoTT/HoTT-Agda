@@ -73,15 +73,15 @@ module _ {i} where
     Ω^S-Trunc-preiso : (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
       → Ω^STruncPreIso n m (⟨ S n ⟩₋₂ +2+ m) X
     Ω^S-Trunc-preiso O m X =
-      record { F = (–> (=ₜ-equiv [ pt X ] [ pt X ]) , idp);
+      record { F = ⊙–> (⊙Ω-⊙Trunc-comm m X);
                pres-comp = –>-=ₜ-equiv-pres-∙;
-               e = snd (=ₜ-equiv [ pt X ] [ pt X ]) }
+               e = snd (⊙Ω-⊙Trunc-comm m X) }
     Ω^S-Trunc-preiso (S n) m X =
       let
         r : Ω^STruncPreIso n (S m) (⟨ S n ⟩₋₂ +2+ S m) X
         r = Ω^S-Trunc-preiso n (S m) X
 
-        H = (–> (=ₜ-equiv [ idp^ (S n) ] [ idp^ (S n) ]) , idp)
+        H = ⊙–> (⊙Ω-⊙Trunc-comm m (⊙Ω^ (S n) X))
         G = ⊙Ω-fmap (Ω^STruncPreIso.F r)
       in
       transport (λ k → Ω^STruncPreIso (S n) m k X)
@@ -91,7 +91,7 @@ module _ {i} where
            pres-comp = λ p q →
              ap (fst H) (Ω^S-fmap-∙ 0 (Ω^STruncPreIso.F r) p q)
              ∙ (–>-=ₜ-equiv-pres-∙ (fst G p) (fst G q));
-           e = snd (=ₜ-equiv [ idp^ (S n) ] [ idp^ (S n) ]
+           e = snd (⊙≃-to-≃ (⊙Ω-⊙Trunc-comm m (⊙Ω^ (S n) X))
                     ∘e Ω^-emap 1 (Ω^STruncPreIso.F r , Ω^STruncPreIso.e r))})
 
   Ω^S-group-Trunc-fuse-diag-iso : (n : ℕ) (X : Ptd i)

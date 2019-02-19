@@ -6,6 +6,7 @@ open import lib.Function2
 open import lib.NType2
 open import lib.types.Group
 open import lib.types.Pi
+open import lib.types.Sigma
 open import lib.types.Subtype
 open import lib.types.Truncation
 open import lib.groups.Homomorphism
@@ -23,8 +24,11 @@ _≃ᴳˢ_ = GroupStructureIso
 GroupIso : ∀ {i j} (G : Group i) (H : Group j) → Type (lmax i j)
 GroupIso G H = Σ (G →ᴳ H) (λ φ → is-equiv (GroupHom.f φ))
 
-infix 30 _≃ᴳ_
+infix 30 _≃ᴳ_ _≃ᴬᴳ_
 _≃ᴳ_ = GroupIso
+
+_≃ᴬᴳ_ : ∀ {i j} (G : AbGroup i) (H : AbGroup j) → Type (lmax i j)
+_≃ᴬᴳ_ G H = AbGroup.grp G ≃ᴳ AbGroup.grp H
 
 ≃ᴳˢ-to-≃ᴳ : ∀ {i j} {G : Group i} {H : Group j}
   → (Group.group-struct G ≃ᴳˢ Group.group-struct H) → (G ≃ᴳ H)
@@ -237,6 +241,10 @@ module _ {i} {G H : Group i} (iso : GroupIso G H) where
     El=-β : ap Group.El uaᴳ == El=
     El=-β = ap3-lemma-El El= _ _
 
+abstract
+  uaᴬᴳ : ∀ {i} (G H : AbGroup i) (iso : G ≃ᴬᴳ H) → G == H
+  uaᴬᴳ G H iso = abgroup= G H (uaᴳ iso)
+
 {- homomorphism from equality of groups -}
 
 abstract
@@ -276,6 +284,10 @@ transport!ᴳ-iso B p = transport!ᴳ B p , transp!ᴳ-is-iso B p
 coeᴳ : ∀ {i} {G H : Group i} → G == H → (G →ᴳ H)
 coeᴳ = transportᴳ (idf _)
 
+abstract
+  coeᴳ-idp : ∀ {i} (G : Group i) → coeᴳ (idp {a = G}) == idhom G
+  coeᴳ-idp G = idp
+
 coe!ᴳ : ∀ {i} {G H : Group i} → G == H → (H →ᴳ G)
 coe!ᴳ = transport!ᴳ (idf _)
 
@@ -291,6 +303,19 @@ abstract
   coeᴳ-β iso = group-hom= $
       ap coe (El=-β iso)
     ∙ λ= (coe-β (GroupIso.f-equiv iso))
+
+coeᴬᴳ : ∀ {i} {G H : AbGroup i} → G == H → (G →ᴬᴳ H)
+coeᴬᴳ = coeᴳ ∘ ap AbGroup.grp
+
+abstract
+  coeᴬᴳ-β : ∀ {i} (G H : AbGroup i) (iso : G ≃ᴬᴳ H)
+    → coeᴬᴳ (uaᴬᴳ G H iso) == GroupIso.f-hom iso
+  coeᴬᴳ-β G H iso =
+    coeᴳ (ap AbGroup.grp (abgroup= G H (uaᴳ iso)))
+      =⟨ ap coeᴳ (fst=-β (uaᴳ iso) _) ⟩
+    coeᴳ (uaᴳ iso)
+      =⟨ coeᴳ-β iso ⟩
+    GroupIso.f-hom iso =∎
 
 -- triviality
 
@@ -381,3 +406,7 @@ post∘ᴳ-iso G H K iso = ≃-to-≃ᴳ (equiv to from to-from from-to) to-pres
 
     from-to : ∀ φ → from (to φ) == φ
     from-to φ = group-hom= $ λ= λ h → GroupIso.g-f iso (GroupHom.f φ h)
+
+{- negation is a homomorphism in an abelian group -}
+inv-iso : ∀ {i} (G : AbGroup i) → GroupIso (AbGroup.grp G) (AbGroup.grp G)
+inv-iso G = inv-hom G , AbGroup.inv-is-equiv G

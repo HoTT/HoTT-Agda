@@ -51,7 +51,7 @@ grid-co∂ = record {f = CEl-fmap (succ n) Z/Y-to-E ∘ GroupHom.f co∂ ; pres-
 grid-∂-before-Susp : C/B → Susp B/A
 grid-∂-before-Susp = extract-glue ∘ C/B-to-E
 
-⊙grid-∂-before-Susp : Z/Y ⊙→ ⊙Susp Y/X
+⊙grid-∂-before-Susp : Z/Y ⊙→ ⊙Susp (de⊙ Y/X)
 ⊙grid-∂-before-Susp = grid-∂-before-Susp , lemma where
   abstract lemma = snd (⊙extract-glue ⊙∘ Z/Y-to-E)
 

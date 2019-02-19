@@ -21,7 +21,7 @@ cw-co∂-last = grid-co∂
 cw-∂-before-Susp : Xₙ/Xₙ₋₁ (⊙Skeleton.skel ⊙skel) → Susp (Xₙ/Xₙ₋₁ (cw-init (⊙Skeleton.skel ⊙skel)))
 cw-∂-before-Susp = grid-∂-before-Susp
 
-⊙cw-∂-before-Susp : ⊙Xₙ/Xₙ₋₁ (⊙Skeleton.skel ⊙skel) ⊙→ ⊙Susp (⊙Xₙ/Xₙ₋₁ (cw-init (⊙Skeleton.skel ⊙skel)))
+⊙cw-∂-before-Susp : ⊙Xₙ/Xₙ₋₁ (⊙Skeleton.skel ⊙skel) ⊙→ ⊙Susp (Xₙ/Xₙ₋₁ (cw-init (⊙Skeleton.skel ⊙skel)))
 ⊙cw-∂-before-Susp = ⊙grid-∂-before-Susp
 
 cw-∂-before-Susp-glue-β = grid-∂-before-Susp-glue-β

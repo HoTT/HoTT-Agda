@@ -71,22 +71,22 @@ abstract
     GroupIso.f (C-FinBouquet-diag (S (S n)) I)
       (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ ⦉ fin-skel ⦊))
         (CEl-fmap (ℕ-to-ℤ (S (S n))) ⊙cw-∂-before-Susp
-          (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙Susp-fmap (⊙<– (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ ⦉ fin-skel₋₁ ⦊)))
+          (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ ⦉ fin-skel₋₁ ⦊)))
             (<– (CEl-Susp (ℕ-to-ℤ (S n)) (⊙FinBouquet _ (S n)))
               (GroupIso.g (C-FinBouquet-diag (S n) I₋₁)
                 g))))) <I
       =⟨ ap (λ g → GroupIso.f (C-FinBouquet-diag (S (S n)) I) g <I) $
             ∘-CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ ⦉ fin-skel ⦊)) ⊙cw-∂-before-Susp
-              (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙Susp-fmap (⊙<– (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ ⦉ fin-skel₋₁ ⦊)))
+              (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ ⦉ fin-skel₋₁ ⦊)))
                 (<– (CEl-Susp (ℕ-to-ℤ (S n)) (⊙FinBouquet _ (S n)))
                   (GroupIso.g (C-FinBouquet-diag (S n) I₋₁)
                     g)))
           ∙ ∘-CEl-fmap (ℕ-to-ℤ (S (S n)))
               (⊙cw-∂-before-Susp ⊙∘ ⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ ⦉ fin-skel ⦊))
-              (⊙Susp-fmap (⊙<– (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ ⦉ fin-skel₋₁ ⦊)))
+              (⊙Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ ⦉ fin-skel₋₁ ⦊)))
               (<– (CEl-Susp (ℕ-to-ℤ (S n)) (⊙FinBouquet _ (S n)))
                 (GroupIso.g (C-FinBouquet-diag (S n) I₋₁)
-                  g))      
+                  g))
           ∙ ap (λ f → CEl-fmap (ℕ-to-ℤ (S (S n))) f
               (<– (CEl-Susp (ℕ-to-ℤ (S n)) (⊙FinBouquet _ (S n)))
                 (GroupIso.g (C-FinBouquet-diag (S n) I₋₁)
@@ -101,11 +101,11 @@ abstract
     Group.sum (C2 0)
       (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁)
         (⊙SphereS-endo-degree (S n)
-          (⊙Susp-fmap (⊙fwproj <I₋₁) ⊙∘ ⊙function₀' ⊙∘ ⊙fwin <I)))
+          (⊙Susp-fmap (fwproj <I₋₁) ⊙∘ ⊙function₀' ⊙∘ ⊙fwin <I)))
       =⟨ ap (Group.sum (C2 0))
           (λ= λ <I₋₁ → ap (Group.exp (C2 0) (g <I₋₁)) $
             ⊙SphereS-endo-degree-base-indep (S n)
-              {f = (  ⊙Susp-fmap (⊙fwproj <I₋₁)
+              {f = (  ⊙Susp-fmap (fwproj <I₋₁)
                    ⊙∘ ⊙function₀'
                    ⊙∘ ⊙fwin <I)}
               {g = (Susp-fmap (function₁' <I <I₋₁) , idp)}

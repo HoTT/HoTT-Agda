@@ -45,6 +45,7 @@ module PushoutRec {i j k} {d : Span {i} {j} {k}} {l} {D : Type l}
 
   private
     module M = PushoutElim left* right* (λ c → ↓-cst-in (glue* c))
+  open M using (left-β; right-β) public
 
   f : Pushout d → D
   f = M.f

@@ -2,7 +2,6 @@
 
 module lib.two-semi-categories.TwoSemiCategories where
 
-open import lib.two-semi-categories.DualCategory public
 open import lib.two-semi-categories.FunCategory public
 open import lib.two-semi-categories.Functor public
 open import lib.two-semi-categories.FunctorInverse public

@@ -47,7 +47,7 @@ private
     into : Cofiber² (fst f) → Susp (de⊙ X)
     into = Into.f
 
-    ⊙into : ⊙Cofiber² f ⊙→ ⊙Susp X
+    ⊙into : ⊙Cofiber² f ⊙→ ⊙Susp (de⊙ X)
     ⊙into = into , ! (merid (pt X))
 
     module Out = SuspRec {C = de⊙ (⊙Cofiber² f)}
@@ -84,17 +84,17 @@ private
     eqv : Cofiber² (fst f) ≃ Susp (de⊙ X)
     eqv = equiv into out into-out out-into
 
-    ⊙eqv : ⊙Cofiber² f ⊙≃ ⊙Susp X
+    ⊙eqv : ⊙Cofiber² f ⊙≃ ⊙Susp (de⊙ X)
     ⊙eqv = ≃-to-⊙≃ eqv (! (merid (pt X)))
 
 module _ {X Y : Ptd i} (f : X ⊙→ Y) where
 
-  ⊙Cof²-to-⊙Susp : ⊙Cofiber² f ⊙→ ⊙Susp X
+  ⊙Cof²-to-⊙Susp : ⊙Cofiber² f ⊙→ ⊙Susp (de⊙ X)
   ⊙Cof²-to-⊙Susp = Equiv.⊙into f
 
   Cof²-to-Susp = fst ⊙Cof²-to-⊙Susp
 
-  ⊙Susp-to-⊙Cof² : ⊙Susp X ⊙→ ⊙Cofiber² f
+  ⊙Susp-to-⊙Cof² : ⊙Susp (de⊙ X) ⊙→ ⊙Cofiber² f
   ⊙Susp-to-⊙Cof² = ⊙<– (Equiv.⊙eqv f)
 
   Susp-to-Cof² = fst ⊙Susp-to-⊙Cof²
@@ -140,11 +140,27 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
 
   iterated-cofiber-seq : PtdMapSequence X (⊙Cofiber³ f)
   iterated-cofiber-seq =
-    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cofiber f ⊙→⟨ ⊙cfcod²' f ⟩ ⊙Cofiber² f ⊙→⟨ ⊙cfcod³' f ⟩ ⊙Cofiber³ f ⊙⊣|
+    X
+      ⊙→⟨ f ⟩
+    Y
+      ⊙→⟨ ⊙cfcod' f ⟩
+    ⊙Cofiber f
+      ⊙→⟨ ⊙cfcod²' f ⟩
+    ⊙Cofiber² f
+      ⊙→⟨ ⊙cfcod³' f ⟩
+    ⊙Cofiber³ f ⊙⊣|
 
-  cyclic-cofiber-seq : PtdMapSequence X (⊙Susp Y)
+  cyclic-cofiber-seq : PtdMapSequence X (⊙Susp (de⊙ Y))
   cyclic-cofiber-seq =
-    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cofiber f ⊙→⟨ ⊙extract-glue ⟩ ⊙Susp X ⊙→⟨ ⊙Susp-fmap f ⟩ ⊙Susp Y ⊙⊣|
+    X
+      ⊙→⟨ f ⟩
+    Y
+      ⊙→⟨ ⊙cfcod' f ⟩
+    ⊙Cofiber f
+      ⊙→⟨ ⊙extract-glue ⟩
+    ⊙Susp (de⊙ X)
+      ⊙→⟨ ⊙Susp-fmap (fst f) ⟩
+    ⊙Susp (de⊙ Y) ⊙⊣|
 
   iterated-to-cyclic : PtdMapSeqMap iterated-cofiber-seq cyclic-cofiber-seq
     (⊙idf X) (⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f))
@@ -161,7 +177,7 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
     , idf-is-equiv _
     , idf-is-equiv _
     , snd (Equiv.eqv f)
-    , snd (Susp-flip-equiv ∘e (Equiv.eqv (⊙cfcod' f)))
+    , snd (Susp-flip-equiv ∘e Equiv.eqv (⊙cfcod' f))
 
   iterated-equiv-cyclic : PtdMapSeqEquiv iterated-cofiber-seq cyclic-cofiber-seq
     (⊙idf X) (⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f))

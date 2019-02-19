@@ -55,7 +55,7 @@ module _ {i} (A : Type i) where
 
 module _ {i} (X : Ptd i) where
 
-  ⊙*-Bool-l : ⊙Bool ⊙* X ⊙≃ ⊙Susp X
+  ⊙*-Bool-l : ⊙Bool ⊙* X ⊙≃ ⊙Susp (de⊙ X)
   ⊙*-Bool-l = ≃-to-⊙≃ (*-Bool-l (de⊙ X)) idp
 
 module _ {i j} (A : Type i) (B : Type j) where
@@ -65,11 +65,11 @@ module _ {i j} (A : Type i) (B : Type j) where
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
-  ⊙*-Susp-l : ⊙Susp X ⊙* Y ⊙≃ ⊙Susp (X ⊙* Y)
+  ⊙*-Susp-l : ⊙Susp (de⊙ X) ⊙* Y ⊙≃ ⊙Susp (de⊙ X * de⊙ Y)
   ⊙*-Susp-l = ≃-to-⊙≃ (*-Susp-l (de⊙ X) (de⊙ Y)) idp
 
 module _ {i} where
 
   ⊙*-Sphere-l : (m : ℕ) (X : Ptd i) → ⊙Sphere m ⊙* X ⊙≃ ⊙Susp^ (S m) X
   ⊙*-Sphere-l O X = ⊙*-Bool-l X
-  ⊙*-Sphere-l (S m) X = ⊙Susp-emap (⊙*-Sphere-l m X) ⊙∘e ⊙*-Susp-l (⊙Sphere m) X
+  ⊙*-Sphere-l (S m) X = ⊙Susp-emap (⊙≃-to-≃ (⊙*-Sphere-l m X)) ⊙∘e ⊙*-Susp-l (⊙Sphere m) X

@@ -2,11 +2,14 @@
 
 open import HoTT
 open import homotopy.HSpace renaming (HSpaceStructure to HSS)
-import homotopy.WedgeExtension as WedgeExt
+open import homotopy.WedgeExtension
 
-module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
-  {{_ : is-connected 0 (de⊙ X)}} (H-X : HSS X)
-  where
+module homotopy.Pi2HSusp where
+
+module Pi2HSusp {i} {X : Ptd i}
+  {{_ : has-level 1 (de⊙ X)}}
+  {{_ : is-connected 0 (de⊙ X)}}
+  (H-X : HSS X) where
 
   {- TODO this belongs somewhere else, but where? -}
   private
@@ -110,7 +113,7 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   homomorphism-r₁ = ap [_]₁ ∘ homomorphism-r
 
   abstract
-    homomorphism-args : WedgeExt.args {i} {i} {A} {e} {A} {e}
+    homomorphism-args : args {i} {i} {A} {e} {A} {e}
     homomorphism-args =
       record {
         m = -1; n = -1;
@@ -127,15 +130,18 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
           → add-path-and-inverse-l p p == add-path-and-inverse-r p p
         coh idp = idp
 
+    module HomomorphismExt =
+      WedgeExt {i} {i} {A} {e} {A} {e} homomorphism-args
+
     homomorphism : (a a' : A)
       → [ merid (μ a a' ) ]₁ == [ (merid a' ∙ back) ∙ merid a ]₁
-    homomorphism = WedgeExt.ext homomorphism-args
+    homomorphism = HomomorphismExt.ext
 
     homomorphism-β-l : (a' : A) → homomorphism e a' == homomorphism-l₁ a'
-    homomorphism-β-l a' = WedgeExt.β-r {r = homomorphism-args} a'
+    homomorphism-β-l = HomomorphismExt.β-r
 
     homomorphism-β-r : (a : A) → homomorphism a e == homomorphism-r₁ a
-    homomorphism-β-r a = WedgeExt.β-l {r = homomorphism-args} a
+    homomorphism-β-r = HomomorphismExt.β-l
 
   decode' : {x : Susp A} → Codes x → P x
   decode' {x} = Susp-elim {P = λ x → Codes x → P x}
@@ -149,7 +155,7 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
                          == [ merid (transport Codes (merid a) a') ]
       STS a a' =
         transport P (merid a) [ merid a' ∙ back ]
-          =⟨ transport-Trunc (north ==_) (merid a) _ ⟩
+          =⟨ transport-Trunc' (north ==_) (merid a) _ ⟩
         [ transport (north ==_) (merid a) (merid a' ∙ back) ]
           =⟨ ap [_] (transp-cst=idf {A = Susp A} (merid a) _) ⟩
         [ (merid a' ∙ back) ∙ merid a ]
@@ -158,53 +164,130 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
           =⟨ ap ([_] ∘ merid) (! (transport-Codes-mer a a')) ⟩
         [ merid (transport Codes (merid a) a') ] ∎
 
-  abstract
-    decode'-encode' : {x : Susp A} (tα : P x)
-      → decode' {x} (encode' {x} tα) == tα
-    decode'-encode' {x} = Trunc-elim
-      {P = λ tα → decode' {x} (encode' {x} tα) == tα}
-      -- FIXME: Agda very slow (looping?) when omitting the next line
-      {{λ _ → =-preserves-level Trunc-level}}
-      (J (λ y p → decode' {y} (encode' {y} [ p ]) == [ p ])
-         (ap [_] (!-inv-r (merid e))))
+  decode'-encode' : {x : Susp A} (tα : P x)
+    → decode' {x} (encode' {x} tα) == tα
+  decode'-encode' {x} = Trunc-elim
+    {P = λ tα → decode' {x} (encode' {x} tα) == tα}
+    -- FIXME: Agda very slow (looping?) when omitting the next line
+    {{λ _ → =-preserves-level Trunc-level}}
+    (J (λ y p → decode' {y} (encode' {y} [ p ]) == [ p ])
+        (ap [_] (!-inv-r (merid e))))
 
-  eq' : Trunc 1 (Ω (⊙Susp X)) ≃ A
+  eq' : Trunc 1 (Ω (⊙Susp (de⊙ X))) ≃ A
   eq' = equiv encode' decodeN' encode'-decodeN' decode'-encode'
 
-  ⊙decodeN : ⊙Trunc 1 X ⊙→ ⊙Trunc 1 (⊙Ω (⊙Susp X))
+  ⊙decodeN : ⊙Trunc 1 X ⊙→ ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X)))
   ⊙decodeN = ⊙Trunc-fmap (SAL.η X)
 
-  decodeN : Trunc 1 A → Trunc 1 (Ω (⊙Susp X))
+  decodeN : Trunc 1 A → Trunc 1 (Ω (⊙Susp (de⊙ X)))
   decodeN = fst ⊙decodeN
 
-  encodeN : Trunc 1 (Ω (⊙Susp X)) → Trunc 1 A
+  encodeN : Trunc 1 (Ω (⊙Susp (de⊙ X))) → Trunc 1 A
   encodeN = [_] ∘ encode' {x = north}
 
-  eq : Trunc 1 (Ω (⊙Susp X)) ≃ Trunc 1 A
+  ⊙encodeN : ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X))) ⊙→ ⊙Trunc 1 X
+  ⊙encodeN = encodeN , idp
+
+  eq : Trunc 1 (Ω (⊙Susp (de⊙ X))) ≃ Trunc 1 A
   eq = encodeN ,
     replace-inverse (snd ((unTrunc-equiv A)⁻¹ ∘e eq'))
       {decodeN}
       (Trunc-elim (λ _ → idp))
 
-  ⊙eq : ⊙Trunc 1 (⊙Ω (⊙Susp X)) ⊙≃ ⊙Trunc 1 X
+  ⊙eq : ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X))) ⊙≃ ⊙Trunc 1 X
   ⊙eq = ≃-to-⊙≃ eq idp
 
-  ⊙eq⁻¹ : ⊙Trunc 1 X ⊙≃ ⊙Trunc 1 (⊙Ω (⊙Susp X))
+  abstract
+    ⊙decodeN-⊙encodeN : ⊙decodeN ⊙∘ ⊙encodeN == ⊙idf _
+    ⊙decodeN-⊙encodeN =
+      ⊙λ=' {X = ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X)))} {Y = ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X)))}
+           decode'-encode' $
+      ↓-idf=cst-in $
+      ! (∙-unit-r (ap [_] (!-inv-r (merid (pt X)))))
+
+    ⊙<–-⊙eq : ⊙<– ⊙eq == ⊙decodeN
+    ⊙<–-⊙eq =
+      –>-is-inj (pre⊙∘-equiv {Z = ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X)))} ⊙eq) (⊙<– ⊙eq) ⊙decodeN $
+      (⊙<– ⊙eq) ⊙∘ ⊙encodeN
+        =⟨ ⊙<–-inv-l ⊙eq ⟩
+      ⊙idf _
+        =⟨ ! ⊙decodeN-⊙encodeN ⟩
+      ⊙decodeN ⊙∘ ⊙encodeN =∎
+
+    ⊙encodeN-⊙decodeN : ⊙encodeN ⊙∘ ⊙decodeN == ⊙idf _
+    ⊙encodeN-⊙decodeN =
+      ⊙encodeN ⊙∘ ⊙decodeN
+        =⟨ ap (⊙encodeN ⊙∘_) (! ⊙<–-⊙eq) ⟩
+      ⊙encodeN ⊙∘ ⊙<– ⊙eq
+        =⟨ ⊙<–-inv-r ⊙eq ⟩
+      ⊙idf _ =∎
+
+  ⊙eq⁻¹ : ⊙Trunc 1 X ⊙≃ ⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X)))
   ⊙eq⁻¹ = ⊙decodeN , snd (eq ⁻¹)
 
-  iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X)))
+  iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X))))
       ≃ᴳ Ω^S-group 0 (⊙Trunc 1 X)
   iso = Ω^S-group-emap 0 ⊙eq
 
   abstract
-    π₂-Susp : πS 1 (⊙Susp X) ≃ᴳ πS 0 X
+    π₂-Susp : πS 1 (⊙Susp (de⊙ X)) ≃ᴳ πS 0 X
     π₂-Susp =
-      πS 1 (⊙Susp X)
-        ≃ᴳ⟨ πS-Ω-split-iso 0 (⊙Susp X) ⟩
-      πS 0 (⊙Ω (⊙Susp X))
-        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (⊙Ω (⊙Susp X)) ⁻¹ᴳ ⟩
-      Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X)))
+      πS 1 (⊙Susp (de⊙ X))
+        ≃ᴳ⟨ πS-Ω-split-iso 0 (⊙Susp (de⊙ X)) ⟩
+      πS 0 (⊙Ω (⊙Susp (de⊙ X)))
+        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (⊙Ω (⊙Susp (de⊙ X))) ⁻¹ᴳ ⟩
+      Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (de⊙ X))))
         ≃ᴳ⟨ iso ⟩
       Ω^S-group 0 (⊙Trunc 1 X)
         ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 X ⟩
       πS 0 X ≃ᴳ∎
+
+module Pi2HSuspNaturality {i} {X Y : Ptd i}
+  (f : X ⊙→ Y)
+  {{_ : has-level 1 (de⊙ X)}} {{_ : has-level 1 (de⊙ Y)}}
+  {{_ : is-connected 0 (de⊙ X)}} {{_ : is-connected 0 (de⊙ Y)}}
+  (H-X : HSS X) (H-Y : HSS Y) where
+
+  import homotopy.SuspAdjointLoop as SAL
+  private
+    module Π₂X = Pi2HSusp H-X
+    module Π₂Y = Pi2HSusp H-Y
+
+  ⊙decodeN-natural :
+    Π₂Y.⊙decodeN ◃⊙∘
+    ⊙Trunc-fmap f ◃⊙idf
+    =⊙∘
+    ⊙Trunc-fmap (⊙Ω-fmap (⊙Susp-fmap (fst f))) ◃⊙∘
+    Π₂X.⊙decodeN ◃⊙idf
+  ⊙decodeN-natural = =⊙∘-in $
+    Π₂Y.⊙decodeN ⊙∘ ⊙Trunc-fmap f
+      =⟨ ⊙λ= (⊙Trunc-fmap-⊙∘ (SAL.η Y) f) ⟩
+    ⊙Trunc-fmap (SAL.η Y ⊙∘ f)
+      =⟨ ap ⊙Trunc-fmap (SAL.η-natural f) ⟩
+    ⊙Trunc-fmap (⊙Ω-fmap (⊙Susp-fmap (fst f)) ⊙∘ SAL.η X)
+      =⟨ ! (⊙λ= (⊙Trunc-fmap-⊙∘ (⊙Ω-fmap (⊙Susp-fmap (fst f))) (SAL.η X))) ⟩
+    ⊙Trunc-fmap (⊙Ω-fmap (⊙Susp-fmap (fst f))) ⊙∘ Π₂X.⊙decodeN =∎
+
+  ⊙encodeN-natural :
+    Π₂Y.⊙encodeN ◃⊙∘
+    ⊙Trunc-fmap (⊙Ω-fmap (⊙Susp-fmap (fst f))) ◃⊙idf
+    =⊙∘
+    ⊙Trunc-fmap f ◃⊙∘
+    Π₂X.⊙encodeN ◃⊙idf
+  ⊙encodeN-natural =
+    Π₂Y.⊙encodeN ◃⊙∘
+    ⊙Trunc-fmap (⊙Ω-fmap (⊙Susp-fmap (fst f))) ◃⊙idf
+      =⊙∘⟨ 2 & 0 & =⊙∘-in {gs = Π₂X.⊙decodeN ◃⊙∘ Π₂X.⊙encodeN ◃⊙idf} $
+           ! Π₂X.⊙decodeN-⊙encodeN ⟩
+    Π₂Y.⊙encodeN ◃⊙∘
+    ⊙Trunc-fmap (⊙Ω-fmap (⊙Susp-fmap (fst f))) ◃⊙∘
+    Π₂X.⊙decodeN ◃⊙∘
+    Π₂X.⊙encodeN ◃⊙idf
+      =⊙∘⟨ 1 & 2 & !⊙∘ ⊙decodeN-natural ⟩
+    Π₂Y.⊙encodeN ◃⊙∘
+    Π₂Y.⊙decodeN ◃⊙∘
+    ⊙Trunc-fmap f ◃⊙∘
+    Π₂X.⊙encodeN ◃⊙idf
+      =⊙∘⟨ 0 & 2 & =⊙∘-in {gs = ⊙idf-seq} Π₂Y.⊙encodeN-⊙decodeN ⟩
+    ⊙Trunc-fmap f ◃⊙∘
+    Π₂X.⊙encodeN ◃⊙idf ∎⊙∘
